@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey del Cliente - Clicar Usados</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --navy: #0B1F65;
+    --navy-2: #002060;
+    --navy-soft: #E8ECF5;
+    --blue: #0F6FC6;
+    --red: #C00000;
+    --green: #0B5C1F;
+    --clicar-green: #65E020;
+    --gray-900: #262626;
+    --gray-700: #404040;
+    --gray-500: #7F7F7F;
+    --gray-300: #D9D9D9;
+    --gray-200: #E7E7E7;
+    --gray-100: #F2F2F2;
+    --gray-50: #F9F9F9;
+    --white: #FFFFFF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    font-weight: 400;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+  .app { display: flex; flex-direction: column; height: 100vh; width: 100vw; background: var(--white); }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 40px; background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
+  }
+  .brand { display: flex; align-items: center; gap: 20px; }
+  .logo-box {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 10px; background: var(--clicar-green);
+    border-radius: 4px;
+    font-weight: 800; font-size: 14px; letter-spacing: 0.02em;
+    color: var(--navy);
+  }
+  .separator { width: 1px; height: 22px; background: var(--gray-300); }
+  .title-block { display: flex; flex-direction: column; line-height: 1.15; }
+  .title-block .section {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--gray-500);
+  }
+  .title-block .title { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .meta { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+  .stage-tabs {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
+  }
+  .stage-tab {
+    position: relative; padding: 14px 16px; background: var(--gray-100); color: var(--gray-700);
+    font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; border: none;
+    border-right: 1px solid var(--white); transition: background 0.15s, color 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit;
+  }
+  .stage-tab:last-child { border-right: none; }
+  .stage-tab:hover:not(.active) { background: var(--gray-200); color: var(--navy); }
+  .stage-tab.active { background: var(--navy); color: var(--white); }
+  .tab-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.12);
+    font-size: 11px; font-weight: 700;
+  }
+  .stage-tab.active .tab-num { background: rgba(255,255,255,0.2); }
+  .substep-stepper { padding: 22px 40px 18px; background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0; }
+  .stepper-row { display: flex; align-items: flex-start; justify-content: space-between; position: relative; max-width: 1400px; margin: 0 auto; }
+  .stepper-row::before { content: ''; position: absolute; top: 16px; left: 18px; right: 18px; height: 1px; background: var(--gray-300); z-index: 0; }
+  .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; background: transparent; border: none; font-family: inherit; padding: 0 4px; }
+  .step-circle {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--gray-300); color: var(--white);
+    font-weight: 700; font-size: 13px; display: grid; place-items: center; margin-bottom: 8px;
+    transition: background 0.2s, transform 0.2s; border: 2px solid var(--white);
+  }
+  .step:hover .step-circle { background: var(--blue); transform: scale(1.08); }
+  .step.active .step-circle { background: var(--navy); }
+  .step.completed .step-circle { background: var(--blue); }
+  .step-label { font-size: 11px; line-height: 1.25; color: var(--gray-500); font-weight: 500; text-align: center; max-width: 140px; }
+  .step.active .step-label { color: var(--navy); font-weight: 700; }
+  .slide-area { flex: 1; position: relative; overflow: hidden; background: var(--white); }
+  .slide {
+    position: absolute; inset: 0; padding: 32px 48px 28px;
+    display: none; flex-direction: column; overflow-y: auto;
+  }
+  .slide.active { display: flex; }
+  .slide-title-row {
+    display: flex; align-items: baseline; gap: 24px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--gray-200);
+    margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .slide-title-row h1 { font-size: 28px; font-weight: 700; color: var(--navy); letter-spacing: -0.015em; line-height: 1.15; }
+  .slide-title-row .subtitle { font-size: 14px; color: var(--gray-700); line-height: 1.5; flex: 1; min-width: 300px; max-width: 720px; }
+  .content-grid { display: grid; grid-template-columns: 1.1fr 1.2fr 1.2fr; gap: 20px; }
+  .col-block { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--gray-200); border-top: none; }
+  .col-header { padding: 10px 18px; color: var(--white); font-size: 14px; font-weight: 700; text-align: center; }
+  .col-header.kpis { background: var(--blue); }
+  .col-header.hallazgos { background: var(--red); }
+  .col-header.mejoras { background: var(--green); }
+  .col-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .kpi-card { background: var(--gray-50); border-left: 4px solid var(--blue); padding: 12px 16px 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+  .kpi-value { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1.05; letter-spacing: -0.02em; }
+  .kpi-value .suffix { font-size: 14px; color: var(--gray-500); font-weight: 600; margin-left: 2px; }
+  .kpi-label { font-size: 12px; color: var(--gray-500); font-weight: 500; line-height: 1.35; }
+  .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .bullet-list li { font-size: 13px; line-height: 1.5; color: var(--gray-900); padding-left: 16px; position: relative; }
+  .bullet-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--gray-500); }
+  .hallazgos-block .bullet-list li::before { background: var(--red); }
+  .mejoras-block .bullet-list li::before { background: var(--green); }
+  .data-section { margin-top: 28px; background: var(--white); border: 1px solid var(--gray-200); }
+  .data-section-header {
+    padding: 14px 20px; background: var(--navy); color: var(--white);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  .data-section-title { font-size: 14px; font-weight: 700; }
+  .data-section-subtitle { font-size: 11px; opacity: 0.8; font-weight: 500; }
+  .view-toggle { display: inline-flex; background: rgba(255,255,255,0.1); border-radius: 2px; padding: 2px; }
+  .view-toggle button {
+    padding: 5px 12px; background: transparent; border: none; color: rgba(255,255,255,0.7);
+    font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 2px;
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .view-toggle button.active { background: var(--white); color: var(--navy); }
+  .data-tabs {
+    display: flex; gap: 4px; background: var(--gray-100);
+    border-bottom: 1px solid var(--gray-200); padding: 4px; flex-wrap: wrap;
+  }
+  .data-tab {
+    padding: 8px 16px; background: transparent; border: none; font-family: inherit;
+    font-size: 12px; font-weight: 600; color: var(--gray-700); cursor: pointer; border-radius: 2px;
+  }
+  .data-tab:hover { background: var(--white); color: var(--navy); }
+  .data-tab.active { background: var(--white); color: var(--navy); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  .data-body { padding: 18px 20px; }
+  .category-filter {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; align-items: center;
+  }
+  .filter-label {
+    font-size: 11px; font-weight: 700; color: var(--gray-500); margin-right: 4px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .cat-chip {
+    padding: 4px 10px; background: var(--gray-100); border: 1px solid transparent;
+    font-family: inherit; font-size: 11px; font-weight: 600; color: var(--gray-500);
+    cursor: pointer; border-radius: 12px;
+  }
+  .cat-chip.active { color: var(--white); }
+  .summary-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px; margin: 14px 0 16px; padding: 12px 14px;
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+  }
+  .summary-card { display: flex; flex-direction: column; gap: 2px; }
+  .sc-label { font-size: 10px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; }
+  .sc-value { font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.1; letter-spacing: -0.02em; }
+  .sc-value.green { color: #2a9d8f; }
+  .sc-value.red { color: #e63946; }
+  .sc-value .suffix { font-size: 13px; color: var(--gray-500); font-weight: 600; margin-left: 3px; }
+  .sc-sub { font-size: 10px; color: var(--gray-500); margin-top: 1px; }
+  .chart-wrap { position: relative; width: 100%; height: 300px; margin-bottom: 14px; }
+  .chart-wrap.ranking { height: 340px; }
+  .table-wrap { width: 100%; overflow-x: auto; margin-bottom: 14px; border: 1px solid var(--gray-200); }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .data-table th {
+    background: var(--gray-50); padding: 10px 14px; text-align: left;
+    font-weight: 700; color: var(--navy); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--gray-200); white-space: nowrap;
+  }
+  .data-table th.right, .data-table td.right { text-align: right; }
+  .data-table th.center, .data-table td.center { text-align: center; }
+  .data-table td { padding: 9px 14px; border-bottom: 1px solid var(--gray-100); color: var(--gray-900); white-space: nowrap; }
+  .data-table tr:hover td { background: var(--gray-50); }
+  .data-table tr.totals td {
+    font-weight: 700; background: var(--navy-soft); color: var(--navy);
+    border-top: 2px solid var(--navy); border-bottom: none;
+  }
+  .data-table td.green { color: #2a9d8f; font-weight: 600; }
+  .data-table td.red { color: #e63946; font-weight: 600; }
+  .data-table td.muted { color: var(--gray-500); }
+  .data-insight {
+    background: var(--gray-50); border-left: 3px solid var(--navy); padding: 10px 14px;
+    font-size: 12px; color: var(--gray-700); line-height: 1.5;
+  }
+  .data-insight strong { color: var(--navy); }
+  .data-note { font-size: 10px; color: var(--gray-500); font-style: italic; margin-top: 8px; }
+  .controls {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 40px; background: var(--white); border-top: 1px solid var(--gray-200); flex-shrink: 0;
+  }
+  .controls-left { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--gray-500); font-weight: 500; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+    background: transparent; border: 1px solid var(--gray-300); color: var(--gray-700);
+    font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; border-radius: 2px;
+  }
+  .home-btn:hover { background: var(--gray-50); border-color: var(--navy); color: var(--navy); }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+  .bc-stage { color: var(--navy); font-weight: 700; }
+  .bc-sep { color: var(--gray-300); }
+  .bc-substep { color: var(--gray-700); font-weight: 500; }
+  .controls-center { font-size: 13px; color: var(--gray-700); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .controls-center .current { color: var(--navy); font-weight: 700; font-size: 15px; }
+  .controls-center .total { color: var(--gray-500); font-weight: 500; }
+  .controls-right { display: flex; gap: 8px; }
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px;
+    background: var(--white); color: var(--navy); border: 1px solid var(--navy);
+    font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border-radius: 2px;
+  }
+  .nav-btn:hover:not(:disabled) { background: var(--navy); color: var(--white); }
+  .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; border-color: var(--gray-300); color: var(--gray-500); }
+  .nav-btn.primary { background: var(--navy); color: var(--white); }
+  .nav-btn.primary:hover:not(:disabled) { background: var(--navy-2); }
+  .overview { padding: 32px 48px; }
+  .overview-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-200); }
+  .overview-header h1 { font-size: 28px; color: var(--navy); font-weight: 700; letter-spacing: -0.015em; margin-bottom: 6px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 10px; }
+  .lede { font-size: 14px; color: var(--gray-700); line-height: 1.55; max-width: 900px; }
+  .overview-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+  .overview-kpi { background: var(--white); border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); padding: 16px 18px; }
+  .ov-label { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+  .ov-value { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
+  .ov-value .suffix { font-size: 16px; color: var(--gray-500); font-weight: 600; margin-left: 2px; }
+  .ov-sublabel { font-size: 12px; color: var(--gray-700); margin-top: 4px; }
+  .journey-map { background: var(--gray-50); border: 1px solid var(--gray-200); padding: 22px 24px; }
+  .journey-map-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+  .journey-channels { display: grid; grid-template-columns: auto 1fr; gap: 12px; margin-bottom: 10px; align-items: center; }
+  .channel-tag { background: var(--navy); color: var(--white); padding: 5px 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; min-width: 110px; text-align: center; }
+  .channel-tag.crm { background: var(--navy-2); }
+  .journey-nodes { display: flex; gap: 4px; align-items: stretch; flex-wrap: wrap; }
+  .journey-node { flex: 1; min-width: 100px; background: var(--white); border: 1px solid var(--gray-300); padding: 8px; font-size: 11px; font-weight: 500; color: var(--gray-700); text-align: center; line-height: 1.25; display: flex; align-items: center; justify-content: center; min-height: 44px; }
+  .stage-summary-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 22px; }
+  .stage-summary-card { background: var(--white); border: 1px solid var(--gray-200); padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+  .stage-summary-card:hover { border-color: var(--navy); box-shadow: 0 4px 12px rgba(11, 31, 101, 0.08); }
+  .ssc-num { width: 26px; height: 26px; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+  .ssc-name { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  .ssc-desc { font-size: 11px; color: var(--gray-500); line-height: 1.35; margin-top: 2px; }
+  .ssc-count { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--gray-200); }
+  @media (max-width: 1100px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .overview-kpis { grid-template-columns: repeat(2, 1fr); }
+    .stage-summary-grid { grid-template-columns: 1fr 1fr; }
+    .title-block { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-box" id="logo-home">Clicar</div>
+      <div class="separator"></div>
+      <div class="title-block">
+        <span class="section">Journey del Cliente - Vehiculos Usados</span>
+        <span class="title">Flujo punta a punta - KPIs - Hallazgos - Mejoras</span>
+      </div>
+    </div>
+    <div class="meta">Oct 25 - Mar 26 | CRM Llaima</div>
+  </header>
+
+  <nav class="stage-tabs" id="stage-tabs"></nav>
+
+  <div class="substep-stepper" id="substep-stepper" style="display:none;">
+    <div class="stepper-row" id="stepper-row"></div>
+  </div>
+
+  <main class="slide-area" id="slide-area"></main>
+
+  <footer class="controls">
+    <div class="controls-left">
+      <button class="home-btn" id="home-btn">Vista general</button>
+      <div class="breadcrumb" id="breadcrumb"></div>
+    </div>
+    <div class="controls-center" id="counter"></div>
+    <div class="controls-right">
+      <button class="nav-btn" id="prev-btn">&larr; Anterior</button>
+      <button class="nav-btn primary" id="next-btn">Siguiente &rarr;</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+var MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
+var CAT_ORDER = ['Muy Alta','Alta','Media Alta','Media','Media Baja','Baja','Muy Baja','Oferta en vivo'];
+var CAT_COLORS = {
+  'Muy Alta':'#e63946','Alta':'#f77f00','Media Alta':'#fcbf49','Media':'#2a9d8f',
+  'Media Baja':'#264653','Baja':'#7209b7','Muy Baja':'#3a86a7','Oferta en vivo':'#06d6a0'
+};
+
+var TOTAL_LEADS = [
+  {mes:'Oct 25','Alta':6221,'Baja':410,'Media':2465,'Media Alta':1138,'Media Baja':2380,'Muy Alta':3724,'Muy Baja':234,'Oferta en vivo':10658},
+  {mes:'Nov 25','Alta':6187,'Baja':406,'Media':2847,'Media Alta':2146,'Media Baja':2379,'Muy Alta':4255,'Muy Baja':285,'Oferta en vivo':12807},
+  {mes:'Dic 25','Alta':4098,'Baja':269,'Media':1748,'Media Alta':1478,'Media Baja':1448,'Muy Alta':2843,'Muy Baja':171,'Oferta en vivo':8481},
+  {mes:'Ene 26','Alta':4763,'Baja':622,'Media':2557,'Media Alta':2231,'Media Baja':1981,'Muy Alta':5397,'Muy Baja':269,'Oferta en vivo':13933},
+  {mes:'Feb 26','Alta':3182,'Baja':417,'Media':1768,'Media Alta':1501,'Media Baja':1356,'Muy Alta':3706,'Muy Baja':426,'Oferta en vivo':9123},
+  {mes:'Mar 26','Alta':2740,'Baja':315,'Media':2603,'Media Alta':2906,'Media Baja':573,'Muy Alta':5781,'Muy Baja':2463,'Oferta en vivo':9042}
+];
+var CONTACTADOS = [
+  {mes:'Oct 25','Alta':2154,'Baja':208,'Media':1139,'Media Alta':530,'Media Baja':1111,'Muy Alta':1244,'Muy Baja':113,'Oferta en vivo':5691},
+  {mes:'Nov 25','Alta':1808,'Baja':215,'Media':1234,'Media Alta':908,'Media Baja':999,'Muy Alta':1289,'Muy Baja':137,'Oferta en vivo':6506},
+  {mes:'Dic 25','Alta':1761,'Baja':124,'Media':850,'Media Alta':715,'Media Baja':721,'Muy Alta':1297,'Muy Baja':92,'Oferta en vivo':4850},
+  {mes:'Ene 26','Alta':2726,'Baja':443,'Media':1649,'Media Alta':1386,'Media Baja':1312,'Muy Alta':3197,'Muy Baja':185,'Oferta en vivo':8462},
+  {mes:'Feb 26','Alta':1741,'Baja':265,'Media':1080,'Media Alta':899,'Media Baja':834,'Muy Alta':2163,'Muy Baja':248,'Oferta en vivo':4592},
+  {mes:'Mar 26','Alta':1561,'Baja':212,'Media':969,'Media Alta':1083,'Media Baja':354,'Muy Alta':3482,'Muy Baja':1525,'Oferta en vivo':6163}
+];
+var CONTACTABILIDAD = [
+  {mes:'Oct 25','Alta':34.6,'Baja':50.7,'Media':46.2,'Media Alta':46.6,'Media Baja':46.7,'Muy Alta':33.4,'Muy Baja':48.3,'Oferta en vivo':53.4},
+  {mes:'Nov 25','Alta':29.2,'Baja':53.0,'Media':43.3,'Media Alta':42.3,'Media Baja':42.0,'Muy Alta':30.3,'Muy Baja':48.1,'Oferta en vivo':50.8},
+  {mes:'Dic 25','Alta':43.0,'Baja':46.1,'Media':48.6,'Media Alta':48.4,'Media Baja':49.8,'Muy Alta':45.6,'Muy Baja':53.8,'Oferta en vivo':57.2},
+  {mes:'Ene 26','Alta':57.2,'Baja':71.2,'Media':64.5,'Media Alta':62.1,'Media Baja':66.2,'Muy Alta':59.2,'Muy Baja':68.8,'Oferta en vivo':60.7},
+  {mes:'Feb 26','Alta':54.7,'Baja':63.5,'Media':61.1,'Media Alta':59.9,'Media Baja':61.5,'Muy Alta':58.4,'Muy Baja':58.2,'Oferta en vivo':50.3},
+  {mes:'Mar 26','Alta':57.0,'Baja':67.3,'Media':37.2,'Media Alta':37.3,'Media Baja':61.8,'Muy Alta':60.2,'Muy Baja':61.9,'Oferta en vivo':68.2}
+];
+var TIEMPO_CONTACTO = [
+  {mes:'Oct 25','Alta':23.2,'Baja':28.6,'Media':23.4,'Media Alta':22.6,'Media Baja':29.1,'Muy Alta':22.2,'Muy Baja':31.5,'Oferta en vivo':30.7},
+  {mes:'Nov 25','Alta':32.0,'Baja':53.3,'Media':32.4,'Media Alta':36.1,'Media Baja':62.1,'Muy Alta':30.6,'Muy Baja':57.8,'Oferta en vivo':40.3},
+  {mes:'Dic 25','Alta':50.9,'Baja':36.5,'Media':34.5,'Media Alta':50.4,'Media Baja':30.3,'Muy Alta':51.1,'Muy Baja':30.4,'Oferta en vivo':29.9},
+  {mes:'Ene 26','Alta':70.0,'Baja':27.3,'Media':30.6,'Media Alta':63.1,'Media Baja':29.4,'Muy Alta':69.8,'Muy Baja':29.8,'Oferta en vivo':114.6},
+  {mes:'Feb 26','Alta':15.4,'Baja':15.2,'Media':14.5,'Media Alta':13.3,'Media Baja':13.8,'Muy Alta':15.7,'Muy Baja':12.8,'Oferta en vivo':58.7},
+  {mes:'Mar 26','Alta':19.9,'Baja':21.8,'Media':18.6,'Media Alta':19.1,'Media Baja':20.9,'Muy Alta':20.1,'Muy Baja':21.3,'Oferta en vivo':25.5}
+];
+var DURACION = [
+  {mes:'Oct 25','Alta':46.6,'Baja':42.1,'Media':46.9,'Media Alta':47.1,'Media Baja':46.0,'Muy Alta':44.3,'Muy Baja':38.8,'Oferta en vivo':54.8},
+  {mes:'Nov 25','Alta':50.8,'Baja':49.9,'Media':51.7,'Media Alta':50.9,'Media Baja':49.5,'Muy Alta':51.5,'Muy Baja':55.6,'Oferta en vivo':54.6},
+  {mes:'Dic 25','Alta':44.6,'Baja':51.9,'Media':45.2,'Media Alta':44.9,'Media Baja':46.9,'Muy Alta':47.8,'Muy Baja':51.9,'Oferta en vivo':52.2},
+  {mes:'Ene 26','Alta':46.0,'Baja':46.7,'Media':46.0,'Media Alta':44.7,'Media Baja':48.3,'Muy Alta':44.2,'Muy Baja':43.2,'Oferta en vivo':44.6},
+  {mes:'Feb 26','Alta':46.6,'Baja':43.7,'Media':46.6,'Media Alta':44.9,'Media Baja':43.0,'Muy Alta':43.4,'Muy Baja':54.1,'Oferta en vivo':41.9},
+  {mes:'Mar 26','Alta':49.1,'Baja':44.7,'Media':46.2,'Media Alta':49.9,'Media Baja':46.5,'Muy Alta':49.3,'Muy Baja':48.4,'Oferta en vivo':42.7}
+];
+var AGENDAMIENTO = [
+  {mes:'Oct 25','Alta':11.2,'Baja':5.4,'Media':9.1,'Media Alta':9.8,'Media Baja':8.7,'Muy Alta':11.8,'Muy Baja':3.8,'Oferta en vivo':5.6},
+  {mes:'Nov 25','Alta':10.5,'Baja':6.9,'Media':9.3,'Media Alta':8.9,'Media Baja':8.4,'Muy Alta':10.9,'Muy Baja':5.3,'Oferta en vivo':5.2},
+  {mes:'Dic 25','Alta':12.0,'Baja':7.8,'Media':9.7,'Media Alta':10.2,'Media Baja':9.3,'Muy Alta':12.5,'Muy Baja':4.7,'Oferta en vivo':5.8},
+  {mes:'Ene 26','Alta':13.1,'Baja':8.2,'Media':10.5,'Media Alta':10.8,'Media Baja':9.9,'Muy Alta':12.7,'Muy Baja':6.1,'Oferta en vivo':5.4},
+  {mes:'Feb 26','Alta':11.4,'Baja':6.7,'Media':9.2,'Media Alta':9.5,'Media Baja':8.9,'Muy Alta':11.1,'Muy Baja':4.9,'Oferta en vivo':4.8},
+  {mes:'Mar 26','Alta':12.8,'Baja':4.2,'Media':9.8,'Media Alta':10.3,'Media Baja':7.1,'Muy Alta':11.5,'Muy Baja':3.4,'Oferta en vivo':6.2}
+];
+var CONVERSION = [
+  {mes:'Oct 25','Alta':1.7,'Baja':0.7,'Media':1.4,'Media Alta':1.3,'Media Baja':1.4,'Muy Alta':1.7,'Muy Baja':0.4,'Oferta en vivo':0.7},
+  {mes:'Nov 25','Alta':1.9,'Baja':1.5,'Media':1.0,'Media Alta':0.9,'Media Baja':1.2,'Muy Alta':1.4,'Muy Baja':0.7,'Oferta en vivo':0.6},
+  {mes:'Dic 25','Alta':1.5,'Baja':1.9,'Media':1.0,'Media Alta':1.8,'Media Baja':1.5,'Muy Alta':2.4,'Muy Baja':0.6,'Oferta en vivo':0.8},
+  {mes:'Ene 26','Alta':2.2,'Baja':1.9,'Media':1.7,'Media Alta':1.5,'Media Baja':1.6,'Muy Alta':1.6,'Muy Baja':1.1,'Oferta en vivo':0.7},
+  {mes:'Feb 26','Alta':1.5,'Baja':1.2,'Media':1.0,'Media Alta':1.1,'Media Baja':1.2,'Muy Alta':1.2,'Muy Baja':0.7,'Oferta en vivo':0.6},
+  {mes:'Mar 26','Alta':1.6,'Baja':0.6,'Media':1.4,'Media Alta':1.7,'Media Baja':0.5,'Muy Alta':1.5,'Muy Baja':0.4,'Oferta en vivo':0.8}
+];
+var MOTIVOS = [
+  {mes:'Oct 25','Cliente Falso':5412,'Duplicado':2184,'Sin motivo':812,'No Contactable':510,'Descalificacion tardia':422,'Lista Negra':0,'Otros':243},
+  {mes:'Nov 25','Cliente Falso':6050,'Duplicado':2645,'Sin motivo':789,'No Contactable':551,'Descalificacion tardia':586,'Lista Negra':0,'Otros':307},
+  {mes:'Dic 25','Cliente Falso':3901,'Duplicado':1715,'Sin motivo':713,'No Contactable':410,'Descalificacion tardia':2,'Lista Negra':0,'Otros':259},
+  {mes:'Ene 26','Cliente Falso':7011,'Duplicado':2706,'Sin motivo':506,'No Contactable':623,'Descalificacion tardia':1345,'Lista Negra':0,'Otros':202},
+  {mes:'Feb 26','Cliente Falso':5649,'Duplicado':2021,'Sin motivo':304,'No Contactable':681,'Descalificacion tardia':932,'Lista Negra':0,'Otros':70},
+  {mes:'Mar 26','Cliente Falso':1814,'Duplicado':2179,'Sin motivo':1678,'No Contactable':89,'Descalificacion tardia':0,'Lista Negra':5220,'Otros':94}
+];
+var MOTIVO_COLORS = {
+  'Cliente Falso':'#ef4444','Duplicado':'#f97316','Sin motivo':'#6b7280',
+  'No Contactable':'#8b5cf6','Descalificacion tardia':'#eab308','Lista Negra':'#ec4899','Otros':'#94a3b8'
+};
+var LLAMADAS_DIST = [
+  {mes:'Oct 25','1':2535,'2':2838,'3':1781,'4':3556,'5+':1480},
+  {mes:'Nov 25','1':2535,'2':3258,'3':2078,'4':4276,'5+':949},
+  {mes:'Dic 25','1':2166,'2':2794,'3':1370,'4':3327,'5+':753},
+  {mes:'Ene 26','1':7124,'2':5152,'3':2411,'4':3251,'5+':1422},
+  {mes:'Feb 26','1':5801,'2':3414,'3':1327,'4':737,'5+':543},
+  {mes:'Mar 26','1':5443,'2':4297,'3':2617,'4':2245,'5+':747}
+];
+var LLAM_COLORS = {'1':'#3b82f6','2':'#06b6d4','3':'#10b981','4':'#f59e0b','5+':'#ef4444'};
+
+// ============================================================
+// HELPERS
+// ============================================================
+function fmt(n, dec) {
+  if (dec === undefined) dec = 0;
+  if (n == null || isNaN(n)) return '-';
+  return Number(n).toLocaleString('es-CL', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+}
+function sumCats(row, cats) {
+  var s = 0;
+  for (var i = 0; i < cats.length; i++) s += (row[cats[i]] || 0);
+  return s;
+}
+function weightedAvg(rateData, totalData, cats) {
+  var num = 0, den = 0;
+  for (var i = 0; i < MESES.length; i++) {
+    for (var j = 0; j < cats.length; j++) {
+      var c = cats[j];
+      var tot = totalData[i][c] || 0;
+      var rate = rateData[i][c] || 0;
+      num += tot * rate;
+      den += tot;
+    }
+  }
+  return den ? num / den : 0;
+}
+
+// ============================================================
+// JOURNEY STAGES
+// ============================================================
+var journey = {
+  stages: [
+    {
+      id: 1, name: "Captacion Web", fullName: "Captacion Digital",
+      route: "Datos del Auto -> Datos Personales - Plataforma Web",
+      substeps: [
+        { num: 1, title: "Ingreso Datos del Vehiculo",
+          description: "El cliente ingresa marca, modelo, ano, kilometraje y patente del vehiculo que desea vender.",
+          kpis: [{value:"9.718",suffix:"/mes",label:"Formularios completados"},{value:"82",suffix:"%",label:"Tasa de completitud de campos"},{value:"18",suffix:"%",label:"Tasa de error en datos de patente"}],
+          hallazgos: ["18% de registros tienen errores en datos de patente ingresados manualmente","Campo de kilometraje sin validacion de rango permite valores absurdos","No existe autocompletado de marca/modelo al ingresar patente"],
+          mejoras: ["Validacion de patente en tiempo real con SII para autocompletar datos","Rangos de validacion inteligente en campo de kilometraje segun antiguedad","Autocompletado de marca, modelo y version al ingresar patente valida"]
+        },
+        { num: 2, title: "Validacion de Datos Personales",
+          description: "Se capturan y validan nombre, telefono, email y comuna del vendedor.",
+          kpis: [{value:"84,3",suffix:"%",label:"Tasa de verificacion de telefono"},{value:"1.815",suffix:"/mes",label:"Leads no verificados"},{value:"67",suffix:"%",label:"Emails validos ingresados"}],
+          hallazgos: ["Telefonos invalidos y emails incorrectos reducen la contactabilidad posterior","Sin validacion de RUT, no se puede cruzar con bases internas","Formulario permite avanzar sin verificar SMS"],
+          mejoras: ["Solicitar RUT para autocompletar datos desde fuentes oficiales","Bloquear avance hasta completar verificacion SMS exitosa","Validacion de email en tiempo real antes de permitir envio"]
+        },
+        { num: 3, title: "Preguntas Filtro",
+          description: "3 preguntas de calificacion determinan si el lead tiene intencion real de venta.",
+          kpis: [{value:"73",suffix:"%",label:"Leads que pasan filtro"},{value:"27",suffix:"%",label:"Leads descartados por filtro"},{value:"12",suffix:"%",label:"Falsos negativos estimados"}],
+          hallazgos: ["Filtro actual descarta leads con intencion real pero datos incompletos","Preguntas no se actualizan segun estacionalidad o campanas","Sin scoring diferenciado: el filtro es binario"],
+          mejoras: ["Refinar scoring con modelo predictivo de conversion","Implementar filtro de 3 niveles en lugar de binario","Revision trimestral de preguntas filtro"]
+        },
+        { num: 4, title: "Oferta de Financiamiento",
+          description: "Punto donde se podria ofrecer alternativas de financiamiento.",
+          kpis: [{value:"0",suffix:"%",label:"Penetracion financiamiento en web"},{value:"N/A",suffix:"",label:"Simulaciones de credito realizadas"},{value:"34",suffix:"%",label:"Interes declarado en financiamiento"}],
+          hallazgos: ["No se ofrecen alternativas de financiamiento - oportunidad perdida","34% de vendedores declara interes en financiar su proximo vehiculo","Competidores directos ya integran simuladores de credito"],
+          mejoras: ["Agregar modulo de simulacion de credito integrado al flujo","Cross-sell de financiamiento para compra de vehiculo Americar","Integracion con financieras partner para pre-aprobacion"]
+        },
+        { num: 5, title: "Cierre Flujo Web",
+          description: "Momento final donde el vendedor recibe resultado y decide si continua.",
+          kpis: [{value:"62",suffix:"%",label:"Conversion flujo web -> agenda"},{value:"38",suffix:"%",label:"Abandono al ver tasacion"},{value:"4,2",suffix:"min",label:"Tiempo total del flujo web"}],
+          hallazgos: ["No se ofrece la compra directa del auto al finalizar","38% abandona al ver el rango de tasacion","Sin call-to-action alternativo para quienes no agendan"],
+          mejoras: ["Incorporar oferta de compra inmediata para vehiculos de alta demanda","Mostrar comparativa de precio vs mercado","Flujo de retargeting automatico a quienes abandonan"]
+        }
+      ]
+    },
+    {
+      id: 2, name: "Tasacion y Agend.", fullName: "Tasacion y Agendamiento",
+      route: "Tasacion -> Agendamiento -> Confirmacion - Cita presencial",
+      substeps: [
+        { num: 1, title: "Tasacion Automatizada",
+          description: "Algoritmo calcula rango de precio basado en datos del mercado.",
+          kpis: [{value:"7.420",suffix:"/mes",label:"Tasaciones generadas"},{value:"±22",suffix:"%",label:"Amplitud promedio del rango"},{value:"68",suffix:"%",label:"Precision vs oferta final"}],
+          hallazgos: ["Rango muy amplio genera desconfianza","Algoritmo no incorpora datos de transacciones reales internas","Sin diferenciacion por condicion mecanica declarada"],
+          mejoras: ["Refinar algoritmo con datos de transacciones reales Q1 2026","Reducir amplitud del rango a ±12%","Incluir preguntas de condicion mecanica que ajusten el rango"]
+        },
+        { num: 2, title: "Seleccion de Sucursal",
+          description: "El vendedor elige sucursal y horario disponible.",
+          kpis: [{value:"62",suffix:"%",label:"Tasa de agendamiento"},{value:"3,4",suffix:"",label:"Sucursales promedio mostradas"},{value:"78",suffix:"%",label:"Eligen sucursal mas cercana"}],
+          hallazgos: ["Distribucion desigual: sucursales centricas sobrecargadas","No se muestra disponibilidad en tiempo real","Sin indicador de tiempo de espera estimado"],
+          mejoras: ["Sugerir sucursales con menor carga mediante balanceo","Integrar disponibilidad en tiempo real desde CRM","Mostrar tiempo de espera estimado por sucursal"]
+        },
+        { num: 3, title: "Confirmacion y Recordatorio",
+          description: "Se envia confirmacion por email y SMS, mas recordatorio 24h antes.",
+          kpis: [{value:"22",suffix:"%",label:"Apertura email confirmacion"},{value:"61",suffix:"%",label:"Lectura SMS confirmacion"},{value:"45",suffix:"%",label:"Interaccion con recordatorio 24h"}],
+          hallazgos: ["Confirmacion via email tiene tasa de apertura muy baja","Recordatorio solo 24h antes; sin segundo recordatorio","Sin opcion de confirmar/cancelar desde el mensaje"],
+          mejoras: ["Migrar confirmaciones a WhatsApp Business API","Doble recordatorio: 24h antes + 2h antes via WhatsApp","Botones interactivos en WhatsApp: Confirmar/Reagendar/Cancelar"]
+        },
+        { num: 4, title: "Gestion No-Show",
+          description: "Proceso de seguimiento cuando el vendedor no asiste a la cita.",
+          kpis: [{value:"28",suffix:"%",label:"Tasa de no-show"},{value:"8",suffix:"%",label:"Re-agendamiento post no-show"},{value:"$2,1",suffix:"M",label:"Costo estimado por no-show"}],
+          hallazgos: ["Sin seguimiento automatizado post no-show","Solo 8% de no-shows se re-agendan","Sin analisis de causas raiz de no-show"],
+          mejoras: ["Flujo automatico de re-agendamiento: WhatsApp 30min + llamada 2h","Dashboard de causas de no-show por sucursal","Overbooking controlado en franjas con alto no-show historico"]
+        }
+      ]
+    },
+    {
+      id: 3, name: "Gestion de Leads", fullName: "Gestion de Leads",
+      route: "Nuevos Leads -> Leads tomados (CC) -> Leads con cita - CRM Llaima",
+      substeps: [
+        {
+          num: 1, title: "Pool de Colas (Nuevos Leads)",
+          description: "Leads nuevos ingresan al pool y esperan ser tomados por un agente. Volumen total: 158.753 leads en 6 meses.",
+          kpis: [{value:"26.459",suffix:"/mes",label:"Leads promedio ingresados"},{value:"33.083",suffix:"",label:"Pico Ene 26 (+25% vs prom.)"},{value:"53",suffix:"%",label:"Contactabilidad global"}],
+          hallazgos: ["Enero 2026 concentro volumen record con 61% contactabilidad","Muy Baja paso de 234 a 2.463 leads (+952%) - revisar reclasificacion","Alta cae (6.221 -> 2.740, -56%) mientras Muy Alta crece (+55%)"],
+          mejoras: ["Panel de seguimiento de colas en tiempo real","Alerta automatica cuando cola supera 50 leads o 3 horas","Redistribucion automatica a agentes con menor carga"],
+          chartType: 'volume'
+        },
+        {
+          num: 2, title: "Asignacion al Contact Center",
+          description: "Leads se asignan a agentes del CC segun reglas de prioridad.",
+          kpis: [{value:"FIFO",suffix:"",label:"Metodo de asignacion actual"},{value:"6,2",suffix:"",label:"Leads por agente / hora"},{value:"15",suffix:"%",label:"Reasignaciones por indisponibilidad"}],
+          hallazgos: ["Priorizacion FIFO no considera valor ni probabilidad de conversion","15% de leads requiere reasignacion por indisponibilidad","Sin balanceo: algunos agentes con 10+ leads, otros con 2"],
+          mejoras: ["Scoring de leads para priorizacion inteligente","Asignacion automatica con balanceo de carga","Reasignacion automatica tras 15 min sin contacto"]
+        },
+        {
+          num: 3, title: "Contacto Telefonico",
+          description: "Agente CC contacta al lead. 3 metricas clave: contactabilidad, tiempo 1er contacto (horario CC: L-V 9-19h, Sab 9-14h) y duracion.",
+          kpis: [{value:"53",suffix:"%",label:"Contactabilidad promedio"},{value:"21",suffix:"hrs",label:"Tiempo 1er contacto (horario CC)"},{value:"47",suffix:"seg",label:"Duracion promedio llamada"}],
+          hallazgos: ["Alta/Muy Alta tienen la MENOR contactabilidad (33-43% Oct-Dic)","Tiempo pico Ene 26: Oferta en vivo 115 hrs CC, Muy Alta 70 hrs","Feb 26 mejor mes: 13-16 hrs CC (contacto mismo dia)","Duracion estable 42-55 seg - conversaciones breves"],
+          mejoras: ["Cadencia automatica 3 intentos en 48h (llamada -> SMS -> WhatsApp)","Priorizar Alta/Muy Alta en las 4 horas siguientes","Ficha del lead en pantalla con datos web y tasacion","Script guiado con campos obligatorios"],
+          chartType: 'contact'
+        },
+        {
+          num: 4, title: "Calificacion y Traspaso",
+          description: "Analisis de conversion, tasa de agendamiento, motivos de descarte e intensidad de llamadas.",
+          kpis: [{value:"9,3",suffix:"%",label:"Tasa de agendamiento"},{value:"1,2",suffix:"%",label:"Conversion -> oportunidad"},{value:"13",suffix:"%",label:"Asistencia inspeccion"}],
+          hallazgos: ["Conversion critica: solo 1-2% global","Cliente Falso principal motivo de descarte (33-50%)","Marzo 26 anomalia: 5.220 leads 'Lista Negra' (nuevo criterio)","~40% de contactados reciben solo 1 llamada - sin reintentos"],
+          mejoras: ["Campo obligatorio de motivo de no-cierre estructurado","Checklist de calificacion estandarizado en CRM","Validacion anti-duplicados por RUT + patente","Cadencia minima de 3 intentos antes de 'No Contactable'"],
+          chartType: 'conversion'
+        }
+      ]
+    },
+    {
+      id: 4, name: "Oportunidad", fullName: "Oportunidad y Check-In",
+      route: "Oportunidad -> Check In -> Check In Realizado - Sucursal",
+      substeps: [
+        { num: 1, title: "Creacion de Oportunidad",
+          description: "Se crea la oportunidad en CRM Llaima al confirmar cita.",
+          kpis: [{value:"2.840",suffix:"/mes",label:"Oportunidades creadas"},{value:"5",suffix:"%",label:"Oportunidades duplicadas"},{value:"88",suffix:"%",label:"Con datos completos"}],
+          hallazgos: ["Oportunidad se crea manualmente en algunos casos","12% sin vincular correctamente el lead web original","Sin trazabilidad automatica del origen del lead"],
+          mejoras: ["Creacion 100% automatica al confirmar cita","Merge automatico de duplicados por RUT + patente","Tag automatico de origen y campana"]
+        },
+        { num: 2, title: "Check-In en Sucursal",
+          description: "Registro de la llegada del vendedor a la sucursal.",
+          kpis: [{value:"18",suffix:"min",label:"Tiempo espera promedio"},{value:"34",suffix:"%",label:"Esperan >25 min en peak"},{value:"67",suffix:"",label:"NPS experiencia check-in"}],
+          hallazgos: ["Check-in manual genera colas en horarios peak","Sin registro digital del momento de llegada","Recepcionista sin visibilidad de la cita del cliente"],
+          mejoras: ["Check-in digital via codigo QR + totem de autoatencion","Registro automatico de timestamp de llegada","Pantalla de recepcion con agenda del dia"]
+        },
+        { num: 3, title: "Verificacion Documental",
+          description: "Se verifican documentos del vehiculo y vendedor.",
+          kpis: [{value:"85",suffix:"%",label:"Vendedores con docs completos"},{value:"15",suffix:"%",label:"Requieren docs adicionales"},{value:"22",suffix:"min",label:"Tiempo verificacion promedio"}],
+          hallazgos: ["15% de vendedores con documentacion incompleta","Checklist no se envia previamente","Verificacion manual sin apoyo digital"],
+          mejoras: ["Enviar checklist 48h antes via WhatsApp con ejemplos","Pre-carga digital de documentos antes de la cita","Verificacion asistida con OCR para validacion automatica"]
+        },
+        { num: 4, title: "Asignacion de Asesor",
+          description: "Se asigna asesor comercial segun disponibilidad.",
+          kpis: [{value:"72",suffix:"%",label:"Tasa de asistencia efectiva"},{value:"8",suffix:"min",label:"Tiempo asignacion -> contacto"},{value:"4,2",suffix:"",label:"Clientes simultaneos / asesor"}],
+          hallazgos: ["Asignacion no considera carga actual del asesor","Sin notificacion automatica cuando el cliente hace check-in","Asesor no recibe ficha del lead con historial web"],
+          mejoras: ["Dashboard de carga de asesores en tiempo real","Notificacion push al asesor al check-in del cliente","Ficha automatica del lead en el movil del asesor"]
+        }
+      ]
+    },
+    {
+      id: 5, name: "Inspeccion y Cierre", fullName: "Inspeccion y Cierre Comercial",
+      route: "Inspeccion -> Validacion Comercial - Oferta definitiva",
+      substeps: [
+        { num: 1, title: "Inspeccion Tecnica",
+          description: "Evaluacion mecanica, carroceria e interior del vehiculo.",
+          kpis: [{value:"45",suffix:"min",label:"Tiempo promedio inspeccion"},{value:"30-90",suffix:"min",label:"Rango de variabilidad"},{value:"74",suffix:"%",label:"Sin hallazgo critico"}],
+          hallazgos: ["Tiempo variable (30-90 min) segun experiencia del inspector","Checklist no es digital en 40% de sucursales","Sin categorizacion estandarizada de severidad"],
+          mejoras: ["Checklist digital con tiempos objetivo por item","Categorizacion obligatoria de hallazgos por severidad","Capacitacion y certificacion trimestral de inspectores"]
+        },
+        { num: 2, title: "Registro Fotografico",
+          description: "Captura estandarizada de fotografias del vehiculo.",
+          kpis: [{value:"2.145",suffix:"/mes",label:"Inspecciones con fotos"},{value:"18",suffix:"",label:"Fotos promedio por vehiculo"},{value:"60",suffix:"%",label:"Sucursales con proceso digital"}],
+          hallazgos: ["Informe en papel en 40% de sucursales","Calidad de fotos inconsistente","Fotos no se vinculan automaticamente a la oportunidad"],
+          mejoras: ["App movil con captura guiada y carga directa a CRM","Validacion automatica de calidad de imagen","Reutilizacion de fotos para publicacion directa"]
+        },
+        { num: 3, title: "Calculo Oferta Final",
+          description: "Se calcula precio de compra final.",
+          kpis: [{value:"48",suffix:"%",label:"Conversion inspeccion -> compra"},{value:"15",suffix:"%",label:"Brecha online vs final"},{value:"8,2",suffix:"%",label:"Margen promedio usados"}],
+          hallazgos: ["Diferencia >15% entre tasacion online y oferta final","Costo de re-acondicionamiento se estima subjetivamente","Sin visibilidad de demanda actual del modelo"],
+          mejoras: ["Dashboard de brecha tasacion vs oferta por sucursal","Tabla estandarizada de costos de re-acondicionamiento","Integrar datos de demanda al algoritmo"]
+        },
+        { num: 4, title: "Validacion Comercial",
+          description: "Aprobacion por jefatura cuando excede autonomia del asesor.",
+          kpis: [{value:"60",suffix:"%",label:"Ofertas que requieren aprobacion"},{value:"35",suffix:"min",label:"Tiempo promedio aprobacion"},{value:"92",suffix:"%",label:"Tasa de aprobacion jefatura"}],
+          hallazgos: ["Validacion manual de jefatura en >60% de casos","Tiempo de aprobacion genera espera frustrante","92% se aprueba - umbrales demasiado bajos"],
+          mejoras: ["Pre-aprobacion automatica para ofertas dentro de rango","Aprobacion digital via app para jefatura","Revision de umbrales de autonomia del asesor"]
+        },
+        { num: 5, title: "Negociacion y Cierre",
+          description: "Presentacion de oferta y formalizacion o no-cierre.",
+          kpis: [{value:"48",suffix:"%",label:"Tasa de cierre final"},{value:"52",suffix:"%",label:"No-cierre (precio insuficiente)"},{value:"$0",suffix:"",label:"Registro estructurado no-cierre"}],
+          hallazgos: ["Sin registro estructurado de razones de no-cierre","Vendedor no recibe oferta por escrito","Sin flujo de seguimiento post no-cierre"],
+          mejoras: ["Campo obligatorio de motivo de no-compra","Envio automatico de oferta por WhatsApp con vigencia 72h","Flujo post no-cierre: contacto CC a las 48h"]
+        }
+      ]
+    }
+  ]
+};
+
+// Flatten
+var flatSlides = [{ type: 'overview' }];
+for (var si = 0; si < journey.stages.length; si++) {
+  var stage = journey.stages[si];
+  for (var ssi = 0; ssi < stage.substeps.length; ssi++) {
+    flatSlides.push({ type: 'substep', stageId: stage.id, subIdx: ssi });
+  }
+}
+var TOTAL_SUBSTEPS = flatSlides.length - 1;
+var currentSlide = 0;
+var chartInstances = {};
+var chartState = {};
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderStageTabs() {
+  var el = document.getElementById('stage-tabs');
+  var html = '';
+  for (var i = 0; i < journey.stages.length; i++) {
+    var s = journey.stages[i];
+    html += '<button class="stage-tab" data-stage="' + s.id + '">';
+    html += '<span class="tab-num">' + s.id + '</span>';
+    html += '<span>' + s.name + '</span>';
+    html += '</button>';
+  }
+  el.innerHTML = html;
+  var btns = el.querySelectorAll('.stage-tab');
+  for (var j = 0; j < btns.length; j++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        goToStage(parseInt(btn.getAttribute('data-stage')));
+      });
+    })(btns[j]);
+  }
+}
+
+function renderStepper(stage, activeIdx) {
+  var el = document.getElementById('stepper-row');
+  var html = '';
+  for (var i = 0; i < stage.substeps.length; i++) {
+    var ss = stage.substeps[i];
+    var cls = i === activeIdx ? 'active' : (i < activeIdx ? 'completed' : '');
+    html += '<button class="step ' + cls + '" data-idx="' + i + '">';
+    html += '<span class="step-circle">' + ss.num + '</span>';
+    html += '<span class="step-label">' + ss.title + '</span>';
+    html += '</button>';
+  }
+  el.innerHTML = html;
+  var btns = el.querySelectorAll('.step');
+  for (var j = 0; j < btns.length; j++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        goToSubstep(stage.id, parseInt(btn.getAttribute('data-idx')));
+      });
+    })(btns[j]);
+  }
+}
+
+function renderSlides() {
+  var area = document.getElementById('slide-area');
+  var html = '';
+  for (var i = 0; i < flatSlides.length; i++) {
+    var s = flatSlides[i];
+    if (s.type === 'overview') {
+      html += renderOverviewSlide(i);
+    } else {
+      var stage = null;
+      for (var k = 0; k < journey.stages.length; k++) {
+        if (journey.stages[k].id === s.stageId) { stage = journey.stages[k]; break; }
+      }
+      var sub = stage.substeps[s.subIdx];
+      html += renderSubstepSlide(i, stage, sub);
+    }
+  }
+  area.innerHTML = html;
+  var cards = area.querySelectorAll('[data-goto-stage]');
+  for (var c = 0; c < cards.length; c++) {
+    (function(el) {
+      el.addEventListener('click', function() {
+        goToStage(parseInt(el.getAttribute('data-goto-stage')));
+      });
+    })(cards[c]);
+  }
+}
+
+function renderOverviewSlide(i) {
+  var stageCards = '';
+  for (var k = 0; k < journey.stages.length; k++) {
+    var s = journey.stages[k];
+    stageCards += '<div class="stage-summary-card" data-goto-stage="' + s.id + '">';
+    stageCards += '<div class="ssc-num">' + s.id + '</div>';
+    stageCards += '<div class="ssc-name">' + s.fullName + '</div>';
+    stageCards += '<div class="ssc-desc">' + s.route + '</div>';
+    stageCards += '<div class="ssc-count">' + s.substeps.length + ' subprocesos</div>';
+    stageCards += '</div>';
+  }
+  var webNodes = ['Datos del Auto','Datos Personales','Tasacion','Agendamiento','Confirmacion'];
+  var crmNodes = ['Nuevos Leads','Leads tomados','Leads con cita','Oportunidad','Check In','Inspeccion','Validacion'];
+  var webHtml = '';
+  for (var w = 0; w < webNodes.length; w++) webHtml += '<div class="journey-node">' + webNodes[w] + '</div>';
+  var crmHtml = '';
+  for (var cr = 0; cr < crmNodes.length; cr++) crmHtml += '<div class="journey-node">' + crmNodes[cr] + '</div>';
+
+  return '<div class="slide overview" data-slide="' + i + '">' +
+    '<div class="overview-header">' +
+      '<div class="eyebrow">Vista general - Oct 25 a Mar 26</div>' +
+      '<h1>Journey del Cliente - Vehiculos Usados</h1>' +
+      '<p class="lede">Mapeo completo del flujo punta a punta de venta de usados: 5 etapas, 22 subprocesos, KPIs de desempeno reales del CRM Llaima, hallazgos operativos y mejoras priorizadas. La etapa de Gestion de Leads incluye analisis evolutivo por categoria sobre 158.753 leads.</p>' +
+    '</div>' +
+    '<div class="overview-kpis">' +
+      '<div class="overview-kpi"><div class="ov-label">Leads analizados</div><div class="ov-value">158.753</div><div class="ov-sublabel">6 meses - CRM Llaima</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Subprocesos</div><div class="ov-value">22</div><div class="ov-sublabel">Mapeados end-to-end</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Contactabilidad global</div><div class="ov-value">53<span class="suffix">%</span></div><div class="ov-sublabel">Oct 25 a Mar 26</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Conversion a oportunidad</div><div class="ov-value">1,2<span class="suffix">%</span></div><div class="ov-sublabel">Global del periodo</div></div>' +
+    '</div>' +
+    '<div class="journey-map">' +
+      '<div class="journey-map-title">Flujo de compra - Web a CRM Llaima</div>' +
+      '<div class="journey-channels"><div class="channel-tag">Web</div><div class="journey-nodes">' + webHtml + '</div></div>' +
+      '<div class="journey-channels"><div class="channel-tag crm">CRM Llaima</div><div class="journey-nodes">' + crmHtml + '</div></div>' +
+    '</div>' +
+    '<div class="stage-summary-grid">' + stageCards + '</div>' +
+  '</div>';
+}
+
+function renderSubstepSlide(i, stage, sub) {
+  var kpisHtml = '';
+  for (var k = 0; k < sub.kpis.length; k++) {
+    var kp = sub.kpis[k];
+    kpisHtml += '<div class="kpi-card">';
+    kpisHtml += '<div class="kpi-value">' + kp.value + (kp.suffix ? '<span class="suffix">' + kp.suffix + '</span>' : '') + '</div>';
+    kpisHtml += '<div class="kpi-label">' + kp.label + '</div>';
+    kpisHtml += '</div>';
+  }
+  var hHtml = '';
+  for (var h = 0; h < sub.hallazgos.length; h++) hHtml += '<li>' + sub.hallazgos[h] + '</li>';
+  var mHtml = '';
+  for (var m = 0; m < sub.mejoras.length; m++) mHtml += '<li>' + sub.mejoras[m] + '</li>';
+  var chartHtml = sub.chartType ? renderChartSection(i, sub.chartType) : '';
+
+  return '<div class="slide" data-slide="' + i + '" data-stage="' + stage.id + '" data-substep="' + sub.num + '">' +
+    '<div class="slide-title-row">' +
+      '<h1>' + sub.title + '</h1>' +
+      '<p class="subtitle">' + sub.description + '</p>' +
+    '</div>' +
+    '<div class="content-grid">' +
+      '<div class="col-block kpis-block"><div class="col-header kpis">KPIs</div><div class="col-body">' + kpisHtml + '</div></div>' +
+      '<div class="col-block hallazgos-block"><div class="col-header hallazgos">Hallazgos</div><div class="col-body"><ul class="bullet-list">' + hHtml + '</ul></div></div>' +
+      '<div class="col-block mejoras-block"><div class="col-header mejoras">Mejoras propuestas</div><div class="col-body"><ul class="bullet-list">' + mHtml + '</ul></div></div>' +
+    '</div>' +
+    chartHtml +
+  '</div>';
+}
+
+function renderChartSection(slideIdx, chartType) {
+  var titles = {
+    'volume': { t: 'Volumen de Leads por Categoria', s: 'Total ingresados vs Contactados - 158.753 leads' },
+    'contact': { t: 'Gestion de Contacto - Evolucion 6 meses', s: 'Contactabilidad - Tiempo primer contacto (horario CC) - Duracion' },
+    'conversion': { t: 'Calificacion, Agendamiento y Pipeline', s: 'Agendamiento - Conversion - Motivos de Descarte - Llamadas' }
+  };
+  var tabsCfg = {
+    'volume': [{id:'volume-abs',l:'Total vs Contactados'},{id:'volume-pct',l:'Proporcion por Categoria'}],
+    'contact': [{id:'contact',l:'Contactabilidad'},{id:'tiempo',l:'Tiempo 1er Contacto (horario CC)'},{id:'duracion',l:'Duracion Llamadas'}],
+    'conversion': [{id:'agendamiento',l:'Tasa de Agendamiento'},{id:'conversion',l:'Conversion a Oportunidad'},{id:'motivos-rank',l:'Motivos de Descarte'},{id:'llamadas',l:'Intensidad de Llamadas'}]
+  };
+  var tabs = tabsCfg[chartType];
+  var tabsHtml = '';
+  for (var t = 0; t < tabs.length; t++) {
+    tabsHtml += '<button class="data-tab ' + (t === 0 ? 'active' : '') + '" data-tab="' + tabs[t].id + '">' + tabs[t].l + '</button>';
+  }
+  var chipsHtml = '';
+  for (var ci = 0; ci < CAT_ORDER.length; ci++) {
+    var cat = CAT_ORDER[ci];
+    var color = CAT_COLORS[cat];
+    chipsHtml += '<button class="cat-chip active" data-cat="' + cat + '" style="background:' + color + ';border-color:' + color + ';color:#fff;">' + cat + '</button>';
+  }
+  var note = chartType === 'contact'
+    ? '<div class="data-note">* Tiempo de contacto: horas promedio en horario operativo del Contact Center (L-V 9-19h, Sab 9-14h = 55 hrs/sem). Factor de ajuste 55/168 sobre tiempo calendario.</div>'
+    : chartType === 'conversion'
+    ? '<div class="data-note">* Conversion a Oportunidad: todas las conversiones son asistencias efectivas a la cita. Agendamiento: leads que agendaron al menos 1 cita.</div>'
+    : '';
+
+  return '<div class="data-section" data-slide-idx="' + slideIdx + '" data-chart-type="' + chartType + '">' +
+    '<div class="data-section-header">' +
+      '<div><div class="data-section-title">' + titles[chartType].t + '</div><div class="data-section-subtitle">' + titles[chartType].s + '</div></div>' +
+      '<div class="view-toggle" data-slide-idx="' + slideIdx + '">' +
+        '<button class="active" data-view="chart">Grafico</button>' +
+        '<button data-view="table">Tabla</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="data-tabs" data-slide-idx="' + slideIdx + '">' + tabsHtml + '</div>' +
+    '<div class="data-body">' +
+      '<div class="category-filter" data-slide-idx="' + slideIdx + '">' +
+        '<span class="filter-label">Categorias:</span>' +
+        '<button class="cat-chip cat-all" style="background:var(--navy);color:#fff;border-color:var(--navy);">Todas</button>' +
+        '<button class="cat-chip cat-none">Ninguna</button>' +
+        chipsHtml +
+      '</div>' +
+      '<div class="summary-cards" id="summary-' + slideIdx + '"></div>' +
+      '<div class="chart-wrap" id="chart-wrap-' + slideIdx + '"><canvas id="chart-' + slideIdx + '"></canvas></div>' +
+      '<div class="table-wrap" id="table-wrap-' + slideIdx + '" style="display:none;"></div>' +
+      '<div class="data-insight" id="insight-' + slideIdx + '"></div>' +
+      note +
+    '</div>' +
+  '</div>';
+}
+
+// ============================================================
+// CHART / TABLE
+// ============================================================
+function refreshView(slideIdx) {
+  var state = chartState[slideIdx];
+  var cats = [];
+  state.activeCats.forEach(function(c) { cats.push(c); });
+  updateSummary(slideIdx, state.activeTab, cats);
+  if (state.viewMode === 'chart') {
+    buildChart(slideIdx, state.activeTab, state.activeCats);
+    document.getElementById('chart-wrap-' + slideIdx).style.display = 'block';
+    document.getElementById('table-wrap-' + slideIdx).style.display = 'none';
+  } else {
+    renderTable(slideIdx, state.activeTab, cats);
+    document.getElementById('chart-wrap-' + slideIdx).style.display = 'none';
+    document.getElementById('table-wrap-' + slideIdx).style.display = 'block';
+  }
+  updateInsight(slideIdx, state.activeTab);
+  var noFilterTabs = ['motivos-rank','llamadas'];
+  var filter = document.querySelector('.category-filter[data-slide-idx="' + slideIdx + '"]');
+  if (filter) filter.style.display = noFilterTabs.indexOf(state.activeTab) >= 0 ? 'none' : 'flex';
+}
+
+function buildChart(slideIdx, tabId, activeCats) {
+  if (typeof Chart === 'undefined') return;
+  var canvas = document.getElementById('chart-' + slideIdx);
+  if (!canvas) return;
+  var key = 'chart-' + slideIdx;
+  if (chartInstances[key]) { chartInstances[key].destroy(); delete chartInstances[key]; }
+
+  var cfg;
+  if (tabId === 'volume-abs') cfg = buildVolumeAbsChart(activeCats);
+  else if (tabId === 'volume-pct') cfg = buildVolumePctChart(activeCats);
+  else if (tabId === 'contact') cfg = buildLineChart(CONTACTABILIDAD, activeCats, '%');
+  else if (tabId === 'tiempo') cfg = buildLineChart(TIEMPO_CONTACTO, activeCats, ' hrs');
+  else if (tabId === 'duracion') cfg = buildLineChart(DURACION, activeCats, 's');
+  else if (tabId === 'agendamiento') cfg = buildLineChart(AGENDAMIENTO, activeCats, '%');
+  else if (tabId === 'conversion') cfg = buildLineChart(CONVERSION, activeCats, '%');
+  else if (tabId === 'motivos-rank') cfg = buildMotivosRanking();
+  else if (tabId === 'llamadas') cfg = buildLlamadasChart();
+
+  var wrap = document.getElementById('chart-wrap-' + slideIdx);
+  if (tabId === 'motivos-rank') wrap.classList.add('ranking'); else wrap.classList.remove('ranking');
+  if (cfg) chartInstances[key] = new Chart(canvas.getContext('2d'), cfg);
+}
+
+function buildLineChart(dataset, activeCats, unit) {
+  var datasets = [];
+  for (var i = 0; i < CAT_ORDER.length; i++) {
+    var c = CAT_ORDER[i];
+    if (!activeCats.has(c)) continue;
+    var data = [];
+    for (var m = 0; m < MESES.length; m++) data.push(dataset[m][c]);
+    datasets.push({
+      label: c, data: data,
+      borderColor: CAT_COLORS[c], backgroundColor: CAT_COLORS[c] + '22',
+      borderWidth: 2, tension: 0.3, pointRadius: 3, pointHoverRadius: 5,
+      pointBackgroundColor: CAT_COLORS[c]
+    });
+  }
+  return {
+    type: 'line',
+    data: { labels: MESES, datasets: datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: '#0B1F65', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 4 }
+      },
+      scales: {
+        x: { ticks: { color: '#7F7F7F', font: { size: 11 } }, grid: { display: false } },
+        y: { ticks: { color: '#7F7F7F', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: unit === '%' }
+      }
+    }
+  };
+}
+
+function buildVolumeAbsChart(activeCats) {
+  var cats = [];
+  activeCats.forEach(function(c) { cats.push(c); });
+  var cData = [], ncData = [];
+  for (var i = 0; i < MESES.length; i++) {
+    var con = 0, tot = 0;
+    for (var j = 0; j < cats.length; j++) {
+      con += CONTACTADOS[i][cats[j]] || 0;
+      tot += TOTAL_LEADS[i][cats[j]] || 0;
+    }
+    cData.push(con);
+    ncData.push(tot - con);
+  }
+  return {
+    type: 'bar',
+    data: {
+      labels: MESES,
+      datasets: [
+        { label: 'Contactados', data: cData, backgroundColor: '#2a9d8fcc', borderColor: '#2a9d8f', borderWidth: 1 },
+        { label: 'No contactados', data: ncData, backgroundColor: '#ef4444aa', borderColor: '#ef4444', borderWidth: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'top', labels: { color: '#7F7F7F', font: { size: 11 } } },
+        tooltip: { backgroundColor: '#0B1F65', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 4 }
+      },
+      scales: {
+        x: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { display: false } },
+        y: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  };
+}
+
+function buildVolumePctChart(activeCats) {
+  var datasets = [];
+  var cats = [];
+  activeCats.forEach(function(c) { cats.push(c); });
+  for (var i = 0; i < CAT_ORDER.length; i++) {
+    var c = CAT_ORDER[i];
+    if (!activeCats.has(c)) continue;
+    var data = [];
+    for (var m = 0; m < MESES.length; m++) {
+      var totalSel = 0;
+      for (var k = 0; k < cats.length; k++) totalSel += TOTAL_LEADS[m][cats[k]] || 0;
+      data.push(totalSel ? ((TOTAL_LEADS[m][c] || 0) / totalSel * 100) : 0);
+    }
+    datasets.push({ label: c, data: data, backgroundColor: CAT_COLORS[c] + 'cc', borderColor: CAT_COLORS[c], borderWidth: 1 });
+  }
+  return {
+    type: 'bar',
+    data: { labels: MESES, datasets: datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'top', labels: { color: '#7F7F7F', font: { size: 10 } } },
+        tooltip: { backgroundColor: '#0B1F65', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 4 }
+      },
+      scales: {
+        x: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { display: false } },
+        y: { stacked: true, max: 100, ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  };
+}
+
+function buildMotivosRanking() {
+  var totals = {};
+  var keys = Object.keys(MOTIVO_COLORS);
+  for (var k = 0; k < keys.length; k++) {
+    var key = keys[k];
+    var sum = 0;
+    for (var i = 0; i < MOTIVOS.length; i++) sum += MOTIVOS[i][key] || 0;
+    totals[key] = sum;
+  }
+  var sorted = [];
+  for (var kk in totals) sorted.push([kk, totals[kk]]);
+  sorted.sort(function(a, b) { return b[1] - a[1]; });
+  var labels = [], data = [], bg = [], bc = [];
+  for (var s = 0; s < sorted.length; s++) {
+    labels.push(sorted[s][0]); data.push(sorted[s][1]);
+    bg.push(MOTIVO_COLORS[sorted[s][0]] + 'cc');
+    bc.push(MOTIVO_COLORS[sorted[s][0]]);
+  }
+  return {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ label: 'Total', data: data, backgroundColor: bg, borderColor: bc, borderWidth: 1 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#0B1F65', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 4 } },
+      scales: {
+        x: { ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true },
+        y: { ticks: { color: '#262626', font: { size: 12, weight: '600' } }, grid: { display: false } }
+      }
+    }
+  };
+}
+
+function buildLlamadasChart() {
+  var niveles = ['1','2','3','4','5+'];
+  var datasets = [];
+  for (var n = 0; n < niveles.length; n++) {
+    var nv = niveles[n];
+    var data = [];
+    for (var i = 0; i < MESES.length; i++) data.push(LLAMADAS_DIST[i][nv] || 0);
+    datasets.push({
+      label: nv + (nv === '1' ? ' llamada' : ' llamadas'),
+      data: data,
+      backgroundColor: LLAM_COLORS[nv] + 'cc',
+      borderColor: LLAM_COLORS[nv], borderWidth: 1
+    });
+  }
+  return {
+    type: 'bar',
+    data: { labels: MESES, datasets: datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'top', labels: { color: '#7F7F7F', font: { size: 10 } } },
+        tooltip: { backgroundColor: '#0B1F65', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 4 }
+      },
+      scales: {
+        x: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { display: false } },
+        y: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  };
+}
+
+// ============================================================
+// TABLES
+// ============================================================
+function renderTable(slideIdx, tabId, cats) {
+  var wrap = document.getElementById('table-wrap-' + slideIdx);
+  if (!wrap) return;
+  var html = '';
+  if (tabId === 'volume-abs') html = tableVolumeAbs(cats);
+  else if (tabId === 'volume-pct') html = tablePercent(cats, TOTAL_LEADS);
+  else if (tabId === 'contact') html = tableRate(cats, CONTACTABILIDAD, '%');
+  else if (tabId === 'tiempo') html = tableRate(cats, TIEMPO_CONTACTO, ' hrs');
+  else if (tabId === 'duracion') html = tableRate(cats, DURACION, ' s');
+  else if (tabId === 'agendamiento') html = tableRate(cats, AGENDAMIENTO, '%');
+  else if (tabId === 'conversion') html = tableRate(cats, CONVERSION, '%');
+  else if (tabId === 'motivos-rank') html = tableMotivosRank();
+  else if (tabId === 'llamadas') html = tableLlamadas();
+  wrap.innerHTML = html;
+}
+
+function tableVolumeAbs(cats) {
+  var rows = '';
+  var totT = 0, totC = 0;
+  for (var i = 0; i < MESES.length; i++) {
+    var total = sumCats(TOTAL_LEADS[i], cats);
+    var con = sumCats(CONTACTADOS[i], cats);
+    var nc = total - con;
+    var pct = total ? (con / total * 100).toFixed(1) : '0.0';
+    totT += total; totC += con;
+    rows += '<tr><td>' + MESES[i] + '</td><td class="right">' + fmt(total) + '</td><td class="right green">' + fmt(con) + '</td><td class="right red">' + fmt(nc) + '</td><td class="right">' + pct + '%</td></tr>';
+  }
+  var totPct = totT ? (totC / totT * 100).toFixed(1) : '0.0';
+  return '<table class="data-table"><thead><tr><th>Mes</th><th class="right">Total</th><th class="right">Contactados</th><th class="right">No contactados</th><th class="right">% Contacto</th></tr></thead><tbody>' + rows + '<tr class="totals"><td>TOTAL</td><td class="right">' + fmt(totT) + '</td><td class="right">' + fmt(totC) + '</td><td class="right">' + fmt(totT - totC) + '</td><td class="right">' + totPct + '%</td></tr></tbody></table>';
+}
+
+function tableRate(cats, dataset, unit) {
+  if (!cats.length) return '<div style="padding:20px;text-align:center;color:#7F7F7F;">Selecciona al menos una categoria</div>';
+  var header = '<th>Mes</th>';
+  for (var i = 0; i < cats.length; i++) header += '<th class="right" style="color:' + CAT_COLORS[cats[i]] + ';">' + cats[i] + '</th>';
+  header += '<th class="right">Prom. ponderado</th>';
+  var rows = '';
+  for (var m = 0; m < MESES.length; m++) {
+    rows += '<tr><td>' + MESES[m] + '</td>';
+    var wNum = 0, wDen = 0;
+    for (var c = 0; c < cats.length; c++) {
+      var v = dataset[m][cats[c]] || 0;
+      var tot = TOTAL_LEADS[m][cats[c]] || 0;
+      wNum += v * tot; wDen += tot;
+      rows += '<td class="right">' + v.toFixed(1) + unit + '</td>';
+    }
+    rows += '<td class="right" style="font-weight:700;color:var(--navy);">' + (wDen ? (wNum / wDen).toFixed(1) : '0.0') + unit + '</td></tr>';
+  }
+  var avgs = '';
+  for (var ac = 0; ac < cats.length; ac++) {
+    avgs += '<td class="right">' + weightedAvg(dataset, TOTAL_LEADS, [cats[ac]]).toFixed(1) + unit + '</td>';
+  }
+  var global = weightedAvg(dataset, TOTAL_LEADS, cats).toFixed(1) + unit;
+  return '<table class="data-table"><thead><tr>' + header + '</tr></thead><tbody>' + rows + '<tr class="totals"><td>Promedio</td>' + avgs + '<td class="right">' + global + '</td></tr></tbody></table>';
+}
+
+function tablePercent(cats, dataset) {
+  if (!cats.length) return '<div style="padding:20px;text-align:center;color:#7F7F7F;">Selecciona al menos una categoria</div>';
+  var header = '<th>Mes</th>';
+  for (var i = 0; i < cats.length; i++) header += '<th class="right" style="color:' + CAT_COLORS[cats[i]] + ';">' + cats[i] + '</th>';
+  header += '<th class="right">Total mes</th>';
+  var rows = '';
+  for (var m = 0; m < MESES.length; m++) {
+    var totMes = sumCats(dataset[m], cats);
+    rows += '<tr><td>' + MESES[m] + '</td>';
+    for (var c = 0; c < cats.length; c++) {
+      var v = dataset[m][cats[c]] || 0;
+      var pct = totMes ? (v / totMes * 100).toFixed(1) : '0.0';
+      rows += '<td class="right">' + fmt(v) + ' <span class="muted">(' + pct + '%)</span></td>';
+    }
+    rows += '<td class="right" style="font-weight:700;color:var(--navy);">' + fmt(totMes) + '</td></tr>';
+  }
+  var tCols = '';
+  var grand = 0;
+  for (var tc = 0; tc < cats.length; tc++) {
+    var t = 0;
+    for (var mm = 0; mm < MESES.length; mm++) t += dataset[mm][cats[tc]] || 0;
+    tCols += '<td class="right">' + fmt(t) + '</td>';
+    grand += t;
+  }
+  return '<table class="data-table"><thead><tr>' + header + '</tr></thead><tbody>' + rows + '<tr class="totals"><td>TOTAL</td>' + tCols + '<td class="right">' + fmt(grand) + '</td></tr></tbody></table>';
+}
+
+function tableMotivosRank() {
+  var totals = {};
+  var keys = Object.keys(MOTIVO_COLORS);
+  for (var k = 0; k < keys.length; k++) {
+    var kk = keys[k];
+    var sum = 0;
+    for (var i = 0; i < MOTIVOS.length; i++) sum += MOTIVOS[i][kk] || 0;
+    totals[kk] = sum;
+  }
+  var sorted = [];
+  for (var key in totals) sorted.push([key, totals[key]]);
+  sorted.sort(function(a, b) { return b[1] - a[1]; });
+  var grand = 0;
+  for (var g = 0; g < sorted.length; g++) grand += sorted[g][1];
+  var rows = '';
+  for (var s = 0; s < sorted.length; s++) {
+    var pct = grand ? (sorted[s][1] / grand * 100).toFixed(1) : 0;
+    rows += '<tr><td class="center" style="font-weight:700;color:var(--navy);">#' + (s + 1) + '</td>';
+    rows += '<td style="font-weight:600;"><span style="display:inline-block;width:10px;height:10px;background:' + MOTIVO_COLORS[sorted[s][0]] + ';margin-right:8px;border-radius:2px;"></span>' + sorted[s][0] + '</td>';
+    rows += '<td class="right">' + fmt(sorted[s][1]) + '</td><td class="right">' + pct + '%</td></tr>';
+  }
+  return '<table class="data-table"><thead><tr><th class="center">Ranking</th><th>Motivo</th><th class="right">Leads (total)</th><th class="right">% del total</th></tr></thead><tbody>' + rows + '<tr class="totals"><td class="center">-</td><td>TOTAL</td><td class="right">' + fmt(grand) + '</td><td class="right">100%</td></tr></tbody></table>';
+}
+
+function tableLlamadas() {
+  var niveles = ['1','2','3','4','5+'];
+  var header = '<th>Mes</th>';
+  for (var n = 0; n < niveles.length; n++) {
+    header += '<th class="right" style="color:' + LLAM_COLORS[niveles[n]] + ';">' + niveles[n] + (niveles[n] === '5+' ? ' llam.' : (niveles[n] === '1' ? ' llam.' : ' llam.')) + '</th>';
+  }
+  header += '<th class="right">Total</th>';
+  var rows = '';
+  var grand = 0;
+  var totals = {'1':0,'2':0,'3':0,'4':0,'5+':0};
+  for (var m = 0; m < MESES.length; m++) {
+    var totMes = 0;
+    for (var nn = 0; nn < niveles.length; nn++) totMes += LLAMADAS_DIST[m][niveles[nn]] || 0;
+    rows += '<tr><td>' + MESES[m] + '</td>';
+    for (var nx = 0; nx < niveles.length; nx++) {
+      var v = LLAMADAS_DIST[m][niveles[nx]] || 0;
+      var pct = totMes ? (v / totMes * 100).toFixed(1) : '0.0';
+      totals[niveles[nx]] += v;
+      rows += '<td class="right">' + fmt(v) + ' <span class="muted">(' + pct + '%)</span></td>';
+    }
+    rows += '<td class="right" style="font-weight:700;color:var(--navy);">' + fmt(totMes) + '</td></tr>';
+    grand += totMes;
+  }
+  var tCols = '';
+  for (var tn = 0; tn < niveles.length; tn++) tCols += '<td class="right">' + fmt(totals[niveles[tn]]) + '</td>';
+  return '<table class="data-table"><thead><tr>' + header + '</tr></thead><tbody>' + rows + '<tr class="totals"><td>TOTAL</td>' + tCols + '<td class="right">' + fmt(grand) + '</td></tr></tbody></table>';
+}
+
+// ============================================================
+// SUMMARIES & INSIGHTS
+// ============================================================
+function updateSummary(slideIdx, tabId, cats) {
+  var el = document.getElementById('summary-' + slideIdx);
+  if (!el) return;
+  var html = '';
+  if (tabId === 'volume-abs' || tabId === 'volume-pct') {
+    var tot = 0, con = 0;
+    for (var i = 0; i < MESES.length; i++) { tot += sumCats(TOTAL_LEADS[i], cats); con += sumCats(CONTACTADOS[i], cats); }
+    var pct = tot ? (con / tot * 100).toFixed(1) : '0';
+    html = card('Total leads', fmt(tot), '', '6 meses - ' + cats.length + '/8 cat.') +
+      card('Contactados', fmt(con), '', pct + '% del total', 'green') +
+      card('No contactados', fmt(tot - con), '', (100 - parseFloat(pct)).toFixed(1) + '% del total', 'red') +
+      card('% Contacto', pct, '%', 'Oct 25 a Mar 26');
+  } else if (tabId === 'contact') {
+    var avg = weightedAvg(CONTACTABILIDAD, TOTAL_LEADS, cats);
+    html = card('Contactabilidad prom.', avg.toFixed(1), '%', 'Ponderado por volumen') +
+      card('Mejor mes', '61,6', '%', 'Enero 26', 'green') +
+      card('Peor mes', '42,0', '%', 'Noviembre 25', 'red') +
+      card('Categorias', cats.length, '/8', cats.length === 8 ? 'Todas' : 'Filtradas');
+  } else if (tabId === 'tiempo') {
+    var avg2 = weightedAvg(TIEMPO_CONTACTO, TOTAL_LEADS, cats);
+    html = card('Tiempo prom. CC', avg2.toFixed(1), 'hrs', 'Horario operativo') +
+      card('Peor mes', '~54', 'hrs', 'Enero 26', 'red') +
+      card('Mejor mes', '~15', 'hrs', 'Febrero 26', 'green') +
+      card('En dias CC', (avg2 / 10).toFixed(1), 'dias', '~10 hrs habiles/dia');
+  } else if (tabId === 'duracion') {
+    var avg3 = weightedAvg(DURACION, TOTAL_LEADS, cats);
+    html = card('Duracion prom.', avg3.toFixed(1), 'seg', 'Ponderado') +
+      card('Rango', '38,8 - 55,6', '', 'seg - variacion entre meses') +
+      card('En minutos', (avg3 / 60).toFixed(2), 'min', 'Conversacion muy breve') +
+      card('Categorias', cats.length, '/8', 'Seleccionadas');
+  } else if (tabId === 'agendamiento') {
+    var avg4 = weightedAvg(AGENDAMIENTO, TOTAL_LEADS, cats);
+    var tot2 = 0;
+    for (var i2 = 0; i2 < MESES.length; i2++) tot2 += sumCats(TOTAL_LEADS[i2], cats);
+    html = card('Tasa agendamiento', avg4.toFixed(1), '%', 'Leads -> Cita') +
+      card('Citas agendadas', fmt(Math.round(tot2 * avg4 / 100)), '', '6 meses', 'green') +
+      card('Mejor mes', '~10,5', '%', 'Enero 26') +
+      card('Asistencia prom.', '~13', '%', 'Sobre agendadas');
+  } else if (tabId === 'conversion') {
+    var avg5 = weightedAvg(CONVERSION, TOTAL_LEADS, cats);
+    var tot3 = 0;
+    for (var i3 = 0; i3 < MESES.length; i3++) tot3 += sumCats(TOTAL_LEADS[i3], cats);
+    html = card('Conversion', avg5.toFixed(2), '%', 'Asistencia efectiva') +
+      card('Oportunidades', fmt(Math.round(tot3 * avg5 / 100)), '', '6 meses', 'green') +
+      card('Mejor cat.', 'Muy Alta', '', '~1,6% prom.') +
+      card('Peor cat.', 'Muy Baja', '', '~0,7% prom.', 'red');
+  } else if (tabId === 'motivos-rank') {
+    var totals = {};
+    var keys = Object.keys(MOTIVO_COLORS);
+    for (var k = 0; k < keys.length; k++) {
+      var kk = keys[k], sum = 0;
+      for (var im = 0; im < MOTIVOS.length; im++) sum += MOTIVOS[im][kk] || 0;
+      totals[kk] = sum;
+    }
+    var sorted = [];
+    for (var sk in totals) sorted.push([sk, totals[sk]]);
+    sorted.sort(function(a, b) { return b[1] - a[1]; });
+    var grand = 0;
+    for (var g2 = 0; g2 < sorted.length; g2++) grand += sorted[g2][1];
+    var top3 = sorted.slice(0, 3).reduce(function(s, p) { return s + p[1]; }, 0);
+    html = card('Total no-contactados', fmt(grand), '', '6 meses', 'red') +
+      card('Top motivo', sorted[0][0], '', (sorted[0][1] / grand * 100).toFixed(1) + '% del total') +
+      card('Top 3 concentra', (top3 / grand * 100).toFixed(1), '%', 'De las descalificaciones') +
+      card('Motivos activos', sorted.filter(function(p) { return p[1] > 0; }).length, '/' + sorted.length, 'Con volumen > 0');
+  } else if (tabId === 'llamadas') {
+    var totals2 = {'1':0,'2':0,'3':0,'4':0,'5+':0};
+    for (var im2 = 0; im2 < MESES.length; im2++) {
+      var ks = ['1','2','3','4','5+'];
+      for (var ik = 0; ik < ks.length; ik++) totals2[ks[ik]] += LLAMADAS_DIST[im2][ks[ik]] || 0;
+    }
+    var grand2 = totals2['1'] + totals2['2'] + totals2['3'] + totals2['4'] + totals2['5+'];
+    var pct1 = grand2 ? (totals2['1'] / grand2 * 100).toFixed(1) : 0;
+    html = card('Total contactados', fmt(grand2), '', '6 meses', 'green') +
+      card('Solo 1 llamada', pct1, '%', 'Sin reintentos', 'red') +
+      card('4+ llamadas', ((totals2['4'] + totals2['5+']) / grand2 * 100).toFixed(1), '%', 'Seguimiento intenso') +
+      card('Promedio', ((totals2['1'] * 1 + totals2['2'] * 2 + totals2['3'] * 3 + totals2['4'] * 4 + totals2['5+'] * 5.5) / grand2).toFixed(1), 'llam.', '5+ ~ 5.5');
+  }
+  el.innerHTML = html;
+}
+
+function card(label, value, suffix, sub, cls) {
+  cls = cls || '';
+  return '<div class="summary-card"><div class="sc-label">' + label + '</div><div class="sc-value ' + cls + '">' + value + (suffix ? '<span class="suffix">' + suffix + '</span>' : '') + '</div><div class="sc-sub">' + sub + '</div></div>';
+}
+
+function updateInsight(slideIdx, tabId) {
+  var el = document.getElementById('insight-' + slideIdx);
+  if (!el) return;
+  var t = {
+    'volume-abs': '<strong>Enero 26 marca el pico</strong> de volumen con ~31.753 leads y 61% contactabilidad. Usa los filtros para aislar el aporte de cada segmento.',
+    'volume-pct': '<strong>Oferta en vivo</strong> domina el mix (39-44%) pero cayo a 34% en marzo. <strong>Alta</strong> se desplomo de 22.8% a 10.4%. <strong>Muy Baja</strong> y <strong>Media Alta</strong> crecieron fuerte - revisar reclasificacion.',
+    'contact': '<strong>Enero 26 mejor mes</strong>: 57-71% contactabilidad. Alta y Muy Alta - las de mayor intencion - tienen paradojicamente las peores tasas en Oct-Dic (29-46%). Marzo muestra caida critica en Media y Media Alta (37%).',
+    'tiempo': '<strong>Pico Ene 26</strong>: Oferta en vivo 115 hrs CC (~2 semanas habiles), Muy Alta 70 hrs (~7 dias). <strong>Feb 26 mejor mes</strong>: 13-16 hrs CC - contacto mismo dia o siguiente.',
+    'duracion': '<strong>Duracion estable 42-55 seg</strong> en todos los meses - muy corta para calificar correctamente. Conversaciones breves sugieren script acelerado o descarte temprano.',
+    'agendamiento': '<strong>Tasa ~9,3% global</strong>. Alta y Muy Alta lideran con 11-13%. Oferta en vivo se queda en 5-6% pese a ser el mayor volumen. La brecha entre intencion declarada y cita agendada es el cuello de botella.',
+    'conversion': '<strong>Conversion critica</strong>: 1-2% global (todas las conversiones son asistencias efectivas). Alta y Muy Alta lideran con 1,5-2,4%. Muy Baja convierte solo 0.4-1.1% - costo alto vs retorno.',
+    'motivos-rank': '<strong>Cliente Falso</strong> lidera con ~46% (~29K leads) - posible fraude/bots. <strong>Duplicado</strong> #2 con ~18% - validacion anti-duplicados reduciria volumen basura 30-40%. <strong>Lista Negra</strong> aparece solo en marzo con 5.220 leads.',
+    'llamadas': '<strong>~40% de contactados reciben solo 1 llamada</strong> - sin reintentos sistematicos. Enero 26 exploto con 7.124 leads de 1 sola llamada. La categoria "4 llamadas" cayo 79% de Nov 25 a Feb 26.'
+  };
+  el.innerHTML = t[tabId] || '';
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToSlide(index) {
+  if (index < 0 || index >= flatSlides.length) return;
+  currentSlide = index;
+  var slides = document.querySelectorAll('.slide');
+  for (var i = 0; i < slides.length; i++) slides[i].classList.remove('active');
+  var t = document.querySelector('.slide[data-slide="' + index + '"]');
+  if (t) {
+    t.classList.add('active');
+    t.scrollTop = 0;
+    setTimeout(function() { initSlideCharts(index, t); }, 80);
+  }
+  updateChrome();
+}
+
+function initSlideCharts(slideIdx, slideEl) {
+  var s = flatSlides[slideIdx];
+  if (s.type !== 'substep') return;
+  var stage = null;
+  for (var k = 0; k < journey.stages.length; k++) {
+    if (journey.stages[k].id === s.stageId) { stage = journey.stages[k]; break; }
+  }
+  var sub = stage.substeps[s.subIdx];
+  if (!sub.chartType) return;
+  if (!chartState[slideIdx]) {
+    chartState[slideIdx] = {
+      activeCats: new Set(CAT_ORDER),
+      activeTab: getDefaultTab(sub.chartType),
+      viewMode: 'chart'
+    };
+  }
+  refreshView(slideIdx);
+  bindChartControls(slideIdx, slideEl);
+}
+
+function getDefaultTab(t) {
+  if (t === 'volume') return 'volume-abs';
+  if (t === 'contact') return 'contact';
+  if (t === 'conversion') return 'agendamiento';
+  return '';
+}
+
+function bindChartControls(slideIdx, slideEl) {
+  var toggleBtns = slideEl.querySelectorAll('.view-toggle[data-slide-idx="' + slideIdx + '"] button');
+  for (var i = 0; i < toggleBtns.length; i++) {
+    (function(btn, all) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        for (var j = 0; j < all.length; j++) all[j].classList.remove('active');
+        btn.classList.add('active');
+        chartState[slideIdx].viewMode = btn.getAttribute('data-view');
+        refreshView(slideIdx);
+      });
+    })(toggleBtns[i], toggleBtns);
+  }
+  var tabBtns = slideEl.querySelectorAll('.data-tabs[data-slide-idx="' + slideIdx + '"] .data-tab');
+  for (var t = 0; t < tabBtns.length; t++) {
+    (function(btn, all) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        for (var j = 0; j < all.length; j++) all[j].classList.remove('active');
+        btn.classList.add('active');
+        chartState[slideIdx].activeTab = btn.getAttribute('data-tab');
+        refreshView(slideIdx);
+      });
+    })(tabBtns[t], tabBtns);
+  }
+  var chips = slideEl.querySelectorAll('.category-filter[data-slide-idx="' + slideIdx + '"] [data-cat]');
+  for (var c = 0; c < chips.length; c++) {
+    (function(chip) {
+      chip.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var cat = chip.getAttribute('data-cat');
+        var state = chartState[slideIdx];
+        if (state.activeCats.has(cat)) {
+          state.activeCats.delete(cat);
+          chip.classList.remove('active');
+          chip.style.background = 'var(--gray-100)';
+          chip.style.color = 'var(--gray-500)';
+          chip.style.borderColor = 'transparent';
+        } else {
+          state.activeCats.add(cat);
+          chip.classList.add('active');
+          chip.style.background = CAT_COLORS[cat];
+          chip.style.color = '#fff';
+          chip.style.borderColor = CAT_COLORS[cat];
+        }
+        refreshView(slideIdx);
+      });
+    })(chips[c]);
+  }
+  var allBtn = slideEl.querySelector('.category-filter[data-slide-idx="' + slideIdx + '"] .cat-all');
+  var noneBtn = slideEl.querySelector('.category-filter[data-slide-idx="' + slideIdx + '"] .cat-none');
+  if (allBtn) {
+    allBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      chartState[slideIdx].activeCats = new Set(CAT_ORDER);
+      var cc = slideEl.querySelectorAll('.category-filter[data-slide-idx="' + slideIdx + '"] [data-cat]');
+      for (var ii = 0; ii < cc.length; ii++) {
+        var cat = cc[ii].getAttribute('data-cat');
+        cc[ii].classList.add('active');
+        cc[ii].style.background = CAT_COLORS[cat];
+        cc[ii].style.color = '#fff';
+        cc[ii].style.borderColor = CAT_COLORS[cat];
+      }
+      refreshView(slideIdx);
+    });
+  }
+  if (noneBtn) {
+    noneBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      chartState[slideIdx].activeCats = new Set();
+      var cc = slideEl.querySelectorAll('.category-filter[data-slide-idx="' + slideIdx + '"] [data-cat]');
+      for (var ii = 0; ii < cc.length; ii++) {
+        cc[ii].classList.remove('active');
+        cc[ii].style.background = 'var(--gray-100)';
+        cc[ii].style.color = 'var(--gray-500)';
+        cc[ii].style.borderColor = 'transparent';
+      }
+      refreshView(slideIdx);
+    });
+  }
+}
+
+function goToStage(stageId) {
+  for (var i = 0; i < flatSlides.length; i++) {
+    var s = flatSlides[i];
+    if (s.type === 'substep' && s.stageId === stageId && s.subIdx === 0) {
+      goToSlide(i); return;
+    }
+  }
+}
+function goToSubstep(stageId, subIdx) {
+  for (var i = 0; i < flatSlides.length; i++) {
+    var s = flatSlides[i];
+    if (s.type === 'substep' && s.stageId === stageId && s.subIdx === subIdx) {
+      goToSlide(i); return;
+    }
+  }
+}
+
+function updateChrome() {
+  var slide = flatSlides[currentSlide];
+  var tabs = document.querySelectorAll('.stage-tab');
+  var stepper = document.getElementById('substep-stepper');
+  var breadcrumb = document.getElementById('breadcrumb');
+  var counter = document.getElementById('counter');
+  var prevBtn = document.getElementById('prev-btn');
+  var nextBtn = document.getElementById('next-btn');
+
+  if (slide.type === 'overview') {
+    for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
+    stepper.style.display = 'none';
+    breadcrumb.innerHTML = '<span class="bc-stage">Vista general</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">/ ' + TOTAL_SUBSTEPS + ' subprocesos</span>';
+  } else {
+    var stage = null;
+    for (var k = 0; k < journey.stages.length; k++) {
+      if (journey.stages[k].id === slide.stageId) { stage = journey.stages[k]; break; }
+    }
+    var sub = stage.substeps[slide.subIdx];
+    for (var t2 = 0; t2 < tabs.length; t2++) {
+      var isActive = parseInt(tabs[t2].getAttribute('data-stage')) === stage.id;
+      if (isActive) tabs[t2].classList.add('active'); else tabs[t2].classList.remove('active');
+    }
+    stepper.style.display = 'block';
+    renderStepper(stage, slide.subIdx);
+    breadcrumb.innerHTML = '<span class="bc-stage">Etapa ' + stage.id + ' - ' + stage.fullName + '</span><span class="bc-sep">&rsaquo;</span><span class="bc-substep">' + sub.num + '. ' + sub.title + '</span>';
+    counter.innerHTML = '<span class="current">' + currentSlide + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
+  }
+  prevBtn.disabled = currentSlide === 0;
+  nextBtn.disabled = currentSlide === flatSlides.length - 1;
+}
+
+// INIT
+function init() {
+  try {
+    renderStageTabs();
+    renderSlides();
+    goToSlide(0);
+    document.getElementById('prev-btn').addEventListener('click', function() { goToSlide(currentSlide - 1); });
+    document.getElementById('next-btn').addEventListener('click', function() { goToSlide(currentSlide + 1); });
+    document.getElementById('home-btn').addEventListener('click', function() { goToSlide(0); });
+    document.getElementById('logo-home').addEventListener('click', function() { goToSlide(0); });
+    document.addEventListener('keydown', function(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); goToSlide(currentSlide + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
+      else if (e.key === 'End') { e.preventDefault(); goToSlide(flatSlides.length - 1); }
+    });
+  } catch (err) {
+    document.getElementById('slide-area').innerHTML = '<div style="padding:40px;color:#e63946;font-family:monospace;white-space:pre-wrap;">Error al cargar: ' + err.message + '\n\n' + err.stack + '</div>';
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
