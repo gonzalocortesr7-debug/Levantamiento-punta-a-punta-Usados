@@ -40,14 +40,7 @@
     padding: 14px 40px; background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
   }
   .brand { display: flex; align-items: center; gap: 20px; }
-  .logo-box {
-    cursor: pointer;
-    display: flex; align-items: center; gap: 8px;
-    padding: 4px 10px; background: var(--clicar-green);
-    border-radius: 4px;
-    font-weight: 800; font-size: 14px; letter-spacing: 0.02em;
-    color: var(--navy);
-  }
+  .logo-img { cursor: pointer; height: 30px; display: block; }
   .separator { width: 1px; height: 22px; background: var(--gray-300); }
   .title-block { display: flex; flex-direction: column; line-height: 1.15; }
   .title-block .section {
@@ -56,6 +49,32 @@
   }
   .title-block .title { font-size: 14px; font-weight: 600; color: var(--navy); }
   .meta { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+  .macro-stages {
+    display: flex; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);
+    flex-shrink: 0; padding: 0 40px; gap: 0;
+  }
+  .macro-stage {
+    position: relative; padding: 12px 28px; background: transparent; border: none;
+    font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+    color: var(--gray-500); cursor: pointer; text-transform: uppercase; transition: color 0.15s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .macro-stage.active { color: var(--navy); }
+  .macro-stage.active::after {
+    content: ''; position: absolute; left: 16px; right: 16px; bottom: -1px;
+    height: 3px; background: var(--clicar-green);
+  }
+  .macro-stage[disabled] { color: var(--gray-300); cursor: not-allowed; }
+  .macro-stage:not([disabled]):not(.active):hover { color: var(--navy); }
+  .macro-num {
+    display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--gray-200); color: var(--gray-500); font-size: 11px; font-weight: 700;
+  }
+  .macro-stage.active .macro-num { background: var(--clicar-green); color: var(--navy); }
+  .macro-badge {
+    padding: 2px 8px; border-radius: 8px; background: var(--gray-200); color: var(--gray-500);
+    font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  }
   .stage-tabs {
     display: grid; grid-template-columns: repeat(5, 1fr);
     background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
@@ -75,7 +94,11 @@
     font-size: 11px; font-weight: 700;
   }
   .stage-tab.active .tab-num { background: rgba(255,255,255,0.2); }
-  .substep-stepper { padding: 22px 40px 18px; background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0; }
+  .substep-stepper { padding: 18px 40px 18px; background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0; }
+  .stage-header { max-width: 1400px; margin: 0 auto 14px; padding-bottom: 14px; border-bottom: 1px dashed var(--gray-200); }
+  .sh-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clicar-green); margin-bottom: 4px; }
+  .sh-title { font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 6px; }
+  .sh-desc { font-size: 12px; color: var(--gray-700); line-height: 1.55; max-width: 980px; }
   .stepper-row { display: flex; align-items: flex-start; justify-content: space-between; position: relative; max-width: 1400px; margin: 0 auto; }
   .stepper-row::before { content: ''; position: absolute; top: 16px; left: 18px; right: 18px; height: 1px; background: var(--gray-300); z-index: 0; }
   .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; background: transparent; border: none; font-family: inherit; padding: 0 4px; }
@@ -261,7 +284,7 @@
 <div class="app">
   <header class="topbar">
     <div class="brand">
-      <div class="logo-box" id="logo-home">Clicar</div>
+      <img src="assets/logo-clicar.png" alt="Clicar" id="logo-home" class="logo-img">
       <div class="separator"></div>
       <div class="title-block">
         <span class="section">Journey del Cliente - Vehiculos Usados</span>
@@ -271,9 +294,27 @@
     <div class="meta">Oct 25 - Mar 26 | CRM Llaima</div>
   </header>
 
+  <nav class="macro-stages" id="macro-stages">
+    <button class="macro-stage active" data-macro="compra">
+      <span class="macro-num">1</span>
+      <span>Compra</span>
+    </button>
+    <button class="macro-stage" data-macro="preparacion" disabled>
+      <span class="macro-num">2</span>
+      <span>Preparacion</span>
+      <span class="macro-badge">Proximamente</span>
+    </button>
+    <button class="macro-stage" data-macro="venta" disabled>
+      <span class="macro-num">3</span>
+      <span>Venta</span>
+      <span class="macro-badge">Proximamente</span>
+    </button>
+  </nav>
+
   <nav class="stage-tabs" id="stage-tabs"></nav>
 
   <div class="substep-stepper" id="substep-stepper" style="display:none;">
+    <div class="stage-header" id="stage-header"></div>
     <div class="stepper-row" id="stepper-row"></div>
   </div>
 
@@ -416,6 +457,7 @@ var journey = {
     {
       id: 1, name: "Captacion Web", fullName: "Captacion Digital",
       route: "Datos del Auto -> Datos Personales - Plataforma Web",
+      description: "Punto de entrada del vendedor de vehiculos usados. El cliente llega via web (organico, campanas digitales o referidos) y completa el flujo de autoatencion: ingresa datos del vehiculo, datos personales, responde preguntas filtro de calificacion y cierra el formulario. Es la fase de mayor volumen y donde se define la calidad inicial del lead que alimentara al Contact Center.",
       substeps: [
         { num: 1, title: "Ingreso Datos del Vehiculo",
           description: "El cliente ingresa marca, modelo, ano, kilometraje y patente del vehiculo que desea vender.",
@@ -452,6 +494,7 @@ var journey = {
     {
       id: 2, name: "Tasacion y Agend.", fullName: "Tasacion y Agendamiento",
       route: "Tasacion -> Agendamiento -> Confirmacion - Cita presencial",
+      description: "El sistema calcula una tasacion automatizada del vehiculo en base a datos de mercado y el cliente selecciona sucursal y horario para llevarlo presencialmente. Se envian confirmaciones y recordatorios por email/SMS. Las metricas clave son la precision del rango de tasacion, la tasa de agendamiento efectiva y la gestion del no-show en la cita presencial.",
       substeps: [
         { num: 1, title: "Tasacion Automatizada",
           description: "Algoritmo calcula rango de precio basado en datos del mercado.",
@@ -482,6 +525,7 @@ var journey = {
     {
       id: 3, name: "Gestion de Leads", fullName: "Gestion de Leads",
       route: "Nuevos Leads -> Leads tomados (CC) -> Leads con cita - CRM Llaima",
+      description: "Los leads generados desde web ingresan al pool del Contact Center, se asignan a agentes, se realizan contactos telefonicos de seguimiento y se califican para traspaso a sucursal. El foco esta en contactabilidad, velocidad de primer contacto, tasa de agendamiento y conversion a oportunidad real. Esta etapa analiza 158.753 leads entre Oct 25 y Mar 26 segmentados en 8 categorias de calificacion.",
       substeps: [
         {
           num: 1, title: "Pool de Colas (Nuevos Leads)",
@@ -519,6 +563,7 @@ var journey = {
     {
       id: 4, name: "Oportunidad", fullName: "Oportunidad y Check-In",
       route: "Oportunidad -> Check In -> Check In Realizado - Sucursal",
+      description: "Al confirmar la cita se crea la oportunidad formal en CRM Llaima y se prepara la llegada del cliente a la sucursal. Incluye check-in presencial, verificacion documental del vehiculo y del vendedor y asignacion del asesor comercial. El objetivo es reducir tiempos de espera, evitar fricciones administrativas y entregar al asesor toda la informacion previa del lead (datos web, tasacion inicial e historial de contacto).",
       substeps: [
         { num: 1, title: "Creacion de Oportunidad",
           description: "Se crea la oportunidad en CRM Llaima al confirmar cita.",
@@ -549,6 +594,7 @@ var journey = {
     {
       id: 5, name: "Inspeccion y Cierre", fullName: "Inspeccion y Cierre Comercial",
       route: "Inspeccion -> Validacion Comercial - Oferta definitiva",
+      description: "Evaluacion tecnica y documental del vehiculo, registro fotografico estandarizado, calculo de la oferta final considerando costos de re-acondicionamiento, validacion comercial por jefatura cuando excede la autonomia del asesor y negociacion/cierre con el cliente. Cierra la compra del vehiculo o lo registra como no-cierre con razones estructuradas para activar flujos de seguimiento posteriores.",
       substeps: [
         { num: 1, title: "Inspeccion Tecnica",
           description: "Evaluacion mecanica, carroceria e interior del vehiculo.",
@@ -623,6 +669,14 @@ function renderStageTabs() {
 }
 
 function renderStepper(stage, activeIdx) {
+  var header = document.getElementById('stage-header');
+  if (header) {
+    var desc = stage.description || '';
+    header.innerHTML =
+      '<div class="sh-eyebrow">Etapa ' + stage.id + ' de ' + journey.stages.length + ' - Macro: Compra</div>' +
+      '<div class="sh-title">' + stage.fullName + '</div>' +
+      (desc ? '<p class="sh-desc">' + desc + '</p>' : '');
+  }
   var el = document.getElementById('stepper-row');
   var html = '';
   for (var i = 0; i < stage.substeps.length; i++) {
@@ -1274,11 +1328,15 @@ function initSlideCharts(slideIdx, slideEl) {
     chartState[slideIdx] = {
       activeCats: new Set(CAT_ORDER),
       activeTab: getDefaultTab(sub.chartType),
-      viewMode: 'chart'
+      viewMode: 'chart',
+      bound: false
     };
   }
   refreshView(slideIdx);
-  bindChartControls(slideIdx, slideEl);
+  if (!chartState[slideIdx].bound) {
+    bindChartControls(slideIdx, slideEl);
+    chartState[slideIdx].bound = true;
+  }
 }
 
 function getDefaultTab(t) {
