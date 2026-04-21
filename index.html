@@ -99,6 +99,25 @@
   .sh-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clicar-green); margin-bottom: 4px; }
   .sh-title { font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin-bottom: 6px; }
   .sh-desc { font-size: 12px; color: var(--gray-700); line-height: 1.55; max-width: 980px; }
+  .sh-resources { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; max-width: 980px; }
+  .sh-resource { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--navy-soft); color: var(--navy); border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid transparent; transition: border-color 0.15s; }
+  .sh-resource:hover { border-color: var(--navy); }
+  .sh-resource::before { content: "\1F4CE"; font-size: 11px; }
+  .sh-resource.video { background: #E7F5E7; color: var(--green); }
+  .sh-resource.video::before { content: "\25B6"; font-size: 10px; }
+  .sh-resource.video:hover { border-color: var(--green); }
+  .sh-resource.video.pending { background: var(--gray-100); color: var(--gray-500); cursor: not-allowed; font-style: italic; }
+  .sh-resource.video.pending:hover { border-color: transparent; }
+  .video-modal { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; }
+  .video-modal.open { display: flex; }
+  .video-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.75); cursor: pointer; }
+  .video-modal-content { position: relative; width: min(960px, 92vw); background: var(--white); border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; display: flex; flex-direction: column; max-height: 92vh; }
+  .video-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--gray-200); background: var(--white); }
+  .video-modal-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .video-modal-close { background: transparent; border: none; font-size: 26px; color: var(--gray-700); cursor: pointer; line-height: 1; padding: 0 4px; }
+  .video-modal-close:hover { color: var(--red); }
+  .video-modal-iframe-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; height: 0; flex: 0 0 auto; }
+  .video-modal-iframe-wrap iframe, .video-modal-iframe-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .stepper-row { display: flex; align-items: flex-start; justify-content: space-between; position: relative; max-width: 1400px; margin: 0 auto; }
   .stepper-row::before { content: ''; position: absolute; top: 16px; left: 18px; right: 18px; height: 1px; background: var(--gray-300); z-index: 0; }
   .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; background: transparent; border: none; font-family: inherit; padding: 0 4px; }
@@ -271,6 +290,49 @@
   .ssc-name { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.2; }
   .ssc-desc { font-size: 11px; color: var(--gray-500); line-height: 1.35; margin-top: 2px; }
   .ssc-count { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--gray-200); }
+  .ov-value.placeholder { color: var(--gray-500); font-size: 26px; font-style: italic; }
+  .ov-sublabel.action { color: var(--red); font-weight: 600; }
+  .ov-sublabel.action::before { content: "\26A0  "; }
+  .alcance-block-title { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; letter-spacing: -0.005em; }
+  .alcance-block-sub { font-size: 11px; color: var(--gray-500); margin-bottom: 14px; }
+  .alcance-flow { display: flex; align-items: stretch; gap: 0; margin-bottom: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .alcance-step { flex: 1 1 0; min-width: 170px; background: var(--white); border: 1px solid var(--gray-200); border-top: 3px solid var(--clicar-green); padding: 14px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s, box-shadow 0.15s; }
+  .alcance-step:hover { border-color: var(--navy); box-shadow: 0 4px 12px rgba(11,31,101,0.08); }
+  .alcance-step-header { display: flex; align-items: center; gap: 8px; }
+  .alcance-num { width: 22px; height: 22px; background: var(--navy); color: var(--white); font-size: 11px; font-weight: 700; display: grid; place-items: center; border-radius: 50%; flex-shrink: 0; }
+  .alcance-name { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  .alcance-route { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
+  .alcance-count { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--gray-200); }
+  .alcance-connector { align-self: center; color: var(--gray-300); font-size: 20px; padding: 0 4px; user-select: none; font-weight: 700; }
+  .alcance-note { font-size: 11px; color: var(--gray-500); margin-top: 12px; font-style: italic; }
+  .macro-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .macro-card { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); padding: 22px; display: flex; flex-direction: column; gap: 12px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+  .macro-card:hover:not(.disabled) { border-color: var(--clicar-green); box-shadow: 0 6px 20px rgba(11,31,101,0.1); }
+  .macro-card.disabled { opacity: 0.65; cursor: not-allowed; border-left-color: var(--gray-300); }
+  .macro-card-num { width: 32px; height: 32px; background: var(--navy); color: var(--white); font-size: 14px; font-weight: 700; display: grid; place-items: center; border-radius: 50%; }
+  .macro-card.disabled .macro-card-num { background: var(--gray-300); }
+  .macro-card-title { font-size: 20px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
+  .macro-card-desc { font-size: 12px; color: var(--gray-700); line-height: 1.5; flex: 1; }
+  .macro-card-stats { display: flex; flex-wrap: wrap; gap: 6px; }
+  .macro-card-stats span { font-size: 11px; color: var(--gray-700); background: var(--gray-100); padding: 4px 8px; border-radius: 10px; font-weight: 600; }
+  .macro-card-status { font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 4px; display: inline-block; width: fit-content; }
+  .status-real { background: #E7F5E7; color: var(--green); border: 1px solid #B6E0B6; }
+  .status-wip { background: #FFF4DC; color: #8A5A00; border: 1px solid #F0D388; }
+  .status-pending { background: var(--gray-100); color: var(--gray-500); border: 1px solid var(--gray-300); }
+  .macro-card-cta { font-size: 12px; font-weight: 700; color: var(--clicar-green); margin-top: auto; padding-top: 8px; border-top: 1px solid var(--gray-200); }
+  .macro-card.disabled .macro-card-cta { color: var(--gray-500); }
+  .ins-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 12px 0; }
+  .ins-summary-card { background: var(--white); border: 1px solid var(--gray-200); padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .ins-summary-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .ins-summary-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .ins-summary-title { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .ins-summary-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--gray-700); }
+  .ins-summary-row strong { color: var(--navy); font-weight: 700; }
+  .ins-summary-row.highlight { margin-top: 4px; padding-top: 6px; border-top: 1px solid var(--gray-200); font-size: 13px; }
+  .ins-summary-row.highlight strong { color: var(--clicar-green); font-size: 15px; }
+  @media (max-width: 900px) { .ins-summary-grid { grid-template-columns: 1fr; } }
+  .home-footer-note { font-size: 11px; color: var(--gray-500); font-style: italic; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--gray-200); }
+  @media (max-width: 900px) { .macro-cards { grid-template-columns: 1fr; } }
   @media (max-width: 1100px) {
     .content-grid { grid-template-columns: 1fr; }
     .overview-kpis { grid-template-columns: repeat(2, 1fr); }
@@ -299,10 +361,9 @@
       <span class="macro-num">1</span>
       <span>Compra</span>
     </button>
-    <button class="macro-stage" data-macro="preparacion" disabled>
+    <button class="macro-stage" data-macro="preparacion">
       <span class="macro-num">2</span>
       <span>Preparacion</span>
-      <span class="macro-badge">Proximamente</span>
     </button>
     <button class="macro-stage" data-macro="venta" disabled>
       <span class="macro-num">3</span>
@@ -331,6 +392,17 @@
       <button class="nav-btn primary" id="next-btn">Siguiente &rarr;</button>
     </div>
   </footer>
+</div>
+
+<div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+  <div class="video-modal-content">
+    <div class="video-modal-header">
+      <div class="video-modal-title" id="video-modal-title">Video</div>
+      <button class="video-modal-close" id="video-modal-close" aria-label="Cerrar">&times;</button>
+    </div>
+    <div class="video-modal-iframe-wrap" id="video-modal-iframe-wrap"></div>
+  </div>
 </div>
 
 <script>
@@ -455,9 +527,10 @@ function weightedAvg(rateData, totalData, cats) {
 var journey = {
   stages: [
     {
-      id: 1, name: "Captacion Web", fullName: "Captacion Digital",
+      id: 1, macro: "compra", name: "Captacion Web", fullName: "Captacion Digital",
       route: "Datos del Auto -> Datos Personales - Plataforma Web",
       description: "Punto de entrada del vendedor de vehiculos usados. El cliente llega via web (organico, campanas digitales o referidos) y completa el flujo de autoatencion: ingresa datos del vehiculo, datos personales, responde preguntas filtro de calificacion y cierra el formulario. Es la fase de mayor volumen y donde se define la calidad inicial del lead que alimentara al Contact Center.",
+      video: { url: null, title: "Video del proceso - Captacion Digital" },
       substeps: [
         { num: 1, title: "Ingreso Datos del Vehiculo",
           description: "El cliente ingresa marca, modelo, ano, kilometraje y patente del vehiculo que desea vender.",
@@ -492,7 +565,8 @@ var journey = {
       ]
     },
     {
-      id: 2, name: "Tasacion y Agend.", fullName: "Tasacion y Agendamiento",
+      id: 2, macro: "compra", name: "Tasacion y Agend.", fullName: "Tasacion y Agendamiento",
+      video: { url: null, title: "Video del proceso - Tasacion y Agendamiento" },
       route: "Tasacion -> Agendamiento -> Confirmacion - Cita presencial",
       description: "El sistema calcula una tasacion automatizada del vehiculo en base a datos de mercado y el cliente selecciona sucursal y horario para llevarlo presencialmente. Se envian confirmaciones y recordatorios por email/SMS. Las metricas clave son la precision del rango de tasacion, la tasa de agendamiento efectiva y la gestion del no-show en la cita presencial.",
       substeps: [
@@ -523,7 +597,8 @@ var journey = {
       ]
     },
     {
-      id: 3, name: "Gestion de Leads", fullName: "Gestion de Leads",
+      id: 3, macro: "compra", name: "Gestion de Leads", fullName: "Gestion de Leads",
+      video: { url: null, title: "Video del proceso - Gestion de Leads" },
       route: "Nuevos Leads -> Leads tomados (CC) -> Leads con cita - CRM Llaima",
       description: "Los leads generados desde web ingresan al pool del Contact Center, se asignan a agentes, se realizan contactos telefonicos de seguimiento y se califican para traspaso a sucursal. El foco esta en contactabilidad, velocidad de primer contacto, tasa de agendamiento y conversion a oportunidad real. Esta etapa analiza 158.753 leads entre Oct 25 y Mar 26 segmentados en 8 categorias de calificacion.",
       substeps: [
@@ -561,7 +636,8 @@ var journey = {
       ]
     },
     {
-      id: 4, name: "Oportunidad", fullName: "Oportunidad y Check-In",
+      id: 4, macro: "compra", name: "Oportunidad", fullName: "Oportunidad y Check-In",
+      video: { url: null, title: "Video del proceso - Oportunidad y Check-In" },
       route: "Oportunidad -> Check In -> Check In Realizado - Sucursal",
       description: "Al confirmar la cita se crea la oportunidad formal en CRM Llaima y se prepara la llegada del cliente a la sucursal. Incluye check-in presencial, verificacion documental del vehiculo y del vendedor y asignacion del asesor comercial. El objetivo es reducir tiempos de espera, evitar fricciones administrativas y entregar al asesor toda la informacion previa del lead (datos web, tasacion inicial e historial de contacto).",
       substeps: [
@@ -592,15 +668,17 @@ var journey = {
       ]
     },
     {
-      id: 5, name: "Inspeccion y Cierre", fullName: "Inspeccion y Cierre Comercial",
+      id: 5, macro: "compra", name: "Inspeccion y Cierre", fullName: "Inspeccion y Cierre Comercial",
+      video: { url: null, title: "Video del proceso - Inspeccion y Cierre" },
       route: "Inspeccion -> Validacion Comercial - Oferta definitiva",
       description: "Evaluacion tecnica y documental del vehiculo, registro fotografico estandarizado, calculo de la oferta final considerando costos de re-acondicionamiento, validacion comercial por jefatura cuando excede la autonomia del asesor y negociacion/cierre con el cliente. Cierra la compra del vehiculo o lo registra como no-cierre con razones estructuradas para activar flujos de seguimiento posteriores.",
       substeps: [
         { num: 1, title: "Inspeccion Tecnica",
-          description: "Evaluacion mecanica, carroceria e interior del vehiculo.",
-          kpis: [{value:"45",suffix:"min",label:"Tiempo promedio inspeccion"},{value:"30-90",suffix:"min",label:"Rango de variabilidad"},{value:"74",suffix:"%",label:"Sin hallazgo critico"}],
-          hallazgos: ["Tiempo variable (30-90 min) segun experiencia del inspector","Checklist no es digital en 40% de sucursales","Sin categorizacion estandarizada de severidad"],
-          mejoras: ["Checklist digital con tiempos objetivo por item","Categorizacion obligatoria de hallazgos por severidad","Capacitacion y certificacion trimestral de inspectores"]
+          description: "Evaluacion mecanica, carroceria e interior del vehiculo. Incluye el funnel mensual comparativo de oportunidades creadas -> inspeccionadas -> compradas separado por tipo de vinculo (Compra directa vs VPP).",
+          kpis: [{value:"45.628",suffix:"",label:"Oportunidades creadas (Oct 25 - Abr 26)"},{value:"14.940",suffix:"",label:"Inspecciones realizadas"},{value:"7.515",suffix:"",label:"Compras concretadas"}],
+          hallazgos: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es mas eficiente end-to-end: 40% conversion vs 13% VPP","La brecha esta en la pre-calificacion: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspeccion es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caida en Marzo 26 en Compra: 75% insp vs. 83-87% historico - alerta a revisar"],
+          mejoras: ["Analisis de leads VPP no inspeccionados (75% del pipeline VPP) para identificar patrones de descarte y filtros mejorables","Revisar caida de inspecciones en Marzo 26 en Compra directa","Tiempo variable (30-90 min) segun experiencia del inspector","Checklist digital con tiempos objetivo por item","Categorizacion obligatoria de hallazgos por severidad"],
+          chartType: 'insp-vinculo'
         },
         { num: 2, title: "Registro Fotografico",
           description: "Captura estandarizada de fotografias del vehiculo.",
@@ -627,33 +705,583 @@ var journey = {
           mejoras: ["Campo obligatorio de motivo de no-compra","Envio automatico de oferta por WhatsApp con vigencia 72h","Flujo post no-cierre: contacto CC a las 48h"]
         }
       ]
+    },
+    {
+      id: 6, macro: "preparacion", name: "Ingreso a Quiter", fullName: "Ingreso a Quiter + Ubicacion",
+      video: { url: null, title: "Video del proceso - Ingreso a Quiter + Ubicacion" },
+      route: "6 origenes de ingreso -> Registro en Quiter -> Ubicacion fisica",
+      description: "Toda unidad adquirida ingresa al sistema operativo Quiter con asignacion de ubicacion fisica. Los 6 origenes posibles (VPP, VPP's, Compras B2B empresa, Compras B2B no empresa, Consignados, Test Car) convergen en un pipeline unico aguas abajo. La trazabilidad y velocidad de este registro determinan cuando puede comenzar todo el resto del proceso de preparacion.",
+      substeps: [
+        { num: 1, title: "Registro en Quiter por origen",
+          description: "Registro de la unidad segun su origen y asignacion de ubicacion fisica en el sistema. Inventario total actual: 2.574 unidades provenientes de 5 origenes.",
+          kpis: [{value:"2.574",suffix:"uds",label:"Inventario total (snapshot)"},{value:"5",suffix:"",label:"Origenes de ingreso activos"},{value:"TBD",suffix:"%",label:"Mix % por origen"}],
+          hallazgos: ["Inventario actual de 2.574 unidades desde 5 origenes (VPP, Compras B2B empresa, Compras B2B no empresa, Test Car, Consignados)","La distribucion % por origen no esta cuantificada: se requiere para identificar origenes criticos","Los 6 origenes de ingreso podrian tener flujos operacionales distintos aguas abajo (sin confirmar)","Dependencia de carga manual: sin integracion automatica desde origenes de compra"],
+          mejoras: ["Reporte de mix por origen para detectar origenes dominantes y residuales","Unificar SLA de registro independiente del origen","Integracion automatica desde sistemas de compras y tasacion","Campo obligatorio de origen con lista controlada"]
+        },
+        { num: 2, title: "Asignacion de ubicacion fisica",
+          description: "Se registra donde esta fisicamente la unidad para permitir logistica y fotografia.",
+          kpis: [{value:"TBD",suffix:"%",label:"Unidades con ubicacion correcta"},{value:"TBD",suffix:"%",label:"Discrepancias detectadas en auditoria"},{value:"TBD",suffix:"hrs",label:"Tiempo hasta ubicacion asignada"}],
+          hallazgos: ["Ubicacion sistema vs. fisica puede divergir por movimientos no registrados","Sin auditoria periodica sistematica de ubicacion","Impacto en busqueda para fotografia e inspeccion"],
+          mejoras: ["Auditoria semanal de ubicacion por sucursal","App movil para actualizar ubicacion al momento del movimiento","QR fisico por unidad para validar ubicacion en terreno"]
+        }
+      ]
+    },
+    {
+      id: 7, macro: "preparacion", name: "Precio de Venta", fullName: "Asignacion de Precio de Venta",
+      video: { url: null, title: "Video del proceso - Asignacion de Precio de Venta" },
+      route: "Quiter -> Precio comercial asignado",
+      description: "Asignacion del valor comercial publicable de la unidad. Es el gate obligatorio antes de publicar en el sitio web. La consistencia entre precio publicado y tasacion ofrecida al cliente en la etapa de compra afecta la confianza y la percepcion de transparencia.",
+      substeps: [
+        { num: 1, title: "Carga del precio",
+          description: "Asignacion del valor comercial de la unidad. Gate obligatorio antes de publicar: 17 unidades de las 200 no publicadas hoy (8,5%) estan bloqueadas especificamente por falta de precio.",
+          kpis: [{value:"17",suffix:"uds",label:"Bloqueadas sin precio (hoy)"},{value:"8,5",suffix:"%",label:"De las 200 no publicadas"},{value:"TBD",suffix:"hrs",label:"Tiempo Quiter -> precio cargado"}],
+          hallazgos: ["17 unidades disponibles hoy no estan publicadas por falta de precio - gate operacional concreto","Sin SLA formal publicado entre registro en Quiter y carga de precio","Posibles inconsistencias entre tasacion web y precio final publicado","Reglas de pricing no trazables por modelo/antiguedad"],
+          mejoras: ["Alerta automatica cuando una unidad lleva > X horas sin precio","Definir y publicar SLA de carga de precio (ej. <24h desde Quiter)","Reporte de dispersion tasacion web vs. precio publicado","Reglas parametricas de pricing por modelo + antiguedad + condicion"]
+        },
+        { num: 2, title: "Ajustes post-publicacion",
+          description: "Monitoreo de ajustes de precio dentro de los primeros dias en stock.",
+          kpis: [{value:"TBD",suffix:"%",label:"Unidades ajustadas en primeros 30 dias"},{value:"TBD",suffix:"%",label:"Ajuste promedio (magnitud)"},{value:"TBD",suffix:"dias",label:"Tiempo promedio hasta primer ajuste"}],
+          hallazgos: ["Sin seguimiento sistematico de precio inicial vs. ajustes","Falta de feedback loop entre ventas y pricing","Decisiones de ajuste sin registro estructurado"],
+          mejoras: ["Dashboard de movimientos de precio por unidad","Workflow estructurado para ajustes de precio con motivo","Umbrales automaticos que alerten sobre ajustes excesivos"]
+        }
+      ]
+    },
+    {
+      id: 8, macro: "preparacion", name: "Publicacion Web", fullName: "Publicacion en Sitio Web",
+      video: { url: null, title: "Video del proceso - Publicacion en Sitio Web" },
+      route: "Precio -> Unidad visible en catalogo",
+      description: "La unidad pasa a estar visible en el catalogo publico de clicar.cl. Este paso es independiente del estado del material fotografico: una unidad puede publicarse sin foto final e ir al fin del catalogo con placeholder. El tiempo Quiter -> publicacion efectiva es un KPI clave del pipeline operacional.",
+      substeps: [
+        { num: 1, title: "Publicacion efectiva",
+          description: "La unidad aparece en el catalogo web con su ficha. Snapshot actual: 1.790 unidades publicadas sobre un inventario total de 2.574.",
+          kpis: [{value:"1.790",suffix:"uds",label:"Publicadas hoy"},{value:"69,5",suffix:"%",label:"Publicadas vs. inventario total"},{value:"89,9",suffix:"%",label:"Publicadas vs. disponibles"}],
+          hallazgos: ["Solo el 69,5% del inventario (2.574 uds) esta publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% esta publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","584 unidades (22,7% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automaticamente","Fichas publicadas con datos incompletos degradan la experiencia del comprador"],
+          mejoras: ["Reporte diario de brecha disponibles vs. publicadas (meta: >95%)","Monitoreo del mix de motivos de no-publicacion para atacar el mas frecuente","Definir campos minimos obligatorios para publicar (con bloqueo)","SLA maximo Quiter -> publicacion (ej. 24-48h)"],
+          chartType: 'prep-funnel'
+        },
+        { num: 2, title: "No publicadas del stock disponible",
+          description: "200 unidades disponibles para publicar pero retenidas hoy (10,1% del stock disponible). Desglose por motivo: En acopio 166 (83%), Sin precio 17 (8,5%), Otras razones 15 (7,5%), Concesionario VN 2 (1%).",
+          kpis: [{value:"200",suffix:"uds",label:"Retenidas hoy (disponibles)"},{value:"83",suffix:"%",label:"En acopio (166 uds) - causa dominante"},{value:"10,1",suffix:"%",label:"% del stock disponible"}],
+          hallazgos: ["El 83% de las retenciones (166 uds) estan 'En acopio' - categoria que requiere definir operacionalmente que significa y cuanto tiempo es aceptable","17 uds bloqueadas por falta de precio - gate operacional concreto gestionable","15 uds 'Otras razones' sin categorizacion clara: debilita la accionabilidad","2 uds en Concesionario VN - volumen marginal pero habla de stock que no deberia estar en el pool","Sin categorizacion estandarizada del motivo en el sistema"],
+          mejoras: ["Desagregar 'En acopio' en subcategorias accionables (recien llegado, pendiente limpieza, pendiente documentacion, etc.)","Migrar 'Otras razones' a lista cerrada con 3-5 categorias","SLA maximo por categoria: acopio (ej. 48h), sin precio (ej. 24h)","Dashboard diario de retenciones con alerta cuando una categoria crece"]
+        },
+        { num: 3, title: "No disponibles para publicar (inventario)",
+          description: "580 unidades del inventario total no son elegibles para publicar por motivos estructurales (22,5% del inventario). Desglose: Reservadas 403 (Uds reservadas 345, Ferry Truck 57, Acopio 1), Problemas legales 166, UFM/Falla mecanica 9, No disponible 2.",
+          kpis: [{value:"580",suffix:"uds",label:"No disponibles"},{value:"22,5",suffix:"%",label:"Del inventario total"},{value:"403",suffix:"uds",label:"Reservadas (69% de no disp.)"}],
+          hallazgos: ["22,5% del inventario inmovilizado: 1 de cada 4 unidades NO esta disponible para la vitrina","Las reservadas (403) dominan con 69%: 345 uds reservadas + 57 Ferry Truck + 1 Acopio - requiere entender si la reserva es comercial legitima o inmovilizado","166 unidades con problemas legales: volumen significativo que hay que destrabar - cruce con legal","9 unidades en UFM (SAIS/Falla mecanica) - bajo volumen pero flag de calidad de compra en origen","Categorias heterogeneas: mezcla compromisos comerciales (reservadas), bloqueos legales, y fallas - cada una con owner y tiempo de resolucion distinto"],
+          mejoras: ["Reporte mensual de aging por categoria de no-disponible","Owner claro por categoria: Reservadas (Comercial), Legales (Legal), UFM (Calidad/Compras), No disponible (Operaciones)","Alerta cuando una unidad lleva >X dias en categoria no-disponible","Revisar criterio de aceptacion en compra para reducir UFM en origen","Diferenciar 'reserva comercial activa' vs. 'reserva fantasma' (>30 dias sin avance)"]
+        }
+      ]
+    },
+    {
+      id: 9, macro: "preparacion", name: "Foto Impel", fullName: "Produccion y Post-Procesado Foto Impel",
+      video: { url: null, title: "Video del proceso - Produccion y Post-Procesado Foto Impel" },
+      route: "Toma de foto -> Procesamiento Impel -> Cabina virtual 360 (opcional)",
+      description: "Etapa critica del pipeline visual. La foto de producto se captura y luego se procesa en el software Impel, que aplica fondo limpio (Tier 2, estandar) o cabina virtual 360 (Tier 1, incorporacion reciente 2026-04-13 con look tipo estudio giratorio y branding CLICAR). Es el cuello de botella operacional: cuando Impel no alcanza, la unidad queda publicada con foto de inspeccion (Tier 3) o sin foto (Tier 4).",
+      resources: [
+        { label: "Hallazgos Preparacion (detalle)", href: "hallazgos-preparacion.md" }
+      ],
+      substeps: [
+        { num: 1, title: "Captura de foto de producto",
+          description: "Sesion de foto de la unidad ya ubicada fisicamente.",
+          kpis: [{value:"TBD",suffix:"/dia",label:"Capacidad de sesiones"},{value:"TBD",suffix:"%",label:"Utilizacion real vs. capacidad"},{value:"TBD",suffix:"hrs",label:"Publicacion -> foto tomada"}],
+          hallazgos: ["Sin metrica publicada de capacidad instalada ni utilizacion","Dependencia de disponibilidad de operador","Sin priorizacion por segmento premium / ticket alto"],
+          mejoras: ["Dashboard de capacidad vs. demanda diaria","Agenda automatica de fotos segun publicaciones del dia","Priorizacion de stock premium y alta rotacion"]
+        },
+        { num: 2, title: "Post-procesado Impel (fondo limpio)",
+          description: "Salida estandar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad.",
+          kpis: [{value:"TBD",suffix:"%",label:"Fotos que completan solo Tier 2"},{value:"TBD",suffix:"hrs",label:"Foto tomada -> Tier 2 lista"},{value:"TBD",suffix:"%",label:"Rework por calidad insuficiente"}],
+          hallazgos: ["Tier 2 ha sido la salida estandar hasta abril 2026","Calidad aceptable pero sin branding premium ni look de estudio","Sin SLA definido de este paso"],
+          mejoras: ["Definir SLA foto tomada -> Tier 2 lista","Automatizar entrega a sitio web ni bien Tier 2 esta listo","Medicion objetiva de calidad (iluminacion, encuadre, nitidez)"]
+        },
+        { num: 3, title: "Cabina virtual 360 (Tier 1)",
+          description: "Nueva capacidad implementada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopcion marginal aun.",
+          kpis: [{value:"TBD",suffix:"%",label:"Fotos Impel con cabina virtual 360"},{value:"TBD",suffix:"/dia",label:"Throughput Tier 1"},{value:"TBD",suffix:"",label:"Objetivo de adopcion (30/60/90 dias)"}],
+          hallazgos: ["Capacidad reciente: todavia poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorizacion explicita de segmentos (ej. lujo primero)"],
+          mejoras: ["Plan de escalamiento escalonado con hitos semanales","Priorizar lujo / alto ticket en primeras semanas","Reporte semanal de % stock en Tier 1 con tendencia"]
+        },
+        { num: 4, title: "Backlog y no-procesamiento",
+          description: "Unidades publicadas esperando foto Impel lista, o que nunca la reciben.",
+          kpis: [{value:"TBD",suffix:"",label:"Backlog actual (unidades)"},{value:"TBD",suffix:"dias",label:"Antiguedad promedio del backlog"},{value:"TBD",suffix:"%",label:"Unidades que NUNCA reciben foto Impel"}],
+          hallazgos: ["Sin alerta automatica cuando backlog crece o envejece","Sin causas raiz documentadas de no-procesamiento","Backlog invisible al negocio genera degradacion silenciosa de vitrina"],
+          mejoras: ["Alerta automatica cuando backlog > umbral o antiguedad > SLA","Campo obligatorio 'motivo de no-procesamiento' por unidad","Weekly review de backlog con owners designados"]
+        }
+      ]
+    },
+    {
+      id: 10, macro: "preparacion", name: "Orden en Catalogo", fullName: "Clasificacion y Orden en Catalogo",
+      video: { url: null, title: "Video del proceso - Clasificacion y Orden en Catalogo" },
+      route: "Estado de foto -> Posicion en catalogo (4 tiers)",
+      description: "Resultado operativo del pipeline visible al cliente. La distribucion del stock entre los 4 tiers determina la calidad de la vitrina digital: Tier 1 (cabina virtual 360) y Tier 2 (Impel fondo limpio) ocupan paginas 1-2; Tier 3 (foto inspeccion) aparece al medio auditado diariamente; Tier 4 (sin foto, placeholder) va al fin del catalogo. Evidencia actual (2026-04-20): en clicar.cl/seminuevos-lujo?page=6 los 3 primeros vehiculos del grid son Tier 4 (Lexus RX, Volvo XC90, BMW X5) - lujo con ticket >= $46M.",
+      resources: [
+        { label: "Hallazgos Preparacion (detalle)", href: "hallazgos-preparacion.md" },
+        { label: "Evidencia: catalogo lujo p.6", href: "https://www.clicar.cl/seminuevos-lujo?page=6" }
+      ],
+      substeps: [
+        { num: 1, title: "Distribucion de stock por tier",
+          description: "Metrica maestra: que proporcion del stock publicado (1.790 uds) esta en cada tipo de foto. Data real BI 2026-04-17: Impel 1.211 (67,7%), Inspeccion 375 (20,9%), Sin foto 204 (11,4%).",
+          kpis: [{value:"67,7",suffix:"%",label:"Con foto Impel (1.211 uds)"},{value:"20,9",suffix:"%",label:"Con foto inspeccion (375 uds)"},{value:"11,4",suffix:"%",label:"Sin foto (204 uds)"}],
+          hallazgos: ["32,3% del stock publicado NO tiene foto Impel: 375 con inspeccion + 204 sin foto = 579 uds degradadas","Zona Metropolitana concentra el problema: 114 de 204 sin-foto (55,9%) estan en RM","Tier 1 (cabina virtual 360) con adopcion marginal - aun no cuantificable como subset del 67,7% Impel","Sin target oficial de distribucion por tier","Zona Sur muestra mejor ejecucion: solo 8,9% sin foto"],
+          mejoras: ["Definir target por zona (ej. >80% Impel, <5% Sin foto)","Reporte semanal de mix con tendencia y comparativo zonal","Alerta cuando una zona supera 15% sin-foto","Plan de escalamiento a 100% del stock con cabina virtual 360"],
+          chartType: 'prep-foto-zona'
+        },
+        { num: 2, title: "Impacto comercial por tier",
+          description: "Cruce de tier de foto con resultados comerciales (tiempo en stock, visitas, conversion).",
+          kpis: [{value:"TBD",suffix:"dias",label:"Dias en stock Tier 1 vs Tier 4"},{value:"TBD",suffix:"%",label:"Conversion relativa por tier"},{value:"TBD",suffix:"%",label:"CTR de ficha por tier"}],
+          hallazgos: ["No hay cruce publicado entre tier de foto y performance comercial","Intuicion de negocio: Tier 4 'mata' la visibilidad pero falta evidencia cuantitativa","Justificacion para inversion en cabina virtual 360 requiere este dato"],
+          mejoras: ["Analisis A/B tier de foto vs. dias en stock y conversion","Dashboard de performance comercial segmentado por tier","Business case cuantitativo para inversion en Tier 1"]
+        },
+        { num: 3, title: "Auditoria de calidad visible",
+          description: "Revision operativa del catalogo publico para detectar degradacion de vitrina. El ranking de sucursales por % sin-foto identifica los puntos de intervencion prioritarios (ver grafico).",
+          kpis: [{value:"51,5",suffix:"%",label:"Peor sucursal (Concepcion J. Alessandri R. 1885)"},{value:"48,4",suffix:"%",label:"2da peor (Vitacura Padre Hurtado 1246)"},{value:"43",suffix:"uds",label:"Sin foto en top 3 peores sucursales"}],
+          hallazgos: ["3 sucursales concentran 43 de las 204 unidades sin foto (21%): J. Alessandri 1885, Vitacura Padre Hurtado 1246, Jose Miguel Carrera 6197","Carshopping A. Vespucio 2451 es la sucursal con MAS unidades sin foto en absoluto (33 uds) aunque %relativo es 19,4%","Auditoria actual de fotos de inspeccion es diaria pero sin metrica agregada por sucursal","Sin auditoria sistematica de placeholders Tier 4","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
+          mejoras: ["Intervencion focalizada en top 5 peores sucursales (accion correctiva semanal)","Checklist objetivo para decidir Tier 3 publicable vs. Tier 4","Ranking publico interno de sucursales por % sin-foto (presion social positiva)","Auditoria automatizada con deteccion de 'suciedad visual' por IA","SLA maximo por sucursal: ej. no mas de 10% sin-foto"],
+          chartType: 'prep-foto-sucursal'
+        },
+        { num: 4, title: "SLA de upgrade de tier",
+          description: "Tiempo maximo aceptable en Tier 3 o Tier 4 antes de escalar.",
+          kpis: [{value:"TBD",suffix:"dias",label:"Permanencia promedio en Tier 3"},{value:"TBD",suffix:"dias",label:"Permanencia promedio en Tier 4"},{value:"TBD",suffix:"%",label:"Unidades que hacen upgrade de tier"}],
+          hallazgos: ["No hay SLA explicito para sacar unidades de Tier 3 / Tier 4","Unidades pueden quedar 'olvidadas' en tiers bajos por meses","Sin owner claro del upgrade de tier"],
+          mejoras: ["Definir SLA maximo por tier (ej. Tier 4: max 72h)","Asignar owner operacional del pipeline visual","Cola priorizada de upgrades con edad maxima visible"]
+        }
+      ]
     }
   ]
 };
 
-// Flatten
-var flatSlides = [{ type: 'overview' }];
-for (var si = 0; si < journey.stages.length; si++) {
-  var stage = journey.stages[si];
-  for (var ssi = 0; ssi < stage.substeps.length; ssi++) {
-    flatSlides.push({ type: 'substep', stageId: stage.id, subIdx: ssi });
+// Macro state + helpers
+var MACRO_LABELS = { compra: "Compra", preparacion: "Preparacion", venta: "Venta" };
+var MACRO_META = {
+  compra: {
+    num: 1,
+    title: "Compra",
+    description: "Recorrido completo del cliente vendedor desde que llega a clicar.cl hasta el cierre comercial en sucursal. Cubre captacion digital, tasacion y agendamiento, gestion de leads en Contact Center, check-in presencial e inspeccion con cierre comercial. El analisis se apoya en data real del CRM Llaima.",
+    shortDescription: "Captacion digital, tasacion, gestion de leads en CC, check-in e inspeccion con cierre comercial.",
+    status: { text: "Data real - Oct 2025 a Mar 2026", variant: "real" },
+    disabled: false,
+    universoValue: "158.753",
+    universoValueClass: "",
+    universoLabel: "Leads analizados",
+    universoSub: "CRM Llaima - Oct 2025 a Mar 2026",
+    universoSubClass: "",
+    periodoValue: "6 meses",
+    periodoValueClass: "",
+    periodoLabel: "Periodo",
+    periodoSub: "Oct 2025 - Mar 2026 (cerrado)",
+    periodoSubClass: "",
+    note: ""
+  },
+  preparacion: {
+    num: 2,
+    title: "Preparacion",
+    description: "Tramo operacional interno que transforma una unidad adquirida en una publicacion competitiva en la vitrina digital. Cubre registro en Quiter, asignacion de precio, publicacion web y - criticamente - el pipeline de foto Impel con sus 4 tiers de calidad (cabina virtual 360, fondo limpio, foto inspeccion, sin foto) que determinan la posicion de la unidad en el catalogo.",
+    shortDescription: "Quiter, precio, publicacion y pipeline de foto Impel (4 tiers: cabina virtual 360, fondo limpio, inspeccion, sin foto).",
+    status: { text: "Data parcial - snapshot inventario", variant: "wip" },
+    disabled: false,
+    universoValue: "2.574",
+    universoValueClass: "",
+    universoLabel: "Unidades en inventario",
+    universoSub: "Snapshot - fecha exacta por confirmar con Operaciones",
+    universoSubClass: "",
+    periodoValue: "Snapshot",
+    periodoValueClass: "",
+    periodoLabel: "Tipo de data",
+    periodoSub: "Estado actual del stock (no evolutivo)",
+    periodoSubClass: "",
+    note: "Esta macro tiene data parcial: inventario actual y embudo de publicabilidad con cifras reales. Los KPIs de pipeline de foto (throughput, cabina virtual 360, backlog) siguen como TBD hasta integrar data desde BI y Operaciones."
+  },
+  venta: {
+    num: 3,
+    title: "Venta",
+    description: "Macro en proceso de levantamiento.",
+    shortDescription: "Proceso post-compra / venta al cliente final. Aun no mapeado.",
+    status: { text: "Pendiente de mapeo", variant: "pending" },
+    disabled: true,
+    universoValue: "TBD", universoValueClass: "placeholder",
+    universoLabel: "Universo", universoSub: "Pendiente de levantamiento", universoSubClass: "action",
+    periodoValue: "TBD", periodoValueClass: "placeholder",
+    periodoLabel: "Periodo", periodoSub: "Pendiente de levantamiento", periodoSubClass: "action",
+    note: "Esta macro aun no esta mapeada."
   }
+};
+var currentMacro = "compra";
+function getActiveStages() {
+  var out = [];
+  for (var i = 0; i < journey.stages.length; i++) {
+    if (journey.stages[i].macro === currentMacro) out.push(journey.stages[i]);
+  }
+  return out;
 }
-var TOTAL_SUBSTEPS = flatSlides.length - 1;
+function buildFlatSlides() {
+  var list = [{ type: 'home' }, { type: 'overview' }];
+  var active = getActiveStages();
+  for (var si = 0; si < active.length; si++) {
+    var stage = active[si];
+    for (var ssi = 0; ssi < stage.substeps.length; ssi++) {
+      list.push({ type: 'substep', stageId: stage.id, subIdx: ssi });
+    }
+  }
+  return list;
+}
+
+// Flatten (initial)
+var flatSlides = buildFlatSlides();
+var TOTAL_SUBSTEPS = flatSlides.length - 2;
 var currentSlide = 0;
 var chartInstances = {};
 var chartState = {};
+
+// ============================================================
+// PREPARACION - DATA REAL (Reporte BI 2026-04-17)
+// ============================================================
+var PREP_FUNNEL = {
+  total: 2574,
+  publicadas: 1790,
+  no_publicadas_disp: 200,
+  no_disponibles: 584
+};
+var PREP_FOTOS_ZONA = [
+  { zona: 'Concepcion',    impel: 157, inspeccion: 43,  sin_foto: 32,  total: 232 },
+  { zona: 'Longitudinal',  impel: 183, inspeccion: 57,  sin_foto: 26,  total: 266 },
+  { zona: 'Metropolitana', impel: 610, inspeccion: 210, sin_foto: 114, total: 934 },
+  { zona: 'Sur',           impel: 151, inspeccion: 33,  sin_foto: 18,  total: 202 },
+  { zona: 'Temuco',        impel: 110, inspeccion: 32,  sin_foto: 14,  total: 156 }
+];
+var PREP_FOTOS_SUCURSAL = [
+  { s: 'Clinica J. Alessandri R. 2121',           z: 'Concepcion',    impel: 37,  inspeccion: 10, sin_foto: 4,  total: 51 },
+  { s: 'Concepcion C. Colon 8961',                z: 'Concepcion',    impel: 40,  inspeccion: 3,  sin_foto: 2,  total: 45 },
+  { s: 'Concepcion J. Alessandri R. 1885',        z: 'Concepcion',    impel: 2,   inspeccion: 14, sin_foto: 17, total: 33 },
+  { s: 'Concepcion Paicavi 2592',                 z: 'Concepcion',    impel: 38,  inspeccion: 14, sin_foto: 5,  total: 57 },
+  { s: 'Vega 21 de Mayo 3225',                    z: 'Concepcion',    impel: 40,  inspeccion: 2,  sin_foto: 4,  total: 46 },
+  { s: 'Chillan Av Brasil 80',                    z: 'Longitudinal',  impel: 27,  inspeccion: 12, sin_foto: 5,  total: 44 },
+  { s: 'Chillan Ecuador 330',                     z: 'Longitudinal',  impel: 13,  inspeccion: 5,  sin_foto: 2,  total: 20 },
+  { s: 'Chillan Ecuador 768',                     z: 'Longitudinal',  impel: 20,  inspeccion: 6,  sin_foto: 2,  total: 28 },
+  { s: 'Linares Leon Bustos 0239',                z: 'Longitudinal',  impel: 12,  inspeccion: 0,  sin_foto: 0,  total: 12 },
+  { s: 'Los Angeles Av. Alemania 410',            z: 'Longitudinal',  impel: 22,  inspeccion: 9,  sin_foto: 4,  total: 35 },
+  { s: 'Los Angeles Industrias 7730',             z: 'Longitudinal',  impel: 27,  inspeccion: 10, sin_foto: 1,  total: 38 },
+  { s: 'Talca 11 Oriente 1180',                   z: 'Longitudinal',  impel: 12,  inspeccion: 4,  sin_foto: 4,  total: 20 },
+  { s: 'Talca San Miguel 2790',                   z: 'Longitudinal',  impel: 50,  inspeccion: 11, sin_foto: 8,  total: 69 },
+  { s: 'Autopark Departamental 4500',             z: 'Metropolitana', impel: 95,  inspeccion: 17, sin_foto: 9,  total: 121 },
+  { s: 'Carshopping A. Vespucio 2451',            z: 'Metropolitana', impel: 96,  inspeccion: 41, sin_foto: 33, total: 170 },
+  { s: 'Cerrillos Pedro A. Cerda 669',            z: 'Metropolitana', impel: 51,  inspeccion: 11, sin_foto: 5,  total: 67 },
+  { s: 'Jose Miguel Carrera 6197',                z: 'Metropolitana', impel: 15,  inspeccion: 4,  sin_foto: 11, total: 30 },
+  { s: 'La Dehesa J. A. Delano 11021',            z: 'Metropolitana', impel: 16,  inspeccion: 9,  sin_foto: 3,  total: 28 },
+  { s: 'Las Condes Fco. Bilbao 5593',             z: 'Metropolitana', impel: 22,  inspeccion: 11, sin_foto: 2,  total: 35 },
+  { s: 'Los Cobres Vitacura 6875',                z: 'Metropolitana', impel: 29,  inspeccion: 12, sin_foto: 6,  total: 47 },
+  { s: 'Maipu Av. Pajaritos 2557',                z: 'Metropolitana', impel: 19,  inspeccion: 9,  sin_foto: 0,  total: 28 },
+  { s: 'Movicenter A. Vespucio 1155',             z: 'Metropolitana', impel: 141, inspeccion: 41, sin_foto: 6,  total: 188 },
+  { s: 'San Bdo. Av. Portales 3698',              z: 'Metropolitana', impel: 21,  inspeccion: 8,  sin_foto: 4,  total: 33 },
+  { s: 'San Felipe Chacabuco 109',                z: 'Metropolitana', impel: 17,  inspeccion: 0,  sin_foto: 0,  total: 17 },
+  { s: 'San Felipe Chacabuco 255',                z: 'Metropolitana', impel: 10,  inspeccion: 7,  sin_foto: 0,  total: 17 },
+  { s: 'Vina del Mar Limache 3677',               z: 'Metropolitana', impel: 22,  inspeccion: 19, sin_foto: 5,  total: 46 },
+  { s: 'Vitacura 5555',                           z: 'Metropolitana', impel: 32,  inspeccion: 4,  sin_foto: 9,  total: 45 },
+  { s: 'Vitacura Padre Hurtado 1246',             z: 'Metropolitana', impel: 12,  inspeccion: 4,  sin_foto: 15, total: 31 },
+  { s: 'Vitacura Vitacura 7649',                  z: 'Metropolitana', impel: 12,  inspeccion: 13, sin_foto: 6,  total: 31 },
+  { s: 'Las Animas P. A. Cerda 410',              z: 'Sur',           impel: 24,  inspeccion: 6,  sin_foto: 2,  total: 32 },
+  { s: 'Osorno Andres Bello 663',                 z: 'Sur',           impel: 22,  inspeccion: 2,  sin_foto: 3,  total: 27 },
+  { s: 'Osorno Juan Mackenna 1659',               z: 'Sur',           impel: 21,  inspeccion: 8,  sin_foto: 2,  total: 31 },
+  { s: 'Puerto Montt Benavente 753',              z: 'Sur',           impel: 26,  inspeccion: 2,  sin_foto: 3,  total: 31 },
+  { s: 'Puerto Montt Regimiento 861',             z: 'Sur',           impel: 20,  inspeccion: 8,  sin_foto: 3,  total: 31 },
+  { s: 'Puerto Montt Serrano 328',                z: 'Sur',           impel: 8,   inspeccion: 1,  sin_foto: 0,  total: 9 },
+  { s: 'Valdivia Av. R. Picarte 2240',            z: 'Sur',           impel: 30,  inspeccion: 6,  sin_foto: 5,  total: 41 },
+  { s: 'Temuco Alemania 501',                     z: 'Temuco',        impel: 18,  inspeccion: 7,  sin_foto: 0,  total: 25 },
+  { s: 'Temuco Caupolican 693',                   z: 'Temuco',        impel: 29,  inspeccion: 0,  sin_foto: 2,  total: 31 },
+  { s: 'Temuco Hochstetter 976',                  z: 'Temuco',        impel: 19,  inspeccion: 15, sin_foto: 6,  total: 40 },
+  { s: 'Temuco Tolosa Caupolican 149',            z: 'Temuco',        impel: 44,  inspeccion: 10, sin_foto: 6,  total: 60 }
+];
+
+// Chart.js helpers (preparacion)
+function pctBar(v, total){ return total ? Math.round(v/total*1000)/10 : 0; }
+
+function buildPrepFunnelCfg() {
+  var f = PREP_FUNNEL;
+  return {
+    type: 'bar',
+    data: {
+      labels: ['Inventario total (2.574 uds)'],
+      datasets: [
+        { label: 'Publicadas (1.790 - 69,5%)', data: [f.publicadas], backgroundColor: '#0B5C1F', borderWidth: 0 },
+        { label: 'Disponibles no publicadas (200 - 7,8%)', data: [f.no_publicadas_disp], backgroundColor: '#F0A830', borderWidth: 0 },
+        { label: 'No disponibles (584 - 22,7%)', data: [f.no_disponibles], backgroundColor: '#C00000', borderWidth: 0 }
+      ]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { color: '#404040', font: { size: 11 } } },
+        tooltip: {
+          backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding:10,
+          callbacks: { label: function(ctx){ var v = ctx.parsed.x; var pct = pctBar(v, 2574); return ctx.dataset.label + ': ' + v + ' uds (' + pct + '%)'; } }
+        }
+      },
+      scales: {
+        x: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' } },
+        y: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { display: false } }
+      }
+    }
+  };
+}
+
+function buildPrepFotoZonaCfg() {
+  var labels = PREP_FOTOS_ZONA.map(function(r){ return r.zona + ' (' + r.total + ')'; });
+  var toPct = function(field){ return PREP_FOTOS_ZONA.map(function(r){ return pctBar(r[field], r.total); }); };
+  return {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Impel', data: toPct('impel'), backgroundColor: '#0B5C1F', borderWidth: 0 },
+        { label: 'Inspeccion', data: toPct('inspeccion'), backgroundColor: '#F0A830', borderWidth: 0 },
+        { label: 'Sin foto', data: toPct('sin_foto'), backgroundColor: '#C00000', borderWidth: 0 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { color: '#404040', font: { size: 11 } } },
+        tooltip: {
+          backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding:10,
+          callbacks: { label: function(ctx){
+            var r = PREP_FOTOS_ZONA[ctx.dataIndex];
+            var f = ctx.dataset.label.toLowerCase() === 'impel' ? 'impel' : ctx.dataset.label.toLowerCase() === 'inspeccion' ? 'inspeccion' : 'sin_foto';
+            return ctx.dataset.label + ': ' + r[f] + ' uds (' + ctx.parsed.y + '%)';
+          } }
+        }
+      },
+      scales: {
+        x: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { display: false } },
+        y: { stacked: true, max: 100, ticks: { color: '#7F7F7F', callback: function(v){ return v + '%'; } }, grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  };
+}
+
+function buildPrepFotoSucursalCfg() {
+  var data = PREP_FOTOS_SUCURSAL.slice().filter(function(r){ return r.total >= 10; });
+  data.sort(function(a,b){ return pctBar(b.sin_foto,b.total) - pctBar(a.sin_foto,a.total); });
+  data = data.slice(0, 15);
+  var labels = data.map(function(r){ return r.s + ' (' + r.total + ')'; });
+  var pcts = data.map(function(r){ return pctBar(r.sin_foto, r.total); });
+  var counts = data.map(function(r){ return r.sin_foto; });
+  return {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: '% Sin foto', data: pcts, backgroundColor: '#C00000cc', borderColor: '#C00000', borderWidth: 1 }
+      ]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding:10,
+          callbacks: { label: function(ctx){ return '% Sin foto: ' + ctx.parsed.x + '% (' + counts[ctx.dataIndex] + ' uds)'; } }
+        }
+      },
+      scales: {
+        x: { max: 60, ticks: { color: '#7F7F7F', callback: function(v){ return v + '%'; } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+        y: { ticks: { color: '#7F7F7F', font: { size: 10 } }, grid: { display: false } }
+      }
+    }
+  };
+}
+
+function buildPrepChartCfg(chartType) {
+  if (chartType === 'prep-funnel') return buildPrepFunnelCfg();
+  if (chartType === 'prep-foto-zona') return buildPrepFotoZonaCfg();
+  if (chartType === 'prep-foto-sucursal') return buildPrepFotoSucursalCfg();
+  return null;
+}
+
+function renderPrepChartSection(slideIdx, chartType) {
+  var titles = {
+    'prep-funnel': { t: 'Funnel de publicabilidad', s: 'Inventario total (2.574 uds) y cuales llegan realmente a la vitrina digital - Reporte BI 2026-04-17' },
+    'prep-foto-zona': { t: 'Composicion de fotos por zona', s: 'Mix % Impel / Inspeccion / Sin foto sobre el stock publicado (1.790 uds)' },
+    'prep-foto-sucursal': { t: 'Ranking sucursales por % sin foto', s: 'Top 15 sucursales con mayor % de unidades sin foto (publicaciones con placeholder). Filtro: sucursales con >= 10 uds.' }
+  };
+  var insights = {
+    'prep-funnel': '<strong>1 de cada 4 unidades (22,7%) ni siquiera es elegible</strong> para publicar. De las 1.990 disponibles, 200 (10,1%) estan retenidas por motivos operacionales (83% en acopio, 8,5% sin precio). La vitrina solo muestra 1.790 / 2.574 = 69,5% del inventario total.',
+    'prep-foto-zona': '<strong>Zona Metropolitana concentra el problema:</strong> 114 de las 204 unidades sin foto del sistema (55,9%) estan en RM. En cambio Zona Sur muestra la mejor ejecucion con solo 8,9% sin foto. Ningun zona supera el 75% de cobertura Impel.',
+    'prep-foto-sucursal': '<strong>Dos sucursales superan el 48% de sin-foto:</strong> Concepcion J. Alessandri R. 1885 (51,5%) y Vitacura Padre Hurtado 1246 (48,4%) son intervenciones prioritarias. Jose Miguel Carrera 6197 le sigue con 36,7%. Estas 3 sucursales aportan 43 de las 204 uds sin foto (21%).'
+  };
+  var t = titles[chartType] || { t: '', s: '' };
+  return '<div class="data-section">' +
+    '<div class="data-section-header">' +
+      '<div><div class="data-section-title">' + t.t + '</div><div class="data-section-subtitle">' + t.s + '</div></div>' +
+    '</div>' +
+    '<div class="chart-wrap prep-chart-wrap" style="height: 380px;"><canvas id="prep-chart-' + slideIdx + '" data-prep-chart="' + chartType + '"></canvas></div>' +
+    '<div class="data-insight">' + (insights[chartType] || '') + '</div>' +
+  '</div>';
+}
+
+function initPrepCharts() {
+  if (typeof Chart === 'undefined') return;
+  var canvases = document.querySelectorAll('[data-prep-chart]');
+  for (var i = 0; i < canvases.length; i++) {
+    var canvas = canvases[i];
+    var key = canvas.id;
+    if (chartInstances[key]) { chartInstances[key].destroy(); delete chartInstances[key]; }
+    var type = canvas.getAttribute('data-prep-chart');
+    var cfg = buildPrepChartCfg(type);
+    if (cfg) chartInstances[key] = new Chart(canvas.getContext('2d'), cfg);
+  }
+  initInspCharts();
+}
+
+// ============================================================
+// INSPECCION Y CIERRE - DATA REAL por tipo de vinculo (Compra vs VPP)
+// ============================================================
+var INSP_MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26'];
+var INSP_COMPRA = {
+  label: 'Compra',
+  color: '#0F6FC6',
+  creadas: [1037, 884, 784, 1030, 668, 1060, 615],
+  inspeccionadas: [872, 770, 669, 851, 583, 800, 466],
+  compradas: [385, 311, 364, 448, 287, 372, 242],
+  insp_pct: [84, 87, 85, 83, 87, 75, 76],
+  conv_pct: [44, 40, 54, 53, 49, 47, 52],
+  total_creadas: 6078, total_insp: 5011, total_comp: 2409,
+  pct_insp: 82, pct_conv: 48, pct_total: 40,
+  label_insp: '% Insp. sobre Oportunidad'
+};
+var INSP_VPP = {
+  label: 'VPP',
+  color: '#F0A830',
+  creadas: [7201, 6715, 5982, 6820, 5869, 6963, null],
+  inspeccionadas: [1809, 1750, 1523, 1714, 1382, 1751, null],
+  compradas: [989, 928, 841, 881, 675, 792, null],
+  insp_pct: [25, 26, 25, 25, 24, 25, null],
+  conv_pct: [55, 53, 55, 51, 49, 45, null],
+  total_creadas: 39550, total_insp: 9929, total_comp: 5106,
+  pct_insp: 25, pct_conv: 51, pct_total: 13,
+  label_insp: '% Insp. sobre Tasacion'
+};
+
+function buildInspVolumenCfg() {
+  return {
+    type: 'bar',
+    data: {
+      labels: INSP_MESES,
+      datasets: [
+        { label: 'Compra - Creadas', data: INSP_COMPRA.creadas, backgroundColor: '#0F6FC655', borderColor: '#0F6FC6', borderWidth: 1, stack: 'compra' },
+        { label: 'Compra - Inspeccionadas', data: INSP_COMPRA.inspeccionadas, backgroundColor: '#0F6FC6aa', borderColor: '#0F6FC6', borderWidth: 1, stack: 'compra' },
+        { label: 'Compra - Compradas', data: INSP_COMPRA.compradas, backgroundColor: '#0F6FC6', borderColor: '#0B1F65', borderWidth: 1, stack: 'compra' },
+        { label: 'VPP - Creadas', data: INSP_VPP.creadas, backgroundColor: '#F0A83055', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
+        { label: 'VPP - Inspeccionadas', data: INSP_VPP.inspeccionadas, backgroundColor: '#F0A830aa', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
+        { label: 'VPP - Compradas', data: INSP_VPP.compradas, backgroundColor: '#F0A830', borderColor: '#8A5A00', borderWidth: 1, stack: 'vpp' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { color: '#404040', font: { size: 11 }, boxWidth: 14 } },
+        tooltip: { backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding: 10 }
+      },
+      scales: {
+        x: { stacked: false, ticks: { color: '#7F7F7F' }, grid: { display: false } },
+        y: { stacked: false, ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  };
+}
+
+function buildInspLineCfg(field, unit) {
+  return {
+    type: 'line',
+    data: {
+      labels: INSP_MESES,
+      datasets: [
+        { label: 'Compra', data: INSP_COMPRA[field], borderColor: INSP_COMPRA.color, backgroundColor: INSP_COMPRA.color + '33', borderWidth: 2, tension: 0.3, spanGaps: true, pointRadius: 4, pointBackgroundColor: INSP_COMPRA.color },
+        { label: 'VPP', data: INSP_VPP[field], borderColor: INSP_VPP.color, backgroundColor: INSP_VPP.color + '33', borderWidth: 2, tension: 0.3, spanGaps: true, pointRadius: 4, pointBackgroundColor: INSP_VPP.color }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { color: '#404040', font: { size: 11 }, boxWidth: 14 } },
+        tooltip: {
+          backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding: 10,
+          callbacks: { label: function(ctx){ return ctx.dataset.label + ': ' + ctx.parsed.y + unit; } }
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#7F7F7F' }, grid: { display: false } },
+        y: { beginAtZero: true, max: unit === '%' ? 100 : undefined, ticks: { color: '#7F7F7F', callback: function(v){ return v + unit; } }, grid: { color: 'rgba(0,0,0,0.05)' } }
+      }
+    }
+  };
+}
+
+function buildInspChart(canvasId, tabId) {
+  var key = canvasId;
+  if (chartInstances[key]) { chartInstances[key].destroy(); delete chartInstances[key]; }
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  var cfg;
+  if (tabId === 'volumen') cfg = buildInspVolumenCfg();
+  else if (tabId === 'pct-insp') cfg = buildInspLineCfg('insp_pct', '%');
+  else if (tabId === 'pct-conv') cfg = buildInspLineCfg('conv_pct', '%');
+  if (cfg) chartInstances[key] = new Chart(canvas.getContext('2d'), cfg);
+}
+
+function renderInspVinculoSection(slideIdx) {
+  var summaryCard = function(d){
+    return '<div class="ins-summary-card" style="border-left: 4px solid ' + d.color + '">' +
+      '<div class="ins-summary-head"><span class="ins-summary-dot" style="background:' + d.color + '"></span><span class="ins-summary-title">' + d.label + '</span></div>' +
+      '<div class="ins-summary-row"><span>Creadas</span><strong>' + d.total_creadas.toLocaleString('es-CL') + '</strong></div>' +
+      '<div class="ins-summary-row"><span>Inspeccionadas</span><strong>' + d.total_insp.toLocaleString('es-CL') + ' (' + d.pct_insp + '%)</strong></div>' +
+      '<div class="ins-summary-row"><span>Compradas</span><strong>' + d.total_comp.toLocaleString('es-CL') + ' (' + d.pct_conv + '%)</strong></div>' +
+      '<div class="ins-summary-row highlight"><span>Conversion total</span><strong>' + d.pct_total + '%</strong></div>' +
+    '</div>';
+  };
+  return '<div class="data-section">' +
+    '<div class="data-section-header">' +
+      '<div><div class="data-section-title">Inspeccion y cierre - Compra vs VPP</div><div class="data-section-subtitle">Funnel mensual Creadas -> Inspeccionadas -> Compradas separado por tipo de vinculo. Ventana: Oct 2025 - Abr 2026 (VPP sin data de Abril aun).</div></div>' +
+    '</div>' +
+    '<div class="ins-summary-grid">' + summaryCard(INSP_COMPRA) + summaryCard(INSP_VPP) + '</div>' +
+    '<div class="data-tabs" data-insp-tabs="' + slideIdx + '">' +
+      '<button class="data-tab active" data-insp-tab="volumen">Volumen mensual (funnel)</button>' +
+      '<button class="data-tab" data-insp-tab="pct-insp">% Inspeccion</button>' +
+      '<button class="data-tab" data-insp-tab="pct-conv">% Conversion a Compra</button>' +
+    '</div>' +
+    '<div class="chart-wrap" style="height: 380px; margin-top: 12px;"><canvas id="insp-chart-' + slideIdx + '" data-insp-chart data-insp-slide="' + slideIdx + '"></canvas></div>' +
+    '<div class="data-insight"><strong>Dos funnels muy distintos:</strong> Compra convierte 40% end-to-end con un pipeline pequeno (6.078 creadas) y alta tasa de inspeccion (82%). VPP convierte solo 13% end-to-end pero con volumen masivo (39.550 creadas) y filtro fuerte en inspeccion (solo 25%). Ambos comparten una tasa de cierre post-inspeccion similar (~48-51%), indicando que una vez que el auto llega a la mesa, la decision de compra es comparable - la diferencia esta en la pre-calificacion. Monitorear la caida de Marzo 26 en Compra (75% insp, vs 83-87% historico).</div>' +
+  '</div>';
+}
+
+function initInspCharts() {
+  if (typeof Chart === 'undefined') return;
+  var canvases = document.querySelectorAll('[data-insp-chart]');
+  for (var i = 0; i < canvases.length; i++) {
+    var canvas = canvases[i];
+    var slideIdx = canvas.getAttribute('data-insp-slide');
+    buildInspChart(canvas.id, 'volumen');
+    var tabs = document.querySelectorAll('[data-insp-tabs="' + slideIdx + '"] .data-tab');
+    for (var t = 0; t < tabs.length; t++) {
+      (function(tab, cvId, tabsAll){
+        tab.addEventListener('click', function(){
+          for (var j = 0; j < tabsAll.length; j++) tabsAll[j].classList.remove('active');
+          tab.classList.add('active');
+          buildInspChart(cvId, tab.getAttribute('data-insp-tab'));
+        });
+      })(tabs[t], canvas.id, tabs);
+    }
+  }
+}
 
 // ============================================================
 // RENDER
 // ============================================================
 function renderStageTabs() {
   var el = document.getElementById('stage-tabs');
+  var active = getActiveStages();
   var html = '';
-  for (var i = 0; i < journey.stages.length; i++) {
-    var s = journey.stages[i];
+  for (var i = 0; i < active.length; i++) {
+    var s = active[i];
     html += '<button class="stage-tab" data-stage="' + s.id + '">';
-    html += '<span class="tab-num">' + s.id + '</span>';
+    html += '<span class="tab-num">' + (i + 1) + '</span>';
     html += '<span>' + s.name + '</span>';
     html += '</button>';
   }
@@ -668,14 +1296,66 @@ function renderStageTabs() {
   }
 }
 
+function renderMacroTabs() {
+  var btns = document.querySelectorAll('.macro-stage');
+  for (var i = 0; i < btns.length; i++) {
+    var btn = btns[i];
+    var m = btn.getAttribute('data-macro');
+    if (m === currentMacro) btn.classList.add('active'); else btn.classList.remove('active');
+  }
+}
+
+function setMacro(macro) {
+  if (macro !== currentMacro) {
+    currentMacro = macro;
+    flatSlides = buildFlatSlides();
+    TOTAL_SUBSTEPS = flatSlides.length - 2;
+    renderMacroTabs();
+    renderStageTabs();
+    renderSlides();
+  }
+  goToSlide(1);
+}
+
 function renderStepper(stage, activeIdx) {
   var header = document.getElementById('stage-header');
   if (header) {
     var desc = stage.description || '';
+    var resourcesHtml = '';
+    var chips = [];
+    if (stage.video) {
+      if (stage.video.url) {
+        chips.push('<button class="sh-resource video" data-video-url="' + stage.video.url + '" data-video-title="' + (stage.video.title || 'Video del proceso') + '">Video del proceso</button>');
+      } else {
+        chips.push('<span class="sh-resource video pending" title="Pendiente de grabacion">Video del proceso (pendiente)</span>');
+      }
+    }
+    if (stage.resources && stage.resources.length) {
+      for (var r = 0; r < stage.resources.length; r++) {
+        var res = stage.resources[r];
+        chips.push('<a class="sh-resource" href="' + res.href + '" target="_blank" rel="noopener">' + res.label + '</a>');
+      }
+    }
+    if (chips.length) resourcesHtml = '<div class="sh-resources">' + chips.join('') + '</div>';
+    var activeStages = getActiveStages();
+    var posInMacro = 1;
+    for (var pi = 0; pi < activeStages.length; pi++) {
+      if (activeStages[pi].id === stage.id) { posInMacro = pi + 1; break; }
+    }
+    var macroLabel = MACRO_LABELS[stage.macro] || stage.macro || 'Compra';
     header.innerHTML =
-      '<div class="sh-eyebrow">Etapa ' + stage.id + ' de ' + journey.stages.length + ' - Macro: Compra</div>' +
+      '<div class="sh-eyebrow">Etapa ' + posInMacro + ' de ' + activeStages.length + ' - Macro: ' + macroLabel + '</div>' +
       '<div class="sh-title">' + stage.fullName + '</div>' +
-      (desc ? '<p class="sh-desc">' + desc + '</p>' : '');
+      (desc ? '<p class="sh-desc">' + desc + '</p>' : '') +
+      resourcesHtml;
+    var videoBtns = header.querySelectorAll('.sh-resource.video[data-video-url]');
+    for (var vb = 0; vb < videoBtns.length; vb++) {
+      (function(btn){
+        btn.addEventListener('click', function(){
+          openVideoModal(btn.getAttribute('data-video-url'), btn.getAttribute('data-video-title'));
+        });
+      })(videoBtns[vb]);
+    }
   }
   var el = document.getElementById('stepper-row');
   var html = '';
@@ -703,7 +1383,9 @@ function renderSlides() {
   var html = '';
   for (var i = 0; i < flatSlides.length; i++) {
     var s = flatSlides[i];
-    if (s.type === 'overview') {
+    if (s.type === 'home') {
+      html += renderHomeSlide(i);
+    } else if (s.type === 'overview') {
       html += renderOverviewSlide(i);
     } else {
       var stage = null;
@@ -723,44 +1405,119 @@ function renderSlides() {
       });
     })(cards[c]);
   }
+  var macroLinks = area.querySelectorAll('[data-goto-macro]');
+  for (var cm = 0; cm < macroLinks.length; cm++) {
+    (function(el) {
+      el.addEventListener('click', function() {
+        setMacro(el.getAttribute('data-goto-macro'));
+      });
+    })(macroLinks[cm]);
+  }
+  initPrepCharts();
 }
 
-function renderOverviewSlide(i) {
-  var stageCards = '';
-  for (var k = 0; k < journey.stages.length; k++) {
-    var s = journey.stages[k];
-    stageCards += '<div class="stage-summary-card" data-goto-stage="' + s.id + '">';
-    stageCards += '<div class="ssc-num">' + s.id + '</div>';
-    stageCards += '<div class="ssc-name">' + s.fullName + '</div>';
-    stageCards += '<div class="ssc-desc">' + s.route + '</div>';
-    stageCards += '<div class="ssc-count">' + s.substeps.length + ' subprocesos</div>';
-    stageCards += '</div>';
+function renderHomeSlide(i) {
+  var allStages = journey.stages;
+  var MACROS = ['compra', 'preparacion', 'venta'];
+  var mappedStages = 0, mappedSubs = 0, mappedMacros = 0;
+  for (var mi = 0; mi < MACROS.length; mi++) {
+    var mk = MACROS[mi];
+    var stagesFor = allStages.filter ? allStages.filter(function(s){ return s.macro === mk; }) : [];
+    if (!allStages.filter) {
+      stagesFor = [];
+      for (var q = 0; q < allStages.length; q++) if (allStages[q].macro === mk) stagesFor.push(allStages[q]);
+    }
+    if (stagesFor.length > 0) {
+      mappedMacros++;
+      mappedStages += stagesFor.length;
+      for (var qq = 0; qq < stagesFor.length; qq++) mappedSubs += stagesFor[qq].substeps.length;
+    }
   }
-  var webNodes = ['Datos del Auto','Datos Personales','Tasacion','Agendamiento','Confirmacion'];
-  var crmNodes = ['Nuevos Leads','Leads tomados','Leads con cita','Oportunidad','Check In','Inspeccion','Validacion'];
-  var webHtml = '';
-  for (var w = 0; w < webNodes.length; w++) webHtml += '<div class="journey-node">' + webNodes[w] + '</div>';
-  var crmHtml = '';
-  for (var cr = 0; cr < crmNodes.length; cr++) crmHtml += '<div class="journey-node">' + crmNodes[cr] + '</div>';
+
+  var cardsHtml = '';
+  for (var mj = 0; mj < MACROS.length; mj++) {
+    var mkey = MACROS[mj];
+    var m = MACRO_META[mkey];
+    var stagesForMacro = [];
+    for (var qi = 0; qi < allStages.length; qi++) if (allStages[qi].macro === mkey) stagesForMacro.push(allStages[qi]);
+    var subsForMacro = 0;
+    for (var qj = 0; qj < stagesForMacro.length; qj++) subsForMacro += stagesForMacro[qj].substeps.length;
+    var disabled = !!m.disabled;
+    var mapped = stagesForMacro.length > 0;
+    var cls = 'macro-card' + (disabled || !mapped ? ' disabled' : '');
+    var dataAttr = (disabled || !mapped) ? '' : ' data-goto-macro="' + mkey + '"';
+    var stats = mapped
+      ? '<span>' + stagesForMacro.length + ' sub-etapas</span><span>' + subsForMacro + ' subprocesos</span>'
+      : '<span>Sin mapeo aun</span>';
+    var cta = (disabled || !mapped) ? 'Pendiente' : 'Ver analisis &rsaquo;';
+    cardsHtml += '<div class="' + cls + '"' + dataAttr + '>';
+    cardsHtml += '<div class="macro-card-num">' + m.num + '</div>';
+    cardsHtml += '<div class="macro-card-title">' + m.title + '</div>';
+    cardsHtml += '<p class="macro-card-desc">' + m.shortDescription + '</p>';
+    cardsHtml += '<div class="macro-card-stats">' + stats + '</div>';
+    cardsHtml += '<div class="macro-card-status status-' + m.status.variant + '">' + m.status.text + '</div>';
+    cardsHtml += '<div class="macro-card-cta">' + cta + '</div>';
+    cardsHtml += '</div>';
+  }
 
   return '<div class="slide overview" data-slide="' + i + '">' +
     '<div class="overview-header">' +
-      '<div class="eyebrow">Vista general - Oct 25 a Mar 26</div>' +
-      '<h1>Journey del Cliente - Vehiculos Usados</h1>' +
-      '<p class="lede">Mapeo completo del flujo punta a punta de venta de usados: 5 etapas, 22 subprocesos, KPIs de desempeno reales del CRM Llaima, hallazgos operativos y mejoras priorizadas. La etapa de Gestion de Leads incluye analisis evolutivo por categoria sobre 158.753 leads.</p>' +
+      '<div class="eyebrow">Vista global - Analisis punta a punta</div>' +
+      '<h1>Journey del Cliente - Vehiculos Usados Clicar</h1>' +
+      '<p class="lede">Mapeo punta a punta del recorrido de la unidad usada y del cliente vendedor. El analisis esta organizado en 3 macro-etapas que van desde la captacion digital inicial hasta la venta al cliente final, pasando por la preparacion operacional interna del vehiculo.</p>' +
     '</div>' +
     '<div class="overview-kpis">' +
-      '<div class="overview-kpi"><div class="ov-label">Leads analizados</div><div class="ov-value">158.753</div><div class="ov-sublabel">6 meses - CRM Llaima</div></div>' +
-      '<div class="overview-kpi"><div class="ov-label">Subprocesos</div><div class="ov-value">22</div><div class="ov-sublabel">Mapeados end-to-end</div></div>' +
-      '<div class="overview-kpi"><div class="ov-label">Contactabilidad global</div><div class="ov-value">53<span class="suffix">%</span></div><div class="ov-sublabel">Oct 25 a Mar 26</div></div>' +
-      '<div class="overview-kpi"><div class="ov-label">Conversion a oportunidad</div><div class="ov-value">1,2<span class="suffix">%</span></div><div class="ov-sublabel">Global del periodo</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Macro-etapas</div><div class="ov-value">3</div><div class="ov-sublabel">Mapeadas: ' + mappedMacros + ' de 3</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Sub-etapas mapeadas</div><div class="ov-value">' + mappedStages + '</div><div class="ov-sublabel">End-to-end en ' + mappedMacros + ' macros</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Subprocesos mapeados</div><div class="ov-value">' + mappedSubs + '</div><div class="ov-sublabel">Con KPIs, hallazgos y mejoras</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Data real</div><div class="ov-value">1<span class="suffix"> / 3</span></div><div class="ov-sublabel">Solo Compra - CRM Llaima</div></div>' +
     '</div>' +
     '<div class="journey-map">' +
-      '<div class="journey-map-title">Flujo de compra - Web a CRM Llaima</div>' +
-      '<div class="journey-channels"><div class="channel-tag">Web</div><div class="journey-nodes">' + webHtml + '</div></div>' +
-      '<div class="journey-channels"><div class="channel-tag crm">CRM Llaima</div><div class="journey-nodes">' + crmHtml + '</div></div>' +
+      '<div class="alcance-block-title">Macro-etapas del journey</div>' +
+      '<div class="alcance-block-sub">Click en una macro para abrir su analisis.</div>' +
+      '<div class="macro-cards">' + cardsHtml + '</div>' +
+      '<div class="home-footer-note">Compra usa data real del CRM Llaima (158.753 leads, Oct 25 - Mar 26). Preparacion esta en levantamiento y muestra KPIs como TBD hasta integrar data desde BI y Operaciones. Venta aun no esta mapeada.</div>' +
     '</div>' +
-    '<div class="stage-summary-grid">' + stageCards + '</div>' +
+  '</div>';
+}
+
+function renderOverviewSlide(i) {
+  var activeStagesOv = getActiveStages();
+  var meta = MACRO_META[currentMacro] || MACRO_META.compra;
+  var totalSubprocesos = 0;
+  for (var t = 0; t < activeStagesOv.length; t++) totalSubprocesos += activeStagesOv[t].substeps.length;
+
+  var flowHtml = '';
+  for (var k = 0; k < activeStagesOv.length; k++) {
+    var s = activeStagesOv[k];
+    flowHtml += '<div class="alcance-step" data-goto-stage="' + s.id + '">';
+    flowHtml += '<div class="alcance-step-header"><div class="alcance-num">' + (k + 1) + '</div><div class="alcance-name">' + s.fullName + '</div></div>';
+    flowHtml += '<div class="alcance-route">' + s.route + '</div>';
+    flowHtml += '<div class="alcance-count">' + s.substeps.length + ' subprocesos</div>';
+    flowHtml += '</div>';
+    if (k < activeStagesOv.length - 1) flowHtml += '<div class="alcance-connector">&rsaquo;</div>';
+  }
+
+  var noteHtml = meta.note ? '<div class="alcance-note">' + meta.note + '</div>' : '';
+
+  return '<div class="slide overview" data-slide="' + i + '">' +
+    '<div class="overview-header">' +
+      '<div class="eyebrow">Macro-etapa ' + meta.num + ' de 3</div>' +
+      '<h1>' + meta.title + '</h1>' +
+      '<p class="lede">' + meta.description + '</p>' +
+    '</div>' +
+    '<div class="overview-kpis">' +
+      '<div class="overview-kpi"><div class="ov-label">Sub-etapas</div><div class="ov-value">' + activeStagesOv.length + '</div><div class="ov-sublabel">Mapeadas en esta macro</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Subprocesos</div><div class="ov-value">' + totalSubprocesos + '</div><div class="ov-sublabel">End-to-end</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">' + meta.universoLabel + '</div><div class="ov-value ' + meta.universoValueClass + '">' + meta.universoValue + '</div><div class="ov-sublabel ' + meta.universoSubClass + '">' + meta.universoSub + '</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">' + meta.periodoLabel + '</div><div class="ov-value ' + meta.periodoValueClass + '">' + meta.periodoValue + '</div><div class="ov-sublabel ' + meta.periodoSubClass + '">' + meta.periodoSub + '</div></div>' +
+    '</div>' +
+    '<div class="journey-map">' +
+      '<div class="alcance-block-title">Alcance del analisis</div>' +
+      '<div class="alcance-block-sub">Sub-etapas que se recorren en esta macro. Haz click en cualquiera para abrirla.</div>' +
+      '<div class="alcance-flow">' + flowHtml + '</div>' +
+      noteHtml +
+    '</div>' +
   '</div>';
 }
 
@@ -777,7 +1534,12 @@ function renderSubstepSlide(i, stage, sub) {
   for (var h = 0; h < sub.hallazgos.length; h++) hHtml += '<li>' + sub.hallazgos[h] + '</li>';
   var mHtml = '';
   for (var m = 0; m < sub.mejoras.length; m++) mHtml += '<li>' + sub.mejoras[m] + '</li>';
-  var chartHtml = sub.chartType ? renderChartSection(i, sub.chartType) : '';
+  var chartHtml = '';
+  if (sub.chartType) {
+    if (sub.chartType.indexOf('prep-') === 0) chartHtml = renderPrepChartSection(i, sub.chartType);
+    else if (sub.chartType === 'insp-vinculo') chartHtml = renderInspVinculoSection(i);
+    else chartHtml = renderChartSection(i, sub.chartType);
+  }
 
   return '<div class="slide" data-slide="' + i + '" data-stage="' + stage.id + '" data-substep="' + sub.num + '">' +
     '<div class="slide-title-row">' +
@@ -1454,10 +2216,29 @@ function updateChrome() {
   var prevBtn = document.getElementById('prev-btn');
   var nextBtn = document.getElementById('next-btn');
 
-  if (slide.type === 'overview') {
+  var macroTabsEl = document.querySelectorAll('.macro-stage');
+  for (var mti = 0; mti < macroTabsEl.length; mti++) {
+    if (slide.type === 'home') {
+      macroTabsEl[mti].classList.remove('active');
+    } else {
+      if (macroTabsEl[mti].getAttribute('data-macro') === currentMacro) macroTabsEl[mti].classList.add('active');
+      else macroTabsEl[mti].classList.remove('active');
+    }
+  }
+
+  var stageTabsEl = document.getElementById('stage-tabs');
+  if (stageTabsEl) stageTabsEl.style.display = (slide.type === 'home') ? 'none' : '';
+
+  if (slide.type === 'home') {
+    for (var th = 0; th < tabs.length; th++) tabs[th].classList.remove('active');
+    stepper.style.display = 'none';
+    breadcrumb.innerHTML = '<span class="bc-stage">Vista global - Journey punta a punta</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">' + TOTAL_SUBSTEPS + ' subprocesos totales</span>';
+  } else if (slide.type === 'overview') {
     for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
     stepper.style.display = 'none';
-    breadcrumb.innerHTML = '<span class="bc-stage">Vista general</span>';
+    var macroTitle = (MACRO_META[currentMacro] && MACRO_META[currentMacro].title) || 'Vista general';
+    breadcrumb.innerHTML = '<span class="bc-stage">Macro: ' + macroTitle + '</span>';
     counter.innerHTML = '<span class="current">-</span> <span class="total">/ ' + TOTAL_SUBSTEPS + ' subprocesos</span>';
   } else {
     var stage = null;
@@ -1472,24 +2253,65 @@ function updateChrome() {
     stepper.style.display = 'block';
     renderStepper(stage, slide.subIdx);
     breadcrumb.innerHTML = '<span class="bc-stage">Etapa ' + stage.id + ' - ' + stage.fullName + '</span><span class="bc-sep">&rsaquo;</span><span class="bc-substep">' + sub.num + '. ' + sub.title + '</span>';
-    counter.innerHTML = '<span class="current">' + currentSlide + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
+    counter.innerHTML = '<span class="current">' + (currentSlide - 1) + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
   }
   prevBtn.disabled = currentSlide === 0;
   nextBtn.disabled = currentSlide === flatSlides.length - 1;
 }
 
+// VIDEO MODAL
+function openVideoModal(url, title) {
+  if (!url) return;
+  var modal = document.getElementById('video-modal');
+  var iframeWrap = document.getElementById('video-modal-iframe-wrap');
+  var titleEl = document.getElementById('video-modal-title');
+  titleEl.textContent = title || 'Video';
+  var isMp4 = /\.(mp4|webm|ogg)(\?|$)/i.test(url);
+  if (isMp4) {
+    iframeWrap.innerHTML = '<video src="' + url + '" controls autoplay></video>';
+  } else {
+    iframeWrap.innerHTML = '<iframe src="' + url + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  }
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+function closeVideoModal() {
+  var modal = document.getElementById('video-modal');
+  var iframeWrap = document.getElementById('video-modal-iframe-wrap');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  iframeWrap.innerHTML = '';
+}
+
 // INIT
 function init() {
   try {
+    renderMacroTabs();
     renderStageTabs();
     renderSlides();
     goToSlide(0);
+    var macroBtns = document.querySelectorAll('.macro-stage');
+    for (var mi = 0; mi < macroBtns.length; mi++) {
+      (function(btn) {
+        if (btn.hasAttribute('disabled')) return;
+        btn.addEventListener('click', function() {
+          setMacro(btn.getAttribute('data-macro'));
+        });
+      })(macroBtns[mi]);
+    }
     document.getElementById('prev-btn').addEventListener('click', function() { goToSlide(currentSlide - 1); });
     document.getElementById('next-btn').addEventListener('click', function() { goToSlide(currentSlide + 1); });
     document.getElementById('home-btn').addEventListener('click', function() { goToSlide(0); });
     document.getElementById('logo-home').addEventListener('click', function() { goToSlide(0); });
+    document.getElementById('video-modal-close').addEventListener('click', closeVideoModal);
+    document.getElementById('video-modal-backdrop').addEventListener('click', closeVideoModal);
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      var modalOpen = document.getElementById('video-modal').classList.contains('open');
+      if (modalOpen) {
+        if (e.key === 'Escape') { e.preventDefault(); closeVideoModal(); }
+        return;
+      }
       if (e.key === 'ArrowRight') { e.preventDefault(); goToSlide(currentSlide + 1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
       else if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
