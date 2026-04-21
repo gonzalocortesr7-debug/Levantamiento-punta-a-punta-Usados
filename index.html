@@ -783,28 +783,28 @@ var journey = {
       ],
       substeps: [
         { num: 1, title: "Captura de foto de producto",
-          description: "Sesion de foto de la unidad ya ubicada fisicamente.",
-          kpis: [{value:"TBD",suffix:"/dia",label:"Capacidad de sesiones"},{value:"TBD",suffix:"%",label:"Utilizacion real vs. capacidad"},{value:"TBD",suffix:"hrs",label:"Publicacion -> foto tomada"}],
-          hallazgos: ["Sin metrica publicada de capacidad instalada ni utilizacion","Dependencia de disponibilidad de operador","Sin priorizacion por segmento premium / ticket alto"],
-          mejoras: ["Dashboard de capacidad vs. demanda diaria","Agenda automatica de fotos segun publicaciones del dia","Priorizacion de stock premium y alta rotacion"]
+          description: "Sesion de foto de la unidad ya ubicada fisicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspeccion). 204 uds (11,4%) estan publicadas SIN ninguna foto.",
+          kpis: [{value:"1.586",suffix:"uds",label:"Publicadas con foto capturada (88,6%)"},{value:"204",suffix:"uds",label:"Publicadas sin foto (11,4%)"},{value:"TBD",suffix:"hrs",label:"Publicacion -> foto tomada"}],
+          hallazgos: ["204 unidades (11,4% del publicado) estan en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aun","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","Sin metrica publicada de capacidad instalada ni utilizacion del equipo de foto","Dependencia de disponibilidad de operador","Sin priorizacion por segmento premium / ticket alto"],
+          mejoras: ["Auditoria diaria del subset '204 sin foto' con owner por sucursal","Dashboard de capacidad vs. demanda diaria","Agenda automatica de fotos segun publicaciones del dia","Priorizacion de stock premium y alta rotacion","Alerta cuando una unidad supera 72h publicada sin foto capturada"]
         },
         { num: 2, title: "Post-procesado Impel (fondo limpio)",
-          description: "Salida estandar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad.",
-          kpis: [{value:"TBD",suffix:"%",label:"Fotos que completan solo Tier 2"},{value:"TBD",suffix:"hrs",label:"Foto tomada -> Tier 2 lista"},{value:"TBD",suffix:"%",label:"Rework por calidad insuficiente"}],
-          hallazgos: ["Tier 2 ha sido la salida estandar hasta abril 2026","Calidad aceptable pero sin branding premium ni look de estudio","Sin SLA definido de este paso"],
-          mejoras: ["Definir SLA foto tomada -> Tier 2 lista","Automatizar entrega a sitio web ni bien Tier 2 esta listo","Medicion objetiva de calidad (iluminacion, encuadre, nitidez)"]
+          description: "Salida estandar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad. Data real BI 2026-04-17: 1.211 unidades con foto Impel terminada (67,7% del stock publicado). Nota: el BI agrupa Tier 1 + Tier 2 como IMPEL - la adopcion especifica de cabina virtual 360 requiere reporte Impel detallado.",
+          kpis: [{value:"1.211",suffix:"uds",label:"Con foto Impel (Tier 1 + Tier 2)"},{value:"67,7",suffix:"%",label:"Del stock publicado"},{value:"579",suffix:"uds",label:"Publicadas sin foto Impel lista (32,3%)"}],
+          hallazgos: ["Solo 67,7% del stock publicado tiene foto Impel terminada; 32,3% (579 uds) estan en vitrina con foto de inspeccion o placeholder","El BI no separa Tier 1 de Tier 2, por lo que no podemos cuantificar la adopcion especifica de cabina virtual 360","Cobertura Impel por zona: Sur lidera con 74,8%, RM es peor con 65,3%","Tier 2 ha sido la salida estandar hasta abril 2026","Sin SLA definido entre 'foto capturada' y 'Impel terminada'"],
+          mejoras: ["Pedir a Impel reporte que distinga Tier 1 (cabina virtual 360) vs Tier 2 (fondo limpio)","Definir SLA foto tomada -> Impel lista (ej. <24h)","Automatizar entrega a sitio web ni bien Impel esta listo","Target minimo 85% foto Impel por zona","Medicion objetiva de calidad (iluminacion, encuadre, nitidez)"]
         },
         { num: 3, title: "Cabina virtual 360 (Tier 1)",
-          description: "Nueva capacidad implementada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopcion marginal aun.",
-          kpis: [{value:"TBD",suffix:"%",label:"Fotos Impel con cabina virtual 360"},{value:"TBD",suffix:"/dia",label:"Throughput Tier 1"},{value:"TBD",suffix:"",label:"Objetivo de adopcion (30/60/90 dias)"}],
-          hallazgos: ["Capacidad reciente: todavia poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorizacion explicita de segmentos (ej. lujo primero)"],
-          mejoras: ["Plan de escalamiento escalonado con hitos semanales","Priorizar lujo / alto ticket en primeras semanas","Reporte semanal de % stock en Tier 1 con tendencia"]
+          description: "Capacidad incorporada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopcion marginal aun - el BI actual no separa Tier 1 del Tier 2 (ambos se cuentan como 'IMPEL' = 1.211 uds, 67,7%), asi que la cuantificacion especifica requiere reporte Impel detallado.",
+          kpis: [{value:"TBD",suffix:"%",label:"Subset Impel con cabina virtual 360"},{value:"1.211",suffix:"uds",label:"Techo teorico (Impel total)"},{value:"TBD",suffix:"",label:"Objetivo 30/60/90 dias"}],
+          hallazgos: ["El reporte BI vigente no permite medir adopcion de Tier 1 aisladamente - bloquea el seguimiento gerencial","Capacidad reciente (2026-04-13): todavia poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorizacion explicita de segmentos (ej. lujo primero)","Techo teorico de conversion hoy: las 1.211 uds Impel podrian migrarse a Tier 1 sin esfuerzo incremental en captura"],
+          mejoras: ["Solicitar a Impel un breakdown Tier 1 / Tier 2 en el reporte semanal","Plan de escalamiento escalonado con hitos semanales (% de Impel que pasan a Tier 1)","Priorizar lujo / alto ticket en primeras semanas","Reporte semanal de % stock en Tier 1 con tendencia","Target de 6 meses: 100% de Impel en Tier 1 (cabina virtual 360)"]
         },
         { num: 4, title: "Backlog y no-procesamiento",
-          description: "Unidades publicadas esperando foto Impel lista, o que nunca la reciben.",
-          kpis: [{value:"TBD",suffix:"",label:"Backlog actual (unidades)"},{value:"TBD",suffix:"dias",label:"Antiguedad promedio del backlog"},{value:"TBD",suffix:"%",label:"Unidades que NUNCA reciben foto Impel"}],
-          hallazgos: ["Sin alerta automatica cuando backlog crece o envejece","Sin causas raiz documentadas de no-procesamiento","Backlog invisible al negocio genera degradacion silenciosa de vitrina"],
-          mejoras: ["Alerta automatica cuando backlog > umbral o antiguedad > SLA","Campo obligatorio 'motivo de no-procesamiento' por unidad","Weekly review de backlog con owners designados"]
+          description: "Unidades publicadas esperando foto Impel lista, o que nunca la reciben. Data real BI 2026-04-17: 579 uds en 'backlog visible' = publicadas sin foto Impel (375 con foto de inspeccion 'Tier 3' + 204 sin foto 'Tier 4').",
+          kpis: [{value:"579",suffix:"uds",label:"Backlog visible (32,3% publicado)"},{value:"375",suffix:"uds",label:"Con foto inspeccion (Tier 3)"},{value:"204",suffix:"uds",label:"Sin foto alguna (Tier 4)"}],
+          hallazgos: ["1 de cada 3 unidades publicadas (32,3%) NO tiene foto Impel - vitrina degradada de forma masiva","RM concentra 114 de las 204 unidades Tier 4 (55,9%) - vitrina mas afectada","El backlog hoy es invisible al negocio: sin reporte ni alerta ni owner","Sin data de antiguedad del backlog - requiere cruce con fecha de publicacion por unidad","No se distingue 'esperando Impel' de 'nunca tendra Impel' (abandono)"],
+          mejoras: ["Reporte diario de backlog por zona y sucursal","Alerta automatica cuando backlog > 20% del publicado o antiguedad > SLA","Campo obligatorio 'motivo de no-procesamiento' por unidad","Weekly review de backlog con owners designados por zona","Politica: toda unidad Tier 4 debe tener resolucion (Impel o despublicacion) en 72h"]
         }
       ]
     },

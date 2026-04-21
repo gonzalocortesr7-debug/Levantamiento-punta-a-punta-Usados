@@ -45,6 +45,27 @@ VPP · Compras B2B empresa · Compras B2B no empresa · Test Car · Consignados.
 
 *Nota: la distribución % por origen aún no está cuantificada y se requiere para identificar orígenes críticos.*
 
+### Pipeline de fotos (cobertura real del stock publicado — 1.790 uds)
+
+| Tier | Tipo | Unidades | % |
+|---|---|---|---|
+| Tier 1+2 (agrupado) | Foto Impel | **1.211** | **67,7%** |
+| Tier 3 | Foto inspección | 375 | 20,9% |
+| Tier 4 | Sin foto (placeholder) | 204 | 11,4% |
+| — | **Backlog visible (Tier 3 + 4)** | **579** | **32,3%** |
+
+> **Limitación del BI:** el reporte vigente agrupa Tier 1 (cabina virtual 360) y Tier 2 (fondo limpio) bajo la misma categoría "IMPEL". La adopción específica de cabina virtual 360 no es cuantificable con este reporte — requiere pedir a Impel un breakdown.
+
+### Cobertura Impel por zona
+
+| Zona | Stock | Impel % | Inspección % | Sin foto % |
+|---|---|---|---|---|
+| Sur | 202 | **74,8%** ← mejor | 16,3% | 8,9% |
+| Longitudinal | 266 | 68,8% | 21,4% | 9,8% |
+| Temuco | 156 | 70,5% | 20,5% | 9,0% |
+| Concepción | 232 | 67,7% | 18,5% | 13,8% |
+| Metropolitana | 934 | **65,3%** ← peor | 22,5% | **12,2%** ← peor |
+
 ### Jerarquía real de calidad de foto (4 tiers)
 
 | Tier | Tipo de foto                                      | Ubicación en catálogo         | Estado actual                                   |
