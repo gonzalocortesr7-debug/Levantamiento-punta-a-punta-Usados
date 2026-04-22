@@ -50,6 +50,7 @@
   }
   .title-block .title { font-size: 14px; font-weight: 600; color: var(--navy); }
   .meta { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+  .topbar-actions { display: flex; align-items: center; gap: 8px; }
   .macro-stages {
     display: flex; background: var(--gray-50); border-bottom: 1px solid var(--gray-200);
     flex-shrink: 0; padding: 0 40px; gap: 0;
@@ -432,7 +433,16 @@
         <span class="title">Flujo punta a punta - KPIs - Hallazgos - Mejoras</span>
       </div>
     </div>
-    <div class="meta">Oct 25 - Mar 26 | CRM Llaima</div>
+    <div class="topbar-actions">
+      <button class="macro-view-btn" data-view="exec-summary">
+        <span class="macro-view-icon">📋</span>
+        <span>Resumen ejecutivo</span>
+      </button>
+      <button class="macro-view-btn" data-view="roadmap">
+        <span class="macro-view-icon">🗺️</span>
+        <span>Roadmap</span>
+      </button>
+    </div>
   </header>
 
   <nav class="macro-stages" id="macro-stages">
@@ -448,15 +458,6 @@
       <span class="macro-num">3</span>
       <span>Venta</span>
       <span class="macro-badge">Próximamente</span>
-    </button>
-    <div class="macro-divider"></div>
-    <button class="macro-view-btn" data-view="exec-summary">
-      <span class="macro-view-icon">📋</span>
-      <span>Resumen ejecutivo</span>
-    </button>
-    <button class="macro-view-btn" data-view="roadmap">
-      <span class="macro-view-icon">🗺️</span>
-      <span>Roadmap</span>
     </button>
   </nav>
 
