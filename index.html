@@ -78,14 +78,15 @@
     font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
   }
   .stage-tabs {
-    display: grid; grid-template-columns: repeat(5, 1fr);
+    display: flex;
     background: var(--white); border-bottom: 1px solid var(--gray-200); flex-shrink: 0;
   }
   .stage-tab {
-    position: relative; padding: 14px 16px; background: var(--gray-100); color: var(--gray-700);
-    font-size: 13px; font-weight: 600; text-align: center; cursor: pointer; border: none;
+    position: relative; flex: 1 1 0; min-width: 0; padding: 14px 10px; background: var(--gray-100); color: var(--gray-700);
+    font-size: 12.5px; font-weight: 600; text-align: center; cursor: pointer; border: none;
     border-right: 1px solid var(--white); transition: background 0.15s, color 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit;
+    white-space: nowrap;
   }
   .stage-tab:last-child { border-right: none; }
   .stage-tab:hover:not(.active) { background: var(--gray-200); color: var(--navy); }
@@ -105,6 +106,18 @@
   .sh-resource { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--navy-soft); color: var(--navy); border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid transparent; transition: border-color 0.15s; }
   .sh-resource:hover { border-color: var(--navy); }
   .sh-resource::before { content: "\1F4CE"; font-size: 11px; }
+  .sh-title-line { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .sh-title-line .sh-title { margin: 0; }
+  .sh-arrow { font-size: 16px; color: var(--clicar-green); font-weight: 700; line-height: 1; flex-shrink: 0; }
+  .sh-arrow::before { content: "\2192"; }
+  .sh-responsables { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex: 1 1 auto; }
+  .sh-responsables-label { font-size: 9px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-right: 2px; }
+  .responsable-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; background: var(--navy-soft); color: var(--navy); border-radius: 10px; font-size: 9.5px; border: 1px solid transparent; line-height: 1.4; }
+  .responsable-chip::before { content: "\1F464"; font-size: 9px; }
+  .responsable-nombre { font-weight: 700; }
+  .responsable-rol { color: var(--gray-700); font-weight: 400; font-size: 9px; margin-left: 3px; padding-left: 5px; border-left: 1px solid var(--gray-300); }
+  .responsable-chip.responsable-cliente { background: #FFF4DC; color: #8A5A00; border-color: #F0D388; }
+  .responsable-chip.responsable-cliente .responsable-rol { color: #8A5A00; border-left-color: #F0D388; }
   .sh-resource.video { background: #E7F5E7; color: var(--green); }
   .sh-resource.video::before { content: "\25B6"; font-size: 10px; }
   .sh-resource.video:hover { border-color: var(--green); }
@@ -796,22 +809,28 @@ var journey = {
       ]
     },
     {
-      id: 6, macro: "preparación", name: "Ingreso a Quiter", fullName: "Ingreso a Quiter + Ubicación",
-      video: { url: null, title: "Video del proceso - Ingreso a Quiter + Ubicación" },
-      route: "6 orígenes de ingreso -> Registro en Quiter -> Ubicación física",
-      description: "Toda unidad adquirida ingresa al sistema operativo Quiter con asignación de ubicación física. Los 6 orígenes posibles (VPP, VPP's, Compras B2B empresa, Compras B2B no empresa, Consignados, Test Car) convergen en un pipeline único aguas abajo. La trazabilidad y velocidad de este registro determinan cuando puede comenzar todo el resto del proceso de preparación.",
+      id: 6, macro: "preparación", name: "Ingreso Quiter + Recepción", fullName: "Ingreso a Quiter + Recepción",
+      video: { url: null, title: "Video del proceso - Ingreso a Quiter + Recepción" },
+      route: "6 orígenes de ingreso -> Registro en Quiter -> Llegada física -> Ubicación",
+      description: "Toda unidad adquirida ingresa al sistema operativo Quiter con asignación de ubicación física y, posteriormente, llega físicamente a la sucursal donde se verifica y se le asigna su posición definitiva (vitrina o taller). Los 6 orígenes posibles (VPP, VPP's, Compras B2B empresa, Compras B2B no empresa, Consignados, Test Car) convergen en un pipeline único aguas abajo.",
       substeps: [
         { num: 1, title: "Registro en Quiter por origen",
-          description: "Registro de la unidad según su origen y asignación de ubicación física en el sistema. Inventario total actual: 2.574 unidades provenientes de 5 orígenes.",
+          description: "Registro de la unidad según su origen y asignación inicial de ubicación en el sistema. Inventario total actual: 2.574 unidades provenientes de 5 orígenes.",
           kpis: [{value:"2.574",suffix:"uds",label:"Inventario total (snapshot)"},{value:"5",suffix:"",label:"Orígenes de ingreso activos"},{value:"TBD",suffix:"%",label:"Mix % por origen"}],
           hallazgos: ["Inventario actual de 2.574 unidades desde 5 orígenes (VPP, Compras B2B empresa, Compras B2B no empresa, Test Car, Consignados)","La distribución % por origen no está cuantificada: se requiere para identificar orígenes críticos","Los 6 orígenes de ingreso podrían tener flujos operacionales distintos aguas abajo (sin confirmar)","Dependencia de carga manual: sin integración automática desde orígenes de compra"],
           mejoras: ["Reporte de mix por origen para detectar orígenes dominantes y residuales","Unificar SLA de registro independiente del origen","Integración automática desde sistemas de compras y tasación","Campo obligatorio de origen con lista controlada"]
         },
-        { num: 2, title: "Asignación de ubicación física",
-          description: "Se registra donde está físicamente la unidad para permitir logística y fotografía.",
-          kpis: [{value:"TBD",suffix:"%",label:"Unidades con ubicación correcta"},{value:"TBD",suffix:"%",label:"Discrepancias detectadas en auditoría"},{value:"TBD",suffix:"hrs",label:"Tiempo hasta ubicación asignada"}],
-          hallazgos: ["Ubicación sistema vs. física puede divergir por movimientos no registrados","Sin auditoría periódica sistemática de ubicación","Impacto en búsqueda para fotografía e inspección"],
-          mejoras: ["Auditoría semanal de ubicación por sucursal","App móvil para actualizar ubicación al momento del movimiento","QR físico por unidad para validar ubicación en terreno"]
+        { num: 2, title: "Llegada y verificación del vehículo",
+          description: "El vehículo llega a la sucursal y se verifica documentación, patente y estado declarado vs. recibido.",
+          kpis: [{value:"TBD",suffix:"hrs",label:"Tiempo registro → llegada física"},{value:"TBD",suffix:"%",label:"Verificación correcta al primer intento"},{value:"TBD",suffix:"%",label:"Discrepancias estado declarado vs. recibido"}],
+          hallazgos: ["Sin métrica publicada del tiempo entre registro en Quiter y llegada física del vehículo","Verificación manual expuesta a discrepancias entre lo declarado y lo recibido","Sin protocolo unificado por sucursal para registrar hallazgos de recepción"],
+          mejoras: ["Definir y publicar SLA registro → llegada física","Checklist digital de recepción con foto por hallazgo","Registro estructurado de discrepancias para feedback al origen (VPP/B2B/Consignados)"]
+        },
+        { num: 3, title: "Asignación de ubicación física",
+          description: "El vehículo recibido se asigna a zona de exposición o taller según su condición y se actualiza la ubicación en el sistema para permitir logística y fotografía.",
+          kpis: [{value:"TBD",suffix:"%",label:"Unidades con ubicación correcta"},{value:"TBD",suffix:"%",label:"Unidades que pasan por taller antes de vitrina"},{value:"TBD",suffix:"hrs",label:"Tiempo llegada → ubicación final"}],
+          hallazgos: ["Ubicación en sistema vs. física puede divergir por movimientos no registrados","Criterios taller vs. vitrina no están unificados entre sucursales","Sin trazabilidad del movimiento físico de la unidad dentro de la sucursal","Sin auditoría periódica sistemática de ubicación"],
+          mejoras: ["App móvil para registrar ubicación al momento del movimiento","QR físico por unidad para escanear y validar ubicación en terreno","Reglas claras taller vs. vitrina con criterios de decisión objetivos","Auditoría semanal de ubicación por sucursal"]
         }
       ]
     },
@@ -1174,7 +1193,7 @@ function renderExecSummarySlide(i) {
     '</div>' +
     '<div class="exec-kpi-row">' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Macro-etapas</div><div class="exec-kpi-value">3</div><div class="exec-kpi-sub">2 mapeadas (Compra + Preparación)</div></div>' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">10</div><div class="exec-kpi-sub">37 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
+      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">11</div><div class="exec-kpi-sub">39 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Leads analizados</div><div class="exec-kpi-value">158.753</div><div class="exec-kpi-sub">CRM Llaima · Oct 2025 - Mar 2026</div></div>' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Inventario (Preparación)</div><div class="exec-kpi-value">2.574<span class="suffix">uds</span></div><div class="exec-kpi-sub">Snapshot reporte BI 2026-04-17</div></div>' +
     '</div>' +
@@ -1204,7 +1223,7 @@ function renderExecSummarySlide(i) {
         '<h3>Alcance del análisis</h3>' +
         '<ul>' +
           '<li><strong>Compra</strong> · 5 sub-etapas, 22 subprocesos — data real CRM Llaima (6 meses).</li>' +
-          '<li><strong>Preparación</strong> · 5 sub-etapas, 15 subprocesos — data parcial (snapshot inventario + reporte de fotografías).</li>' +
+          '<li><strong>Preparación</strong> · 6 sub-etapas, 17 subprocesos — data parcial (snapshot inventario + reporte de fotografías).</li>' +
           '<li><strong>Venta</strong> · pendiente de mapeo.</li>' +
           '<li>Cada sub-etapa incluye KPIs operacionales, hallazgos, mejoras y un chip "Impacto cliente" con lineamientos específicos.</li>' +
           '<li>Gráficos embebidos: funnel de leads, contactabilidad, tiempo 1er contacto, motivos de descarte, funnel de publicabilidad, composición fotos por zona, ranking sucursales por % sin foto, y comparativo Compra vs VPP.</li>' +
@@ -1222,6 +1241,68 @@ function renderExecSummarySlide(i) {
       '</div>' +
     '</div>' +
   '</div>';
+}
+
+// ============================================================
+// RESPONSABLES POR ETAPA
+// ============================================================
+var RESPONSABLES_POR_ETAPA = {
+  1: [
+    { nombre: "Martin Flores", rol: "Canales Digitales" },
+    { nombre: "Constanza Araya", rol: "UX/UI" },
+    { nombre: "Trinidad Madrigal", rol: "Marketing" }
+  ],
+  2: [
+    { nombre: "Martin Flores", rol: "Canales Digitales" },
+    { nombre: "Constanza Araya", rol: "UX/UI" },
+    { nombre: "Trinidad Madrigal", rol: "Marketing" }
+  ],
+  3: [
+    { nombre: "Maryorin Vivas", rol: "Productos Digitales" },
+    { nombre: "Jose Tomas Figueroa", rol: "Lead Management Usados" }
+  ],
+  4: [
+    { nombre: "Barbara Colle", rol: "Productos Digitales" },
+    { nombre: "Raul Olivares", rol: "Pricing Usados" }
+  ],
+  5: [
+    { nombre: "Barbara Colle", rol: "Productos Digitales" },
+    { nombre: "Raul Olivares", rol: "Pricing Usados" }
+  ],
+  6: [
+    { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
+    { nombre: "Barbara Colle", rol: "Productos Digitales" },
+    { nombre: "Natalia Reyes", rol: "Logística" }
+  ],
+  7: [
+    { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
+    { nombre: "Barbara Colle", rol: "Productos Digitales" }
+  ],
+  8: [
+    { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
+    { nombre: "Barbara Colle", rol: "Productos Digitales" }
+  ],
+  9: [
+    { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
+    { nombre: "Barbara Colle", rol: "Productos Digitales" }
+  ],
+  10: [
+    { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
+    { nombre: "Barbara Colle", rol: "Productos Digitales" }
+  ]
+};
+var REPRESENTANTE_CLIENTES = { nombre: "Felipe Arroyo", rol: "Experiencia de Clientes" };
+
+function renderResponsables(stageId) {
+  var list = RESPONSABLES_POR_ETAPA[stageId] || [];
+  if (!list.length) return '';
+  var html = '<div class="sh-responsables"><span class="sh-responsables-label">Responsables:</span>';
+  for (var i = 0; i < list.length; i++) {
+    html += '<span class="responsable-chip"><span class="responsable-nombre">' + list[i].nombre + '</span><span class="responsable-rol">' + list[i].rol + '</span></span>';
+  }
+  html += '<span class="responsable-chip responsable-cliente"><span class="responsable-nombre">' + REPRESENTANTE_CLIENTES.nombre + '</span><span class="responsable-rol">' + REPRESENTANTE_CLIENTES.rol + '</span></span>';
+  html += '</div>';
+  return html;
 }
 
 // ============================================================
@@ -1251,7 +1332,8 @@ var CLIENTE_POR_SUBSTEP = {
   "5.4": { kpis: ["35 min tiempo promedio de aprobación","60% de ofertas requieren validación de jefatura","92% tasa de aprobación final"], lineamientos: ["Informar al cliente si la espera será >15 min","Ofrecer café o agua durante la espera","Pre-aprobar dentro de rangos sin hacer esperar al cliente"] },
   "5.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial (TBD)"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
   "6.1": { kpis: ["Tiempo adquisición → sistema (TBD)","% unidades con origen trazable al cliente (TBD)"], lineamientos: ["El origen del auto debe ser consultable por el comprador si pregunta","Trazabilidad completa en la ficha pública cuando aplique"] },
-  "6.2": { kpis: ["% ubicación correcta cuando el cliente pregunta (TBD)","Tiempo de respuesta '¿dónde está mi auto?' (TBD)"], lineamientos: ["Ubicación actualizada en tiempo real","Visible en la ficha del auto"] },
+  "6.2": { kpis: ["Tiempo compra → auto físicamente recibido (TBD)","% vendedores informados de la recepción del auto (TBD)"], lineamientos: ["Notificar al vendedor cuando el auto es recibido (transparencia post-venta)","Registrar discrepancias con evidencia para retroalimentar al origen"] },
+  "6.3": { kpis: ["% ubicación correcta cuando el comprador pregunta (TBD)","Tiempo recepción → disponibilidad para visita (TBD)"], lineamientos: ["Mantener la ubicación actualizada en tiempo real","Evitar unidades 'fantasma' entre recepción y publicación"] },
   "7.1": { kpis: ["17 uds bloqueadas hoy por falta de precio (8,5% de no publicadas)","Tiempo sin precio en vitrina (TBD)"], lineamientos: ["No publicar con placeholder 'precio a consultar'","Si hay rango, explicarlo con argumentos"] },
   "7.2": { kpis: ["% unidades con ajuste de precio en primeros 30 días (TBD)","% clientes que vieron precio distinto al reservar (TBD)"], lineamientos: ["Respetar el precio cuando hay reserva activa","Comunicar proactivamente cualquier cambio al cliente afectado"] },
   "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación (TBD)","% fichas con todos los campos completos (TBD)"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
@@ -1765,8 +1847,6 @@ function renderStepper(stage, activeIdx) {
     if (stage.video) {
       if (stage.video.url) {
         chips.push('<button class="sh-resource video" data-video-url="' + stage.video.url + '" data-video-title="' + (stage.video.title || 'Video del proceso') + '">Video del proceso</button>');
-      } else {
-        chips.push('<span class="sh-resource video pending" title="Pendiente de grabación">Video del proceso (pendiente)</span>');
       }
     }
     if (stage.resources && stage.resources.length) {
@@ -1782,9 +1862,13 @@ function renderStepper(stage, activeIdx) {
       if (activeStages[pi].id === stage.id) { posInMacro = pi + 1; break; }
     }
     var macroLabel = MACRO_LABELS[stage.macro] || stage.macro || 'Compra';
+    var respHtml = renderResponsables(stage.id);
+    var titleLine = respHtml
+      ? '<div class="sh-title-line"><div class="sh-title">' + stage.fullName + '</div><span class="sh-arrow"></span>' + respHtml + '</div>'
+      : '<div class="sh-title">' + stage.fullName + '</div>';
     header.innerHTML =
       '<div class="sh-eyebrow">Etapa ' + posInMacro + ' de ' + activeStages.length + ' - Macro: ' + macroLabel + '</div>' +
-      '<div class="sh-title">' + stage.fullName + '</div>' +
+      titleLine +
       (desc ? '<p class="sh-desc">' + desc + '</p>' : '') +
       resourcesHtml;
     var videoBtns = header.querySelectorAll('.sh-resource.video[data-video-url]');
