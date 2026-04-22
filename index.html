@@ -360,6 +360,22 @@
   .cliente-tooltip ul { list-style: none; padding: 0; margin: 0; }
   .cliente-tooltip li { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; padding: 3px 0 3px 14px; position: relative; }
   .cliente-tooltip li::before { content: "\2022"; position: absolute; left: 4px; color: var(--navy); font-weight: 700; }
+  .benchmark-chip-wrap { position: relative; margin-left: auto; }
+  .benchmark-chip-wrap + .cliente-chip-wrap { margin-left: 8px; }
+  .benchmark-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #E6F0FB; color: #0B3B6F; border: 1px solid #A8C6E6; border-radius: 14px; font-size: 10px; font-weight: 700; cursor: help; text-transform: uppercase; letter-spacing: 0.04em; font-family: inherit; }
+  .benchmark-chip::before { content: "\1F4CA"; font-size: 12px; }
+  .benchmark-chip:hover, .benchmark-chip:focus { background: #A8C6E6; outline: none; }
+  .benchmark-tooltip { position: absolute; top: calc(100% + 8px); right: 0; width: 420px; background: var(--white); border: 1px solid var(--gray-300); border-radius: 4px; box-shadow: 0 12px 32px rgba(0,0,0,0.18); padding: 14px 16px; z-index: 50; display: none; text-align: left; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--gray-900); }
+  .benchmark-chip-wrap:hover .benchmark-tooltip, .benchmark-chip-wrap:focus-within .benchmark-tooltip { display: block; }
+  .benchmark-tooltip::before { content: ""; position: absolute; top: -6px; right: 20px; width: 10px; height: 10px; background: var(--white); border-left: 1px solid var(--gray-300); border-top: 1px solid var(--gray-300); transform: rotate(45deg); }
+  .benchmark-tooltip-title { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 6px; }
+  .benchmark-tooltip-title::before { content: "\1F4CA"; font-size: 14px; }
+  .benchmark-tooltip-heading { font-size: 10px; font-weight: 700; color: #0B3B6F; text-transform: uppercase; letter-spacing: 0.06em; margin: 10px 0 5px; }
+  .benchmark-tooltip-heading:first-of-type { margin-top: 0; }
+  .benchmark-tooltip ul { list-style: none; padding: 0; margin: 0; }
+  .benchmark-tooltip li { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; padding: 3px 0 3px 14px; position: relative; }
+  .benchmark-tooltip li::before { content: "\2022"; position: absolute; left: 4px; color: #0B3B6F; font-weight: 700; }
+  .benchmark-tooltip li strong { color: var(--navy); font-weight: 700; }
   .macro-divider { width: 1px; height: 24px; background: var(--gray-300); margin: 0 8px 0 auto; align-self: center; flex-shrink: 0; }
   .macro-stages { gap: 10px; }
   .macro-view-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; background: transparent; border: 1px solid transparent; color: var(--gray-700); font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 4px; font-family: inherit; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.15s, color 0.15s, border-color 0.15s; }
@@ -467,10 +483,9 @@
       <span class="macro-num">2</span>
       <span>Preparación</span>
     </button>
-    <button class="macro-stage" data-macro="venta" disabled>
+    <button class="macro-stage" data-macro="venta">
       <span class="macro-num">3</span>
       <span>Venta</span>
-      <span class="macro-badge">Próximamente</span>
     </button>
   </nav>
 
@@ -635,16 +650,41 @@ var journey = {
       video: { url: null, title: "Video del proceso - Captación Digital" },
       substeps: [
         { num: 1, title: "Ingreso Datos del Vehículo",
-          description: "El cliente ingresa marca, modelo, año, kilometraje y patente del vehículo que desea vender.",
+          description: "El cliente ingresa patente, año, marca, modelo, versión y kilometraje del vehículo que desea vender. Además responde 3 preguntas de elegibilidad.",
           kpis: [{value:"9.718",suffix:"/mes",label:"Formularios completados"},{value:"82",suffix:"%",label:"Tasa de completitud de campos"},{value:"18",suffix:"%",label:"Tasa de error en datos de patente"}],
-          hallazgos: ["18% de registros tienen errores en datos de patente ingresados manualmente","Campo de kilometraje sin validación de rango permite valores absurdos","No existe autocompletado de marca/modelo al ingresar patente"],
-          mejoras: ["Validación de patente en tiempo real con SII para autocompletar datos","Rangos de validación inteligente en campo de kilometraje según antigüedad","Autocompletado de marca, modelo y versión al ingresar patente válida"]
+          hallazgos: [
+            "18% de registros tienen errores en datos de patente ingresados manualmente, y no existe autocompletado de marca, modelo ni versión — duplicando el esfuerzo del usuario.",
+            "Campo de kilometraje sin validación de rango permite valores absurdos (ej: 1 km, 999.999 km).",
+            "Al modificar un campo (marca, modelo o año), el sistema queda en estado inconsistente y obliga al usuario a reiniciar parcialmente el formulario.",
+            "El stepper de progreso se corta en mobile, mostrando solo los primeros pasos y generando incertidumbre sobre cuánto falta.",
+            "No hay título motivacional ni indicación de qué obtendrá el usuario al completar el flujo.",
+            "Las preguntas de elegibilidad aparecen mezcladas con los datos de tasación, exponiendo al usuario a un rechazo tardío."
+          ],
+          mejoras: [
+            "<strong>Integración con patente para autocompletar y validar elegibilidad:</strong> validación en tiempo real con SII / Registro Civil que autocomplete marca, modelo, año y versión, y detecte de forma inmediata si el vehículo no cumple los criterios de elegibilidad con mensaje claro en el mismo campo, sin esperar al final del formulario.",
+            "<strong>Integración con Llaima para reconocimiento de vehículos propios:</strong> si el auto fue comprado en Americar, precargar historial y condición esperada. Ventaja exclusiva no disponible para ningún competidor.",
+            "<strong>Validación inteligente del kilometraje:</strong> campo con validación según la antigüedad del vehículo y mensaje inline no bloqueante si el valor ingresado parece fuera de rango.",
+            "<strong>Buscador tipeable en marca, modelo y versión:</strong> reemplazar los dropdowns por campos con autocompletado (typeahead) que filtren en tiempo real, especialmente crítico en mobile.",
+            "<strong>Comunicar elegibilidad desde el inicio y rediseñar el modal de rechazo:</strong> anticipar los criterios antes de iniciar el formulario. Si el usuario no califica, mostrar un mensaje empático con el motivo claro y una propuesta de valor alternativa (asesor, otras opciones disponibles)."
+          ]
         },
         { num: 2, title: "Validación de Datos Personales",
-          description: "Se capturan y validan nombre, teléfono, email y comuna del vendedor.",
-          kpis: [{value:"84,3",suffix:"%",label:"Tasa de verificación de teléfono"},{value:"1.815",suffix:"/mes",label:"Leads no verificados"},{value:"67",suffix:"%",label:"Emails validos ingresados"}],
-          hallazgos: ["Teléfonos inválidos y emails incorrectos reducen la contactabilidad posterior","Sin validación de RUT, no se puede cruzar con bases internas","Formulario permite avanzar sin verificar SMS"],
-          mejoras: ["Solicitar RUT para autocompletar datos desde fuentes oficiales","Bloquear avance hasta completar verificación SMS exitosa","Validación de email en tiempo real antes de permitir envío"]
+          description: "Se capturan y validan nombre, teléfono, email y comuna del vendedor para asegurar contactabilidad.",
+          kpis: [{value:"84,3",suffix:"%",label:"Tasa de verificación de teléfono"},{value:"1.815",suffix:"/mes",label:"Leads no verificados"},{value:"67",suffix:"%",label:"Emails válidos ingresados"}],
+          hallazgos: [
+            "Teléfonos inválidos y emails incorrectos reducen la contactabilidad posterior del Contact Center.",
+            "El teléfono está ausente del formulario principal y aparece en un modal posterior, sumando un paso innecesario y generando una 'falsa conclusión' al usuario que cree haber terminado.",
+            "Sin RUT en el formulario, no es posible cruzar con bases internas para detectar clientes recurrentes ni personalizar la experiencia para clientes VIP.",
+            "La pregunta '¿Cuándo quieres vender tu auto?' aparece antes de que el usuario haya visto la tasación, cuando aún no tiene información para responderla con precisión.",
+            "El título es puramente instruccional y no comunica qué recibirá el usuario a cambio de sus datos."
+          ],
+          mejoras: [
+            "Solicitar RUT para autocompletar datos desde fuentes oficiales y detectar clientes existentes.",
+            "Incorporar el campo de teléfono directamente en el formulario.",
+            "Bloquear avance del flujo hasta completar verificación SMS exitosa.",
+            "Validación de email en tiempo real (formato + dominio activo) antes de permitir envío.",
+            "Reformular el título para comunicar el intercambio: 'Ingresa tus datos para recibir la tasación de tu auto'."
+          ]
         },
         { num: 3, title: "Preguntas Filtro",
           description: "3 preguntas de calificación determinan si el lead tiene intención real de venta.",
@@ -659,10 +699,31 @@ var journey = {
           mejoras: ["Agregar modulo de simulación de credito integrado al flujo","Cross-sell de financiamiento para compra de vehículo Americar","Integración con financieras partner para pre-aprobación"]
         },
         { num: 5, title: "Cierre Flujo Web",
-          description: "Momento final donde el vendedor recibe resultado y decide si continúa.",
+          description: "Momento final del flujo web donde el vendedor recibe resultado (tasación) y decide si continúa al proceso presencial.",
           kpis: [{value:"62",suffix:"%",label:"Conversión flujo web -> agenda"},{value:"38",suffix:"%",label:"Abandono al ver tasación"},{value:"4,2",suffix:"min",label:"Tiempo total del flujo web"}],
-          hallazgos: ["No se ofrece la compra directa del auto al finalizar","38% abandona al ver los precios de tasación (compra directa y parte de pago)","Sin call-to-action alternativo para quienes no agendan"],
-          mejoras: ["Incorporar oferta de compra inmediata para vehículos de alta demanda","Mostrar comparativa de precio vs mercado","Flujo de retargeting automático a quienes abandonan"]
+          hallazgos: [
+            "No se ofrece la compra directa del auto al finalizar el flujo de tasación online.",
+            "38% abandona al ver el rango de tasación — percepción de precio bajo sin contexto.",
+            "Sin call-to-action alternativo para quienes no agendan (retargeting, WhatsApp).",
+            "El precio se muestra con un asterisco sin explicación visible, especialmente en mobile, generando incertidumbre.",
+            "La frase 'esta tasación considera un auto en buenas condiciones' genera desconfianza sin definir qué significa 'buenas condiciones'.",
+            "No existe una explicación de los factores considerados en la tasación (año, kilometraje, versión), lo que reduce la percepción de transparencia y credibilidad del precio mostrado.",
+            "En algunos casos ambas opciones (Intercambio e Inmediata) muestran el mismo valor, lo que elimina el precio como criterio de decisión entre modalidades.",
+            "Los 7 días de vigencia están bien comunicados.",
+            "No hay contexto de mercado: el usuario no sabe si el precio es bueno o malo para su vehículo."
+          ],
+          mejoras: [
+            "Incorporar oferta de compra inmediata para vehículos de alta demanda.",
+            "Mostrar comparativa de precio vs. mercado para contextualizar la tasación.",
+            "Flujo de retargeting automático (email + WhatsApp) a quienes abandonan sin agendar.",
+            "Reemplazar el asterisco por un ícono de información (ⓘ) junto al precio que despliegue las condiciones en contexto, sin necesidad de buscar la referencia.",
+            "Reformular la frase 'esta tasación considera un auto en buenas condiciones' por una más honesta: 'El valor final se confirma tras la inspección del vehículo'.",
+            "Diferenciar visualmente las dos modalidades por su beneficio real, no solo por nombre. Cuando el precio es el mismo, mostrar una sola opción.",
+            "Agregar contexto de mercado: un rango referencial de vehículos similares para que el usuario evalúe si la oferta es competitiva.",
+            "Extender la comunicación de vigencia de 7 días a todos los usuarios por correo o WhatsApp, no solo a leads calientes.",
+            "Hacer más visible el CTA 'Agenda tu inspección', que actualmente se pierde en el scroll siendo la acción principal de la pantalla.",
+            "Comunicar claramente los beneficios de agendar la inspección para incentivar la conversión en este paso crítico."
+          ]
         }
       ]
     },
@@ -679,10 +740,32 @@ var journey = {
           mejoras: ["Calibrar el precio online para que se acerque al precio final ofertado y eliminar el vaivén de apelaciones posteriores","Refinar el algoritmo con transacciones reales Q1 2026 (lo que efectivamente compró Clicar y a qué precio)","Incluir preguntas de condición mecánica que ajusten ambos precios desde el inicio","Explicar claramente qué diferencia al precio de compra directa del de parte de pago"]
         },
         { num: 2, title: "Selección de Sucursal",
-          description: "El vendedor elige sucursal y horario disponible.",
+          description: "El vendedor elige región, ciudad, sucursal, fecha y horario disponibles para llevar el vehículo a inspección.",
           kpis: [{value:"62",suffix:"%",label:"Tasa de agendamiento"},{value:"3,4",suffix:"",label:"Sucursales promedio mostradas"},{value:"78",suffix:"%",label:"Eligen sucursal más cercana"}],
-          hallazgos: ["Distribución desigual: sucursales céntricas sobrecargadas","No se muestra disponibilidad en tiempo real","Sin indicador de tiempo de espera estimado"],
-          mejoras: ["Sugerir sucursales con menor carga mediante balanceo","Integrar disponibilidad en tiempo real desde CRM","Mostrar tiempo de espera estimado por sucursal"]
+          hallazgos: [
+            "Distribución desigual: sucursales céntricas sobrecargadas.",
+            "No se muestra disponibilidad en tiempo real.",
+            "Sin indicador de tiempo de espera estimado.",
+            "El título 'Formulario de contacto' no refleja la acción que el usuario está realizando — genera desconexión con la intención de agendar.",
+            "Los datos de contacto (nombre, apellido, teléfono, email) se repiten como formulario editable, cuando el usuario ya los ingresó en el paso anterior — genera fatiga y transmite que el sistema no confía en sus propios datos.",
+            "El campo Región aparece vacío por un bug de persistencia, pese a haber sido ingresado previamente.",
+            "Se requieren tres campos (Región, Ciudad, Sucursal) para llegar a un solo dato, sobrecargando innecesariamente este paso.",
+            "Fecha y horario se seleccionan con dropdowns en vez de controles visuales: el usuario no puede ver el contexto temporal ni el día de la semana en mobile."
+          ],
+          mejoras: [
+            "Sugerir sucursales con menor carga mediante balanceo.",
+            "Integrar disponibilidad en tiempo real desde CRM.",
+            "Mostrar tiempo de espera estimado por sucursal.",
+            "Cambiar el título a 'Agenda tu inspección' o 'Elige fecha y lugar para la inspección de tu auto'.",
+            "Mostrar los datos de contacto ya ingresados en modo solo lectura, con opción '¿Editar datos?' que active la edición solo si el usuario lo necesita.",
+            "Corregir el bug de persistencia que deja el campo Región vacío.",
+            "Consolidar Región, Ciudad y Sucursal en un único selector con filtro en cascada integrado.",
+            "Reemplazar el dropdown de fechas por un calendario visual con días disponibles destacados.",
+            "Reemplazar el dropdown de horarios por chips o botones visuales seleccionables de un vistazo.",
+            "Incorporar geolocalización opcional para sugerir la sucursal más cercana, eliminando la necesidad de seleccionar región y ciudad manualmente.",
+            "Señalar los horarios de menor demanda al estilo Kavak, reduciendo la ansiedad del usuario y distribuyendo mejor la carga operacional.",
+            "Mostrar un resumen de la selección en tiempo real antes de confirmar ('Has seleccionado el día X a las Y hrs en sucursal Z'), al estilo Bruno Fritsch — reduce errores y da seguridad al usuario antes de enviar."
+          ]
         },
         { num: 3, title: "Confirmación y Recordatorio",
           description: "Se envía confirmación por email y SMS, más recordatorio 24h antes.",
@@ -953,6 +1036,136 @@ var journey = {
           mejoras: ["Definir SLA máximo por tier (ej. Tier 4: max 72h)","Asignar owner operacional del pipeline visual","Cola priorizada de upgrades con edad máxima visible"]
         }
       ]
+    },
+    {
+      id: 11, macro: "venta", name: "Captación Digital", fullName: "Captación Digital (Venta)",
+      video: { url: null, title: "Video del proceso - Captación Digital (Venta)" },
+      route: "Vitrina clicar.cl -> Interés del comprador -> Formulario / lead generado",
+      description: "Recorrido del cliente comprador desde que descubre una unidad publicada en clicar.cl hasta que deja sus datos. Cubre la búsqueda en catálogo, la ficha de vehículo, los CTA de contacto y la generación del lead en CRM. Aún por mapear con data real.",
+      substeps: [
+        { num: 1, title: "Búsqueda y filtrado en catálogo",
+          description: "El comprador navega el catálogo público y aplica filtros (marca, modelo, precio, zona).",
+          kpis: [{value:"TBD",suffix:"",label:"Visitas únicas al catálogo / mes"},{value:"TBD",suffix:"%",label:"% sesiones con filtro aplicado"},{value:"TBD",suffix:"",label:"Fichas vistas por sesión"}],
+          hallazgos: ["Sin métrica publicada de uso efectivo de filtros","Dependencia del orden en catálogo (tiers de foto)","Sin análisis de búsquedas sin resultado"],
+          mejoras: ["Tablero de top búsquedas sin resultado para detectar gaps de stock","Filtros guardados / suscripción a alertas","Medir impacto de tier de foto sobre CTR a ficha"]
+        },
+        { num: 2, title: "Ficha de vehículo y CTA de contacto",
+          description: "El comprador entra a la ficha y evalúa si deja sus datos o agenda una visita.",
+          kpis: [{value:"TBD",suffix:"%",label:"CTR ficha -> formulario"},{value:"TBD",suffix:"%",label:"% fichas con foto Tier 1 o Tier 2"},{value:"TBD",suffix:"seg",label:"Tiempo promedio en ficha"}],
+          hallazgos: ["Fichas con Tier 3 o Tier 4 degradan la decisión del comprador","Sin A/B de CTA ni de disposición de foto / precio / ubicación","Datos faltantes en la ficha (km, versión, equipamiento) reducen el interés"],
+          mejoras: ["Bloquear publicación sin campos mínimos","Experimentos A/B de CTA y layout","Mostrar proactivamente stock alternativo en la misma ficha"]
+        },
+        { num: 3, title: "Formulario y generación del lead",
+          description: "El comprador completa datos y genera el lead en CRM para gestión posterior.",
+          kpis: [{value:"TBD",suffix:"%",label:"Tasa de completitud del formulario"},{value:"TBD",suffix:"%",label:"% leads con teléfono válido"},{value:"TBD",suffix:"seg",label:"Tiempo promedio de completado"}],
+          hallazgos: ["Sin validación de teléfono vía SMS en flujo comprador","Sin campo de intención clara (compra inmediata vs. exploración)","Duplicados de leads por múltiples fichas visitadas"],
+          mejoras: ["Validar teléfono por SMS antes de enviar el lead","Campo obligatorio de plazo estimado de compra","Dedupe automático por teléfono / email en CRM"]
+        }
+      ]
+    },
+    {
+      id: 12, macro: "venta", name: "Gestión de Leads", fullName: "Gestión de Leads (Venta)",
+      video: { url: null, title: "Video del proceso - Gestión de Leads (Venta)" },
+      route: "Lead en CRM -> Asignación -> Contacto -> Calificación -> Agendamiento",
+      description: "Tramo de Contact Center / asesor comercial para el comprador: asignación del lead, cadencia de contacto, calificación de intención y agendamiento de la visita a sucursal. Aún por mapear con data real.",
+      substeps: [
+        { num: 1, title: "Asignación del lead al asesor",
+          description: "Ruteo del lead al asesor o Contact Center según reglas (origen, sucursal, ticket).",
+          kpis: [{value:"TBD",suffix:"min",label:"Tiempo lead -> asignación"},{value:"TBD",suffix:"%",label:"% leads con asignación automática"},{value:"TBD",suffix:"",label:"Leads abiertos por asesor (promedio)"}],
+          hallazgos: ["Reglas de asignación no documentadas para Venta","Carga por asesor sin balanceo","Sin scoring de lead para priorización"],
+          mejoras: ["Ruteo automatizado basado en disponibilidad y score","Capacity planning por asesor / sucursal","Alerta cuando un lead queda sin asignar > X min"]
+        },
+        { num: 2, title: "Contacto y cadencia",
+          description: "Intento multicanal (llamada + WhatsApp) hasta establecer contacto con el comprador.",
+          kpis: [{value:"TBD",suffix:"%",label:"Contactabilidad al primer intento"},{value:"TBD",suffix:"hrs",label:"Tiempo 1er contacto"},{value:"TBD",suffix:"",label:"Intentos promedio por lead"}],
+          hallazgos: ["Sin cadencia estandarizada llamada + WhatsApp","Leads 'calientes' compitiendo con cola FIFO","Sin registro estructurado de motivo de no-contacto"],
+          mejoras: ["Cadencia automatizada llamada -> WhatsApp con timeout","Priorización por scoring (no FIFO)","Journey de descalificación automática tras N intentos"]
+        },
+        { num: 3, title: "Calificación y agendamiento",
+          description: "Evaluación de intención real y agendamiento de visita a sucursal o test drive.",
+          kpis: [{value:"TBD",suffix:"%",label:"% leads calificados"},{value:"TBD",suffix:"%",label:"% leads agendados"},{value:"TBD",suffix:"%",label:"Show rate a la visita"}],
+          hallazgos: ["Sin criterios uniformes de calificación entre asesores","Sin recordatorio automatizado de la visita","Pérdida de leads entre calificación y agenda"],
+          mejoras: ["Lista cerrada de criterios de calificación","Confirmación y recordatorio por WhatsApp (Paula)","Reporte de show rate por asesor y sucursal"]
+        }
+      ]
+    },
+    {
+      id: 13, macro: "venta", name: "Reserva y Medios de Pago", fullName: "Reserva y Medios de Pago",
+      video: { url: null, title: "Video del proceso - Reserva y Medios de Pago" },
+      route: "Cliente decide -> Reserva -> Medio de pago -> Señal o anticipo registrado",
+      description: "Momento en que el comprador formaliza intención con una reserva y define el medio de pago (efectivo, transferencia, crédito automotriz, parte de pago). Aún por mapear con data real.",
+      substeps: [
+        { num: 1, title: "Reserva de la unidad",
+          description: "Registro de la reserva en Llaima / sistema con monto y vigencia.",
+          kpis: [{value:"TBD",suffix:"%",label:"% reservas que terminan en venta"},{value:"TBD",suffix:"días",label:"Duración promedio de la reserva"},{value:"TBD",suffix:"%",label:"% reservas liberadas por vencimiento"}],
+          hallazgos: ["Reservas 'fantasma' que inmovilizan stock (403 uds reservadas hoy)","Sin regla automática de liberación por vencimiento","Sin visibilidad del cliente respecto a su propia reserva"],
+          mejoras: ["Liberación automática de reservas a 48h sin avance","Panel del cliente con estado de la reserva y vencimiento","Alerta al asesor antes del vencimiento"]
+        },
+        { num: 2, title: "Elección del medio de pago",
+          description: "El comprador elige entre efectivo, transferencia, crédito automotriz o parte de pago.",
+          kpis: [{value:"TBD",suffix:"%",label:"Mix por medio de pago"},{value:"TBD",suffix:"%",label:"% con crédito automotriz"},{value:"TBD",suffix:"%",label:"% con parte de pago"}],
+          hallazgos: ["Sin mix publicado de medios de pago","Sin integración directa con entidades financieras","Parte de pago requiere tasación del vehículo del comprador -> loop con macro Compra"],
+          mejoras: ["Integración con bancos / financieras partner","Workflow específico para parte de pago (tasación express)","Simulador de cuota en la ficha del vehículo"]
+        },
+        { num: 3, title: "Registro de señal o anticipo",
+          description: "Ingreso del pago inicial y formalización en el sistema.",
+          kpis: [{value:"TBD",suffix:"min",label:"Tiempo del proceso de pago"},{value:"TBD",suffix:"%",label:"% pagos digitales vs. presenciales"},{value:"TBD",suffix:"%",label:"% con comprobante entregado al cliente"}],
+          hallazgos: ["Sin link de pago digital estándar","Comprobante manual por email / papel","Sin conciliación automática entre pago y reserva"],
+          mejoras: ["Link de pago digital con comprobante automático","Conciliación automática entre reserva y pago","Dashboard de pagos pendientes por asesor"]
+        }
+      ]
+    },
+    {
+      id: 14, macro: "venta", name: "Firma de Contrato", fullName: "Firma de Contrato",
+      video: { url: null, title: "Video del proceso - Firma de Contrato" },
+      route: "Condiciones acordadas -> Generación de contrato -> Revisión del cliente -> Firma formal",
+      description: "Formalización del acuerdo comercial entre el comprador y Clicar. Incluye generación del contrato con las condiciones pactadas (precio, medio de pago, plazos, parte de pago si aplica), revisión por el cliente y firma (presencial o digital). Aún por mapear con data real.",
+      substeps: [
+        { num: 1, title: "Generación del contrato",
+          description: "Emisión del contrato con todas las condiciones acordadas prellenadas desde CRM.",
+          kpis: [{value:"TBD",suffix:"min",label:"Tiempo acuerdo -> contrato listo"},{value:"TBD",suffix:"%",label:"% contratos generados sin error"},{value:"TBD",suffix:"%",label:"% contratos con prellenado automático"}],
+          hallazgos: ["Datos del cliente digitados manualmente en el contrato -> errores","Sin plantilla única entre sucursales","Sin trazabilidad de quién generó el contrato"],
+          mejoras: ["Prellenado del contrato desde CRM (un solo source of truth)","Plantilla única versionada centralmente","Audit trail de generación y modificaciones"]
+        },
+        { num: 2, title: "Revisión del cliente",
+          description: "El comprador revisa el contrato, hace consultas y valida las condiciones antes de firmar.",
+          kpis: [{value:"TBD",suffix:"min",label:"Tiempo promedio de revisión"},{value:"TBD",suffix:"%",label:"% contratos modificados en revisión"},{value:"TBD",suffix:"%",label:"% clientes que consultan a un tercero"}],
+          hallazgos: ["Cliente no recibe el contrato antes de la cita para revisarlo con tiempo","Cambios manuales generan re-impresión","Dudas del cliente manejadas de forma oral sin registro"],
+          mejoras: ["Envío del contrato al cliente 24h antes de la firma","Proceso ágil de enmiendas digitales","FAQ del contrato + registro de dudas frecuentes"]
+        },
+        { num: 3, title: "Firma del contrato",
+          description: "Firma formal (presencial o digital) y archivo en CRM con copia al comprador.",
+          kpis: [{value:"TBD",suffix:"%",label:"% firmas digitales vs. presenciales"},{value:"TBD",suffix:"min",label:"Duración de la ceremonia de firma"},{value:"TBD",suffix:"%",label:"% contratos archivados automáticamente"}],
+          hallazgos: ["Firma presencial por defecto aunque aplique digital","Archivo manual en carpetas físicas en algunas sucursales","Cliente recibe la copia por email de forma no estandarizada"],
+          mejoras: ["Firma digital por defecto (DocuSign / similar)","Archivo automático en CRM con vínculo a la unidad","Entrega inmediata de copia firmada por email al cliente"]
+        }
+      ]
+    },
+    {
+      id: 15, macro: "venta", name: "Facturación y Entrega", fullName: "Facturación y Entrega",
+      video: { url: null, title: "Video del proceso - Facturación y Entrega" },
+      route: "Aprobaciones OK -> Facturación -> Documentación legal -> Entrega física",
+      description: "Cierre operacional de la venta: emisión de factura, cambio de propiedad en registro civil, preparación final del vehículo y entrega física al comprador con una experiencia memorable. Aún por mapear con data real.",
+      substeps: [
+        { num: 1, title: "Facturación",
+          description: "Emisión de factura y documentos tributarios.",
+          kpis: [{value:"TBD",suffix:"hrs",label:"Tiempo aprobaciones -> factura emitida"},{value:"TBD",suffix:"%",label:"% facturas sin error al primer intento"},{value:"TBD",suffix:"%",label:"% facturas con envío digital"}],
+          hallazgos: ["Errores frecuentes por datos del cliente digitados manualmente","Envío de factura en papel en algunas sucursales","Sin SLA publicado de emisión"],
+          mejoras: ["Prellenado de datos del cliente desde CRM","Envío digital por defecto con copia al correo","SLA formal: factura <2h después de aprobación"]
+        },
+        { num: 2, title: "Documentación legal y cambio de propiedad",
+          description: "Trámite de transferencia en el registro civil y entrega de documentos al comprador.",
+          kpis: [{value:"TBD",suffix:"días",label:"Tiempo factura -> transferencia lista"},{value:"TBD",suffix:"%",label:"% trámites sin observaciones"},{value:"TBD",suffix:"%",label:"% clientes que esperan >7 días"}],
+          hallazgos: ["Trámite presencial con gestor, sujeto a cuellos del Registro Civil","Sin tracking del trámite para el cliente","Documentos físicos que se entregan en una segunda visita"],
+          mejoras: ["Uso de canales digitales del Registro Civil cuando aplique","Portal de seguimiento del trámite para el cliente","Courier para entrega de documentos finales"]
+        },
+        { num: 3, title: "Preparación final y entrega del vehículo",
+          description: "Lavado, detailing, revisión final y ceremonia de entrega al comprador.",
+          kpis: [{value:"TBD",suffix:"%",label:"% entregas en fecha comprometida"},{value:"TBD",suffix:"min",label:"Duración ceremonia de entrega"},{value:"TBD",suffix:"",label:"NPS de entrega"}],
+          hallazgos: ["Sin protocolo unificado de ceremonia de entrega entre sucursales","Vehículo a veces entregado con detalles menores no resueltos","Sin medición de NPS post-entrega"],
+          mejoras: ["Playbook de entrega premium con checklist","Encuesta NPS automática 24h post-entrega","Seguimiento post-venta a 30 / 60 / 90 días"]
+        }
+      ]
     }
   ]
 };
@@ -1192,8 +1405,8 @@ function renderExecSummarySlide(i) {
       '<p>Síntesis del análisis punta a punta: alcance, números clave, hallazgos prioritarios y próximas decisiones. Diseñado para ser la primera diapositiva al presentar.</p>' +
     '</div>' +
     '<div class="exec-kpi-row">' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Macro-etapas</div><div class="exec-kpi-value">3</div><div class="exec-kpi-sub">2 mapeadas (Compra + Preparación)</div></div>' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">11</div><div class="exec-kpi-sub">39 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
+      '<div class="exec-kpi"><div class="exec-kpi-label">Macro-etapas</div><div class="exec-kpi-value">3</div><div class="exec-kpi-sub">3 mapeadas (Venta con data pendiente)</div></div>' +
+      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">16</div><div class="exec-kpi-sub">54 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Leads analizados</div><div class="exec-kpi-value">158.753</div><div class="exec-kpi-sub">CRM Llaima · Oct 2025 - Mar 2026</div></div>' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Inventario (Preparación)</div><div class="exec-kpi-value">2.574<span class="suffix">uds</span></div><div class="exec-kpi-sub">Snapshot reporte BI 2026-04-17</div></div>' +
     '</div>' +
@@ -1224,7 +1437,7 @@ function renderExecSummarySlide(i) {
         '<ul>' +
           '<li><strong>Compra</strong> · 5 sub-etapas, 22 subprocesos — data real CRM Llaima (6 meses).</li>' +
           '<li><strong>Preparación</strong> · 6 sub-etapas, 17 subprocesos — data parcial (snapshot inventario + reporte de fotografías).</li>' +
-          '<li><strong>Venta</strong> · pendiente de mapeo.</li>' +
+          '<li><strong>Venta</strong> · 5 sub-etapas, 15 subprocesos — estructura inicial levantada, KPIs TBD.</li>' +
           '<li>Cada sub-etapa incluye KPIs operacionales, hallazgos, mejoras y un chip "Impacto cliente" con lineamientos específicos.</li>' +
           '<li>Gráficos embebidos: funnel de leads, contactabilidad, tiempo 1er contacto, motivos de descarte, funnel de publicabilidad, composición fotos por zona, ranking sucursales por % sin foto, y comparativo Compra vs VPP.</li>' +
         '</ul>' +
@@ -1289,6 +1502,27 @@ var RESPONSABLES_POR_ETAPA = {
   10: [
     { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
     { nombre: "Barbara Colle", rol: "Productos Digitales" }
+  ],
+  11: [
+    { nombre: "Martin Flores", rol: "Canales Digitales" },
+    { nombre: "Constanza Araya", rol: "UX/UI" },
+    { nombre: "Trinidad Madrigal", rol: "Marketing" }
+  ],
+  12: [
+    { nombre: "Maryorin Vivas", rol: "Productos Digitales" },
+    { nombre: "Jose Tomas Figueroa", rol: "Lead Management Usados" }
+  ],
+  13: [
+    { nombre: "Barbara Colle", rol: "Productos Digitales" },
+    { nombre: "Raul Olivares", rol: "Pricing Usados" }
+  ],
+  14: [
+    { nombre: "Barbara Colle", rol: "Productos Digitales" },
+    { nombre: "Raul Olivares", rol: "Pricing Usados" }
+  ],
+  15: [
+    { nombre: "Barbara Colle", rol: "Productos Digitales" },
+    { nombre: "Raul Olivares", rol: "Pricing Usados" }
   ]
 };
 var REPRESENTANTE_CLIENTES = { nombre: "Felipe Arroyo", rol: "Experiencia de Clientes" };
@@ -1346,7 +1580,22 @@ var CLIENTE_POR_SUBSTEP = {
   "10.1": { kpis: ["Mix 67,7% Impel / 20,9% Inspección / 11,4% Sin foto","Target: >80% en Tier 1+2","Target: <5% en Tier 4"], lineamientos: ["Top del catálogo debe ser 100% Tier 1+2","Reportar el mix de tiers semanalmente con tendencia"] },
   "10.2": { kpis: ["Días en stock Tier 4 vs. Tier 1 (TBD)","Conversión relativa por tier (TBD)","CTR de ficha por tier (TBD)"], lineamientos: ["Invertir donde haya retorno cuantitativo demostrado","Business case con data antes de escalar capacidad"] },
   "10.3": { kpis: ["Peor sucursal: Concepción J. Alessandri R. 1885 (51,5% sin foto)","2da peor: Vitacura Padre Hurtado 1246 (48,4%)","Top 3 peores = 43 uds sin foto (21% del total)"], lineamientos: ["Intervención focalizada semanal en top 5 peores sucursales","Ranking público interno para presión social positiva"] },
-  "10.4": { kpis: ["Permanencia promedio en Tier 3 (TBD)","Permanencia promedio en Tier 4 (TBD)","% upgrades efectivos por semana (TBD)"], lineamientos: ["SLA máximo por tier: Tier 4 en 72h máximo","Owner operacional claro del pipeline visual"] }
+  "10.4": { kpis: ["Permanencia promedio en Tier 3 (TBD)","Permanencia promedio en Tier 4 (TBD)","% upgrades efectivos por semana (TBD)"], lineamientos: ["SLA máximo por tier: Tier 4 en 72h máximo","Owner operacional claro del pipeline visual"] },
+  "11.1": { kpis: ["Visitas únicas al catálogo / mes (TBD)","% sesiones con filtro aplicado (TBD)","Fichas vistas por sesión (TBD)"], lineamientos: ["Resultados siempre ordenados por calidad de foto y completitud de ficha","Ofrecer sugerencias cuando la búsqueda no tenga resultado","Permitir guardar búsqueda y recibir alertas de stock nuevo"] },
+  "11.2": { kpis: ["CTR ficha -> formulario (TBD)","% fichas con foto Tier 1/2 (TBD)","Tiempo promedio en ficha (TBD)"], lineamientos: ["Fichas completas, con foto en fondo limpio mínimo","Mostrar disponibilidad y ubicación en tiempo real","Sugerir alternativas similares en la misma ficha"] },
+  "11.3": { kpis: ["Tasa de completitud del formulario (TBD)","% leads con teléfono válido (TBD)","Tiempo de completado (TBD)"], lineamientos: ["Formulario corto, solo campos realmente necesarios","Validación de teléfono por SMS antes de enviar el lead","Confirmación inmediata al comprador con próximo paso claro"] },
+  "12.1": { kpis: ["Tiempo lead -> asignación (TBD)","% leads con asignación automática (TBD)"], lineamientos: ["Nunca dejar un lead sin dueño >15 min","Priorizar leads de alto valor sobre FIFO"] },
+  "12.2": { kpis: ["Contactabilidad al primer intento (TBD)","Tiempo 1er contacto (TBD)","Intentos promedio (TBD)"], lineamientos: ["Cadencia multi-canal llamada + WhatsApp","Respetar preferencias y horario del comprador","Nunca abandonar un lead en silencio"] },
+  "12.3": { kpis: ["% leads calificados (TBD)","% agendados (TBD)","Show rate (TBD)"], lineamientos: ["Recordatorio de la visita por WhatsApp (Paula)","Entregar instrucciones claras: dirección, documentos, duración","Permitir reagendar en 1 click"] },
+  "13.1": { kpis: ["% reservas que terminan en venta (TBD)","Duración promedio de la reserva (TBD)","% reservas liberadas por vencimiento (TBD)"], lineamientos: ["Dejar clara la vigencia de la reserva al cliente","Avisar antes del vencimiento","No reservar sin compromiso real del comprador"] },
+  "13.2": { kpis: ["Mix por medio de pago (TBD)","% con crédito automotriz (TBD)","% con parte de pago (TBD)"], lineamientos: ["Mostrar simulador de cuota en la ficha","Ser transparente con tasas y costos financieros","Explicar el flujo de parte de pago antes de iniciarlo"] },
+  "13.3": { kpis: ["Tiempo del proceso de pago (TBD)","% pagos digitales (TBD)","% con comprobante entregado (TBD)"], lineamientos: ["Link de pago digital por defecto","Comprobante automático al correo al momento del pago","Nunca pedir datos sensibles por canales no seguros"] },
+  "14.1": { kpis: ["Tiempo acuerdo -> contrato listo (TBD)","% contratos sin error (TBD)"], lineamientos: ["Prellenar datos desde CRM para minimizar errores","Usar una única plantilla versionada","Mostrar al cliente un resumen claro de condiciones"] },
+  "14.2": { kpis: ["Tiempo de revisión (TBD)","% contratos modificados en revisión (TBD)"], lineamientos: ["Enviar el contrato 24h antes para revisión tranquila","Registrar dudas frecuentes y resolverlas proactivamente","Respetar el tiempo del cliente para revisar"] },
+  "14.3": { kpis: ["% firmas digitales vs. presenciales (TBD)","Duración ceremonia de firma (TBD)"], lineamientos: ["Firma digital por defecto (más rápido y trazable)","Copia firmada al correo del cliente al instante","Explicar cada cláusula relevante al momento de firmar"] },
+  "15.1": { kpis: ["Tiempo aprobaciones -> factura (TBD)","% facturas sin error (TBD)","% envío digital (TBD)"], lineamientos: ["Factura digital por defecto con copia al correo","Cero errores en datos del cliente (pre-llenado desde CRM)","SLA: factura en <2h después de aprobación"] },
+  "15.2": { kpis: ["Tiempo factura -> transferencia lista (TBD)","% trámites sin observaciones (TBD)"], lineamientos: ["Tracking del trámite visible para el comprador","Courier de documentos finales cuando aplique","Canales digitales del Registro Civil preferidos"] },
+  "15.3": { kpis: ["% entregas en fecha comprometida (TBD)","NPS de entrega (TBD)","Duración ceremonia de entrega (TBD)"], lineamientos: ["Ceremonia de entrega estandarizada y memorable","Checklist final que el cliente firma como conforme","Encuesta NPS automática 24h después","Seguimiento post-venta a 30 / 60 / 90 días"] }
 };
 
 function renderClienteChip(stageId, subNum) {
@@ -1363,6 +1612,85 @@ function renderClienteChip(stageId, subNum) {
       '<div class="cliente-tooltip-title">Impacto cliente en esta sub-etapa</div>' +
       '<div class="cliente-tooltip-heading">KPIs de cliente</div><ul>' + kpisHtml + '</ul>' +
       '<div class="cliente-tooltip-heading">Lineamientos aplicables</div><ul>' + linHtml + '</ul>' +
+    '</div>' +
+  '</div>';
+}
+
+// ============================================================
+// BENCHMARK - referentes de la industria por sub-etapa
+// ============================================================
+var BENCHMARK_POR_SUBSTEP = {
+  "1.1": {
+    referentes: "Kavak · TrueCar · Bruno Fritsch · Salfa · DFSK · Gildemeister",
+    hallazgos: [
+      "<strong>5 de 6 referentes</strong> del benchmark reducen el formulario a 1-2 campos editables gracias al autocompletado por patente.",
+      "<strong>Clicar</strong> es el único flujo chileno analizado sin integración de autocompletado por patente.",
+      "Los referentes más maduros del benchmark integran las preguntas de elegibilidad directamente en los campos de entrada, evitando el rechazo tardío al final del formulario."
+    ],
+    oportunidades: [
+      "Integración con Llaima para reconocer vehículos ya comprados en Americar — ventaja exclusiva no disponible para ningún competidor.",
+      "Autocompletar marca, modelo, año y versión desde la patente para cerrar la brecha UX con los referentes."
+    ]
+  },
+  "1.2": {
+    referentes: "Kavak · Bruno Fritsch · TrueCar · Salfa · DFSK · Gildemeister",
+    hallazgos: [
+      "<strong>Clicar es el único referente</strong> del benchmark que ofrece verificación por WhatsApp.",
+      "Competidores usan solo SMS o no cuentan con verificación del teléfono."
+    ],
+    oportunidades: [
+      "Capitalizar la verificación por WhatsApp como diferenciador UX visible en la página (badge 'Verificado por WhatsApp').",
+      "Mantener la ventaja integrando también autocompletado de datos desde RUT cuando aplique."
+    ]
+  },
+  "1.5": {
+    referentes: "Bruno Fritsch · TrueCar · Kavak · Salfa · DFSK · Gildemeister",
+    hallazgos: [
+      "<strong>Bruno Fritsch</strong> muestra un rango de precio en vez de un precio exacto, gestionando expectativas de forma más honesta.",
+      "<strong>TrueCar</strong> y <strong>Kavak</strong> diferencian claramente las modalidades por beneficio real, no solo por nombre.",
+      "Ningún referente muestra precio antes de pedir datos del usuario.",
+      "<strong>DFSK</strong> y <strong>Gildemeister</strong> fallaron en entregar un precio al final del flujo (mostraron $0 o un error) — refuerza la importancia de comunicar las condiciones del valor.",
+      "<strong>Bruno Fritsch</strong> y <strong>Salfa</strong> comunican explícitamente que el valor está 'sujeto a revisión mecánica' desde la pantalla de resultado, enmarcando la tasación como estimación honesta."
+    ],
+    oportunidades: [
+      "Adoptar el rango de precio al estilo Bruno Fritsch para gestionar expectativas.",
+      "Diferenciar beneficios reales de cada modalidad al estilo TrueCar / Kavak.",
+      "Ser explícito con 'sujeto a revisión mecánica' desde la pantalla de tasación (Bruno Fritsch, Salfa)."
+    ]
+  },
+  "2.2": {
+    referentes: "Bruno Fritsch · Kavak · Gildemeister · Salfa · TrueCar · DFSK",
+    hallazgos: [
+      "<strong>Bruno Fritsch</strong> es el único referente que muestra un resumen de la selección en tiempo real ('Has seleccionado el día X a las Y hrs').",
+      "Ningún referente chileno — incluyendo Clicar — confirma visualmente la selección antes de enviar.",
+      "<strong>Kavak</strong> indica qué horarios son 'menos concurridos', reduciendo la ansiedad del usuario y distribuyendo mejor la demanda.",
+      "Ningún referente chileno implementa el hint de horarios de menor demanda.",
+      "<strong>Gildemeister</strong> y <strong>Salfa</strong> filtran sucursales correctamente en cascada (Región → Sucursal); Clicar requiere tres campos para llegar al mismo dato."
+    ],
+    oportunidades: [
+      "Resumen de la selección en tiempo real al estilo Bruno Fritsch antes de confirmar.",
+      "Marcar horarios 'menos concurridos' al estilo Kavak.",
+      "Consolidar Región → Sucursal en cascada como Gildemeister / Salfa."
+    ]
+  }
+};
+
+function renderBenchmarkChip(stageId, subNum) {
+  var key = stageId + '.' + subNum;
+  var b = BENCHMARK_POR_SUBSTEP[key];
+  if (!b) return '';
+  var hHtml = '';
+  for (var i = 0; i < b.hallazgos.length; i++) hHtml += '<li>' + b.hallazgos[i] + '</li>';
+  var oHtml = '';
+  for (var j = 0; j < b.oportunidades.length; j++) oHtml += '<li>' + b.oportunidades[j] + '</li>';
+  return '<div class="benchmark-chip-wrap">' +
+    '<button class="benchmark-chip" type="button" tabindex="0">Benchmark</button>' +
+    '<div class="benchmark-tooltip" role="tooltip">' +
+      '<div class="benchmark-tooltip-title">Benchmark de la industria</div>' +
+      '<div class="benchmark-tooltip-heading">Referentes analizados</div>' +
+      '<ul><li>' + b.referentes + '</li></ul>' +
+      '<div class="benchmark-tooltip-heading">Hallazgos vs. referentes</div><ul>' + hHtml + '</ul>' +
+      '<div class="benchmark-tooltip-heading">Oportunidades a capturar</div><ul>' + oHtml + '</ul>' +
     '</div>' +
   '</div>';
 }
@@ -1411,15 +1739,15 @@ var MACRO_META = {
   venta: {
     num: 3,
     title: "Venta",
-    description: "Macro en proceso de levantamiento.",
-    shortDescription: "Proceso post-compra / venta al cliente final. Aún no mapeado.",
-    status: { text: "Pendiente de mapeo", variant: "pending" },
-    disabled: true,
+    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Estructura inicial levantada; pendiente de integrar data real.",
+    shortDescription: "Captación digital, gestión de leads, reserva y medios de pago, firma de contrato, facturación y entrega.",
+    status: { text: "Estructura inicial - data pendiente", variant: "wip" },
+    disabled: false,
     universoValue: "TBD", universoValueClass: "placeholder",
-    universoLabel: "Universo", universoSub: "Pendiente de levantamiento", universoSubClass: "action",
+    universoLabel: "Compradores / mes", universoSub: "Pendiente de integración con CRM de venta", universoSubClass: "action",
     periodoValue: "TBD", periodoValueClass: "placeholder",
-    periodoLabel: "Periodo", periodoSub: "Pendiente de levantamiento", periodoSubClass: "action",
-    note: "Esta macro aún no está mapeada."
+    periodoLabel: "Periodo", periodoSub: "Pendiente de definir ventana de análisis", periodoSubClass: "action",
+    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Los KPIs están como TBD hasta integrar data real del CRM de venta y operaciones de entrega."
   }
 };
 var currentMacro = "compra";
@@ -2081,6 +2409,7 @@ function renderSubstepSlide(i, stage, sub) {
     '<div class="slide-title-row">' +
       '<h1>' + sub.title + '</h1>' +
       '<p class="subtitle">' + sub.description + '</p>' +
+      renderBenchmarkChip(stage.id, sub.num) +
       renderClienteChip(stage.id, sub.num) +
     '</div>' +
     chartHtml +
