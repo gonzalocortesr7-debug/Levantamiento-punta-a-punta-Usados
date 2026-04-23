@@ -133,6 +133,19 @@
   .video-modal-close:hover { color: var(--red); }
   .video-modal-iframe-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; height: 0; flex: 0 0 auto; }
   .video-modal-iframe-wrap iframe, .video-modal-iframe-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .doc-modal { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; }
+  .doc-modal.open { display: flex; }
+  .doc-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.75); cursor: pointer; }
+  .doc-modal-content { position: relative; width: min(1200px, 95vw); height: 90vh; background: var(--white); border-radius: 6px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; display: flex; flex-direction: column; }
+  .doc-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid var(--gray-200); background: var(--white); gap: 14px; }
+  .doc-modal-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .doc-modal-actions { display: flex; align-items: center; gap: 8px; }
+  .doc-modal-open-tab { font-size: 11px; font-weight: 700; color: var(--navy); text-decoration: none; padding: 4px 10px; border: 1px solid var(--gray-300); border-radius: 12px; transition: border-color 0.15s, color 0.15s; }
+  .doc-modal-open-tab:hover { border-color: var(--navy); color: var(--navy); }
+  .doc-modal-close { background: transparent; border: none; font-size: 26px; color: var(--gray-700); cursor: pointer; line-height: 1; padding: 0 4px; }
+  .doc-modal-close:hover { color: var(--red); }
+  .doc-modal-iframe-wrap { position: relative; width: 100%; flex: 1 1 auto; background: var(--gray-50); }
+  .doc-modal-iframe-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .stepper-row { display: flex; align-items: flex-start; justify-content: space-between; position: relative; max-width: 1400px; margin: 0 auto; }
   .stepper-row::before { content: ''; position: absolute; top: 16px; left: 18px; right: 18px; height: 1px; background: var(--gray-300); z-index: 0; }
   .step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; flex: 1; cursor: pointer; background: transparent; border: none; font-family: inherit; padding: 0 4px; }
@@ -593,6 +606,20 @@
       <button class="video-modal-close" id="video-modal-close" aria-label="Cerrar">&times;</button>
     </div>
     <div class="video-modal-iframe-wrap" id="video-modal-iframe-wrap"></div>
+  </div>
+</div>
+
+<div class="doc-modal" id="doc-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="doc-modal-backdrop" id="doc-modal-backdrop"></div>
+  <div class="doc-modal-content">
+    <div class="doc-modal-header">
+      <div class="doc-modal-title" id="doc-modal-title">Documento</div>
+      <div class="doc-modal-actions">
+        <a class="doc-modal-open-tab" id="doc-modal-open-tab" target="_blank" rel="noopener">Abrir en pestaña ↗</a>
+        <button class="doc-modal-close" id="doc-modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+    </div>
+    <div class="doc-modal-iframe-wrap" id="doc-modal-iframe-wrap"></div>
   </div>
 </div>
 
@@ -2521,12 +2548,90 @@ function buildVtaLeadsChartCfg(kind) {
     ]}, options: Object.assign({}, common, { scales:{ y:{ beginAtZero:true, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
   }
   if (kind === 'seg-valor') {
+    var segLabelsPlugin = {
+      id: 'vtaSegLabels',
+      afterDatasetsDraw: function(chart) {
+        var ctx = chart.ctx;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        var nMonths = chart.data.labels.length;
+        // Etiqueta por segmento (dentro de la barra si hay espacio)
+        ctx.font = '700 10px -apple-system, BlinkMacSystemFont, sans-serif';
+        for (var d = 0; d < chart.data.datasets.length; d++) {
+          var meta = chart.getDatasetMeta(d);
+          if (!meta || !chart.isDatasetVisible(d)) continue;
+          for (var i = 0; i < meta.data.length; i++) {
+            var bar = meta.data[i];
+            if (!bar) continue;
+            var v = chart.data.datasets[d].data[i];
+            if (v == null || v < 15) continue;
+            var h = Math.abs(bar.base - bar.y);
+            if (h < 16) continue;
+            var cx = bar.x;
+            var cy = (bar.base + bar.y) / 2;
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.fillText(v, cx, cy);
+          }
+        }
+        // Total sobre cada barra (suma de segmentos)
+        ctx.font = '800 12px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textBaseline = 'bottom';
+        var totalByMonth = new Array(nMonths).fill(0);
+        for (var dd = 0; dd < chart.data.datasets.length; dd++) {
+          if (!chart.isDatasetVisible(dd)) continue;
+          for (var ii = 0; ii < nMonths; ii++) {
+            totalByMonth[ii] += (chart.data.datasets[dd].data[ii] || 0);
+          }
+        }
+        var topMeta = chart.getDatasetMeta(chart.data.datasets.length - 1);
+        if (topMeta && topMeta.data) {
+          for (var t = 0; t < topMeta.data.length; t++) {
+            var tbar = topMeta.data[t];
+            if (!tbar) continue;
+            var total = totalByMonth[t];
+            var label = total.toLocaleString('es-CL');
+            var tw = ctx.measureText(label).width + 10;
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.fillRect(tbar.x - tw/2, tbar.y - 22, tw, 18);
+            ctx.strokeStyle = '#534AB7';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(tbar.x - tw/2, tbar.y - 22, tw, 18);
+            ctx.fillStyle = '#2b2485';
+            ctx.fillText(label, tbar.x, tbar.y - 7);
+          }
+        }
+        ctx.restore();
+      }
+    };
     return { type:'bar', data:{ labels:lbs, datasets:[
       { label:'Bronce', data:VTA_LEADS.bronce, backgroundColor:'#EF9F27', borderWidth:0 },
       { label:'Oro', data:VTA_LEADS.oro, backgroundColor:'#F0997B', borderWidth:0 },
       { label:'Plata', data:VTA_LEADS.plata, backgroundColor:'#888780', borderWidth:0 },
       { label:'VIP', data:VTA_LEADS.vip, backgroundColor:'#534AB7', borderWidth:0 }
-    ]}, options: Object.assign({}, common, { scales:{ x:{ stacked:true }, y:{ stacked:true, beginAtZero:true } } }) };
+    ]}, options: Object.assign({}, common, {
+      layout:{ padding:{ top: 28 } },
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:true, position:'bottom', labels:{ font:{ size:10 } } },
+        tooltip:{ callbacks:{
+          title: function(items){
+            if (!items.length) return '';
+            var idx = items[0].dataIndex;
+            var tot = (VTA_LEADS.bronce[idx]||0)+(VTA_LEADS.oro[idx]||0)+(VTA_LEADS.plata[idx]||0)+(VTA_LEADS.vip[idx]||0);
+            return items[0].label + ' · Total descartados Con VPP: ' + tot.toLocaleString('es-CL');
+          },
+          label: function(ctx){
+            var v = ctx.parsed.y || 0;
+            var idx = ctx.dataIndex;
+            var tot = (VTA_LEADS.bronce[idx]||0)+(VTA_LEADS.oro[idx]||0)+(VTA_LEADS.plata[idx]||0)+(VTA_LEADS.vip[idx]||0);
+            var pct = tot>0 ? (v/tot*100).toFixed(1) : '0';
+            return ctx.dataset.label + ': ' + v.toLocaleString('es-CL') + ' (' + pct + '%)';
+          }
+        } }
+      },
+      scales:{ x:{ stacked:true }, y:{ stacked:true, beginAtZero:true } }
+    }), plugins:[segLabelsPlugin] };
   }
   if (kind === 'financ') {
     return { type:'line', data:{ labels:lbs, datasets:[
@@ -4056,6 +4161,27 @@ function closeVideoModal() {
   iframeWrap.innerHTML = '';
 }
 
+// DOC MODAL (iframe de documentos/dashboards embebidos)
+function openDocModal(url, title) {
+  if (!url) return;
+  var modal = document.getElementById('doc-modal');
+  var iframeWrap = document.getElementById('doc-modal-iframe-wrap');
+  var titleEl = document.getElementById('doc-modal-title');
+  var openTab = document.getElementById('doc-modal-open-tab');
+  titleEl.textContent = title || 'Documento';
+  openTab.setAttribute('href', url);
+  iframeWrap.innerHTML = '<iframe src="' + url + '" loading="lazy"></iframe>';
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+function closeDocModal() {
+  var modal = document.getElementById('doc-modal');
+  var iframeWrap = document.getElementById('doc-modal-iframe-wrap');
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  iframeWrap.innerHTML = '';
+}
+
 // INIT
 function init() {
   try {
@@ -4088,11 +4214,28 @@ function init() {
     document.getElementById('logo-home').addEventListener('click', function() { goToSlide(0); });
     document.getElementById('video-modal-close').addEventListener('click', closeVideoModal);
     document.getElementById('video-modal-backdrop').addEventListener('click', closeVideoModal);
+    document.getElementById('doc-modal-close').addEventListener('click', closeDocModal);
+    document.getElementById('doc-modal-backdrop').addEventListener('click', closeDocModal);
+    // Intercepto chips de recursos que apuntan a HTMLs locales: los abro en modal embebido
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest && e.target.closest('a.sh-resource');
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var isLocalHtml = /\.html(\?|#|$)/i.test(href) && !/^https?:/i.test(href);
+      if (!isLocalHtml) return;
+      e.preventDefault();
+      openDocModal(href, a.textContent.trim());
+    });
     document.addEventListener('keydown', function(e) {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-      var modalOpen = document.getElementById('video-modal').classList.contains('open');
-      if (modalOpen) {
+      var videoOpen = document.getElementById('video-modal').classList.contains('open');
+      var docOpen = document.getElementById('doc-modal').classList.contains('open');
+      if (videoOpen) {
         if (e.key === 'Escape') { e.preventDefault(); closeVideoModal(); }
+        return;
+      }
+      if (docOpen) {
+        if (e.key === 'Escape') { e.preventDefault(); closeDocModal(); }
         return;
       }
       if (e.key === 'ArrowRight') { e.preventDefault(); goToSlide(currentSlide + 1); }
