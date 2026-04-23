@@ -376,6 +376,80 @@
   .benchmark-tooltip li { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; padding: 3px 0 3px 14px; position: relative; }
   .benchmark-tooltip li::before { content: "\2022"; position: absolute; left: 4px; color: #0B3B6F; font-weight: 700; }
   .benchmark-tooltip li strong { color: var(--navy); font-weight: 700; }
+  .recordatorio { color: #B3261E; background: #FDECEA; padding: 0 6px; border: 1px solid #F5B5B0; border-radius: 4px; font-weight: 700; letter-spacing: 0.02em; }
+  .vta-block { padding: 18px 20px; }
+  .vta-block + .vta-block { border-top: 1px solid var(--gray-200); }
+  .vta-block-title { font-size: 12px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+  .vta-cards-mercado { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .vta-mkt-card { background: var(--navy-soft); border: 1px solid var(--gray-200); padding: 14px; border-radius: 4px; display: flex; flex-direction: column; gap: 4px; }
+  .vta-mkt-card.accent { background: #FDECEA; border-color: #F5B5B0; }
+  .vta-mkt-value { font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.1; }
+  .vta-mkt-card.accent .vta-mkt-value { color: #B3261E; }
+  .vta-mkt-label { font-size: 11px; font-weight: 700; color: var(--gray-700); }
+  .vta-mkt-sub { font-size: 10px; color: var(--gray-500); margin-top: 2px; }
+  .vta-journey { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .vta-journey-step { position: relative; background: var(--white); border: 1px solid var(--gray-200); padding: 12px 14px; border-radius: 4px; }
+  .vta-journey-step::after { content: "\2192"; position: absolute; top: 50%; right: -14px; transform: translateY(-50%); color: var(--clicar-green); font-weight: 700; font-size: 18px; z-index: 1; }
+  .vta-journey-step:last-child::after { display: none; }
+  .vta-journey-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--navy); color: var(--white); border-radius: 50%; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+  .vta-journey-title { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .vta-journey-desc { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
+  .vta-bars { display: flex; flex-direction: column; gap: 8px; }
+  .vta-bar-row { display: grid; grid-template-columns: 180px 1fr 60px; align-items: center; gap: 10px; font-size: 11px; }
+  .vta-bar-label { color: var(--gray-900); font-weight: 600; }
+  .vta-bar-label .vta-bar-sub { color: var(--gray-500); font-weight: 400; margin-left: 4px; }
+  .vta-bar-track { background: var(--gray-100); height: 16px; border-radius: 3px; overflow: hidden; }
+  .vta-bar-fill { height: 100%; background: var(--navy); border-radius: 3px; }
+  .vta-bar-fill.ads { background: #0F6FC6; }
+  .vta-bar-fill.paid { background: #4A90E2; }
+  .vta-bar-fill.direct { background: #7FB4E8; }
+  .vta-bar-fill.organic { background: #2a9d8f; }
+  .vta-bar-fill.social { background: #E8754F; }
+  .vta-bar-fill.other { background: var(--gray-500); }
+  .vta-bar-value { text-align: right; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .vta-sources { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .vta-funnel { display: flex; flex-direction: column; gap: 4px; padding: 8px 0; }
+  .vta-funnel-step { display: flex; align-items: center; justify-content: center; padding: 16px 24px; background: var(--navy); color: var(--white); border-radius: 4px; text-align: center; position: relative; margin: 0 auto; width: 100%; }
+  .vta-funnel-step.s1 { background: #0B3B6F; }
+  .vta-funnel-step.s2 { background: #0F6FC6; width: 70%; }
+  .vta-funnel-step.s3 { background: #4A90E2; width: 48%; }
+  .vta-funnel-step.s4 { background: #B3261E; width: 20%; }
+  .vta-funnel-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.9; }
+  .vta-funnel-value { font-size: 22px; font-weight: 700; line-height: 1.1; margin: 2px 0; }
+  .vta-funnel-pct { font-size: 11px; opacity: 0.9; }
+  .vta-funnel-arrow { text-align: center; color: var(--gray-500); font-size: 11px; font-weight: 700; padding: 2px 0; }
+  .vta-funnel-arrow.critical { color: #B3261E; }
+  @media (max-width: 900px) {
+    .vta-cards-mercado, .vta-journey, .vta-sources { grid-template-columns: 1fr 1fr; }
+    .vta-journey-step::after { display: none; }
+    .vta-bar-row { grid-template-columns: 140px 1fr 50px; }
+    .vta-funnel-step.s2, .vta-funnel-step.s3, .vta-funnel-step.s4 { width: 100%; }
+  }
+  .vta-chart-block { margin-bottom: 22px; }
+  .vta-chart-block:last-child { margin-bottom: 10px; }
+  .vta-chart-block-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .vta-chart-title { font-size: 12px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.04em; margin: 0; }
+  .vta-view-toggle { display: inline-flex; background: var(--gray-100); border-radius: 4px; padding: 2px; border: 1px solid var(--gray-200); }
+  .vta-view-toggle button { padding: 4px 12px; background: transparent; border: none; color: var(--gray-700); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .vta-view-toggle button.active { background: var(--navy); color: var(--white); }
+  .vta-view { display: none; }
+  .vta-view.active { display: block; }
+  .vta-table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 4px; }
+  .vta-table { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .vta-table th { background: var(--gray-50); padding: 9px 12px; text-align: left; font-weight: 700; color: var(--navy); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid var(--gray-200); white-space: nowrap; }
+  .vta-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-900); white-space: nowrap; }
+  .vta-table th.right, .vta-table td.right { text-align: right; }
+  .vta-table tr:hover td { background: var(--gray-50); }
+  .vta-table tr.totals td { font-weight: 700; background: var(--navy-soft); color: var(--navy); border-top: 2px solid var(--navy); border-bottom: none; }
+  .vta-table td.pos { color: #1D9E75; font-weight: 600; }
+  .vta-table td.neg { color: #E24B4A; font-weight: 600; }
+  .vta-insight { border-radius: 0 10px 10px 0; padding: 10px 14px; margin: 8px 0; font-size: 12px; line-height: 1.6; }
+  .vta-insight.r { border-left: 3px solid #E24B4A; background: #fdf3f3; color: #4A1B0C; }
+  .vta-insight.w { border-left: 3px solid #EF9F27; background: #fdf6ec; color: #412402; }
+  .vta-insight.g { border-left: 3px solid #1D9E75; background: #f0faf6; color: #04342C; }
+  .vta-insight.b { border-left: 3px solid #378ADD; background: #f0f6fd; color: #042C53; }
+  .recordatorio-legend { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--gray-700); margin-left: 12px; }
+  .recordatorio-legend::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: #FDECEA; border: 1px solid #F5B5B0; display: inline-block; }
   .macro-divider { width: 1px; height: 24px; background: var(--gray-300); margin: 0 8px 0 auto; align-self: center; flex-shrink: 0; }
   .macro-stages { gap: 10px; }
   .macro-view-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; background: transparent; border: 1px solid transparent; color: var(--gray-700); font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 4px; font-family: inherit; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.15s, color 0.15s, border-color 0.15s; }
@@ -946,7 +1020,7 @@ var journey = {
         { num: 1, title: "Publicación efectiva",
           description: "La unidad aparece en el catálogo web con su ficha. Snapshot actual: 1.790 unidades publicadas sobre un inventario total de 2.574.",
           kpis: [{value:"1.790",suffix:"uds",label:"Publicadas hoy"},{value:"69,5",suffix:"%",label:"Publicadas vs. inventario total"},{value:"89,9",suffix:"%",label:"Publicadas vs. disponibles"}],
-          hallazgos: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","584 unidades (22,7% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente","Fichas publicadas con datos incompletos degradan la experiencia del comprador"],
+          hallazgos: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","584 unidades (22,7% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
           mejoras: ["Reporte diario de brecha disponibles vs. publicadas (meta: >95%)","Monitoreo del mix de motivos de no-publicación para atacar el más frecuente","Definir campos mínimos obligatorios para publicar (con bloqueo)","SLA máximo Quiter -> publicación (ej. 24-48h)"],
           chartType: 'prep-funnel'
         },
@@ -1040,52 +1114,155 @@ var journey = {
     {
       id: 11, macro: "venta", name: "Captación Digital", fullName: "Captación Digital (Venta)",
       video: { url: null, title: "Video del proceso - Captación Digital (Venta)" },
-      route: "Vitrina clicar.cl -> Interés del comprador -> Formulario / lead generado",
-      description: "Recorrido del cliente comprador desde que descubre una unidad publicada en clicar.cl hasta que deja sus datos. Cubre la búsqueda en catálogo, la ficha de vehículo, los CTA de contacto y la generación del lead en CRM. Aún por mapear con data real.",
+      route: "Home -> Catálogo -> Ficha de auto -> Cotización (buy-process)",
+      description: "Recorrido del cliente comprador en clicar.cl: Home → Catálogo → Ficha de auto → Cotización. Análisis de comportamiento basado en Microsoft Clarity (22 mar – 22 abr 2026): 136.334 sesiones totales con 85,7% tráfico mobile. Contexto de mercado: 142M búsquedas 2025 en Google (Google Trends/Ubersuggest), ticket promedio $9M–$13M, SUV lidera con 40% del total de búsquedas. Freno principal de compra en el mercado chileno: el miedo / desconfianza, mayor inhibidor que el precio.",
       substeps: [
-        { num: 1, title: "Búsqueda y filtrado en catálogo",
-          description: "El comprador navega el catálogo público y aplica filtros (marca, modelo, precio, zona).",
-          kpis: [{value:"TBD",suffix:"",label:"Visitas únicas al catálogo / mes"},{value:"TBD",suffix:"%",label:"% sesiones con filtro aplicado"},{value:"TBD",suffix:"",label:"Fichas vistas por sesión"}],
-          hallazgos: ["Sin métrica publicada de uso efectivo de filtros","Dependencia del orden en catálogo (tiers de foto)","Sin análisis de búsquedas sin resultado"],
-          mejoras: ["Tablero de top búsquedas sin resultado para detectar gaps de stock","Filtros guardados / suscripción a alertas","Medir impacto de tier de foto sobre CTR a ficha"]
+        { num: 1, title: "Home — Contexto general del sitio",
+          description: "Punto de entrada del sitio. Data Microsoft Clarity · 22 mar – 22 abr 2026. 136.334 sesiones totales, 85,7% mobile, bounce rate 58,4%, duración promedio 3:07 min.",
+          chartType: 'vta-mercado',
+          kpis: [{value:"136.334",suffix:"",label:"Sesiones totales (30 días)"},{value:"85,7",suffix:"%",label:"Tráfico mobile (106.867 ses.)"},{value:"58,4",suffix:"%",label:"Bounce rate promedio sitio"}],
+          hallazgos: [
+            "Tráfico muy concentrado en mobile: 85,7% (106.867 sesiones). Desktop 12,1% (15.888) y Tablet 1,6% (2.022).",
+            "Bounce rate de 58,4% — más de la mitad de los usuarios abandona sin interactuar, con una duración promedio de apenas 3:07 min por sesión.",
+            "Principales fuentes de tráfico: Ads Meta (Facebook/Instagram) 36%, Google Paid Search 20%, Directo 18%, Google Orgánico 8%, Instagram orgánico 6%, otros 12% — alta dependencia de paid.",
+            "Viaje del comprador chileno tiene 4 etapas (Categoría → Modelo → Precio/Financiamiento → Confianza) y el freno principal es la confianza, no el precio."
+          ],
+          mejoras: [
+            "Priorizar experiencia mobile-first de forma explícita: el 85,7% del tráfico decide desde el móvil.",
+            "Trabajar sobre el bounce rate del Home con pruebas de hero, propuesta de valor y atajos a catálogo / cotización.",
+            "Diversificar la mezcla de tráfico: bajar dependencia de Ads Meta reforzando Google Orgánico y contenido de confianza (testimonios, garantías, reviews).",
+            "Diseñar la narrativa del sitio pensando en la etapa 4 del viaje del comprador (confianza): ser el primer actor del mercado chileno en resolver las 4 etapas con excelencia."
+          ]
         },
-        { num: 2, title: "Ficha de vehículo y CTA de contacto",
-          description: "El comprador entra a la ficha y evalúa si deja sus datos o agenda una visita.",
-          kpis: [{value:"TBD",suffix:"%",label:"CTR ficha -> formulario"},{value:"TBD",suffix:"%",label:"% fichas con foto Tier 1 o Tier 2"},{value:"TBD",suffix:"seg",label:"Tiempo promedio en ficha"}],
-          hallazgos: ["Fichas con Tier 3 o Tier 4 degradan la decisión del comprador","Sin A/B de CTA ni de disposición de foto / precio / ubicación","Datos faltantes en la ficha (km, versión, equipamiento) reducen el interés"],
-          mejoras: ["Bloquear publicación sin campos mínimos","Experimentos A/B de CTA y layout","Mostrar proactivamente stock alternativo en la misma ficha"]
+        { num: 2, title: "Catálogo — /vehiculos/usado",
+          description: "Listado general del stock publicado. Data Microsoft Clarity: 62.955 sesiones (46,2% del total del sitio), 87,5% mobile, 56% rebota en página 1 sin ver ningún auto, 41% llegan a una ficha.",
+          kpis: [{value:"62.955",suffix:"",label:"Sesiones (30 días)"},{value:"56",suffix:"%",label:"Rebotan en pág. 1 (sin ver autos)"},{value:"41",suffix:"%",label:"Llegan a ficha desde catálogo"}],
+          hallazgos: [
+            "Autos sin foto ya van al final del listado (implementado) y se aplica orden random cada 24h a los 100 autos más antiguos para visibilidad equitativa.",
+            "Botón de filtros con bajo uso: 2.749 clics en 30 días = solo 4,4% de las sesiones del catálogo usan los filtros.",
+            "Buscador de texto: 30% del uso del buscador de texto del sitio se origina desde el catálogo — el usuario lo usa para refinar dentro del listado.",
+            "<strong>273K dead clicks</strong> en banners de campaña y bloques corporativos no clicables — fricción masiva y silenciosa.",
+            "El filtro devuelve 0 resultados en algunas combinaciones sin stock disponible, sin sugerencias alternativas."
+          ],
+          mejoras: [
+            "<strong>Mayor visibilidad del buscador dentro del catálogo</strong> — los usuarios ya lo usan para refinar (patrón validado en SAIS vía GTM).",
+            "<strong>Mayor visibilidad del botón de filtro</strong> y optimización para evitar combinaciones sin stock.",
+            "Sugerir alternativas cuando el filtro devuelve 0 resultados (stock cercano, misma categoría, rango de precio vecino).",
+            "Hacer clicables o eliminar los banners corporativos que generan 273K dead clicks mensuales.",
+            "Marca de agua <em>Foto en proceso</em> para autos con foto de inspección a la espera de la mejora operacional de fotos, gestionando la expectativa del usuario."
+          ]
         },
-        { num: 3, title: "Formulario y generación del lead",
-          description: "El comprador completa datos y genera el lead en CRM para gestión posterior.",
-          kpis: [{value:"TBD",suffix:"%",label:"Tasa de completitud del formulario"},{value:"TBD",suffix:"%",label:"% leads con teléfono válido"},{value:"TBD",suffix:"seg",label:"Tiempo promedio de completado"}],
-          hallazgos: ["Sin validación de teléfono vía SMS en flujo comprador","Sin campo de intención clara (compra inmediata vs. exploración)","Duplicados de leads por múltiples fichas visitadas"],
-          mejoras: ["Validar teléfono por SMS antes de enviar el lead","Campo obligatorio de plazo estimado de compra","Dedupe automático por teléfono / email en CRM"]
+        { num: 3, title: "Ficha de auto — /marcas/",
+          description: "Detalle del vehículo. Data Microsoft Clarity: 21.872 sesiones (34,7% del catálogo), tiempo promedio 4:30 min, 17,3% de las sesiones con dead click (3.792), quickback rate 56,1%.",
+          kpis: [{value:"21.872",suffix:"",label:"Sesiones (30 días)"},{value:"17,3",suffix:"%",label:"Sesiones con dead click (3.792)"},{value:"56,1",suffix:"%",label:"Quickback rate (abandono rápido)"}],
+          hallazgos: [
+            "<strong>Carrusel de fotos sin interacción táctil en mobile</strong> cuando el auto tiene foto de inspección pero no vista 360°: el contenedor no registra swipe ni zoom. Afecta prácticamente a todos los autos sin 360° y concentra la fricción de la ficha.",
+            "<strong>74.943 dead clicks mensuales</strong> atribuibles a intentos de swipe/zoom sin respuesta — mayor pérdida de interacción del sitio.",
+            "56,1% de quickback rate: más de la mitad de los usuarios entra a la ficha y vuelve atrás sin profundizar.",
+            "Implementado: fotos de recepción informales (auto sucio, con personas, sin preparar) se evalúan antes de publicar; autos sin foto se ubican al final del catálogo."
+          ],
+          mejoras: [
+            "<strong>Habilitar interacción táctil (swipe / zoom doble toque)</strong> en el contenedor de fotos de inspección en mobile, independiente de si el auto tiene vista 360° o no — elimina los 74.943 dead clicks mensuales.",
+            "Agregar indicador visual <em>Desliza para ver más fotos</em> para comunicar la interacción disponible.",
+            "Marca de agua <em>Foto en proceso</em> para los autos en cola de fotografía formal, gestionando la expectativa visual.",
+            "Medir impacto de tier de foto sobre quickback rate y tiempo en ficha para priorizar inversión en el pipeline visual."
+          ]
+        },
+        { num: 4, title: "Cotización (Funnel de conversión)",
+          description: "Flujo de datos de contacto y financiamiento para generar el lead. Data Microsoft Clarity · 22 mar – 22 abr 2026: 862 sesiones inician cotización desde ficha (3,9% de conversión ficha → cotización), 19,4% con dead click (167 de 862).",
+          chartType: 'vta-funnel',
+          kpis: [{value:"862",suffix:"",label:"Inician cotización / 30 días"},{value:"3,9",suffix:"%",label:"Conv. ficha -> cotización"},{value:"19,4",suffix:"%",label:"Sesiones con dead click (167 de 862)"}],
+          hallazgos: [
+            "<strong>Salto crítico del funnel</strong>: de 21.872 fichas a solo 862 cotizaciones = 3,9% de conversión. Es la mayor oportunidad de mejora del funnel del sitio.",
+            "Dead clicks en la foto del auto del header del buy-process y en los indicadores numéricos de paso (1·2·3·4·5): el usuario intenta interactuar esperando navegar entre pasos o ampliar la foto.",
+            "<strong>Error 303 en paso 4</strong> del buy-process — en revisión por el equipo de desarrollo, prioridad crítica.",
+            "Demasiadas preguntas en el flujo generan fricción y abandono, a pesar de que los datos ya se capturan a partir del paso 1."
+          ],
+          mejoras: [
+            "<strong>Corregir error 303 en buy-process paso 4</strong> — prioridad crítica, en revisión por desarrollo.",
+            "Eliminar la foto del header en el flujo de cotización y reemplazar los steps por un indicador de progreso no clicable.",
+            "Reducir la fricción del flujo eliminando preguntas innecesarias — dejar solo la información relevante para aumentar la velocidad de experiencia.",
+            "Experimentar con variantes del flujo (menos campos, single-page) para mover el 3,9% de conversión ficha → cotización."
+          ]
         }
       ]
     },
     {
       id: 12, macro: "venta", name: "Gestión de Leads", fullName: "Gestión de Leads (Venta)",
       video: { url: null, title: "Video del proceso - Gestión de Leads (Venta)" },
-      route: "Lead en CRM -> Asignación -> Contacto -> Calificación -> Agendamiento",
-      description: "Tramo de Contact Center / asesor comercial para el comprador: asignación del lead, cadencia de contacto, calificación de intención y agendamiento de la visita a sucursal. Aún por mapear con data real.",
+      resources: [{ href: "./dashboard-leads-ventas.html", label: "Dashboard Ejecutivo — 104.747 leads" }],
+      route: "Lead en CRM -> Volumen / Descarte -> Temperatura -> VPP y Segmentos -> Financiamiento / Motivos",
+      description: "Tramo de Contact Center / asesor comercial para el comprador. Análisis apoyado en data real de <strong>Salazar-Israel · Oct 2025 – Mar 2026 · 104.747 leads</strong>: tasa de descarte global 68,8%, conversión 5,3%, marzo 26 mejor mes (8,2%). Oportunidades identificadas: proteger clientes Oro/VIP con VPP, flujo diferenciado para financiamiento, redefinir criterio de temperatura y eliminar 'descarte masivo'.",
       substeps: [
-        { num: 1, title: "Asignación del lead al asesor",
-          description: "Ruteo del lead al asesor o Contact Center según reglas (origen, sucursal, ticket).",
-          kpis: [{value:"TBD",suffix:"min",label:"Tiempo lead -> asignación"},{value:"TBD",suffix:"%",label:"% leads con asignación automática"},{value:"TBD",suffix:"",label:"Leads abiertos por asesor (promedio)"}],
-          hallazgos: ["Reglas de asignación no documentadas para Venta","Carga por asesor sin balanceo","Sin scoring de lead para priorización"],
-          mejoras: ["Ruteo automatizado basado en disponibilidad y score","Capacity planning por asesor / sucursal","Alerta cuando un lead queda sin asignar > X min"]
+        { num: 1, title: "Volumen y conversión mensual",
+          description: "Tendencia del período Oct 2025 – Mar 2026: 104.747 leads totales, 72.113 descartados (68,8%), 5.587 entregados (5,3%). Mejor mes: Marzo 2026 con 8,2% de conversión. 13.548 leads quedan en etapa 'Nuevo' sin gestionar.",
+          chartType: 'vta-leads-vol',
+          kpis: [{value:"104.747",suffix:"",label:"Total leads (6 meses)"},{value:"68,8",suffix:"%",label:"Tasa de descarte global"},{value:"5,3",suffix:"%",label:"Conversión global (entregados)"},{value:"13.548",suffix:"",label:"Leads sin gestionar (etapa Nuevo)"}],
+          hallazgos: [
+            "Tasa de descarte del 68,8% sostenida en el período — el pipeline se quiebra antes de la entrega.",
+            "Marzo 2026 es el único mes donde todas las métricas mejoran simultáneamente (8,2% conversión, menor descarte y más entregados).",
+            "13.548 leads (13% del total) quedan en etapa 'Nuevo' sin haberse gestionado — volumen crítico sin dueño.",
+            "Pico de volumen en Enero 2026 (21.914 leads, +25% vs. promedio) coincide con una peor conversión — falta capacity en meses peak."
+          ],
+          mejoras: [
+            "<strong>Replicar las condiciones de marzo 2026</strong> en los meses de alto volumen — identificar qué se hizo distinto y estandarizar.",
+            "Alerta automática cuando un lead lleva > X horas en estado 'Nuevo' sin gestión.",
+            "Capacity planning dinámico basado en tendencia mensual de entrada de leads.",
+            "Panel diario de seguimiento del pipeline por etapa con owners claros por cada tramo."
+          ]
         },
-        { num: 2, title: "Contacto y cadencia",
-          description: "Intento multicanal (llamada + WhatsApp) hasta establecer contacto con el comprador.",
-          kpis: [{value:"TBD",suffix:"%",label:"Contactabilidad al primer intento"},{value:"TBD",suffix:"hrs",label:"Tiempo 1er contacto"},{value:"TBD",suffix:"",label:"Intentos promedio por lead"}],
-          hallazgos: ["Sin cadencia estandarizada llamada + WhatsApp","Leads 'calientes' compitiendo con cola FIFO","Sin registro estructurado de motivo de no-contacto"],
-          mejoras: ["Cadencia automatizada llamada -> WhatsApp con timeout","Priorización por scoring (no FIFO)","Journey de descalificación automática tras N intentos"]
+        { num: 2, title: "Temperatura vs. conversión",
+          description: "Análisis cruzado de la temperatura del lead (Caliente / Tibio / Frío) contra su tasa real de descarte y conversión. El criterio actual de temperatura no predice el resultado comercial.",
+          chartType: 'vta-leads-temp',
+          kpis: [{value:"+13",suffix:"pp",label:"Descarte Caliente vs. Frío (promedio)"},{value:"3,9",suffix:"%",label:"Conversión Caliente (promedio)"},{value:"4,6",suffix:"%",label:"Conversión Frío (promedio)"}],
+          hallazgos: [
+            "Los leads calientes se descartan MÁS que los fríos en todos los meses (+13pp promedio).",
+            "La temperatura NO predice conversión: frío iguala o supera a caliente en varios meses (Oct 25, Ene 26, Mar 26).",
+            "Febrero 2026 el Tibio convirtió al 12,3% (el mejor resultado) — ni los criterios ni la asignación aprovechan esa señal.",
+            "Falta de criterio homogéneo entre sucursales para clasificar temperatura."
+          ],
+          mejoras: [
+            "<strong>Redefinir criterio de temperatura:</strong> reemplazarlo por scoring basado en comportamiento observado (visitas, páginas, financiamiento).",
+            "Estandarizar la clasificación entre sucursales con una guía única y validarla contra conversión real cada trimestre.",
+            "Dejar de priorizar por 'caliente' si la evidencia muestra que frío convierte igual o mejor.",
+            "Dashboard de conversión por temperatura y sucursal para identificar outliers."
+          ]
         },
-        { num: 3, title: "Calificación y agendamiento",
-          description: "Evaluación de intención real y agendamiento de visita a sucursal o test drive.",
-          kpis: [{value:"TBD",suffix:"%",label:"% leads calificados"},{value:"TBD",suffix:"%",label:"% leads agendados"},{value:"TBD",suffix:"%",label:"Show rate a la visita"}],
-          hallazgos: ["Sin criterios uniformes de calificación entre asesores","Sin recordatorio automatizado de la visita","Pérdida de leads entre calificación y agenda"],
-          mejoras: ["Lista cerrada de criterios de calificación","Confirmación y recordatorio por WhatsApp (Paula)","Reporte de show rate por asesor y sucursal"]
+        { num: 3, title: "VPP y segmentos de valor",
+          description: "Clientes con auto en parte de pago (VPP) e historial de compra (segmentos Bronce / Plata / Oro / VIP). Con VPP se descarta +7pp más, pero cuando el lead avanza, convierte mejor (4,0% vs. 3,3%) — potencial desaprovechado.",
+          chartType: 'vta-leads-vpp',
+          kpis: [{value:"+7",suffix:"pp",label:"Descarte con VPP vs. sin VPP"},{value:"4,0",suffix:"%",label:"Conversión con VPP (cuando avanza)"},{value:"641",suffix:"",label:"Oro + VIP con VPP descartados"}],
+          hallazgos: [
+            "Con VPP se descarta MÁS en todos los meses (+7pp) — el VPP no protege de ser descartado.",
+            "Cuando avanzan, los leads con VPP convierten mejor: 4,0% vs. 3,3% sin VPP — potencial desaprovechado.",
+            "641 clientes Oro + VIP con VPP fueron descartados en 6 meses. Enero 2026 es el peor mes con 280 perdidos.",
+            "El segmento de valor no se usa hoy como señal de protección contra descarte masivo."
+          ],
+          mejoras: [
+            "<strong>Bloquear descarte automático de leads Oro/VIP + VPP sin revisión de supervisor</strong> — 641 clientes premium recuperables.",
+            "Flujo diferenciado para leads con VPP: SLA de contacto más agresivo y validación humana antes de descartar.",
+            "Reporte semanal por sucursal del % Oro/VIP descartados vs. meta.",
+            "Tagging automático 'Premium con VPP' visible para el asesor en su cola."
+          ]
+        },
+        { num: 4, title: "Financiamiento y motivos de descarte",
+          description: "El segmento de mayor margen (con financiamiento) es justamente el peor gestionado: 95,3% de descarte promedio. Los motivos dominantes son 'No contesta' (31%) y 'Descarte masivo' (12%, distorsiona métricas).",
+          chartType: 'vta-leads-financ',
+          kpis: [{value:"95,3",suffix:"%",label:"Descarte con financiamiento (promedio)"},{value:"-10",suffix:"pp",label:"Brecha vs. sin financiamiento"},{value:"22.364",suffix:"",label:"Descartes por 'No contesta' (31%)"},{value:"8.613",suffix:"",label:"Descartes por 'Desc. masivo' (12%)"}],
+          hallazgos: [
+            "El segmento de mayor margen (con financiamiento) tiene la peor tasa de gestión: 95,3% de descarte — 10pp más que sin financiamiento.",
+            "Descarte por segmento con financiamiento: Sin segmento 96% · VIP 93% · Oro 91% · Plata 89% · Bronce 87%.",
+            "'No contesta' domina con 22.364 casos (31% del total) — atacable con validación de datos al ingreso al CRM.",
+            "'Descarte masivo' acumula 8.613 casos en 6 meses (12%) — oculta leads recuperables al no registrar motivo específico.",
+            "'Neg. financ.' suma 5.329 casos (7%) — alineado con el hallazgo de mala gestión del segmento con crédito."
+          ],
+          mejoras: [
+            "<strong>Flujo diferenciado para financiamiento</strong> — pre-evaluación crediticia antes del ingreso al CRM. El segmento de mayor margen no puede seguir con 95,3% de descarte.",
+            "<strong>Eliminar 'Descarte masivo' como opción válida</strong> — exigir motivo específico obligatorio y auditoría del 100% de casos históricos.",
+            "Validación básica de teléfono y email al ingreso del lead para reducir 'No contesta'.",
+            "Calificación mínima al ingreso: 'No contesta' + 'quería información' = 49% de los descartes — se puede filtrar antes de asignar el lead.",
+            "Reporte mensual de motivos con tendencia para detectar migraciones entre categorías."
+          ]
         }
       ]
     },
@@ -1225,7 +1402,49 @@ var ROADMAP = [
     macro: "preparación", stage: "Publicación en Sitio Web", substep: "No publicadas del stock disponible", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Liberación automática de reservas después de 48h sin avance en Llaima",
     description: "407 uds reservadas hoy (69% del inventario no disponible). Una regla automática en Llaima que libere la reserva a las 48h sin avance devuelve el stock a la vitrina sin intervención manual y evita que las reservas fantasma inmovilicen inventario.",
-    macro: "preparación", stage: "Publicación en Sitio Web", substep: "No disponibles para publicar", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" }
+    macro: "preparación", stage: "Publicación en Sitio Web", substep: "No disponibles para publicar", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Corregir error 303 en buy-process paso 4",
+    description: "Error 303 identificado en el paso 4 del flujo de cotización (buy-process). Hoy 862 sesiones/mes llegan a iniciar cotización desde ficha (3,9% de conversión) y una parte no logra completar por este error. En revisión por el equipo de desarrollo, prioridad crítica para destrabar el principal cuello de botella del funnel del sitio.",
+    macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Habilitar swipe/zoom en carrusel de fotos de inspección en mobile",
+    description: "Cuando el auto tiene foto de inspección pero no vista 360°, el contenedor de la imagen no registra gestos de swipe ni zoom. Los usuarios lo intentan y no obtienen respuesta, generando 74.943 dead clicks mensuales. Habilitar interacción táctil + indicador 'Desliza para ver más fotos' elimina la fricción visual más grande de la ficha.",
+    macro: "venta", stage: "Captación Digital", substep: "Ficha de auto — /marcas/", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Corregir botón 'Mes anterior' en calendario de agendamiento",
+    description: "Dead click identificado en el botón 'Mes anterior' del calendario del paso 4 del flujo de cotización. 3.198 dead clicks mensuales atribuidos a este componente. Fix directo de UI.",
+    macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Rediseñar filtros y visibilidad del buscador en catálogo",
+    description: "Hoy solo 4,4% de las sesiones del catálogo usan los filtros (2.749 clics / mes sobre 62.955 sesiones) y 30% del uso del buscador de texto del sitio se origina en el catálogo — señal de que los usuarios quieren refinar pero no ven las herramientas. Subir la visibilidad del buscador (patrón validado en SAIS vía GTM) + optimizar filtros para evitar combinaciones sin stock.",
+    macro: "venta", stage: "Captación Digital", substep: "Catálogo — /vehiculos/usado", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Marca de agua 'Foto en proceso' en catálogo para autos sin fotografía formal",
+    description: "Mientras la foto formal no esté lista, mostrar marca de agua 'Foto en proceso' sobre la foto de inspección para gestionar la expectativa visual del usuario y no degradar la percepción de calidad del catálogo.",
+    macro: "venta", stage: "Captación Digital", substep: "Catálogo — /vehiculos/usado", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Hacer clicables o eliminar banners corporativos del catálogo",
+    description: "273K dead clicks mensuales en banners de campaña y bloques corporativos no clicables dentro del catálogo. Hacerlos clicables con destino claro, o eliminarlos si no aportan, reduce la fricción más volumétrica del sitio.",
+    macro: "venta", stage: "Captación Digital", substep: "Catálogo — /vehiculos/usado", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Eliminar foto del header del buy-process y reemplazar steps por indicador no clicable",
+    description: "La foto del auto en el header del buy-process y los indicadores numéricos de paso (1·2·3·4·5) reciben dead clicks frecuentes: el usuario intenta interactuar esperando navegar o ampliar. Eliminar la foto y reemplazar los steps por un indicador de progreso no clicable reduce confusión en el flujo.",
+    macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Reducir fricción del buy-process eliminando preguntas no necesarias",
+    description: "Los datos se capturan a partir del paso 1, pero el flujo acumula preguntas adicionales que fatigan al usuario y aumentan el abandono. Dejar solo información relevante para acelerar la experiencia y subir la conversión ficha → cotización (hoy 3,9%).",
+    macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Proteger clientes Oro y VIP con VPP de descarte automático",
+    description: "641 clientes premium (Oro + VIP) con VPP fueron descartados en 6 meses (Salazar-Israel · Oct 25 – Mar 26), con Enero 26 como peor mes (280 perdidos). Bloquear el descarte automático de leads Oro/VIP con VPP sin revisión de supervisor recupera clientes de alto margen y convierte mejor (4,0% vs. 3,3%) cuando avanzan.",
+    macro: "venta", stage: "Gestión de Leads", substep: "VPP y segmentos de valor", priority: "alta", transformational: true, responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Flujo diferenciado para leads con financiamiento",
+    description: "El segmento de mayor margen tiene la peor tasa de gestión: 95,3% de descarte — 10pp más que sin financiamiento. Una pre-evaluación crediticia antes del ingreso al CRM + un SLA de contacto más agresivo en este segmento desbloquea leads de mayor ticket.",
+    macro: "venta", stage: "Gestión de Leads", substep: "Financiamiento y motivos de descarte", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Redefinir el criterio de temperatura del lead",
+    description: "Los leads 'calientes' se descartan más que los 'fríos' en todos los meses (+13pp promedio) y convierten menos en el acumulado. Reemplazar el criterio actual por un scoring basado en comportamiento (visitas, páginas, financiamiento) + estandarizar la clasificación entre sucursales.",
+    macro: "venta", stage: "Gestión de Leads", substep: "Temperatura vs. conversión", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Eliminar 'Descarte masivo' como motivo válido en el CRM",
+    description: "8.613 casos en 6 meses (12% del total de descartes) registrados como 'Descarte masivo' — oculta leads recuperables y distorsiona las métricas. Exigir motivo específico obligatorio + auditoría del 100% de casos históricos para reclasificar.",
+    macro: "venta", stage: "Gestión de Leads", substep: "Financiamiento y motivos de descarte", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Validación mínima al ingreso del lead para reducir 'No contesta'",
+    description: "'No contesta' = 22.364 casos (31% del total). Sumado a 'quería información' (9%) llega a 49% de los descartes. Validación básica de teléfono (SMS/WhatsApp) y email antes de asignar el lead reduce el volumen atrapado en este motivo.",
+    macro: "venta", stage: "Gestión de Leads", substep: "Financiamiento y motivos de descarte", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
+  { iniciativa: "Replicar las condiciones operacionales de marzo 2026",
+    description: "Marzo 2026 es el único mes en el período donde todas las métricas mejoran simultáneamente: 8,2% de conversión, menor descarte y más entregados. Identificar qué se hizo distinto (asignación, capacity, cadencia, criterios) y replicarlo en meses de alto volumen.",
+    macro: "venta", stage: "Gestión de Leads", substep: "Volumen y conversión mensual", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" }
 ];
 
 function renderRoadmapSlide(i) {
@@ -1405,8 +1624,8 @@ function renderExecSummarySlide(i) {
       '<p>Síntesis del análisis punta a punta: alcance, números clave, hallazgos prioritarios y próximas decisiones. Diseñado para ser la primera diapositiva al presentar.</p>' +
     '</div>' +
     '<div class="exec-kpi-row">' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Macro-etapas</div><div class="exec-kpi-value">3</div><div class="exec-kpi-sub">3 mapeadas (Venta con data pendiente)</div></div>' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">16</div><div class="exec-kpi-sub">54 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
+      '<div class="exec-kpi"><div class="exec-kpi-label">Macro-etapas</div><div class="exec-kpi-value">3</div><div class="exec-kpi-sub">3 mapeadas (Venta con data parcial)</div></div>' +
+      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">16</div><div class="exec-kpi-sub">56 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Leads analizados</div><div class="exec-kpi-value">158.753</div><div class="exec-kpi-sub">CRM Llaima · Oct 2025 - Mar 2026</div></div>' +
       '<div class="exec-kpi"><div class="exec-kpi-label">Inventario (Preparación)</div><div class="exec-kpi-value">2.574<span class="suffix">uds</span></div><div class="exec-kpi-sub">Snapshot reporte BI 2026-04-17</div></div>' +
     '</div>' +
@@ -1437,7 +1656,7 @@ function renderExecSummarySlide(i) {
         '<ul>' +
           '<li><strong>Compra</strong> · 5 sub-etapas, 22 subprocesos — data real CRM Llaima (6 meses).</li>' +
           '<li><strong>Preparación</strong> · 6 sub-etapas, 17 subprocesos — data parcial (snapshot inventario + reporte de fotografías).</li>' +
-          '<li><strong>Venta</strong> · 5 sub-etapas, 15 subprocesos — estructura inicial levantada, KPIs TBD.</li>' +
+          '<li><strong>Venta</strong> · 5 sub-etapas, 17 subprocesos — Captación Digital con data real Microsoft Clarity (30 días), Gestión de Leads con data Salazar-Israel (104.747 leads · 6 meses); resto con estructura inicial.</li>' +
           '<li>Cada sub-etapa incluye KPIs operacionales, hallazgos, mejoras y un chip "Impacto cliente" con lineamientos específicos.</li>' +
           '<li>Gráficos embebidos: funnel de leads, contactabilidad, tiempo 1er contacto, motivos de descarte, funnel de publicabilidad, composición fotos por zona, ranking sucursales por % sin foto, y comparativo Compra vs VPP.</li>' +
         '</ul>' +
@@ -1581,12 +1800,14 @@ var CLIENTE_POR_SUBSTEP = {
   "10.2": { kpis: ["Días en stock Tier 4 vs. Tier 1 (TBD)","Conversión relativa por tier (TBD)","CTR de ficha por tier (TBD)"], lineamientos: ["Invertir donde haya retorno cuantitativo demostrado","Business case con data antes de escalar capacidad"] },
   "10.3": { kpis: ["Peor sucursal: Concepción J. Alessandri R. 1885 (51,5% sin foto)","2da peor: Vitacura Padre Hurtado 1246 (48,4%)","Top 3 peores = 43 uds sin foto (21% del total)"], lineamientos: ["Intervención focalizada semanal en top 5 peores sucursales","Ranking público interno para presión social positiva"] },
   "10.4": { kpis: ["Permanencia promedio en Tier 3 (TBD)","Permanencia promedio en Tier 4 (TBD)","% upgrades efectivos por semana (TBD)"], lineamientos: ["SLA máximo por tier: Tier 4 en 72h máximo","Owner operacional claro del pipeline visual"] },
-  "11.1": { kpis: ["Visitas únicas al catálogo / mes (TBD)","% sesiones con filtro aplicado (TBD)","Fichas vistas por sesión (TBD)"], lineamientos: ["Resultados siempre ordenados por calidad de foto y completitud de ficha","Ofrecer sugerencias cuando la búsqueda no tenga resultado","Permitir guardar búsqueda y recibir alertas de stock nuevo"] },
-  "11.2": { kpis: ["CTR ficha -> formulario (TBD)","% fichas con foto Tier 1/2 (TBD)","Tiempo promedio en ficha (TBD)"], lineamientos: ["Fichas completas, con foto en fondo limpio mínimo","Mostrar disponibilidad y ubicación en tiempo real","Sugerir alternativas similares en la misma ficha"] },
-  "11.3": { kpis: ["Tasa de completitud del formulario (TBD)","% leads con teléfono válido (TBD)","Tiempo de completado (TBD)"], lineamientos: ["Formulario corto, solo campos realmente necesarios","Validación de teléfono por SMS antes de enviar el lead","Confirmación inmediata al comprador con próximo paso claro"] },
-  "12.1": { kpis: ["Tiempo lead -> asignación (TBD)","% leads con asignación automática (TBD)"], lineamientos: ["Nunca dejar un lead sin dueño >15 min","Priorizar leads de alto valor sobre FIFO"] },
-  "12.2": { kpis: ["Contactabilidad al primer intento (TBD)","Tiempo 1er contacto (TBD)","Intentos promedio (TBD)"], lineamientos: ["Cadencia multi-canal llamada + WhatsApp","Respetar preferencias y horario del comprador","Nunca abandonar un lead en silencio"] },
-  "12.3": { kpis: ["% leads calificados (TBD)","% agendados (TBD)","Show rate (TBD)"], lineamientos: ["Recordatorio de la visita por WhatsApp (Paula)","Entregar instrucciones claras: dirección, documentos, duración","Permitir reagendar en 1 click"] },
+  "11.1": { kpis: ["136.334 sesiones totales (30 días)","85,7% tráfico mobile (106.867 ses.)","58,4% bounce rate — más de la mitad abandona sin interactuar","3:07 min duración promedio por sesión"], lineamientos: ["Diseño mobile-first real: 85,7% del tráfico decide desde el móvil","La narrativa debe responder a las 4 etapas del viaje del comprador (categoría → modelo → precio → confianza)","El freno principal es la confianza, no el precio — priorizar testimonios, garantías y transparencia"] },
+  "11.2": { kpis: ["62.955 sesiones del catálogo (30 días)","56% rebota en pág. 1 sin ver ningún auto","41% llegan a ficha desde catálogo","2.749 clics en botón filtros (solo 4,4% de sesiones)","273K dead clicks mensuales en banners no clicables"], lineamientos: ["Listado ordenado por calidad visual: autos sin foto al final","Filtros y buscador visibles — el usuario quiere refinar","Cero dead clicks: banner clicable o banner eliminado","Si el filtro no tiene stock, sugerir alternativas en vez de mostrar vacío"] },
+  "11.3": { kpis: ["21.872 sesiones en ficha (30 días)","4:30 min tiempo promedio en página","17,3% de sesiones con dead click (3.792)","56,1% quickback rate (abandono rápido)","74.943 dead clicks mensuales por falta de swipe/zoom"], lineamientos: ["El carrusel de fotos debe responder a gestos táctiles (swipe + zoom)","Indicador visual 'Desliza para ver más fotos' en mobile","Marca de agua 'Foto en proceso' para autos con foto de inspección, gestionar expectativa visual"] },
+  "11.4": { kpis: ["862 sesiones inician cotización (30 días)","3,9% conversión ficha -> cotización — mayor oportunidad del funnel","19,4% de sesiones con dead click (167 de 862)","Error 303 en paso 4 del buy-process"], lineamientos: ["Resolver el error 303 del paso 4 — prioridad crítica","Indicador de progreso claro y no clicable en los steps","Solo preguntar lo esencial: menos campos = más conversión","Confirmar al usuario cada hito con mensaje claro"] },
+  "12.1": { kpis: ["104.747 leads ingresados (Oct 25 – Mar 26)","68,8% tasa de descarte global","5,3% conversión (5.587 entregados)","13.548 leads sin gestionar en etapa 'Nuevo' (13%)"], lineamientos: ["Nunca dejar un lead sin dueño / sin gestión >24h","Replicar condiciones de marzo 2026 (mejor mes, 8,2% conversión)","Capacity planning en meses peak (Ene 26 con +25% de volumen convirtió peor)"] },
+  "12.2": { kpis: ["Leads 'Caliente' se descartan +13pp más que 'Frío'","Conversión Caliente 3,9% vs. Frío 4,6% (promedio)","Tibio en Feb 26 convirtió 12,3% — señal no aprovechada"], lineamientos: ["No priorizar por 'temperatura' hasta validar que correlaciona con conversión real","Criterio único de temperatura entre sucursales, revisado trimestralmente","Scoring basado en comportamiento observado, no en intuición del asesor"] },
+  "12.3": { kpis: ["+7pp descarte con VPP vs. sin VPP","641 Oro + VIP con VPP descartados (6 meses)","4,0% conversión cuando avanzan vs. 3,3% sin VPP"], lineamientos: ["Bloquear descarte automático de leads Oro/VIP + VPP sin revisión","SLA de contacto más agresivo para clientes con VPP","Reporte visible por sucursal del % Premium descartados"] },
+  "12.4": { kpis: ["95,3% descarte con financiamiento (promedio)","-10pp vs. sin financiamiento","22.364 'No contesta' (31% del total)","8.613 'Descarte masivo' (12%, distorsiona métricas)"], lineamientos: ["Pre-evaluación crediticia ANTES de ingresar el lead al CRM","Motivo obligatorio y específico al descartar — eliminar 'Descarte masivo'","Validar teléfono y email al ingreso para reducir 'No contesta'"] },
   "13.1": { kpis: ["% reservas que terminan en venta (TBD)","Duración promedio de la reserva (TBD)","% reservas liberadas por vencimiento (TBD)"], lineamientos: ["Dejar clara la vigencia de la reserva al cliente","Avisar antes del vencimiento","No reservar sin compromiso real del comprador"] },
   "13.2": { kpis: ["Mix por medio de pago (TBD)","% con crédito automotriz (TBD)","% con parte de pago (TBD)"], lineamientos: ["Mostrar simulador de cuota en la ficha","Ser transparente con tasas y costos financieros","Explicar el flujo de parte de pago antes de iniciarlo"] },
   "13.3": { kpis: ["Tiempo del proceso de pago (TBD)","% pagos digitales (TBD)","% con comprobante entregado (TBD)"], lineamientos: ["Link de pago digital por defecto","Comprobante automático al correo al momento del pago","Nunca pedir datos sensibles por canales no seguros"] },
@@ -1656,6 +1877,19 @@ var BENCHMARK_POR_SUBSTEP = {
       "Adoptar el rango de precio al estilo Bruno Fritsch para gestionar expectativas.",
       "Diferenciar beneficios reales de cada modalidad al estilo TrueCar / Kavak.",
       "Ser explícito con 'sujeto a revisión mecánica' desde la pantalla de tasación (Bruno Fritsch, Salfa)."
+    ]
+  },
+  "11.2": {
+    referentes: "Salazar-Israel (SAIS) · benchmark interno Americar · GTM",
+    hallazgos: [
+      "El <strong>patrón de mayor visibilidad del buscador dentro del catálogo</strong> ya fue validado en Salazar-Israel (SAIS) vía Google Tag Manager — subió el refinamiento de búsqueda sin campañas adicionales.",
+      "En Clicar hoy solo 4,4% de las sesiones del catálogo usan el botón de filtros (2.749 clics / mes), pero el 30% del uso del buscador de texto del sitio se origina dentro del catálogo: existe intención de refinar que no se traduce en uso porque el control no está visible.",
+      "SAIS no publica autos sin foto formal ni deja combinaciones de filtro en cero resultados — ambas prácticas todavía ocurren en Clicar."
+    ],
+    oportunidades: [
+      "Replicar el patrón SAIS de buscador visible dentro del catálogo — implementación de bajo costo vía GTM con resultado ya validado en la red.",
+      "Extender la lógica SAIS de 'no combinación cero' (sugerencias alternativas cuando no hay stock) al catálogo de Clicar.",
+      "Benchmark externo (Kavak / Salfa / Gildemeister) pendiente de levantar — confirmar si sus catálogos resuelven la visibilidad del filtro y el tratamiento de autos sin foto."
     ]
   },
   "2.2": {
@@ -1776,6 +2010,36 @@ var TOTAL_SUBSTEPS = flatSlides.length - 4;
 var currentSlide = 0;
 var chartInstances = {};
 var chartState = {};
+
+// ============================================================
+// Chart.js defaults: leyenda con línea (no cuadrado) para datasets de línea
+// ============================================================
+(function() {
+  if (typeof Chart === 'undefined') return;
+  Chart.defaults.plugins.legend.labels.usePointStyle = true;
+  Chart.defaults.plugins.legend.labels.boxWidth = 28;
+  Chart.defaults.plugins.legend.labels.boxHeight = 2;
+  Chart.defaults.plugins.legend.labels.generateLabels = function(chart) {
+    var datasets = (chart.data && chart.data.datasets) || [];
+    var rootType = (chart.config && chart.config.type) || (chart.config && chart.config._config && chart.config._config.type);
+    return datasets.map(function(ds, i) {
+      var isLine = (ds.type === 'line') || (rootType === 'line' && ds.type !== 'bar');
+      var strokeColor = (typeof ds.borderColor === 'string' ? ds.borderColor : null) || (typeof ds.backgroundColor === 'string' ? ds.backgroundColor : null) || '#666';
+      var fillColor = isLine ? 'transparent' : ((typeof ds.backgroundColor === 'string' ? ds.backgroundColor : null) || strokeColor);
+      return {
+        text: ds.label || '',
+        fillStyle: fillColor,
+        strokeStyle: strokeColor,
+        lineWidth: isLine ? (ds.borderWidth != null ? ds.borderWidth : 2) : 0,
+        lineDash: ds.borderDash || [],
+        pointStyle: isLine ? 'line' : 'rect',
+        hidden: !chart.isDatasetVisible(i),
+        index: i,
+        datasetIndex: i
+      };
+    });
+  };
+})();
 
 // ============================================================
 // PREPARACION - DATA REAL (Reporte BI 2026-04-17)
@@ -1941,6 +2205,559 @@ function buildPrepChartCfg(chartType) {
   return null;
 }
 
+function renderVtaMercadoSection(slideIdx) {
+  var html = '<div class="data-section">' +
+    '<div class="data-section-header">' +
+      '<div><div class="data-section-title">Contexto del mercado chileno</div><div class="data-section-subtitle">Fuente: Google Trends / Ubersuggest · Microsoft Clarity · 22 mar – 22 abr 2026</div></div>' +
+    '</div>' +
+    '<div class="vta-block">' +
+      '<div class="vta-block-title">El mercado habla — Qué buscan los chilenos al comprar un auto usado</div>' +
+      '<div class="vta-cards-mercado">' +
+        '<div class="vta-mkt-card"><div class="vta-mkt-value">142M</div><div class="vta-mkt-label">Búsquedas 2025</div><div class="vta-mkt-sub">Google Trends / Ubersuggest — mercado en ebullición digital</div></div>' +
+        '<div class="vta-mkt-card"><div class="vta-mkt-value">$9M – $13M</div><div class="vta-mkt-label">Ticket promedio</div><div class="vta-mkt-sub">Financiamiento es parte del producto, no un extra</div></div>' +
+        '<div class="vta-mkt-card"><div class="vta-mkt-value">40%</div><div class="vta-mkt-label">SUV — categoría líder</div><div class="vta-mkt-sub">40% del total de búsquedas de categoría</div></div>' +
+        '<div class="vta-mkt-card accent"><div class="vta-mkt-value">El miedo</div><div class="vta-mkt-label">Freno principal de compra</div><div class="vta-mkt-sub">Mayor inhibidor que el precio — la oportunidad está en convertir ansiedad en certeza</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="vta-block">' +
+      '<div class="vta-block-title">El viaje del comprador en Chile — 4 etapas de decisión</div>' +
+      '<div class="vta-journey">' +
+        '<div class="vta-journey-step"><div class="vta-journey-num">1</div><div class="vta-journey-title">¿Qué auto?</div><div class="vta-journey-desc">Estilo de vida primero. SUV lidera con 40% de búsquedas de categoría.</div></div>' +
+        '<div class="vta-journey-step"><div class="vta-journey-num">2</div><div class="vta-journey-title">¿Qué modelo?</div><div class="vta-journey-desc">Búsqueda quirúrgica: "Toyota RAV4 usado Chile". Alta intención.</div></div>' +
+        '<div class="vta-journey-step"><div class="vta-journey-num">3</div><div class="vta-journey-title">¿Cuánto vale?</div><div class="vta-journey-desc">Ticket $9M–$13M. Financiamiento es parte del producto, no un extra.</div></div>' +
+        '<div class="vta-journey-step"><div class="vta-journey-num">4</div><div class="vta-journey-title">¿Es confiable?</div><div class="vta-journey-desc">El mayor freno. Casi nadie lo resuelve bien. Aquí está la oportunidad.</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="vta-block">' +
+      '<div class="vta-block-title">Distribución de dispositivos y fuentes de tráfico · Últimos 30 días</div>' +
+      '<div class="vta-sources">' +
+        '<div>' +
+          '<div style="font-size:11px;font-weight:700;color:var(--gray-700);margin-bottom:8px;">Distribución de dispositivos</div>' +
+          '<div class="vta-bars">' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Mobile<span class="vta-bar-sub">106.867 ses.</span></div><div class="vta-bar-track"><div class="vta-bar-fill" style="width:85.7%"></div></div><div class="vta-bar-value">85,7%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Desktop<span class="vta-bar-sub">15.888 ses.</span></div><div class="vta-bar-track"><div class="vta-bar-fill" style="width:12.1%"></div></div><div class="vta-bar-value">12,1%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Tablet<span class="vta-bar-sub">2.022 ses.</span></div><div class="vta-bar-track"><div class="vta-bar-fill" style="width:1.6%"></div></div><div class="vta-bar-value">1,6%</div></div>' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:11px;font-weight:700;color:var(--gray-700);margin-bottom:8px;">Principales fuentes de tráfico</div>' +
+          '<div class="vta-bars">' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Ads Meta (Facebook/Instagram)</div><div class="vta-bar-track"><div class="vta-bar-fill ads" style="width:100%"></div></div><div class="vta-bar-value">36%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Google Paid Search</div><div class="vta-bar-track"><div class="vta-bar-fill paid" style="width:55.5%"></div></div><div class="vta-bar-value">20%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Directo</div><div class="vta-bar-track"><div class="vta-bar-fill direct" style="width:50%"></div></div><div class="vta-bar-value">18%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Google Orgánico</div><div class="vta-bar-track"><div class="vta-bar-fill organic" style="width:22.2%"></div></div><div class="vta-bar-value">8%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Instagram directo (RRSS)</div><div class="vta-bar-track"><div class="vta-bar-fill social" style="width:16.7%"></div></div><div class="vta-bar-value">6%</div></div>' +
+            '<div class="vta-bar-row"><div class="vta-bar-label">Otros</div><div class="vta-bar-track"><div class="vta-bar-fill other" style="width:33.3%"></div></div><div class="vta-bar-value">12%</div></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="data-insight"><strong>Clicar tiene la oportunidad de ser el primer actor del mercado</strong> en resolver las 4 etapas del viaje del comprador con excelencia. Quien convierta la ansiedad en certeza, gana el mercado — y 85,7% de ese combate se pelea en mobile.</div>' +
+  '</div>';
+  return html;
+}
+
+function renderVtaFunnelSection(slideIdx) {
+  var blockId = 'vta-funnel-' + slideIdx;
+  var funnelTable = '<div class="vta-table-wrap"><table class="vta-table">' +
+    '<thead><tr><th>Etapa</th><th>URL</th><th class="right">Sesiones</th><th class="right">% del total</th><th class="right">% del paso anterior</th></tr></thead>' +
+    '<tbody>' +
+      '<tr><td><strong>Sesiones totales</strong></td><td>clicar.cl</td><td class="right">136.334</td><td class="right">100,0%</td><td class="right">—</td></tr>' +
+      '<tr><td><strong>Catálogo</strong></td><td>/vehiculos/usado</td><td class="right">62.955</td><td class="right">46,2%</td><td class="right">46,2%</td></tr>' +
+      '<tr><td><strong>Ficha de auto</strong></td><td>/marcas/</td><td class="right">21.872</td><td class="right">16,0%</td><td class="right">34,7%</td></tr>' +
+      '<tr class="totals"><td><strong>Cotización</strong></td><td>/buy-process</td><td class="right">862</td><td class="right">0,6%</td><td class="right neg">3,9%</td></tr>' +
+    '</tbody></table></div>';
+  return '<div class="data-section">' +
+    '<div class="vta-chart-block-header" style="padding: 14px 20px; margin: 0; border-bottom: 1px solid var(--gray-200);">' +
+      '<h4 class="vta-chart-title">Funnel del sitio · Últimos 30 días (Microsoft Clarity)</h4>' +
+      '<div class="vta-view-toggle">' +
+        '<button type="button" class="active" data-vta-view="chart" data-vta-target="' + blockId + '">Gráfico</button>' +
+        '<button type="button" data-vta-view="table" data-vta-target="' + blockId + '">Tabla</button>' +
+      '</div>' +
+    '</div>' +
+    '<div data-vta-block="' + blockId + '">' +
+    '<div class="vta-view active" data-vta-pane="' + blockId + '-chart">' +
+    '<div class="vta-block">' +
+      '<div class="vta-funnel">' +
+        '<div class="vta-funnel-step s1">' +
+          '<div><div class="vta-funnel-label">Sesiones totales · clicar.cl</div><div class="vta-funnel-value">136.334</div><div class="vta-funnel-pct">100% — todos los ingresos</div></div>' +
+        '</div>' +
+        '<div class="vta-funnel-arrow">↓ 46,2%</div>' +
+        '<div class="vta-funnel-step s2">' +
+          '<div><div class="vta-funnel-label">Catálogo · /vehiculos/usado</div><div class="vta-funnel-value">62.955</div><div class="vta-funnel-pct">46,2% del total</div></div>' +
+        '</div>' +
+        '<div class="vta-funnel-arrow">↓ 34,7%</div>' +
+        '<div class="vta-funnel-step s3">' +
+          '<div><div class="vta-funnel-label">Ficha de auto · /marcas/</div><div class="vta-funnel-value">21.872</div><div class="vta-funnel-pct">34,7% del catálogo</div></div>' +
+        '</div>' +
+        '<div class="vta-funnel-arrow critical">⚠ Salto crítico — 3,9%</div>' +
+        '<div class="vta-funnel-step s4">' +
+          '<div><div class="vta-funnel-label">Buy-process (inicia cotización)</div><div class="vta-funnel-value">862</div><div class="vta-funnel-pct">3,9% de la ficha</div></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="data-insight"><strong>Salto crítico:</strong> de 21.872 fichas a solo 862 cotizaciones = <strong>3,9% de conversión</strong>. Es la mayor oportunidad de mejora del funnel del sitio. Trabajar sobre los dead clicks de la ficha (74.943/mes en swipe/zoom) y la fricción del buy-process (error 303 en paso 4, exceso de preguntas) puede mover este número con impacto directo en leads.</div>' +
+    '</div>' +
+    '<div class="vta-view" data-vta-pane="' + blockId + '-table">' +
+      '<div class="vta-block">' + funnelTable + '</div>' +
+    '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ============================================================
+// VENTA - GESTIÓN DE LEADS · Data real Salazar-Israel
+// Oct 2025 – Mar 2026 · 104.747 leads
+// ============================================================
+var VTA_LEADS_MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
+var VTA_LEADS = {
+  total:    [17204,17474,15821,21914,19004,13330],
+  desc:     [12871,13273,10215,14922,13108, 7724],
+  entreg:   [  881,  849,  477, 1202, 1082, 1096],
+  cal:      [  216,  225,    0,  421,  923,  811],
+  gest:     [  178,  120, 1082,  214,  311,  453],
+  nuevo:    [ 1717, 4997,  681, 2421, 2119, 1613],
+  descC:    [79,88,61,73,76,67],
+  descT:    [26,80,49,42,31,25],
+  descF:    [66,65,64,59,67,61],
+  convC:    [3.9,3.1,1.8,6.6,6.5,5.5],
+  convT:    [3.8,4.7,1.3,3.9,5.3,12.3],
+  convF:    [5.1,4.3,5.2,5.7,2.5,5.2],
+  vppNoTotal:[14761,14885,13402,18125,15935,11182],
+  vppNoDesc: [ 9959, 1433,12992, 6871, 9720, 5323],
+  vppNoConv: [  521,  301,  238,  784,  481,  118],
+  vppSiTotal:[ 2443, 2589, 2419, 3789, 3069, 2148],
+  vppSiDesc: [ 1922, 2231, 1813, 2285,  923,  540],
+  vppSiConv: [  122,  177,   62,  229,  215,   81],
+  bronce:   [65,66,103,101,70,38],
+  oro:      [95,67, 60, 82,52,39],
+  plata:    [57,41, 45, 62,51,22],
+  vip:      [53,34, 40, 52,47,20],
+  financSi: [95.2,96.7,95.5,95.7,94.2,92.4],
+  financNo: [91.9,89.5,91.2,90.3,92.2,84.5],
+  noContesta:[3344,4820,3325,4503,3931,2441],
+  negFinanc: [ 982,1377,1220, 724, 619, 407],
+  negDesiste:[1575,3601,2655,1927,1931,1329],
+  descMasivo:[ 972,1271,2673, 843,2708, 146],
+  negSinMot: [ 877, 755, 373,1887,1253, 881],
+  duplicado: [ 813, 965, 663, 843, 777, 711],
+  negStock:  [ 315, 371, 305, 372, 363, 244]
+};
+function vtaSum(a){var s=0;for(var i=0;i<a.length;i++)s+=a[i];return s;}
+function vtaPct(a,b){return b>0 ? Math.round(a/b*1000)/10 : 0;}
+function vtaConvRate(){return VTA_LEADS.total.map(function(t,i){return vtaPct(VTA_LEADS.entreg[i],t);});}
+function vtaDescRate(){return VTA_LEADS.total.map(function(t,i){return vtaPct(VTA_LEADS.desc[i],t);});}
+
+// Plugin que dibuja el % sobre cada punto de línea
+var vtaLinePctLabelsPlugin = {
+  id: 'vtaLinePctLabels',
+  afterDatasetsDraw: function(chart) {
+    var ctx = chart.ctx;
+    var datasets = chart.data.datasets || [];
+    ctx.save();
+    ctx.font = '700 10px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    for (var d = 0; d < datasets.length; d++) {
+      var ds = datasets[d];
+      if (ds.type && ds.type !== 'line') continue;
+      var meta = chart.getDatasetMeta(d);
+      if (!meta || !meta.data || !chart.isDatasetVisible(d)) continue;
+      var color = (typeof ds.borderColor === 'string' && ds.borderColor) ? ds.borderColor : '#333';
+      var above = (d % 2 === 0);
+      for (var i = 0; i < meta.data.length; i++) {
+        var pt = meta.data[i];
+        if (!pt) continue;
+        var val = ds.data[i];
+        if (val == null) continue;
+        var label = (Math.abs(val) >= 10 ? val.toFixed(0) : val.toFixed(1)) + '%';
+        var tw = ctx.measureText(label).width + 8;
+        var yTop = above ? (pt.y - 20) : (pt.y + 4);
+        var textY = above ? (pt.y - 6) : (pt.y + 18);
+        ctx.fillStyle = 'rgba(255,255,255,0.94)';
+        ctx.fillRect(pt.x - tw/2, yTop, tw, 16);
+        ctx.fillStyle = color;
+        ctx.fillText(label, pt.x, textY - 2);
+      }
+    }
+    ctx.restore();
+  }
+};
+
+function buildVtaLeadsChartCfg(kind) {
+  var lbs = VTA_LEADS_MESES;
+  var common = { responsive:true, maintainAspectRatio:false, layout:{ padding:{ top: 18 } }, plugins:{ legend:{ display:true, position:'bottom', labels:{ font:{ size:10 } } } } };
+  if (kind === 'vol') {
+    var convR = vtaConvRate();
+    var convMax = Math.max.apply(null, convR);
+    var volLabelsPlugin = {
+      id: 'vtaVolLabels',
+      afterDatasetsDraw: function(chart) {
+        var ctx = chart.ctx;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        // Total leads sobre cada barra
+        var barMeta = chart.getDatasetMeta(0);
+        if (barMeta && barMeta.data) {
+          ctx.font = '700 11px -apple-system, BlinkMacSystemFont, sans-serif';
+          for (var b = 0; b < barMeta.data.length; b++) {
+            var bar = barMeta.data[b];
+            if (!bar) continue;
+            var tv = chart.data.datasets[0].data[b];
+            var tl = tv != null ? tv.toLocaleString('es-CL') : '';
+            ctx.fillStyle = '#0B3B6F';
+            ctx.fillText(tl, bar.x, bar.y - 4);
+          }
+        }
+        // % conversión sobre la línea
+        var lineMeta = chart.getDatasetMeta(1);
+        if (lineMeta && lineMeta.data) {
+          ctx.font = '700 11px -apple-system, BlinkMacSystemFont, sans-serif';
+          for (var i = 0; i < lineMeta.data.length; i++) {
+            var pt = lineMeta.data[i];
+            if (!pt) continue;
+            var val = chart.data.datasets[1].data[i];
+            var label = (val != null ? val.toFixed(1) + '%' : '');
+            var tw = ctx.measureText(label).width + 8;
+            ctx.fillStyle = 'rgba(255,255,255,0.92)';
+            ctx.fillRect(pt.x - tw/2, pt.y - 22, tw, 16);
+            ctx.fillStyle = '#0B5D44';
+            ctx.fillText(label, pt.x, pt.y - 8);
+          }
+        }
+        ctx.restore();
+      }
+    };
+    return { type:'bar', data:{ labels:lbs, datasets:[
+      { label:'Total leads', data:VTA_LEADS.total, backgroundColor:'#B5D4F4', borderWidth:0, yAxisID:'y', order:2 },
+      { label:'% conversión', data:convR, type:'line', borderColor:'#1D9E75', backgroundColor:'transparent', borderWidth:3, pointRadius:6, pointBackgroundColor:'#1D9E75', pointBorderColor:'#ffffff', pointBorderWidth:2, tension:0.3, yAxisID:'y2', order:0, clip:false }
+    ]}, options: Object.assign({}, common, {
+      layout: { padding: { top: 22 } },
+      interaction: { mode:'index', intersect:false },
+      plugins: {
+        legend:{ display:true, position:'bottom', labels:{ font:{ size:10 } } },
+        tooltip: { callbacks: {
+          label: function(ctx){
+            if (ctx.datasetIndex === 0) return 'Total leads: ' + ctx.parsed.y.toLocaleString('es-CL');
+            return '% conversión: ' + ctx.parsed.y.toFixed(1) + '%';
+          }
+        } }
+      },
+      scales:{
+        y:{ beginAtZero:true, ticks:{ callback:function(v){return (v/1000).toFixed(0)+'k';} }, grid:{ color:'rgba(0,0,0,0.04)' } },
+        y2:{ position:'right', beginAtZero:true, max: Math.ceil(convMax * 1.4 + 1), ticks:{ callback:function(v){return v+'%';} }, grid:{ display:false } }
+      }
+    }), plugins: [volLabelsPlugin] };
+  }
+  if (kind === 'etapas') {
+    return { type:'bar', data:{ labels:lbs, datasets:[
+      { label:'Descartado', data:VTA_LEADS.desc, backgroundColor:'#E24B4A', borderWidth:0 },
+      { label:'Entregado', data:VTA_LEADS.entreg, backgroundColor:'#1D9E75', borderWidth:0 },
+      { label:'Calificado', data:VTA_LEADS.cal, backgroundColor:'#378ADD', borderWidth:0 },
+      { label:'En gestión', data:VTA_LEADS.gest, backgroundColor:'#EF9F27', borderWidth:0 },
+      { label:'Nuevo', data:VTA_LEADS.nuevo, backgroundColor:'#888780', borderWidth:0 }
+    ]}, options: Object.assign({}, common, {
+      interaction: { mode:'index', intersect:false },
+      plugins: {
+        legend:{ display:true, position:'bottom', labels:{ font:{ size:10 } } },
+        tooltip: {
+          callbacks: {
+            title: function(items){
+              if (!items.length) return '';
+              var idx = items[0].dataIndex;
+              var total = VTA_LEADS.total[idx];
+              return items[0].label + ' · Total leads: ' + total.toLocaleString('es-CL');
+            },
+            label: function(ctx){
+              var v = ctx.parsed.y || 0;
+              var total = VTA_LEADS.total[ctx.dataIndex] || 0;
+              var pct = total > 0 ? (v / total * 100).toFixed(1) : '0';
+              return ctx.dataset.label + ': ' + v.toLocaleString('es-CL') + ' (' + pct + '%)';
+            }
+          }
+        }
+      },
+      scales:{ x:{ stacked:true }, y:{ stacked:true, beginAtZero:true, ticks:{ callback:function(v){return (v/1000).toFixed(0)+'k';} } } }
+    }) };
+  }
+  if (kind === 'descarte') {
+    var dr = vtaDescRate();
+    var drMin = Math.max(0, Math.floor(Math.min.apply(null, dr) - 5));
+    var drMax = Math.min(100, Math.ceil(Math.max.apply(null, dr) + 5));
+    return { type:'line', data:{ labels:lbs, datasets:[
+      { label:'% descarte', data:dr, borderColor:'#E24B4A', backgroundColor:'rgba(226,75,74,0.08)', borderWidth:2.5, pointRadius:5, fill:true, tension:0.3,
+        pointBackgroundColor: dr.map(function(v){ return v>72 ? '#E24B4A' : (v>66 ? '#EF9F27' : '#1D9E75'); }) }
+    ]}, options: Object.assign({}, common, { plugins:{ legend:{ display:false } }, scales:{ y:{ min:drMin, max:drMax, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
+  }
+  if (kind === 'temp-desc') {
+    return { type:'line', data:{ labels:lbs, datasets:[
+      { label:'Caliente', data:VTA_LEADS.descC, borderColor:'#E24B4A', backgroundColor:'rgba(226,75,74,0.07)', borderWidth:2, pointRadius:4, fill:true, tension:0.3 },
+      { label:'Tibio', data:VTA_LEADS.descT, borderColor:'#EF9F27', backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.3, borderDash:[5,3] },
+      { label:'Frío', data:VTA_LEADS.descF, borderColor:'#378ADD', backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.3, borderDash:[2,2] }
+    ]}, options: Object.assign({}, common, { scales:{ y:{ min:0, max:100, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
+  }
+  if (kind === 'temp-conv') {
+    return { type:'line', data:{ labels:lbs, datasets:[
+      { label:'Caliente', data:VTA_LEADS.convC, borderColor:'#E24B4A', backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.3 },
+      { label:'Tibio', data:VTA_LEADS.convT, borderColor:'#EF9F27', backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.3, borderDash:[5,3] },
+      { label:'Frío', data:VTA_LEADS.convF, borderColor:'#378ADD', backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.3, borderDash:[2,2] }
+    ]}, options: Object.assign({}, common, { scales:{ y:{ beginAtZero:true, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
+  }
+  if (kind === 'vpp-desc') {
+    var vppNoD = VTA_LEADS.vppNoTotal.map(function(t,i){return vtaPct(VTA_LEADS.vppNoDesc[i],t);});
+    var vppSiD = VTA_LEADS.vppSiTotal.map(function(t,i){return vtaPct(VTA_LEADS.vppSiDesc[i],t);});
+    return { type:'line', data:{ labels:lbs, datasets:[
+      { label:'Con VPP', data:vppSiD, borderColor:'#E24B4A', backgroundColor:'rgba(226,75,74,0.07)', borderWidth:2.5, pointRadius:5, fill:true, tension:0.3 },
+      { label:'Sin VPP', data:vppNoD, borderColor:'#378ADD', backgroundColor:'transparent', borderWidth:2, pointRadius:5, tension:0.3, borderDash:[5,3] }
+    ]}, options: Object.assign({}, common, { scales:{ y:{ min:0, max:100, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
+  }
+  if (kind === 'vpp-conv') {
+    var vppNoC = VTA_LEADS.vppNoTotal.map(function(t,i){return vtaPct(VTA_LEADS.vppNoConv[i],t);});
+    var vppSiC = VTA_LEADS.vppSiTotal.map(function(t,i){return vtaPct(VTA_LEADS.vppSiConv[i],t);});
+    return { type:'line', data:{ labels:lbs, datasets:[
+      { label:'Con VPP', data:vppSiC, borderColor:'#1D9E75', backgroundColor:'rgba(29,158,117,0.07)', borderWidth:2.5, pointRadius:5, fill:true, tension:0.3 },
+      { label:'Sin VPP', data:vppNoC, borderColor:'#378ADD', backgroundColor:'transparent', borderWidth:2, pointRadius:5, tension:0.3, borderDash:[5,3] }
+    ]}, options: Object.assign({}, common, { scales:{ y:{ beginAtZero:true, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
+  }
+  if (kind === 'seg-valor') {
+    return { type:'bar', data:{ labels:lbs, datasets:[
+      { label:'Bronce', data:VTA_LEADS.bronce, backgroundColor:'#EF9F27', borderWidth:0 },
+      { label:'Oro', data:VTA_LEADS.oro, backgroundColor:'#F0997B', borderWidth:0 },
+      { label:'Plata', data:VTA_LEADS.plata, backgroundColor:'#888780', borderWidth:0 },
+      { label:'VIP', data:VTA_LEADS.vip, backgroundColor:'#534AB7', borderWidth:0 }
+    ]}, options: Object.assign({}, common, { scales:{ x:{ stacked:true }, y:{ stacked:true, beginAtZero:true } } }) };
+  }
+  if (kind === 'financ') {
+    return { type:'line', data:{ labels:lbs, datasets:[
+      { label:'Con financiamiento', data:VTA_LEADS.financSi, borderColor:'#E24B4A', backgroundColor:'rgba(226,75,74,0.07)', borderWidth:2.5, pointRadius:5, fill:true, tension:0.3 },
+      { label:'Sin financiamiento', data:VTA_LEADS.financNo, borderColor:'#378ADD', backgroundColor:'transparent', borderWidth:2, pointRadius:5, tension:0.3, borderDash:[5,3] }
+    ]}, options: Object.assign({}, common, { scales:{ y:{ min:75, max:100, ticks:{ callback:function(v){return v+'%';} } } } }), plugins:[vtaLinePctLabelsPlugin] };
+  }
+  if (kind === 'motivos') {
+    return { type:'bar', data:{
+      labels:['No contesta','Neg. desiste','Desc. masivo','Neg. sin motivo','Neg. financ.','Duplicado','Neg. stock'],
+      datasets:[{ data:[vtaSum(VTA_LEADS.noContesta),vtaSum(VTA_LEADS.negDesiste),vtaSum(VTA_LEADS.descMasivo),vtaSum(VTA_LEADS.negSinMot),vtaSum(VTA_LEADS.negFinanc),vtaSum(VTA_LEADS.duplicado),vtaSum(VTA_LEADS.negStock)], backgroundColor:['#3266ad','#73726c','#E24B4A','#888780','#E24B4A','#B5D4F4','#EF9F27'], borderWidth:0 }]
+    }, options: Object.assign({}, common, { plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ callback:function(v){return (v/1000).toFixed(0)+'k';} } }, x:{ ticks:{ font:{ size:10 } } } } }) };
+  }
+  return null;
+}
+
+function vtaLeadsBuildTable(kind) {
+  var m = VTA_LEADS_MESES;
+  function tr(cells, cls) { return '<tr' + (cls ? ' class="'+cls+'"' : '') + '>' + cells.map(function(c){ return '<td class="right">' + c + '</td>'; }).join('') + '</tr>'; }
+  function n(v) { return (v||0).toLocaleString('es-CL'); }
+  function p(v,t) { return t>0 ? (v/t*100).toFixed(1) + '%' : '—'; }
+  var head, rows = '', totals = '';
+  if (kind === 'vol') {
+    head = '<tr><th>Mes</th><th class="right">Total leads</th><th class="right">Descartado</th><th class="right">En gestión</th><th class="right">Calificado</th><th class="right">Entregado</th><th class="right">Nuevo</th><th class="right">% Conv</th><th class="right">% Desc</th></tr>';
+    for (var i = 0; i < m.length; i++) {
+      var t = VTA_LEADS.total[i];
+      rows += '<tr><td><strong>' + m[i] + '</strong></td>' +
+        '<td class="right">' + n(t) + '</td>' +
+        '<td class="right neg">' + n(VTA_LEADS.desc[i]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.gest[i]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.cal[i]) + '</td>' +
+        '<td class="right pos">' + n(VTA_LEADS.entreg[i]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.nuevo[i]) + '</td>' +
+        '<td class="right pos">' + p(VTA_LEADS.entreg[i], t) + '</td>' +
+        '<td class="right neg">' + p(VTA_LEADS.desc[i], t) + '</td>' +
+      '</tr>';
+    }
+    var tT = vtaSum(VTA_LEADS.total), tD = vtaSum(VTA_LEADS.desc), tE = vtaSum(VTA_LEADS.entreg);
+    totals = '<tr class="totals"><td>TOTAL</td><td class="right">' + n(tT) + '</td><td class="right">' + n(tD) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.gest)) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.cal)) + '</td><td class="right">' + n(tE) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.nuevo)) + '</td><td class="right">' + p(tE, tT) + '</td><td class="right">' + p(tD, tT) + '</td></tr>';
+  } else if (kind === 'etapas') {
+    head = '<tr><th>Mes</th><th class="right">Total</th><th class="right">Descartado</th><th class="right">Entregado</th><th class="right">Calificado</th><th class="right">En gestión</th><th class="right">Nuevo</th></tr>';
+    for (var j = 0; j < m.length; j++) {
+      var tt = VTA_LEADS.total[j];
+      rows += '<tr><td><strong>' + m[j] + '</strong></td><td class="right">' + n(tt) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.desc[j]) + ' <small style="color:var(--gray-500)">(' + p(VTA_LEADS.desc[j], tt) + ')</small></td>' +
+        '<td class="right">' + n(VTA_LEADS.entreg[j]) + ' <small style="color:var(--gray-500)">(' + p(VTA_LEADS.entreg[j], tt) + ')</small></td>' +
+        '<td class="right">' + n(VTA_LEADS.cal[j]) + ' <small style="color:var(--gray-500)">(' + p(VTA_LEADS.cal[j], tt) + ')</small></td>' +
+        '<td class="right">' + n(VTA_LEADS.gest[j]) + ' <small style="color:var(--gray-500)">(' + p(VTA_LEADS.gest[j], tt) + ')</small></td>' +
+        '<td class="right">' + n(VTA_LEADS.nuevo[j]) + ' <small style="color:var(--gray-500)">(' + p(VTA_LEADS.nuevo[j], tt) + ')</small></td>' +
+      '</tr>';
+    }
+  } else if (kind === 'descarte') {
+    head = '<tr><th>Mes</th><th class="right">Total</th><th class="right">Descartados</th><th class="right">% Descarte</th></tr>';
+    for (var k = 0; k < m.length; k++) {
+      var td = VTA_LEADS.total[k];
+      rows += '<tr><td><strong>' + m[k] + '</strong></td><td class="right">' + n(td) + '</td><td class="right neg">' + n(VTA_LEADS.desc[k]) + '</td><td class="right neg">' + p(VTA_LEADS.desc[k], td) + '</td></tr>';
+    }
+  } else if (kind === 'temp-desc') {
+    head = '<tr><th>Mes</th><th class="right">% Caliente</th><th class="right">% Tibio</th><th class="right">% Frío</th></tr>';
+    for (var l = 0; l < m.length; l++) {
+      rows += '<tr><td><strong>' + m[l] + '</strong></td><td class="right">' + VTA_LEADS.descC[l] + '%</td><td class="right">' + VTA_LEADS.descT[l] + '%</td><td class="right">' + VTA_LEADS.descF[l] + '%</td></tr>';
+    }
+  } else if (kind === 'temp-conv') {
+    head = '<tr><th>Mes</th><th class="right">% Caliente</th><th class="right">% Tibio</th><th class="right">% Frío</th></tr>';
+    for (var ll = 0; ll < m.length; ll++) {
+      rows += '<tr><td><strong>' + m[ll] + '</strong></td><td class="right">' + VTA_LEADS.convC[ll] + '%</td><td class="right">' + VTA_LEADS.convT[ll] + '%</td><td class="right">' + VTA_LEADS.convF[ll] + '%</td></tr>';
+    }
+  } else if (kind === 'vpp-desc') {
+    head = '<tr><th>Mes</th><th class="right">Total c/VPP</th><th class="right">Desc c/VPP</th><th class="right">% Desc c/VPP</th><th class="right">Total s/VPP</th><th class="right">Desc s/VPP</th><th class="right">% Desc s/VPP</th></tr>';
+    for (var q = 0; q < m.length; q++) {
+      rows += '<tr><td><strong>' + m[q] + '</strong></td>' +
+        '<td class="right">' + n(VTA_LEADS.vppSiTotal[q]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.vppSiDesc[q]) + '</td>' +
+        '<td class="right neg">' + p(VTA_LEADS.vppSiDesc[q], VTA_LEADS.vppSiTotal[q]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.vppNoTotal[q]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.vppNoDesc[q]) + '</td>' +
+        '<td class="right">' + p(VTA_LEADS.vppNoDesc[q], VTA_LEADS.vppNoTotal[q]) + '</td>' +
+      '</tr>';
+    }
+  } else if (kind === 'vpp-conv') {
+    head = '<tr><th>Mes</th><th class="right">Total c/VPP</th><th class="right">Conv c/VPP</th><th class="right">% Conv c/VPP</th><th class="right">Total s/VPP</th><th class="right">Conv s/VPP</th><th class="right">% Conv s/VPP</th></tr>';
+    for (var r = 0; r < m.length; r++) {
+      rows += '<tr><td><strong>' + m[r] + '</strong></td>' +
+        '<td class="right">' + n(VTA_LEADS.vppSiTotal[r]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.vppSiConv[r]) + '</td>' +
+        '<td class="right pos">' + p(VTA_LEADS.vppSiConv[r], VTA_LEADS.vppSiTotal[r]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.vppNoTotal[r]) + '</td>' +
+        '<td class="right">' + n(VTA_LEADS.vppNoConv[r]) + '</td>' +
+        '<td class="right">' + p(VTA_LEADS.vppNoConv[r], VTA_LEADS.vppNoTotal[r]) + '</td>' +
+      '</tr>';
+    }
+  } else if (kind === 'seg-valor') {
+    head = '<tr><th>Mes</th><th class="right">Bronce</th><th class="right">Plata</th><th class="right">Oro</th><th class="right">VIP</th><th class="right">Total mes</th></tr>';
+    for (var s = 0; s < m.length; s++) {
+      var totMes = VTA_LEADS.bronce[s] + VTA_LEADS.plata[s] + VTA_LEADS.oro[s] + VTA_LEADS.vip[s];
+      rows += '<tr><td><strong>' + m[s] + '</strong></td><td class="right">' + n(VTA_LEADS.bronce[s]) + '</td><td class="right">' + n(VTA_LEADS.plata[s]) + '</td><td class="right">' + n(VTA_LEADS.oro[s]) + '</td><td class="right neg">' + n(VTA_LEADS.vip[s]) + '</td><td class="right"><strong>' + n(totMes) + '</strong></td></tr>';
+    }
+    totals = '<tr class="totals"><td>TOTAL</td><td class="right">' + n(vtaSum(VTA_LEADS.bronce)) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.plata)) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.oro)) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.vip)) + '</td><td class="right">' + n(vtaSum(VTA_LEADS.bronce)+vtaSum(VTA_LEADS.plata)+vtaSum(VTA_LEADS.oro)+vtaSum(VTA_LEADS.vip)) + '</td></tr>';
+  } else if (kind === 'financ') {
+    head = '<tr><th>Mes</th><th class="right">% Desc. Con financ.</th><th class="right">% Desc. Sin financ.</th><th class="right">Δ (pp)</th></tr>';
+    for (var f = 0; f < m.length; f++) {
+      var diff = (VTA_LEADS.financSi[f] - VTA_LEADS.financNo[f]).toFixed(1);
+      rows += '<tr><td><strong>' + m[f] + '</strong></td><td class="right neg">' + VTA_LEADS.financSi[f] + '%</td><td class="right">' + VTA_LEADS.financNo[f] + '%</td><td class="right neg">+' + diff + ' pp</td></tr>';
+    }
+  } else if (kind === 'motivos') {
+    var items = [
+      { nombre:'No contesta', arr:VTA_LEADS.noContesta },
+      { nombre:'Neg. desiste info', arr:VTA_LEADS.negDesiste },
+      { nombre:'Descarte masivo', arr:VTA_LEADS.descMasivo },
+      { nombre:'Neg. sin motivo', arr:VTA_LEADS.negSinMot },
+      { nombre:'Neg. financ.', arr:VTA_LEADS.negFinanc },
+      { nombre:'Duplicado', arr:VTA_LEADS.duplicado },
+      { nombre:'Neg. stock', arr:VTA_LEADS.negStock }
+    ];
+    var totAll = 0; for (var ti=0; ti<items.length; ti++) totAll += vtaSum(items[ti].arr);
+    head = '<tr><th>Motivo</th><th class="right">Total 6 meses</th><th class="right">% del total</th></tr>';
+    items.sort(function(a,b){ return vtaSum(b.arr) - vtaSum(a.arr); });
+    for (var mi = 0; mi < items.length; mi++) {
+      var mt = vtaSum(items[mi].arr);
+      rows += '<tr><td><strong>' + items[mi].nombre + '</strong></td><td class="right">' + n(mt) + '</td><td class="right">' + (totAll>0?(mt/totAll*100).toFixed(1):'0') + '%</td></tr>';
+    }
+    totals = '<tr class="totals"><td>TOTAL</td><td class="right">' + n(totAll) + '</td><td class="right">100%</td></tr>';
+  }
+  return '<div class="vta-table-wrap"><table class="vta-table"><thead>' + head + '</thead><tbody>' + rows + totals + '</tbody></table></div>';
+}
+
+function renderVtaLeadsSection(slideIdx, type) {
+  var blocks = {
+    'vta-leads-vol': {
+      title: 'Volumen y conversión mensual · Oct 2025 – Mar 2026',
+      subtitle: 'Total 104.747 leads · Salazar-Israel',
+      charts: [
+        { kind:'vol', title:'Total leads vs % conversión', height:260 },
+        { kind:'etapas', title:'Etapas por mes (apilado)', height:240 },
+        { kind:'descarte', title:'% descarte global', height:200 }
+      ],
+      insights: [
+        { c:'r', t:'🚨 Tasa de descarte global del 68,8% (72.113 de 104.747). El pipeline se quiebra antes de la entrega.' },
+        { c:'g', t:'✅ Marzo 2026 es el mejor mes: 8,2% de conversión. Identificar qué se hizo distinto y replicarlo es la vía más corta a mejora.' },
+        { c:'w', t:'🟠 13.548 leads quedan en etapa "Nuevo" en el período — volumen significativo sin gestionar.' }
+      ]
+    },
+    'vta-leads-temp': {
+      title: 'Temperatura vs conversión',
+      subtitle: '¿Los leads calientes convierten más?',
+      charts: [
+        { kind:'temp-desc', title:'Tasa de descarte por temperatura', height:240 },
+        { kind:'temp-conv', title:'Tasa de conversión por temperatura', height:240 }
+      ],
+      insights: [
+        { c:'r', t:'🚨 Los leads calientes se descartan MÁS que los fríos en todos los meses (+13pp promedio). La temperatura no predice conversión.' },
+        { c:'b', t:'📊 Frío convierte tanto o más que caliente en varios meses — el criterio actual de temperatura no correlaciona con el resultado comercial.' }
+      ]
+    },
+    'vta-leads-vpp': {
+      title: 'VPP y segmentos de valor',
+      subtitle: 'Clientes con auto en parte de pago e historial de compra',
+      charts: [
+        { kind:'vpp-desc', title:'Tasa de descarte · Con VPP vs. Sin VPP', height:240 },
+        { kind:'vpp-conv', title:'Tasa de conversión · Con VPP vs. Sin VPP', height:240 },
+        { kind:'seg-valor', title:'Descartados con VPP por segmento de valor', height:260 }
+      ],
+      insights: [
+        { c:'r', t:'🚨 Con VPP se descarta MÁS en todos los meses (+7pp). El VPP no protege de ser descartado.' },
+        { c:'g', t:'✅ Cuando avanzan, los leads con VPP convierten mejor (4,0% vs. 3,3%). El potencial está siendo desaprovechado.' },
+        { c:'r', t:'💎 641 clientes Oro + VIP con VPP fueron descartados en 6 meses. Enero 2026 es el peor mes con 280 perdidos.' }
+      ]
+    },
+    'vta-leads-financ': {
+      title: 'Financiamiento y motivos de descarte',
+      subtitle: 'Segmento de mayor margen + ¿por qué se pierden los leads?',
+      charts: [
+        { kind:'financ', title:'Tasa de descarte · Con financiamiento vs. Sin financiamiento', height:240 },
+        { kind:'motivos', title:'Top motivos de descarte acumulados', height:260 }
+      ],
+      insights: [
+        { c:'r', t:'🚨 El segmento de mayor margen (con financiamiento) tiene la peor tasa de gestión: 95,3% de descarte — 10pp más que sin financiamiento.' },
+        { c:'b', t:'📞 "No contesta" domina con 22.364 casos (31% del total) — atacable con validación de datos al ingreso al CRM.' },
+        { c:'w', t:'🗑️ "Descarte masivo" (8.613 casos · 12%) distorsiona métricas y oculta oportunidades. Debe eliminarse como opción válida.' }
+      ]
+    }
+  };
+  var cfg = blocks[type];
+  if (!cfg) return '';
+  var chartsHtml = '';
+  for (var i = 0; i < cfg.charts.length; i++) {
+    var c = cfg.charts[i];
+    var blockId = 'vta-leads-' + slideIdx + '-' + c.kind;
+    chartsHtml += '<div class="vta-chart-block" data-vta-block="' + blockId + '">' +
+      '<div class="vta-chart-block-header">' +
+        '<h4 class="vta-chart-title">' + c.title + '</h4>' +
+        '<div class="vta-view-toggle">' +
+          '<button type="button" class="active" data-vta-view="chart" data-vta-target="' + blockId + '">Gráfico</button>' +
+          '<button type="button" data-vta-view="table" data-vta-target="' + blockId + '">Tabla</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="vta-view active" data-vta-pane="' + blockId + '-chart">' +
+        '<div class="chart-wrap" style="height:' + c.height + 'px;">' +
+          '<canvas id="' + blockId + '" data-vta-leads-chart="' + c.kind + '"></canvas>' +
+        '</div>' +
+      '</div>' +
+      '<div class="vta-view" data-vta-pane="' + blockId + '-table">' +
+        vtaLeadsBuildTable(c.kind) +
+      '</div>' +
+    '</div>';
+  }
+  var insightsHtml = '';
+  for (var j = 0; j < cfg.insights.length; j++) {
+    insightsHtml += '<div class="vta-insight ' + cfg.insights[j].c + '">' + cfg.insights[j].t + '</div>';
+  }
+  return '<div class="data-section">' +
+    '<div class="data-section-header">' +
+      '<div><div class="data-section-title">' + cfg.title + '</div><div class="data-section-subtitle">' + cfg.subtitle + '</div></div>' +
+    '</div>' +
+    '<div class="vta-block">' + chartsHtml + insightsHtml + '</div>' +
+  '</div>';
+}
+
+function initVtaLeadsCharts() {
+  if (typeof Chart === 'undefined') return;
+  var canvases = document.querySelectorAll('[data-vta-leads-chart]');
+  for (var i = 0; i < canvases.length; i++) {
+    var canvas = canvases[i];
+    var key = canvas.id;
+    if (chartInstances[key]) { chartInstances[key].destroy(); delete chartInstances[key]; }
+    var kind = canvas.getAttribute('data-vta-leads-chart');
+    var cfg = buildVtaLeadsChartCfg(kind);
+    if (cfg) chartInstances[key] = new Chart(canvas.getContext('2d'), cfg);
+  }
+}
+
 function renderPrepChartSection(slideIdx, chartType) {
   var titles = {
     'prep-funnel': { t: 'Funnel de publicabilidad', s: 'Inventario total (2.574 uds) y cuáles llegan realmente a la vitrina digital - Reporte BI 2026-04-17' },
@@ -1974,6 +2791,7 @@ function initPrepCharts() {
     if (cfg) chartInstances[key] = new Chart(canvas.getContext('2d'), cfg);
   }
   initInspCharts();
+  initVtaLeadsCharts();
 }
 
 // ============================================================
@@ -2278,6 +3096,75 @@ function renderSlides() {
   var downloadBtn = area.querySelector('#roadmap-download-btn');
   if (downloadBtn) downloadBtn.addEventListener('click', downloadRoadmapExcel);
   initPrepCharts();
+  bindVtaViewToggles(area);
+  highlightRecordatorios(area);
+}
+
+function bindVtaViewToggles(area) {
+  var btns = area.querySelectorAll('.vta-view-toggle button[data-vta-target]');
+  for (var i = 0; i < btns.length; i++) {
+    (function(btn){
+      btn.addEventListener('click', function() {
+        var target = btn.getAttribute('data-vta-target');
+        var view = btn.getAttribute('data-vta-view');
+        var block = area.querySelector('[data-vta-block="' + target + '"]');
+        if (!block) return;
+        var siblings = block.querySelectorAll('.vta-view-toggle button');
+        for (var s = 0; s < siblings.length; s++) siblings[s].classList.remove('active');
+        btn.classList.add('active');
+        var panes = block.querySelectorAll('.vta-view');
+        for (var p = 0; p < panes.length; p++) {
+          var name = panes[p].getAttribute('data-vta-pane');
+          panes[p].classList.toggle('active', name === (target + '-' + view));
+        }
+      });
+    })(btns[i]);
+  }
+}
+
+// ============================================================
+// RECORDATORIOS - resalta en rojo los placeholders pendientes
+// ============================================================
+// Tokens que marcan información aun por resolver por el equipo.
+// Agregar aquí cualquier nuevo patrón que deba aparecer en rojo.
+var RECORDATORIO_REGEX = /\bTBD\b|\(TBD\)|Por asignar|Por definir|Pendiente de (?:mapeo|levantamiento|definir|integraci[oó]n|confirmar)/g;
+var RECORDATORIO_SKIP_TAGS = { SCRIPT: 1, STYLE: 1, CODE: 1, TEXTAREA: 1, INPUT: 1 };
+
+function highlightRecordatorios(root) {
+  if (!root) return;
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(node) {
+      if (!node.nodeValue || !RECORDATORIO_REGEX.test(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+      var p = node.parentNode;
+      while (p && p !== root) {
+        if (p.classList && p.classList.contains('recordatorio')) return NodeFilter.FILTER_REJECT;
+        if (RECORDATORIO_SKIP_TAGS[p.nodeName]) return NodeFilter.FILTER_REJECT;
+        p = p.parentNode;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  var targets = [];
+  var n;
+  while ((n = walker.nextNode())) targets.push(n);
+  for (var i = 0; i < targets.length; i++) {
+    var node = targets[i];
+    RECORDATORIO_REGEX.lastIndex = 0;
+    var text = node.nodeValue;
+    var frag = document.createDocumentFragment();
+    var lastIdx = 0;
+    var m;
+    while ((m = RECORDATORIO_REGEX.exec(text)) !== null) {
+      if (m.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+      var span = document.createElement('span');
+      span.className = 'recordatorio';
+      span.textContent = m[0];
+      frag.appendChild(span);
+      lastIdx = m.index + m[0].length;
+    }
+    if (lastIdx < text.length) frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+    node.parentNode.replaceChild(frag, node);
+  }
 }
 
 function renderHomeSlide(i) {
@@ -2402,6 +3289,9 @@ function renderSubstepSlide(i, stage, sub) {
   if (sub.chartType) {
     if (sub.chartType.indexOf('prep-') === 0) chartHtml = renderPrepChartSection(i, sub.chartType);
     else if (sub.chartType === 'insp-vínculo') chartHtml = renderInspVinculoSection(i);
+    else if (sub.chartType === 'vta-mercado') chartHtml = renderVtaMercadoSection(i);
+    else if (sub.chartType === 'vta-funnel') chartHtml = renderVtaFunnelSection(i);
+    else if (sub.chartType && sub.chartType.indexOf('vta-leads-') === 0) chartHtml = renderVtaLeadsSection(i, sub.chartType);
     else chartHtml = renderChartSection(i, sub.chartType);
   }
 
