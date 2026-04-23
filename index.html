@@ -745,85 +745,108 @@ function weightedAvg(rateData, totalData, cats) {
 var journey = {
   stages: [
     {
-      id: 1, macro: "compra", name: "Captación Web", fullName: "Captación Digital",
-      route: "Datos del Auto -> Datos Personales - Plataforma Web",
-      description: "Punto de entrada del vendedor de vehículos usados. El cliente llega vía web (orgánico, campañas digitales o referidos) y completa el flujo de autoatención: ingresa datos del vehículo, datos personales, responde preguntas filtro de calificación y cierra el formulario. Es la fase de mayor volumen y donde se define la calidad inicial del lead que alimentará al Contact Center.",
+      id: 1, macro: "compra", name: "Captación Digital", fullName: "Captación Digital",
+      route: "Datos del Auto -> Datos Personales -> Resultado Tasación -> Agendar Inspección -> Cierre Flujo Web",
+      description: "El cliente ingresa al sitio web de compra de usados con intención de vender su vehículo. Completa un formulario estructurado con datos del auto y datos personales, pasa por filtros de calificación y recibe una tasación preliminar. Esta etapa es 100% digital y opera en la plataforma web antes de ingresar al CRM Llaima. KPIs generales: 9.718 leads verificados/mes · 84,3% tasa de verificación · 4,2 min tiempo promedio formulario · 16% tasa de abandono del flujo.",
       video: { url: null, title: "Video del proceso - Captación Digital" },
       substeps: [
         { num: 1, title: "Ingreso Datos del Vehículo",
-          description: "El cliente ingresa patente, año, marca, modelo, versión y kilometraje del vehículo que desea vender. Además responde 3 preguntas de elegibilidad.",
-          kpis: [{value:"9.718",suffix:"/mes",label:"Formularios completados"},{value:"82",suffix:"%",label:"Tasa de completitud de campos"},{value:"18",suffix:"%",label:"Tasa de error en datos de patente"}],
+          description: "El cliente ingresa la patente, año, marca, modelo, versión y kilometraje del vehículo que desea vender, además de responder tres preguntas de elegibilidad.",
+          kpis: [{value:"9.718",suffix:"/mes",label:"Formularios completados"},{value:"82",suffix:"%",label:"Tasa de completitud de campos"},{value:"18",suffix:"%",label:"Tasa de error en datos de patente"},{value:"8,6",suffix:"%",label:"Dead clicks en selectores (mobile)"}],
           hallazgos: [
-            "18% de registros tienen errores en datos de patente ingresados manualmente, y no existe autocompletado de marca, modelo ni versión — duplicando el esfuerzo del usuario.",
-            "Campo de kilometraje sin validación de rango permite valores absurdos (ej: 1 km, 999.999 km).",
-            "Al modificar un campo (marca, modelo o año), el sistema queda en estado inconsistente y obliga al usuario a reiniciar parcialmente el formulario.",
-            "El stepper de progreso se corta en mobile, mostrando solo los primeros pasos y generando incertidumbre sobre cuánto falta.",
-            "No hay título motivacional ni indicación de qué obtendrá el usuario al completar el flujo.",
-            "Las preguntas de elegibilidad aparecen mezcladas con los datos de tasación, exponiendo al usuario a un rechazo tardío."
+            "18% de registros tienen errores en datos de patente ingresados manualmente [Clarity].",
+            "Campo de kilometraje sin validación de rango permite valores absurdos (ej: 1 km, 999.999 km) [Análisis UX-UI].",
+            "Los selectores de año, marca y modelo presentan fallas de interacción en mobile: no responden al primer toque (8,6% dead clicks) y, al modificar un campo, el sistema queda en un estado inconsistente que obliga a reiniciar parcialmente el formulario [Análisis UX-UI + Clarity].",
+            "En mobile, el stepper de progreso se corta y solo muestra los primeros pasos, generando incertidumbre sobre el avance y contribuyendo al mayor abandono (bounce 54,25% mobile vs. 27,11% desktop) [Análisis UX-UI].",
+            "No hay título motivacional ni indicación de qué obtendrá el usuario al completar el flujo [Análisis UX-UI].",
+            "El formulario mezcla dos tipos de datos sin distinguirlos: datos de tasación (determinan el valor del auto) y datos de elegibilidad (determinan si Clicar puede comprarlo) [Análisis UX-UI].",
+            "Los botones Sí/No en las preguntas de elegibilidad generan dead clicks en las grabaciones [Clarity]."
           ],
           mejoras: [
             "<strong>Integración con patente para autocompletar y validar elegibilidad:</strong> validación en tiempo real con SII / Registro Civil que autocomplete marca, modelo, año y versión, y detecte de forma inmediata si el vehículo no cumple los criterios de elegibilidad con mensaje claro en el mismo campo, sin esperar al final del formulario.",
-            "<strong>Integración con Llaima para reconocimiento de vehículos propios:</strong> si el auto fue comprado en Americar, precargar historial y condición esperada. Ventaja exclusiva no disponible para ningún competidor.",
+            "<strong>Integración con Llaima para reconocimiento de vehículos propios:</strong> si el auto fue comprado en Americar, precargar datos adicionales como historial y condición esperada. Ventaja exclusiva no disponible para ningún competidor.",
             "<strong>Validación inteligente del kilometraje:</strong> campo con validación según la antigüedad del vehículo y mensaje inline no bloqueante si el valor ingresado parece fuera de rango.",
             "<strong>Buscador tipeable en marca, modelo y versión:</strong> reemplazar los dropdowns por campos con autocompletado (typeahead) que filtren en tiempo real, especialmente crítico en mobile.",
             "<strong>Comunicar elegibilidad desde el inicio y rediseñar el modal de rechazo:</strong> anticipar los criterios antes de iniciar el formulario. Si el usuario no califica, mostrar un mensaje empático con el motivo claro y una propuesta de valor alternativa (asesor, otras opciones disponibles)."
           ]
         },
         { num: 2, title: "Validación de Datos Personales",
-          description: "Se capturan y validan nombre, teléfono, email y comuna del vendedor para asegurar contactabilidad.",
-          kpis: [{value:"84,3",suffix:"%",label:"Tasa de verificación de teléfono"},{value:"1.815",suffix:"/mes",label:"Leads no verificados"},{value:"67",suffix:"%",label:"Emails válidos ingresados"}],
+          description: "Se capturan y validan nombre, apellido, email, región e intención de venta. Luego, mediante un modal, se solicita y valida el teléfono a través de un mensaje por WhatsApp para asegurar la contactabilidad.",
+          kpis: [{value:"84,3",suffix:"%",label:"Tasa de verificación de teléfono"},{value:"1.815",suffix:"/mes",label:"Leads no verificados"},{value:"67",suffix:"%",label:"Emails válidos ingresados"},{value:"24",suffix:"%",label:"Drop-off datos personales (mayor del funnel)"},{value:"50",suffix:"%",label:"Abandono en modal OTP"}],
           hallazgos: [
-            "Teléfonos inválidos y emails incorrectos reducen la contactabilidad posterior del Contact Center.",
-            "El teléfono está ausente del formulario principal y aparece en un modal posterior, sumando un paso innecesario y generando una 'falsa conclusión' al usuario que cree haber terminado.",
-            "Sin RUT en el formulario, no es posible cruzar con bases internas para detectar clientes recurrentes ni personalizar la experiencia para clientes VIP.",
-            "La pregunta '¿Cuándo quieres vender tu auto?' aparece antes de que el usuario haya visto la tasación, cuando aún no tiene información para responderla con precisión.",
-            "El título es puramente instruccional y no comunica qué recibirá el usuario a cambio de sus datos."
+            "Teléfonos inválidos y emails incorrectos reducen la contactabilidad posterior del Contact Center [Análisis UX-UI].",
+            "El teléfono está ausente del formulario principal y aparece en un modal posterior, sumando un paso innecesario y generando una 'falsa conclusión' al usuario que cree haber terminado [Análisis UX-UI].",
+            "Sin RUT en el formulario, no es posible cruzar con bases internas para detectar clientes recurrentes ni personalizar la experiencia para clientes VIP [Análisis UX-UI].",
+            "La pregunta '¿Cuándo quieres vender tu auto?' aparece antes de que el usuario haya visto la tasación, cuando aún no tiene información para responderla con precisión [Análisis UX-UI].",
+            "De 86.312 usuarios que ingresan datos del vehículo, solo 65.554 completan sus datos personales: un <strong>drop-off del 24%</strong>, el más alto del funnel (20.758 leads perdidos al mes) [Clarity + GA].",
+            "El modal OTP se mostró 43.249 veces, pero solo 7.446 usuarios completaron el formulario: cerca del <strong>50% abandona en la validación del teléfono</strong> [Clarity + GA]."
           ],
           mejoras: [
             "Solicitar RUT para autocompletar datos desde fuentes oficiales y detectar clientes existentes.",
             "Incorporar el campo de teléfono directamente en el formulario.",
-            "Bloquear avance del flujo hasta completar verificación SMS exitosa.",
+            "Bloquear avance del flujo hasta completar verificación WhatsApp exitosa.",
             "Validación de email en tiempo real (formato + dominio activo) antes de permitir envío.",
-            "Reformular el título para comunicar el intercambio: 'Ingresa tus datos para recibir la tasación de tu auto'."
+            "Reformular el título para comunicar el intercambio: 'Ingresa tus datos para recibir la tasación de tu auto'.",
+            "<strong>Reducir drop-off del 24% en datos personales</strong> — es la mayor pérdida del funnel (20.758 leads perdidos por mes).",
+            "<strong>Rediseñar modal OTP</strong> — actualmente genera 50% de abandono."
           ]
         },
-        { num: 3, title: "Preguntas Filtro",
-          description: "3 preguntas de calificación determinan si el lead tiene intención real de venta.",
-          kpis: [{value:"73",suffix:"%",label:"Leads que pasan filtro"},{value:"27",suffix:"%",label:"Leads descartados por filtro"},{value:"12",suffix:"%",label:"Falsos negativos estimados"}],
-          hallazgos: ["Filtro actual descarta leads con intención real pero datos incompletos","Preguntas no se actualizan según estacionalidad o campañas","Sin scoring diferenciado: el filtro es binario"],
-          mejoras: ["Refinar scoring con modelo predictivo de conversión","Implementar filtro de 3 niveles en lugar de binario","Revisión trimestral de preguntas filtro"]
-        },
-        { num: 4, title: "Oferta de Financiamiento",
-          description: "Punto donde se podría ofrecer alternativas de financiamiento.",
-          kpis: [{value:"0",suffix:"%",label:"Penetración financiamiento en web"},{value:"N/A",suffix:"",label:"Simulaciones de credito realizadas"},{value:"34",suffix:"%",label:"Interés declarado en financiamiento"}],
-          hallazgos: ["No se ofrecen alternativas de financiamiento - oportunidad perdida","34% de vendedores declara interés en financiar su próximo vehículo","Competidores directos ya integran simuladores de credito"],
-          mejoras: ["Agregar modulo de simulación de credito integrado al flujo","Cross-sell de financiamiento para compra de vehículo Americar","Integración con financieras partner para pre-aprobación"]
-        },
-        { num: 5, title: "Cierre Flujo Web",
-          description: "Momento final del flujo web donde el vendedor recibe resultado (tasación) y decide si continúa al proceso presencial.",
-          kpis: [{value:"62",suffix:"%",label:"Conversión flujo web -> agenda"},{value:"38",suffix:"%",label:"Abandono al ver tasación"},{value:"4,2",suffix:"min",label:"Tiempo total del flujo web"}],
+        { num: 3, title: "Resultado Tasación",
+          description: "Es el momento clave del flujo: el usuario recibe la tasación de su vehículo y decide si avanzar a la inspección.",
+          kpis: [{value:"7.446",suffix:"/mes",label:"Completan el resultado verificado"},{value:"41,5",suffix:"%",label:"Drop-off post-resultado (no agendan)"},{value:"38",suffix:"%",label:"Abandono al ver el rango"},{value:"963",suffix:"",label:"Sesiones con dead click en CTA 'Agendar'"}],
           hallazgos: [
-            "No se ofrece la compra directa del auto al finalizar el flujo de tasación online.",
-            "38% abandona al ver el rango de tasación — percepción de precio bajo sin contexto.",
-            "Sin call-to-action alternativo para quienes no agendan (retargeting, WhatsApp).",
-            "El precio se muestra con un asterisco sin explicación visible, especialmente en mobile, generando incertidumbre.",
-            "La frase 'esta tasación considera un auto en buenas condiciones' genera desconfianza sin definir qué significa 'buenas condiciones'.",
-            "No existe una explicación de los factores considerados en la tasación (año, kilometraje, versión), lo que reduce la percepción de transparencia y credibilidad del precio mostrado.",
-            "En algunos casos ambas opciones (Intercambio e Inmediata) muestran el mismo valor, lo que elimina el precio como criterio de decisión entre modalidades.",
-            "Los 7 días de vigencia están bien comunicados.",
-            "No hay contexto de mercado: el usuario no sabe si el precio es bueno o malo para su vehículo."
+            "El precio se muestra con un asterisco sin explicación visible. La frase 'esta tasación considera un auto en buenas condiciones' genera desconfianza sin definir qué significa 'buenas condiciones' [Análisis UX-UI].",
+            "No existe una explicación de los factores considerados en la tasación (año, kilometraje, versión), lo que reduce la percepción de transparencia y credibilidad del precio mostrado [Análisis UX-UI].",
+            "En algunos casos ambas opciones (Intercambio e Inmediata) muestran el mismo valor, lo que elimina el precio como criterio de decisión entre modalidades [Análisis UX-UI].",
+            "No hay contexto de mercado: el usuario no sabe si el precio es bueno o malo para su vehículo [Análisis UX-UI].",
+            "<strong>41,5% de quienes completan el resultado verificado no avanzan a agendar inspección</strong> (7.446 → 4.358). El CTA 'Agendar inspección' tiene 963 sesiones con dead click — se pierde en el scroll y no genera respuesta al primer toque [Clarity + GA].",
+            "2.944 sesiones con dead clicks convirtieron igual — son usuarios altamente comprometidos que superaron la fricción. Esto confirma que el precio mostrado genera suficiente motivación, pero el diseño post-resultado frena la acción [Clarity + GA].",
+            "34% de vendedores declara interés en financiar su próximo vehículo al vender el actual [Análisis UX-UI].",
+            "38% abandona al ver el rango de tasación — percepción de precio bajo sin contexto. Sin call-to-action alternativo para quienes no agendan (retargeting, WhatsApp) [Clarity + GA]."
           ],
           mejoras: [
-            "Incorporar oferta de compra inmediata para vehículos de alta demanda.",
-            "Mostrar comparativa de precio vs. mercado para contextualizar la tasación.",
-            "Flujo de retargeting automático (email + WhatsApp) a quienes abandonan sin agendar.",
             "Reemplazar el asterisco por un ícono de información (ⓘ) junto al precio que despliegue las condiciones en contexto, sin necesidad de buscar la referencia.",
             "Reformular la frase 'esta tasación considera un auto en buenas condiciones' por una más honesta: 'El valor final se confirma tras la inspección del vehículo'.",
             "Diferenciar visualmente las dos modalidades por su beneficio real, no solo por nombre. Cuando el precio es el mismo, mostrar una sola opción.",
             "Agregar contexto de mercado: un rango referencial de vehículos similares para que el usuario evalúe si la oferta es competitiva.",
             "Extender la comunicación de vigencia de 7 días a todos los usuarios por correo o WhatsApp, no solo a leads calientes.",
-            "Hacer más visible el CTA 'Agenda tu inspección', que actualmente se pierde en el scroll siendo la acción principal de la pantalla.",
-            "Comunicar claramente los beneficios de agendar la inspección para incentivar la conversión en este paso crítico."
+            "<strong>Hacer más visible el CTA 'Agenda tu inspección'</strong>, que actualmente se pierde en el scroll siendo la acción principal de la pantalla.",
+            "Comunicar claramente los beneficios de agendar la inspección para incentivar la conversión en este paso crítico (reduce el 41,5% de drop-off post-resultado, 2da pérdida del funnel).",
+            "Flujo de retargeting automático (email + WhatsApp) a quienes abandonan sin agendar."
+          ]
+        },
+        { num: 4, title: "Agendar Inspección",
+          description: "El usuario selecciona sucursal, fecha y hora para la inspección presencial.",
+          kpis: [{value:"4.358",suffix:"/mes",label:"Llegan a agendar inspección"},{value:"58,5",suffix:"%",label:"Conversión resultado -> agenda"},{value:"34",suffix:"%",label:"Interés declarado en financiamiento"}],
+          hallazgos: [
+            "El título 'Formulario de contacto' no refleja la acción que el usuario está realizando — genera desconexión con la intención de agendar [Análisis UX-UI].",
+            "Los datos de contacto se repiten como formulario editable, cuando el usuario ya los ingresó — genera fatiga y transmite que el sistema no confía en sus propios datos [Análisis UX-UI].",
+            "El campo Región aparece vacío por un bug de persistencia, pese a haber sido ingresado previamente [Análisis UX-UI].",
+            "Se solicitan tres campos (Región, Ciudad y Sucursal) para obtener un solo dato, generando fricción innecesaria [Análisis UX-UI].",
+            "La fecha y hora se seleccionan mediante dropdowns, lo que limita la visibilidad del contexto temporal (como el día de la semana) en mobile [Análisis UX-UI]."
+          ],
+          mejoras: [
+            "Cambiar el título a 'Agenda tu inspección' o 'Elige fecha y lugar para la inspección de tu auto'.",
+            "Eliminar los datos de contacto. Agregar la modalidad de resumen como el flujo de agendamiento de servicio técnico.",
+            "Corregir el bug de persistencia que deja el campo Región vacío.",
+            "Consolidar Región, Ciudad y Sucursal en un único selector con filtro en cascada integrado.",
+            "Reemplazar el dropdown de fechas por un calendario visual con días disponibles destacados.",
+            "Reemplazar el dropdown de horarios por chips o botones visuales seleccionables de un vistazo."
+          ]
+        },
+        { num: 5, title: "Cierre Flujo Web",
+          description: "El usuario recibe la confirmación de su inspección agendada. Es el momento de mayor compromiso e intención en todo el flujo.",
+          kpis: [{value:"62",suffix:"%",label:"Conversión flujo web -> agenda"},{value:"4,2",suffix:"min",label:"Tiempo total del flujo web"},{value:"16",suffix:"%",label:"Tasa de abandono del flujo"}],
+          hallazgos: [
+            "No se comunica con suficiente fuerza el valor de haber agendado la inspección ni los próximos pasos que vive el usuario.",
+            "Sin call-to-action alternativo para quienes no agendan (retargeting, WhatsApp).",
+            "No se ofrece la compra directa del auto al finalizar el flujo de tasación online para vehículos de alta demanda."
+          ],
+          mejoras: [
+            "Mostrar una pantalla de confirmación memorable con fecha, hora y sucursal destacadas + checklist de documentos que el cliente debe llevar.",
+            "Enviar confirmación automática por WhatsApp y correo con botón de reagendar/cancelar.",
+            "Incorporar oferta de compra inmediata para vehículos de alta demanda como alternativa al agendamiento.",
+            "Flujo de retargeting automático (email + WhatsApp) para los que no agendaron."
           ]
         }
       ]
@@ -1791,9 +1814,9 @@ function renderResponsables(stageId) {
 var CLIENTE_POR_SUBSTEP = {
   "1.1": { kpis: ["Tasa de abandono del formulario (TBD)","Tiempo promedio de completado (TBD)","Campos con mayor fricción reportada (TBD)"], lineamientos: ["Mostrar progreso y campos restantes","Autocompletar a partir de la patente siempre que se pueda","Una duda por vez, no todo junto"] },
   "1.2": { kpis: ["Tasa de abandono al pedir teléfono (TBD)","NPS del paso de contacto (TBD)","% consentimientos entendidos vs. solo aceptados (TBD)"], lineamientos: ["Explicar por qué pedimos cada dato","Respetar la preferencia de canal del cliente","Nunca enviar SMS que puedan terminar en un tercero"] },
-  "1.3": { kpis: ["Tasa de abandono en las 3 preguntas filtro (TBD)","% descartados que perciben el rechazo como injusto (TBD)"], lineamientos: ["Lenguaje empático al comunicar un descarte","Ofrecer alternativa concreta si no califica"] },
-  "1.4": { kpis: ["34% declara interés en financiar el próximo vehículo","% que explora la simulación cuando está disponible (TBD)"], lineamientos: ["Sugerir financiamiento solo si hay interés declarado","Nunca forzar cross-sell"] },
-  "1.5": { kpis: ["38% abandona al ver la tasación","% que entiende el próximo paso (TBD)","Claridad del rango percibida (TBD)"], lineamientos: ["Explicar por qué el precio es un rango","Dejar claro qué pasa al agendar","CTA alternativo para quien no agenda hoy"] },
+  "1.3": { kpis: ["7.446 completan el resultado verificado / mes","41,5% drop-off post-resultado (no agendan)","38% abandona al ver la tasación","2.944 sesiones con dead clicks convirtieron igual (usuarios altamente comprometidos)"], lineamientos: ["Explicar por qué el precio es un rango y qué factores lo determinan","Diferenciar modalidades por beneficio real, no solo por nombre","CTA 'Agendar' siempre visible y funcional al primer toque","Retargeting para el 38% que abandona sin agendar"] },
+  "1.4": { kpis: ["4.358 llegan a agendar inspección / mes","58,5% conversión resultado -> agenda","34% declara interés en financiamiento al agendar"], lineamientos: ["Cambiar 'Formulario de contacto' por 'Agenda tu inspección'","No pedir datos que ya ingresó el usuario","Calendario visual con días disponibles en lugar de dropdowns","Mostrar resumen de selección antes de confirmar"] },
+  "1.5": { kpis: ["Confirmación de la inspección agendada","Momento de mayor compromiso e intención del flujo","% que entiende el próximo paso (TBD)"], lineamientos: ["Pantalla de confirmación memorable con fecha/hora/sucursal destacadas","Checklist claro de documentos que debe llevar","Confirmación automática por WhatsApp y correo con botón de reagendar","CTA alternativo para los que no agendaron"] },
   "2.1": { kpis: ["Brecha promedio precio online vs. oferta final: ~15%","% clientes que deben apelar para mejorar el precio (TBD)","Confianza del cliente en los precios entregados (TBD)"], lineamientos: ["Entregar un precio inicial lo más cercano posible al final para evitar el vaivén de apelaciones","Explicar con claridad por qué hay dos precios (compra directa vs. parte de pago) y qué los diferencia","Ser explícitos sobre qué factores pueden ajustar el precio (condición mecánica, documentación, etc.)"] },
   "2.2": { kpis: ["78% elige la sucursal más cercana","% sin sucursal conveniente (TBD)","Tiempo promedio hasta la cita (TBD)"], lineamientos: ["Ofrecer horario extendido y fines de semana","Mostrar tiempo de espera estimado por sucursal"] },
   "2.3": { kpis: ["22% apertura de email de confirmación","61% lectura del SMS","45% interactúa con el recordatorio 24h"], lineamientos: ["Un solo canal preferido por el cliente","Facilitar reagendar o cancelar en 1 click","Segundo recordatorio 2h antes vía WhatsApp"] },
@@ -1871,13 +1894,40 @@ var BENCHMARK_POR_SUBSTEP = {
   "1.1": {
     referentes: "Kavak · TrueCar · Bruno Fritsch · Salfa · DFSK · Gildemeister",
     hallazgos: [
-      "<strong>5 de 6 referentes</strong> del benchmark reducen el formulario a 1-2 campos editables gracias al autocompletado por patente.",
-      "<strong>Clicar</strong> es el único flujo chileno analizado sin integración de autocompletado por patente.",
+      "<strong>5 de 6 referentes</strong> del benchmark reducen el formulario a 1-2 campos editables gracias al autocompletado por patente; Clicar es el único flujo chileno analizado sin esta integración.",
       "Los referentes más maduros del benchmark integran las preguntas de elegibilidad directamente en los campos de entrada, evitando el rechazo tardío al final del formulario."
     ],
     oportunidades: [
       "Integración con Llaima para reconocer vehículos ya comprados en Americar — ventaja exclusiva no disponible para ningún competidor.",
       "Autocompletar marca, modelo, año y versión desde la patente para cerrar la brecha UX con los referentes."
+    ]
+  },
+  "1.3": {
+    referentes: "Bruno Fritsch · TrueCar · Kavak · Salfa · DFSK · Gildemeister",
+    hallazgos: [
+      "Los referentes gestionan la expectativa de precio mostrando <strong>rangos</strong> o aclarando que es una <strong>estimación sujeta a revisión</strong>, y diferencian claramente las modalidades con beneficios reales.",
+      "<strong>Ningún referente</strong> entrega el valor antes de pedir datos del usuario — Clicar está alineado con el patrón de mercado en ese punto.",
+      "<strong>Bruno Fritsch</strong> muestra rango de precio en lugar de valor exacto para gestionar expectativas de forma más honesta.",
+      "<strong>TrueCar</strong> y <strong>Kavak</strong> diferencian las dos modalidades por beneficio real, no solo por nombre.",
+      "<strong>Bruno Fritsch</strong> y <strong>Salfa</strong> comunican explícitamente que el valor está 'sujeto a revisión mecánica' desde la pantalla de resultado."
+    ],
+    oportunidades: [
+      "Adoptar el rango de precio al estilo Bruno Fritsch para gestionar expectativas.",
+      "Diferenciar beneficios reales de cada modalidad al estilo TrueCar / Kavak.",
+      "Comunicar explícitamente 'sujeto a revisión mecánica' en la pantalla de tasación."
+    ]
+  },
+  "1.4": {
+    referentes: "Bruno Fritsch · Kavak · Gildemeister · Salfa · TrueCar · DFSK",
+    hallazgos: [
+      "Los referentes resuelven la cascada de selección (Región → Sucursal) con un <strong>filtrado en cascada más eficiente</strong> en lugar de tres campos separados como en Clicar.",
+      "<strong>Ningún referente chileno</strong> confirma visualmente la selección antes de enviar. <strong>Bruno Fritsch</strong> es el único que muestra resumen en tiempo real antes del envío.",
+      "<strong>Kavak</strong> destaca horarios menos concurridos, reduciendo la ansiedad del usuario y optimizando la distribución de la demanda."
+    ],
+    oportunidades: [
+      "Consolidar Región → Sucursal en cascada como Gildemeister / Salfa.",
+      "Resumen de la selección en tiempo real al estilo Bruno Fritsch antes de confirmar.",
+      "Marcar horarios 'menos concurridos' al estilo Kavak para optimizar distribución."
     ]
   },
   "1.2": {
@@ -1889,21 +1939,6 @@ var BENCHMARK_POR_SUBSTEP = {
     oportunidades: [
       "Capitalizar la verificación por WhatsApp como diferenciador UX visible en la página (badge 'Verificado por WhatsApp').",
       "Mantener la ventaja integrando también autocompletado de datos desde RUT cuando aplique."
-    ]
-  },
-  "1.5": {
-    referentes: "Bruno Fritsch · TrueCar · Kavak · Salfa · DFSK · Gildemeister",
-    hallazgos: [
-      "<strong>Bruno Fritsch</strong> muestra un rango de precio en vez de un precio exacto, gestionando expectativas de forma más honesta.",
-      "<strong>TrueCar</strong> y <strong>Kavak</strong> diferencian claramente las modalidades por beneficio real, no solo por nombre.",
-      "Ningún referente muestra precio antes de pedir datos del usuario.",
-      "<strong>DFSK</strong> y <strong>Gildemeister</strong> fallaron en entregar un precio al final del flujo (mostraron $0 o un error) — refuerza la importancia de comunicar las condiciones del valor.",
-      "<strong>Bruno Fritsch</strong> y <strong>Salfa</strong> comunican explícitamente que el valor está 'sujeto a revisión mecánica' desde la pantalla de resultado, enmarcando la tasación como estimación honesta."
-    ],
-    oportunidades: [
-      "Adoptar el rango de precio al estilo Bruno Fritsch para gestionar expectativas.",
-      "Diferenciar beneficios reales de cada modalidad al estilo TrueCar / Kavak.",
-      "Ser explícito con 'sujeto a revisión mecánica' desde la pantalla de tasación (Bruno Fritsch, Salfa)."
     ]
   },
   "11.2": {
