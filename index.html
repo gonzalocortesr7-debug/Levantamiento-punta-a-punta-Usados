@@ -489,6 +489,197 @@
   .exec-kpi-value { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
   .exec-kpi-value .suffix { font-size: 13px; color: var(--gray-500); font-weight: 600; margin-left: 3px; }
   .exec-kpi-sub { font-size: 11px; color: var(--gray-700); margin-top: 5px; }
+  .exec-kpi-row.three { grid-template-columns: 1.1fr 1fr 1.3fr; }
+  .exec-kpi.compound { display: flex; flex-direction: column; gap: 6px; }
+  .exec-kpi-compound-line { display: flex; align-items: baseline; gap: 6px; }
+  .exec-kpi-compound-value { font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
+  .exec-kpi-compound-label { font-size: 11px; font-weight: 600; color: var(--gray-700); text-transform: uppercase; letter-spacing: 0.05em; }
+  .exec-kpi-phrase { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; margin-top: 4px; }
+  .exec-kpi-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .exec-kpi-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px; background: var(--navy-soft); color: var(--navy); border: 1px solid rgba(11,59,111,0.15); }
+  .exec-kpi-times { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .exec-kpi-time-row { display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: baseline; font-size: 11px; }
+  .exec-kpi-time-macro { font-weight: 700; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; text-align: center; }
+  .exec-kpi-time-macro.compra { background: #E7F0FB; color: #0B3B6F; }
+  .exec-kpi-time-macro.preparación { background: #FDF1DE; color: #8A5A00; }
+  .exec-kpi-time-macro.venta { background: #DFF5EC; color: #0F6E56; }
+  .exec-kpi-time-value { color: var(--gray-900); font-variant-numeric: tabular-nums; }
+  .exec-kpi-time-source { color: var(--gray-500); font-size: 10px; }
+  /* Exec Summary — nuevas secciones */
+  .exec-section { margin-top: 32px; }
+  .exec-section-title { font-size: 14px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+  .exec-section-title::before { content: ''; width: 4px; height: 18px; background: var(--clicar-green); border-radius: 2px; }
+  .exec-section-sub { font-size: 13px; color: var(--gray-700); line-height: 1.5; margin-bottom: 16px; max-width: 960px; }
+  /* Equipo de levantamiento */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .team-area-card { background: var(--white); border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .team-area-card.compra { border-top-color: #0F6FC6; }
+  .team-area-card.preparación { border-top-color: #EF9F27; }
+  .team-area-card.venta { border-top-color: #1D9E75; }
+  .team-area-card.cross { border-top-color: #534AB7; background: #FAF8FF; }
+  .team-area-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .team-area-title { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .team-member { font-size: 12px; color: var(--gray-900); display: flex; align-items: baseline; gap: 6px; padding: 3px 0; border-top: 1px dashed var(--gray-200); }
+  .team-member:first-of-type { border-top: none; }
+  .team-member-name { font-weight: 700; }
+  .team-member-role { color: var(--gray-500); font-size: 11px; }
+  /* Estructura del análisis (pirámide) */
+  .struct-pyramid { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; max-width: 800px; margin: 0 auto; }
+  .struct-level { display: flex; align-items: center; justify-content: center; padding: 14px 20px; color: var(--white); text-align: center; border-radius: 4px; margin: 0 auto; width: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .struct-level.l1 { background: #0B3B6F; width: 100%; }
+  .struct-level.l2 { background: #0F6FC6; width: 75%; }
+  .struct-level.l3 { background: #378ADD; width: 55%; }
+  .struct-level.l4 { background: #7FB4E8; width: 40%; color: var(--navy); }
+  .struct-level-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.9; margin-right: 8px; }
+  .struct-level-value { font-size: 15px; font-weight: 700; margin-right: 8px; }
+  .struct-level-desc { font-size: 11px; opacity: 0.9; }
+  .struct-level.l4 .struct-level-label { opacity: 1; }
+  .struct-legend { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 11px; color: var(--gray-700); }
+  .struct-legend-item { display: flex; align-items: center; gap: 6px; }
+  .struct-legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  /* Hallazgos por macro */
+  .macro-pain-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .macro-pain-block { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); padding: 16px 18px; }
+  .macro-pain-block.compra { border-left-color: #0F6FC6; }
+  .macro-pain-block.preparación { border-left-color: #EF9F27; }
+  .macro-pain-block.venta { border-left-color: #1D9E75; }
+  .macro-pain-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--gray-200); }
+  .macro-pain-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 16px; font-weight: 700; flex-shrink: 0; }
+  .macro-pain-icon.compra { background: #0F6FC6; }
+  .macro-pain-icon.preparación { background: #EF9F27; }
+  .macro-pain-icon.venta { background: #1D9E75; }
+  .macro-pain-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .macro-pain-sub { font-size: 11px; color: var(--gray-500); }
+  .pain-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .pain-item { display: grid; grid-template-columns: 42px 1fr 160px; gap: 14px; padding: 10px 12px; background: var(--gray-50); border-radius: 4px; align-items: start; }
+  .pain-rank { font-size: 22px; font-weight: 800; color: #B3261E; line-height: 1; text-align: center; }
+  .pain-content { display: flex; flex-direction: column; gap: 4px; }
+  .pain-title { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .pain-desc { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; }
+  .pain-impact { font-size: 11px; color: #B3261E; font-weight: 700; background: #FDECEA; padding: 8px 10px; border-radius: 4px; border: 1px solid #F5B5B0; text-align: center; align-self: center; line-height: 1.3; }
+  .pain-impact-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #8A1B14; display: block; margin-bottom: 2px; }
+  /* OKR framework explanation */
+  .okr-framework { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .okr-layer { background: var(--white); border: 1px solid var(--gray-200); padding: 14px 16px; border-radius: 4px; display: flex; flex-direction: column; gap: 6px; position: relative; }
+  .okr-layer::after { content: "→"; position: absolute; top: 50%; right: -12px; transform: translateY(-50%); color: var(--navy); font-weight: 700; font-size: 18px; z-index: 2; }
+  .okr-layer:last-child::after { display: none; }
+  .okr-layer-num { width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .okr-layer-title { font-size: 12px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.04em; }
+  .okr-layer-desc { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
+  .okr-layer-example { font-size: 10.5px; color: var(--gray-500); font-style: italic; margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--gray-200); }
+  /* Gobernanza */
+  .gov-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .gov-card { background: var(--white); border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+  .gov-card.monthly { border-top-color: #534AB7; }
+  .gov-card.biweekly { border-top-color: #0F6FC6; }
+  .gov-card.weekly { border-top-color: #1D9E75; }
+  .gov-card.adhoc { border-top-color: #EF9F27; }
+  .gov-cadence { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); }
+  .gov-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .gov-meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 11.5px; margin-top: 4px; }
+  .gov-meta-label { font-weight: 700; color: var(--gray-500); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .gov-meta-value { color: var(--gray-900); }
+  .gov-outputs { font-size: 11px; color: var(--gray-700); background: var(--gray-50); border-left: 3px solid var(--clicar-green); padding: 8px 10px; margin-top: 4px; line-height: 1.4; }
+  .gov-outputs strong { color: var(--navy); }
+  @media (max-width: 960px) {
+    .struct-level.l2 { width: 90%; }
+    .struct-level.l3 { width: 80%; }
+    .struct-level.l4 { width: 70%; }
+    .pain-item { grid-template-columns: 36px 1fr; }
+    .pain-impact { grid-column: 1 / -1; }
+    .okr-framework { grid-template-columns: 1fr 1fr; }
+    .okr-layer::after { display: none; }
+    .gov-grid { grid-template-columns: 1fr; }
+  }
+  /* OKRs & Impacto */
+  .okrs-hero { padding-bottom: 16px; border-bottom: 1px solid var(--gray-200); margin-bottom: 22px; }
+  .okrs-hero .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clicar-green); margin-bottom: 10px; }
+  .okrs-hero h1 { font-size: 30px; color: var(--navy); font-weight: 700; letter-spacing: -0.015em; margin-bottom: 8px; }
+  .okrs-hero p { font-size: 14px; color: var(--gray-700); line-height: 1.55; max-width: 960px; }
+  .okrs-section-title { font-size: 13px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; margin: 28px 0 10px; display: flex; align-items: center; gap: 10px; }
+  .okrs-section-title::before { content: ''; width: 4px; height: 18px; background: var(--clicar-green); border-radius: 2px; }
+  .okrs-section-sub { font-size: 12px; color: var(--gray-700); margin-bottom: 14px; max-width: 860px; }
+  .north-star-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, auto); grid-auto-flow: column; gap: 14px; }
+  .north-star { background: var(--white); border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .north-star.compra { border-top-color: #0F6FC6; }
+  .north-star.preparación { border-top-color: #EF9F27; }
+  .north-star.venta { border-top-color: #1D9E75; }
+  .north-star-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); }
+  .north-star-metric { font-size: 14px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .north-star-progress { display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums; }
+  .north-star-baseline { font-size: 22px; font-weight: 700; color: #B3261E; }
+  .north-star-arrow { font-size: 14px; color: var(--gray-500); }
+  .north-star-target { font-size: 22px; font-weight: 700; color: #1D9E75; }
+  .north-star-unit { font-size: 11px; color: var(--gray-700); }
+  .north-star-source { font-size: 10px; color: var(--gray-500); border-top: 1px solid var(--gray-200); padding-top: 6px; }
+  .ns-bar { height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+  .ns-bar-fill { height: 100%; background: linear-gradient(90deg, #B3261E 0%, #EF9F27 50%, #1D9E75 100%); border-radius: 3px; }
+  .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .impact-card { background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%); border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+  .impact-card.compra { border-top-color: #0F6FC6; }
+  .impact-card.preparación { border-top-color: #EF9F27; }
+  .impact-card.venta { border-top-color: #1D9E75; }
+  .impact-eje { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); }
+  .impact-big { display: flex; align-items: baseline; gap: 6px; }
+  .impact-big-number { font-size: 42px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+  .impact-card.compra .impact-big-number { color: #0B3B6F; }
+  .impact-card.preparación .impact-big-number { color: #8A5A00; }
+  .impact-card.venta .impact-big-number { color: #0F6E56; }
+  .impact-big-unit { font-size: 13px; font-weight: 700; color: var(--gray-700); }
+  .impact-headline { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+  .impact-detail { font-size: 11.5px; color: var(--gray-700); line-height: 1.5; }
+  .impact-detail strong { color: var(--navy); }
+  .impact-money { font-size: 13px; font-weight: 700; background: #E8F5EE; color: #0F6E56; padding: 6px 10px; border-radius: 4px; border: 1px solid #B7DEC8; display: inline-flex; align-items: center; gap: 6px; width: fit-content; }
+  .impact-money::before { content: "💰"; font-size: 13px; }
+  .impact-assumptions { font-size: 10.5px; color: var(--gray-500); font-style: italic; line-height: 1.45; border-top: 1px dashed var(--gray-200); padding-top: 8px; margin-top: auto; }
+  .impact-totalizer { margin-top: 14px; background: #0B3B6F; color: var(--white); padding: 14px 18px; border-radius: 4px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+  .impact-totalizer-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85; }
+  .impact-totalizer-value { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  .impact-totalizer-sub { font-size: 11px; opacity: 0.85; line-height: 1.4; }
+  @media (max-width: 900px) {
+    .impact-grid { grid-template-columns: 1fr; }
+    .impact-totalizer { grid-template-columns: 1fr; text-align: left; }
+  }
+  .trans-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .trans-card { background: #FFF4DC; border: 1px solid #F0D388; border-left: 4px solid #8A5A00; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .trans-card-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8A5A00; }
+  .trans-card h4 { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+  .trans-card-kr { font-size: 11.5px; color: var(--gray-700); }
+  .trans-card-kr strong { color: var(--navy); }
+  .trans-card-savings { font-size: 13px; font-weight: 700; color: #0F6E56; }
+  .stage-okrs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .stage-okr-card { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); padding: 14px 16px; }
+  .stage-okr-card.macro-compra { border-left-color: #0F6FC6; }
+  .stage-okr-card.macro-preparación { border-left-color: #EF9F27; }
+  .stage-okr-card.macro-venta { border-left-color: #1D9E75; }
+  .stage-okr-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .stage-okr-title { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .stage-okr-objective { font-size: 11.5px; color: var(--gray-700); font-style: italic; }
+  .kr-row { display: grid; grid-template-columns: 1.6fr 0.7fr 0.7fr 1fr; gap: 12px; padding: 8px 0; border-top: 1px solid var(--gray-100); align-items: center; font-size: 12px; }
+  .kr-row:first-of-type { border-top: 1px solid var(--gray-200); }
+  .kr-desc { color: var(--gray-900); line-height: 1.4; }
+  .kr-desc-title { font-weight: 700; color: var(--navy); font-size: 12.5px; margin-bottom: 2px; }
+  .kr-detail { font-size: 11px; color: var(--gray-700); font-style: italic; line-height: 1.45; margin-top: 3px; padding-top: 3px; border-top: 1px dashed var(--gray-200); }
+  .kr-cell-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); display: block; margin-bottom: 2px; }
+  .kr-baseline { color: #B3261E; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .kr-target { color: #1D9E75; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .kr-impacts { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
+  .kr-impacts strong { color: var(--navy); }
+  .okrs-macro-block { margin-bottom: 22px; }
+  .okrs-macro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-200); }
+  .okrs-macro-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .okrs-macro-dot.compra { background: #0F6FC6; }
+  .okrs-macro-dot.preparación { background: #EF9F27; }
+  .okrs-macro-dot.venta { background: #1D9E75; }
+  .okrs-macro-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .okrs-macro-sub { font-size: 11px; color: var(--gray-500); margin-left: auto; }
+  .okrs-legend { font-size: 11px; color: var(--gray-700); background: var(--gray-50); border-left: 3px solid var(--navy); padding: 10px 14px; margin-top: 18px; line-height: 1.5; }
+  .okrs-legend strong { color: var(--navy); }
+  @media (max-width: 900px) {
+    .north-star-grid { grid-template-columns: 1fr; }
+    .trans-grid { grid-template-columns: 1fr; }
+    .kr-row { grid-template-columns: 1fr; }
+  }
   /* Roadmap */
   .roadmap-hero { padding-bottom: 16px; border-bottom: 1px solid var(--gray-200); margin-bottom: 20px; }
   .roadmap-hero .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clicar-green); margin-bottom: 10px; }
@@ -508,6 +699,11 @@
   .roadmap-table tr:hover td { background: var(--gray-50); }
   .roadmap-table td.col-iniciativa { color: var(--navy); font-weight: 600; min-width: 280px; }
   .roadmap-table td.col-stage { font-size: 10.5px; color: var(--gray-500); min-width: 150px; }
+  .roadmap-stage-link { display: inline-block; cursor: pointer; padding: 4px 6px; margin: -4px -6px; border-radius: 3px; transition: background 0.12s, color 0.12s; border: none; background: transparent; text-align: left; font-family: inherit; font-size: inherit; color: inherit; line-height: 1.4; width: 100%; }
+  .roadmap-stage-link:hover { background: var(--navy-soft); color: var(--navy); }
+  .roadmap-stage-link:hover strong { color: var(--navy); }
+  .roadmap-stage-link::after { content: "↗"; font-size: 11px; opacity: 0; margin-left: 6px; color: var(--navy); font-weight: 700; transition: opacity 0.12s; }
+  .roadmap-stage-link:hover::after { opacity: 1; }
   .roadmap-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
   .priority-alta { background: #FDE2E2; color: #C00000; border: 1px solid #F0A0A0; }
   .priority-media { background: #FFF4DC; color: #8A5A00; border: 1px solid #F0D388; }
@@ -553,6 +749,10 @@
       <button class="macro-view-btn" data-view="exec-summary">
         <span class="macro-view-icon">📋</span>
         <span>Resumen ejecutivo</span>
+      </button>
+      <button class="macro-view-btn" data-view="okrs">
+        <span class="macro-view-icon">🎯</span>
+        <span>OKRs & Impacto</span>
       </button>
       <button class="macro-view-btn" data-view="roadmap">
         <span class="macro-view-icon">🗺️</span>
@@ -763,7 +963,7 @@ var journey = {
             "Los botones Sí/No en las preguntas de elegibilidad generan dead clicks en las grabaciones [Clarity]."
           ],
           mejoras: [
-            "<strong>Integración con patente para autocompletar y validar elegibilidad:</strong> validación en tiempo real con SII / Registro Civil que autocomplete marca, modelo, año y versión, y detecte de forma inmediata si el vehículo no cumple los criterios de elegibilidad con mensaje claro en el mismo campo, sin esperar al final del formulario.",
+            "<strong>Integración con patente para autocompletar y validar elegibilidad:</strong> validación en tiempo real vía <strong>Autofact</strong> (~$1.200.000 / mes) que autocomplete marca, modelo, año y versión, y detecte de forma inmediata si el vehículo no cumple los criterios de elegibilidad con mensaje claro en el mismo campo, sin esperar al final del formulario.",
             "<strong>Integración con Llaima para reconocimiento de vehículos propios:</strong> si el auto fue comprado en Americar, precargar datos adicionales como historial y condición esperada. Ventaja exclusiva no disponible para ningún competidor.",
             "<strong>Validación inteligente del kilometraje:</strong> campo con validación según la antigüedad del vehículo y mensaje inline no bloqueante si el valor ingresado parece fuera de rango.",
             "<strong>Buscador tipeable en marca, modelo y versión:</strong> reemplazar los dropdowns por campos con autocompletado (typeahead) que filtren en tiempo real, especialmente crítico en mobile.",
@@ -1408,8 +1608,8 @@ var ROADMAP = [
   { iniciativa: "Bloquear avance del flujo web hasta verificar SMS exitosa",
     description: "Previene leads con teléfonos inválidos o inventados y evita generar SMS que terminen en un tercero. Mejora la contactabilidad posterior del Contact Center.",
     macro: "compra", stage: "Captación Digital", substep: "Validación Datos Personales", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
-  { iniciativa: "Autocompletar datos del vehículo desde la patente (Autofact o compra de base de patentamiento)",
-    description: "Reemplazar la intención previa de integración con SII. Dos opciones de implementación: integración con Autofact (~$1.200.000) o compra de la base de patentamiento (~$3.000.000). Precarga marca, modelo, año y versión desde la patente para reducir el 18% de errores en datos ingresados manualmente.",
+  { iniciativa: "Autocompletar datos del vehículo desde la patente vía Autofact",
+    description: "Integración con Autofact (~$1.200.000 / mes) que precarga marca, modelo, año y versión a partir de la patente. Reemplaza la intención previa de integración directa con SII/Registro Civil y ataca el 18% de errores en datos ingresados manualmente. Alternativa evaluada: compra de la base de patentamiento (~$3.000.000 one-shot).",
     macro: "compra", stage: "Captación Digital", substep: "Ingreso Datos del Vehículo", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Calibrar el precio inicial de tasación para eliminar el vaivén de apelaciones",
     description: "El precio online (tanto compra directa como parte de pago) suele discrepar del precio final ofertado en sucursal (brecha ~15%), lo que obliga al cliente a apelar para mejorar la oferta. Refinar el algoritmo con transacciones reales Q1 2026 e incluir condición mecánica permite entregar un precio inicial más cercano al final, reduciendo frustración del cliente y carga operativa de apelaciones.",
@@ -1525,9 +1725,13 @@ function renderRoadmapSlide(i) {
     var ahorroHtml = it.ahorro
       ? '<span class="roadmap-savings">' + it.ahorro + '</span>'
       : '<span class="roadmap-placeholder">—</span>';
+    var escMacro = (it.macro || '').replace(/"/g, '&quot;');
+    var escStage = (it.stage || '').replace(/"/g, '&quot;');
+    var escSubstep = (it.substep || '').replace(/"/g, '&quot;');
+    var stageCell = '<button type="button" class="roadmap-stage-link" data-rm-macro="' + escMacro + '" data-rm-stage="' + escStage + '" data-rm-substep="' + escSubstep + '" title="Ver datos que justifican esta iniciativa"><strong>' + macroLabel + '</strong><br/>' + it.stage + ' → ' + it.substep + '</button>';
     rowsHtml += '<tr data-idx="' + r + '">' +
       '<td class="col-iniciativa">' + iniciativaHtml + '</td>' +
-      '<td class="col-stage"><strong>' + macroLabel + '</strong><br/>' + it.stage + ' → ' + it.substep + '</td>' +
+      '<td class="col-stage">' + stageCell + '</td>' +
       '<td>' + impactoBadge + '</td>' +
       '<td class="col-ahorro">' + ahorroHtml + '</td>' +
       '<td class="' + respClass + '">' + it.responsable + '</td>' +
@@ -1539,7 +1743,7 @@ function renderRoadmapSlide(i) {
     '<div class="roadmap-hero">' +
       '<div class="eyebrow">Roadmap de mejoras · vista global</div>' +
       '<h1>🗺️ Roadmap de iniciativas priorizadas</h1>' +
-      '<p>Lista curada de las iniciativas priorizadas que salen del análisis, con macro y sub-etapa de origen, prioridad, responsable y fecha comprometida. Los campos Responsable y Fecha están como placeholder hasta asignarse con los owners de cada área.</p>' +
+      '<p>Lista curada de las iniciativas priorizadas que salen del análisis, con eje y proceso de origen, prioridad, responsable y fecha comprometida. Los campos Responsable y Fecha están como placeholder hasta asignarse con los owners de cada área.</p>' +
     '</div>' +
     '<div class="roadmap-filters">' +
       '<span class="filter-label">Filtrar:</span>' +
@@ -1554,7 +1758,7 @@ function renderRoadmapSlide(i) {
       '<table class="roadmap-table">' +
         '<thead><tr>' +
           '<th>Iniciativa</th>' +
-          '<th>Macro / Sub-etapa</th>' +
+          '<th>Eje / Proceso</th>' +
           '<th>Impacto</th>' +
           '<th>Ahorro estimado</th>' +
           '<th>Responsable</th>' +
@@ -1666,61 +1870,687 @@ function handleRoadmapFilter(btn) {
   applyRoadmapFilters();
 }
 
+// ============================================================
+// OKRs & IMPACTO — Vista directorio
+// ============================================================
+var OKRS = {
+  northStars: [
+    { macro: 'compra', label: 'Eje Compra',
+      metric: 'Conversión end-to-end Lead → Compra concretada',
+      baseline: '4,7%', target: '8,0%', unit: 'conversión',
+      source: 'CRM Llaima · 158.753 leads Oct 25 – Mar 26 · 7.515 compras' },
+    { macro: 'compra', label: 'Eje Compra',
+      metric: 'Contactabilidad global del pool de leads',
+      baseline: '53%', target: '70%', unit: 'de leads contactados',
+      source: 'CRM Llaima · Alta/Muy Alta con peor contactabilidad hoy (33-43%)' },
+    { macro: 'preparación', label: 'Eje Preparación',
+      metric: '% stock publicado con foto Tier 1 / 2 (Impel)',
+      baseline: '67,7%', target: '95%', unit: 'del stock publicado',
+      source: 'BI 2026-04-17 · 1.211 de 1.790 uds con foto Impel' },
+    { macro: 'preparación', label: 'Eje Preparación',
+      metric: '% inventario total publicado en vitrina',
+      baseline: '69,5%', target: '90%', unit: 'del inventario total',
+      source: 'BI 2026-04-17 · 1.790 de 2.574 uds publicadas' },
+    { macro: 'venta', label: 'Eje Venta',
+      metric: 'Cotizaciones web iniciadas / mes',
+      baseline: '862', target: '2.000', unit: '/ mes',
+      source: 'Microsoft Clarity · 22 mar – 22 abr 2026 · 3,9% conv. ficha -> cotización' },
+    { macro: 'venta', label: 'Eje Venta',
+      metric: 'Tasa de descarte del pool de leads',
+      baseline: '68,8%', target: '50%', unit: 'de leads descartados',
+      source: 'Salazar-Israel · 72.113 de 104.747 leads descartados (6 meses)' }
+  ],
+  transformacionales: [
+    { title: 'Generar la foto final durante la inspección mecánica (in-house)',
+      macro: 'preparación',
+      kr: '<strong>Tier 1/2 del stock publicado: 67,7% → 95%</strong> · Tier 4 (sin foto): 204 uds → <30',
+      savings: '$4,2M / mes · $50,4M / año',
+      owner: 'Por asignar · TI + Operaciones + Foto' },
+    { title: 'Proteger clientes Oro/VIP con VPP de descarte automático',
+      macro: 'venta',
+      kr: '<strong>641 clientes Oro+VIP con VPP descartados / 6 meses → 0</strong> · Conversión con VPP: 3,3% → 4,0%',
+      savings: 'Data Salazar-Israel · ventas premium recuperables',
+      owner: 'Por asignar · Lead Management Usados' },
+    { title: 'Corregir error 303 + habilitar swipe/zoom mobile en ficha',
+      macro: 'venta',
+      kr: '<strong>Conv. ficha → cotización: 3,9% → 8%</strong> · Dead clicks mobile: 74.943 / mes → <10.000',
+      savings: '862 → ~1.700 cotizaciones / mes (sin cambiar tráfico)',
+      owner: 'Por asignar · Canales Digitales' },
+    { title: 'Cadencia automática llamada + WhatsApp + scoring (no FIFO)',
+      macro: 'compra',
+      kr: '<strong>Contactabilidad global: 53% → 70%</strong> · Tiempo 1er contacto: 21h → <6h · Conversión: 1,2% → 3%',
+      savings: 'Alta/Muy Alta con la peor contactabilidad hoy (33-43%)',
+      owner: 'Por asignar · Lead Management + TI' }
+  ],
+  byStage: {
+    1: { macro: 'compra', title: 'Etapa 1 · Captación Digital',
+      objective: 'Convertir más visitas en leads verificados con datos completos',
+      krs: [
+        { desc: 'Drop-off en Datos Personales (mayor pérdida del funnel)',
+          detail: 'De 86.312 usuarios que ingresan datos del vehículo solo 65.554 completan datos personales (20.758 pérdidas / mes). El modal OTP convierte solo 17% (43.249 → 7.446). Bajar a 12% recupera ~10k leads / mes.',
+          baseline: '24%', target: '12%',
+          impacts: 'Validación WhatsApp bloqueante · Rediseño modal OTP · RUT para autocompletar desde fuentes oficiales · Tiempo de conexión al reenviar OTP · Reformular título ("Ingresa tus datos para recibir la tasación")' },
+        { desc: 'Dead clicks en selectores del formulario (mobile)',
+          detail: 'Selectores de año, marca y modelo no responden al primer toque en mobile y dejan el formulario en estado inconsistente. 8,6% de sesiones mobile con dead click, más alto que desktop.',
+          baseline: '8,6%', target: '<3%',
+          impacts: 'Buscador tipeable (typeahead) · <strong>Integración con Autofact</strong> (~$1,2M/mes) para precargar marca/modelo/año/versión · Validación inteligente del kilometraje · Corregir estado inconsistente al modificar un campo · Stepper mobile completo sin truncar pasos' },
+        { desc: 'Drop-off post-Resultado Tasación (no agendan)',
+          detail: 'De los 7.446 usuarios que reciben la tasación, 3.088 no agendan inspección. CTA "Agendar inspección" recibe 963 dead clicks / mes — se pierde en el scroll. Bajar a 25% suma ~1.200 agendamientos extra / mes.',
+          baseline: '41,5%', target: '25%',
+          impacts: 'CTA Agendar visible y fijo · Contexto de mercado (rango comparable) · Retargeting vía WhatsApp a 48h · Reemplazar asterisco por ícono ⓘ con explicación · Diferenciar modalidades por beneficio real' }
+      ] },
+    2: { macro: 'compra', title: 'Etapa 2 · Tasación y Agendamiento',
+      objective: 'Reducir brecha entre precio online y final + subir show rate',
+      krs: [
+        { desc: 'Brecha precio online vs. oferta final',
+          detail: 'El vendedor ve un precio en el sitio que en sucursal suele ajustarse a la baja (brecha ~15%), obligando a apelar. Genera vaivén, frustración y reduce confianza. Meta <8% elimina el grueso de apelaciones posteriores.',
+          baseline: '~15%', target: '<8%',
+          impacts: 'Calibración con transacciones reales Q1 2026 (qué compró Clicar y a qué precio) · Condición mecánica declarada en el flujo · Explicar factores del precio en el resultado · Comunicar "sujeto a revisión mecánica" al estilo Bruno Fritsch · Apelación digital trazable' },
+        { desc: 'Tasa de no-show a la cita',
+          detail: 'Hoy 28% no asiste a la cita agendada; solo 8% se re-agenda post no-show. Impacto directo en capacidad ociosa del inspector y aging de leads.',
+          baseline: '28%', target: '15%',
+          impacts: 'Paula automatizada (agente virtual WhatsApp) · Confirmación + recordatorios 24h y 2h antes · Botones interactivos Confirmar/Reagendar/Cancelar · Flujo automático de re-agendamiento post no-show · Análisis de causas raíz por sucursal' },
+        { desc: 'Tasa de agendamiento efectiva',
+          detail: '62% de los leads que completan tasación agendan. Con cascada de selección más eficiente y disponibilidad en tiempo real, la meta es 75% (~1.500 agendamientos extra / mes).',
+          baseline: '62%', target: '75%',
+          impacts: 'Disponibilidad en tiempo real desde CRM · Horarios menos concurridos destacados (estilo Kavak) · Cascada Región → Sucursal (estilo Salfa/Gildemeister) · Calendario visual con días disponibles · Geolocalización opcional para sugerir sucursal' }
+      ] },
+    3: { macro: 'compra', title: 'Etapa 3 · Gestión de Leads',
+      objective: 'Alcanzar a más leads, más rápido y con mejor priorización',
+      krs: [
+        { desc: 'Contactabilidad global del pool',
+          detail: 'Hoy 53% del pool se contacta (47% nunca). Las categorías Alta y Muy Alta — las de mayor valor comercial — tienen la peor contactabilidad (33-43%) porque compiten en FIFO con leads de menor calidad.',
+          baseline: '53%', target: '70%',
+          impacts: 'Cadencia multi-canal automatizada (llamada → WhatsApp) · 3 intentos en 48h mínimo · Journey de descalificación automática · Dashboard de contactabilidad por agente/categoría · Reasignación automática tras 15 min sin contacto' },
+        { desc: 'Tiempo al primer contacto (horario CC)',
+          detail: 'Promedio 21h hábiles al primer contacto, con peaks de 70-115h en meses de alto volumen (Enero 26). La conversión correlaciona fuertemente con velocidad: los leads "calientes" se enfrían rápido.',
+          baseline: '21h', target: '<6h',
+          impacts: 'Scoring de leads · Priorización Alta/Muy Alta en las primeras 4h · Alerta cuando un lead supera X horas sin contacto · Capacity planning dinámico en meses peak · Ficha web completa visible al agente' },
+        { desc: 'Conversión global (lead → oportunidad)',
+          detail: 'Conversión crítica de 1,2% lead a oportunidad. Cliente Falso (33-50%) es el principal motivo de descarte y parte de los no-cierres quedan sin registro estructurado.',
+          baseline: '1,2%', target: '3,0%',
+          impacts: 'Scoring de leads para no-FIFO · Motivo obligatorio de no-cierre con lista cerrada · Flujo post-descarte con contacto CC a 48h · Validación anti-duplicados por RUT + patente · Checklist de calificación estandarizado en CRM' }
+      ] },
+    4: { macro: 'compra', title: 'Etapa 4 · Oportunidad y Check-In',
+      objective: 'Eliminar fricción administrativa en la llegada del cliente',
+      krs: [
+        { desc: 'Tiempo promedio de espera en check-in',
+          detail: 'Hoy 18 min de espera promedio y 34% espera >25 min en peak. Check-in manual genera colas en horarios de alta demanda, impactando NPS y tiempo productivo del asesor.',
+          baseline: '18 min', target: '<5 min',
+          impacts: 'Solicitud de inspección automatizada (reemplaza check-in manual) · Tótem / QR de autoatención en recepción · Pantalla de recepción con agenda del día · Registro automático de timestamp de llegada · SLA visible al cliente' },
+        { desc: '% clientes con documentos completos al llegar',
+          detail: '15% de clientes llega con documentación incompleta, extendiendo el tiempo de verificación (22 min promedio). Pre-carga digital reduce repeticiones presenciales.',
+          baseline: '85%', target: '95%',
+          impacts: 'Pre-carga digital vía WhatsApp 48h antes · Checklist con ejemplos visuales · Verificación asistida con OCR · Recordatorio 24h con documentos faltantes' },
+        { desc: 'Tasa de asistencia efectiva',
+          detail: 'Solo 72% de los que hacen check-in son atendidos efectivamente por un asesor. Sin notificación automática al asesor al check-in ni dashboard de carga en tiempo real.',
+          baseline: '72%', target: '88%',
+          impacts: 'Notificación push al asesor al check-in · Ficha completa del lead con historial web en el móvil del asesor · Dashboard de carga de asesores en tiempo real · Reglas de balanceo automático de clientes' }
+      ] },
+    5: { macro: 'compra', title: 'Etapa 5 · Inspección y Cierre',
+      objective: 'Subir la tasa de cierre y registrar el 100% de los no-cierres',
+      krs: [
+        { desc: 'Tasa de cierre final',
+          detail: '48% de las inspecciones terminan en compra. El 52% restante no tiene registro estructurado ni seguimiento: se pierde oportunidad de reactivación post-visita.',
+          baseline: '48%', target: '60%',
+          impacts: 'Oferta escrita por WhatsApp con vigencia 72h · Flujo post no-cierre con contacto CC a 48h · Pre-aprobación automática dentro de rango (no hacer esperar al cliente) · Aprobación digital en CRM con audit trail · Revisión de umbrales de autonomía del asesor' },
+        { desc: '% no-cierres con motivo estructurado registrado',
+          detail: 'Hoy no hay registro cerrado de motivos de no-cierre, impidiendo accionar sobre patrones repetidos. Impacto en conversión futura, precio y comunicación.',
+          baseline: '0%', target: '100%',
+          impacts: 'Campo obligatorio con lista cerrada en CRM · Dashboard de motivos por sucursal y asesor · Reporte mensual con migración entre categorías · Revisión trimestral de tipos de motivo' },
+        { desc: 'Inspecciones con tiempo objetivo (≤60 min)',
+          detail: 'Tiempo de inspección varía entre 30-90 min según experiencia del inspector. Tiempo objetivo estándar de 60 min con checklist digital asegura consistencia y mejora experiencia del cliente.',
+          baseline: '50%', target: '85%',
+          impacts: 'Checklist digital con tiempos objetivo por ítem · Categorización automática de hallazgos por severidad · Invitar al cliente a observar la inspección · Fotos estructuradas reutilizables en publicación · Benchmark entre inspectores' }
+      ] },
+    6: { macro: 'preparación', title: 'Etapa 6 · Ingreso Quiter + Recepción',
+      objective: 'Acortar el tramo compra → recepción → ubicación',
+      krs: [
+        { desc: 'Tiempo registro Quiter → llegada física',
+          detail: 'Sin métrica publicada hoy. Tramo operacional que define cuándo puede arrancar la preparación efectiva — un SLA formal desbloquea el pipeline aguas abajo.',
+          baseline: 'TBD', target: '<48h',
+          impacts: 'SLA publicado y medido · Checklist digital de recepción con foto · Integración automática desde sistemas de compras y tasación · Alerta cuando una unidad supera el SLA · Reporte de discrepancias por origen (VPP/B2B/Consignados)' },
+        { desc: '% unidades con ubicación correcta en sistema',
+          detail: 'Ubicación sistema vs. física puede divergir por movimientos no registrados. Sin auditoría periódica sistemática, se pierde tiempo buscando unidades para fotografía e inspección.',
+          baseline: 'TBD', target: '100%',
+          impacts: 'QR físico por unidad · App móvil para actualizar ubicación en terreno · Auditoría semanal por sucursal · Reglas claras taller vs. vitrina con criterios objetivos · Owner operacional por sucursal' },
+        { desc: 'Tiempo llegada → ubicación final (vitrina/taller)',
+          detail: 'Entre que llega físicamente el auto y queda ubicado definitivamente pasan horas/días sin trazabilidad. Bloquea fotografía, publicación y disponibilidad real.',
+          baseline: 'TBD', target: '<24h',
+          impacts: 'Reglas claras taller vs. vitrina · Auditoría semanal · Dashboard de aging por unidad · Trazabilidad del movimiento físico dentro de la sucursal' }
+      ] },
+    7: { macro: 'preparación', title: 'Etapa 7 · Asignación de Precio de Venta',
+      objective: 'Cero unidades bloqueadas por falta de precio',
+      krs: [
+        { desc: 'Unidades disponibles bloqueadas sin precio',
+          detail: '17 uds hoy (8,5% del stock retenido) no se publican porque falta el precio comercial. Gate operacional concreto y atacable con workflow + SLA claros.',
+          baseline: '17 uds', target: '0',
+          impacts: 'Cola de fijación de precio en Llaima antes del traspaso a Quiter · SLA formal <24h desde Quiter · Alerta cuando una unidad lleva >X horas sin precio · Owner asignado por segmento · Reglas paramétricas por modelo + antigüedad + condición' },
+        { desc: '% unidades con SLA Quiter → precio cumplido',
+          detail: 'No existe SLA publicado hoy. La meta es 100% con visibilidad diaria y escalamiento automático.',
+          baseline: 'TBD', target: '100%',
+          impacts: 'Reglas paramétricas de pricing · Alerta cuando >X horas sin precio · Reporte diario del SLA · Dashboard de cumplimiento por responsable · Revisión mensual de outliers' },
+        { desc: '% ajustes de precio con motivo registrado',
+          detail: 'Hoy los ajustes se hacen sin registro estructurado, impidiendo feedback loop entre ventas y pricing.',
+          baseline: '0%', target: '100%',
+          impacts: 'Workflow estructurado con motivo obligatorio · Dashboard de movimientos de precio por unidad · Umbrales automáticos de alerta sobre ajustes excesivos · Reporte de dispersión tasación web vs. precio publicado' }
+      ] },
+    8: { macro: 'preparación', title: 'Etapa 8 · Publicación en Sitio Web',
+      objective: 'Publicar más stock, más rápido y con data completa',
+      krs: [
+        { desc: '% stock publicado vs. inventario total',
+          detail: 'Hoy 69,5% del inventario está publicado (1.790 de 2.574 uds). 200 uds disponibles retenidas (10,1%) + 584 no elegibles (22,7%). Subir a 90% ≈ +500 uds visibles al comprador.',
+          baseline: '69,5%', target: '90%',
+          impacts: 'Desagregar "En acopio" en subcategorías accionables · Liberación automática de reservas fantasma · SLA máximo Quiter → publicación (<24-48h) · Bloqueo de publicación sin campos mínimos · Reporte diario de brecha disponibles vs. publicadas' },
+        { desc: 'Unidades retenidas "En acopio"',
+          detail: '166 uds (83% de las retenciones con stock disponible) hoy en "En acopio" — categoría cajón de sastre sin SLA, subcategoría ni owner.',
+          baseline: '166 uds', target: '<50',
+          impacts: 'Subcategorías accionables (recién llegado · pendiente limpieza · pendiente documentación) · Owner y SLA <48h por subcategoría · Dashboard diario con alerta cuando una categoría crece · Aging por unidad retenida' },
+        { desc: 'Reservas fantasma liberadas automáticamente',
+          detail: '407 uds reservadas hoy (69% del inventario no disponible). Reservas sin avance inmovilizan stock que debería volver a vitrina.',
+          baseline: '0', target: '100%',
+          impacts: 'Regla en Llaima: liberación a 48h sin avance · Alerta al asesor antes del vencimiento · Panel del cliente con estado de la reserva · Diferenciar reserva comercial activa vs. fantasma (>30 días sin avance)' }
+      ] },
+    9: { macro: 'preparación', title: 'Etapa 9 · Producción y Post-Procesado Foto Impel',
+      objective: 'Cerrar la brecha Tier 1/2 del catálogo (solución raíz)',
+      krs: [
+        { desc: '% stock publicado con foto Impel lista',
+          detail: 'Hoy 67,7% (1.211 de 1.790 uds). El 32,3% restante está en vitrina con foto de inspección (Tier 3) o placeholder (Tier 4). Costo externo: $4,2M/mes que se elimina con la solución raíz.',
+          baseline: '67,7%', target: '95%',
+          impacts: '<strong>[TRANSFORMACIONAL]</strong> Foto final in-house al momento de la inspección mecánica (deprecar Impel) · SLA transitorio foto tomada → Impel <24h · Target mínimo 85% por zona hasta completar el roll-out · Priorización de stock premium durante transición' },
+        { desc: 'Unidades sin foto alguna (Tier 4)',
+          detail: '204 uds publicadas hoy con placeholder "Estamos preparando esta imagen". 114 (55,9%) están en zona RM. Tier 4 mata la visibilidad del auto en la vitrina.',
+          baseline: '204 uds', target: '<30',
+          impacts: 'SLA 72h máximo en Tier 4 (upgrade o despublicación) · Owner operacional del pipeline visual · Reporte diario de backlog por zona/sucursal · Alerta cuando backlog >20% del publicado' },
+        { desc: 'Cobertura Impel zona RM',
+          detail: 'Zona Metropolitana es la peor con 65,3% de cobertura. Zona Sur lidera con 74,8%. El problema está concentrado en pocas sucursales.',
+          baseline: '65,3%', target: '90%',
+          impacts: 'Intervención focalizada en top 5 peores sucursales (J. Alessandri, Vitacura, J. M. Carrera) · Ranking interno para presión social positiva · Recursos temporales de fotografía para cerrar brecha · Auditoría diaria del subset Tier 4 con owner por sucursal' }
+      ] },
+    10: { macro: 'preparación', title: 'Etapa 10 · Clasificación y Orden en Catálogo',
+      objective: 'Vitrina digital premium, sin degradación visible',
+      krs: [
+        { desc: '% unidades en Tier 1 + Tier 2',
+          detail: 'Hoy 67,7% del publicado (BI no separa Tier 1 de Tier 2). Con la foto final al inspeccionar se converge a 100% Tier 1 sin targets por zona.',
+          baseline: '67,7%', target: '95%',
+          impacts: 'Foto final in-house al inspeccionar (solución raíz) · Reporte semanal del mix por zona · Alerta cuando una zona supera 15% sin-foto · Plan de escalamiento a Tier 1 priorizando segmento lujo' },
+        { desc: '% sin foto en la peor sucursal',
+          detail: 'Concepción J. Alessandri R. 1885 lidera con 51,5% de sin-foto, seguida de Vitacura Padre Hurtado 1246 (48,4%). Top 3 peores = 43 uds sin foto (21% del total).',
+          baseline: '51,5%', target: '<10%',
+          impacts: 'Ranking interno de sucursales visible · Intervención focalizada semanal en top 5 peores · SLA transitorio por sucursal (máx. 10% sin-foto) · Responsable identificado por sucursal' },
+        { desc: 'Permanencia promedio en Tier 4',
+          detail: 'No hay SLA explícito para sacar unidades de Tier 3/4. Algunas pueden quedar "olvidadas" por meses sin owner claro.',
+          baseline: 'TBD', target: '<72h',
+          impacts: 'SLA por tier: Tier 4 máximo 72h · Owner operacional del pipeline visual · Cola priorizada de upgrades con edad máxima visible · Dashboard de aging por tier' }
+      ] },
+    11: { macro: 'venta', title: 'Etapa 11 · Captación Digital (Venta)',
+      objective: 'Duplicar la conversión ficha → cotización',
+      krs: [
+        { desc: 'Conversión ficha → cotización',
+          detail: 'Hoy 3,9% (862 cotizaciones de 21.872 fichas). Salto crítico del funnel: 862 → ~1.700 cotizaciones / mes sin cambiar tráfico.',
+          baseline: '3,9%', target: '8,0%',
+          impacts: 'Corregir error 303 en paso 4 del buy-process · Eliminar foto del header del buy-process · Reemplazar steps por indicador de progreso no clicable · Reducir preguntas innecesarias · Corregir botón "Mes anterior" del calendario (3.198 dead clicks)' },
+        { desc: 'Dead clicks en ficha mobile (swipe/zoom)',
+          detail: '74.943 dead clicks / mes atribuidos a intentos de swipe y zoom sin respuesta en el carrusel. Afecta prácticamente todos los autos sin vista 360°.',
+          baseline: '74.943 / mes', target: '<10.000',
+          impacts: 'Habilitar swipe/zoom en el carrusel de fotos de inspección mobile · Indicador visual "Desliza para ver más fotos" · Marca de agua "Foto en proceso" para autos en cola de fotografía formal · Medir impacto tier de foto sobre quickback rate' },
+        { desc: 'Bounce rate del Home',
+          detail: '58,4% de las sesiones abandona sin interactuar. Tráfico muy concentrado en mobile (85,7%) y alta dependencia de paid (Ads Meta 36% + Google Paid 20%).',
+          baseline: '58,4%', target: '40%',
+          impacts: 'Diseño mobile-first real (85,7% del tráfico) · Hero centrado en confianza (testimonios, garantías, reviews) · Diversificar tráfico bajando dependencia de Ads Meta · A/B de propuesta de valor + atajos a catálogo · Mayor visibilidad del buscador dentro del catálogo (patrón SAIS validado vía GTM)' }
+      ] },
+    12: { macro: 'venta', title: 'Etapa 12 · Gestión de Leads (Venta)',
+      objective: 'Reducir descarte y recuperar clientes premium',
+      krs: [
+        { desc: 'Tasa de descarte global (Salazar-Israel)',
+          detail: '68,8% del pool se descarta (72.113 de 104.747 leads en 6 meses). "No contesta" 31% y "Descarte masivo" 12% dominan.',
+          baseline: '68,8%', target: '50%',
+          impacts: 'Cadencia multi-canal automatizada (llamada → WhatsApp) · Scoring de leads (no FIFO) · Eliminar "Descarte masivo" como motivo válido · Validación de teléfono/email al ingreso al CRM · Replicar condiciones de marzo 26 (mejor mes, 8,2% conversión)' },
+        { desc: 'Oro + VIP con VPP descartados (6 meses)',
+          detail: '641 clientes premium perdidos en 6 meses (data Salazar-Israel). Con VPP se descarta +7pp más, pero cuando avanzan convierten mejor (4,0% vs. 3,3%).',
+          baseline: '641', target: '0',
+          impacts: 'Bloqueo de descarte automático de leads Oro/VIP + VPP sin revisión de supervisor · Flujo diferenciado con SLA de contacto más agresivo · Tagging automático "Premium con VPP" visible al asesor · Reporte semanal por sucursal del % Premium descartados' },
+        { desc: 'Descarte en segmento con financiamiento',
+          detail: 'El segmento de mayor margen tiene la peor gestión: 95,3% de descarte vs. 85% sin financiamiento. Desagregado por segmento: Sin segmento 96% · VIP 93% · Oro 91% · Plata 89% · Bronce 87%.',
+          baseline: '95,3%', target: '80%',
+          impacts: 'Pre-evaluación crediticia antes del ingreso al CRM · Flujo diferenciado para leads con financiamiento · Integración con entidades financieras partner · Panel de estado de solicitudes · Carga única de documentos en CRM' }
+      ] },
+    13: { macro: 'venta', title: 'Etapa 13 · Reserva y Medios de Pago',
+      objective: 'Mover reservas reales a ventas y digitalizar el pago',
+      krs: [
+        { desc: '% reservas que terminan en venta',
+          detail: 'Data hoy pendiente (TBD). Hipótesis: reservas fantasma inmovilizan stock sin avance real (407 uds reservadas en Preparación).',
+          baseline: 'TBD', target: '>70%',
+          impacts: 'Liberación automática de reservas fantasma a 48h sin avance · Panel visible al cliente con estado y vencimiento · Alerta al asesor antes del vencimiento · Separar reservas comerciales activas de fantasma' },
+        { desc: '% pagos digitales vs. presenciales',
+          detail: 'Hoy sin medición. El pago digital reduce fricción, deja evidencia automática y acelera el cierre.',
+          baseline: 'TBD', target: '80%',
+          impacts: 'Link de pago digital con comprobante automático · Conciliación automática entre reserva y pago · Dashboard de pagos pendientes por asesor · Simulador de cuota en la ficha del vehículo' },
+        { desc: 'Tiempo reserva → pago registrado',
+          detail: 'Sin medición hoy. El tramo reserva-pago es la bisagra crítica antes del contrato; reducirlo acorta el ciclo de venta.',
+          baseline: 'TBD', target: '<30 min',
+          impacts: 'Conciliación automática reserva ↔ pago · Pasos del pago guiados y autocompletados · Integración con bancos/financieras partner · Workflow específico para parte de pago (tasación express del auto del comprador)' }
+      ] },
+    14: { macro: 'venta', title: 'Etapa 14 · Firma de Contrato',
+      objective: 'Digitalizar la firma y acortar tiempos',
+      krs: [
+        { desc: '% firmas digitales vs. presenciales',
+          detail: 'Hoy firma presencial por defecto, archivo manual en carpetas físicas en algunas sucursales. Digitalizar con DocuSign acelera, da trazabilidad y mejora experiencia del cliente.',
+          baseline: 'TBD', target: '80%',
+          impacts: 'DocuSign por defecto como medio de firma · Archivo automático en CRM con vínculo a la unidad · Entrega inmediata de copia firmada por email · Explicación de cláusulas relevantes en el flujo de firma' },
+        { desc: 'Tiempo acuerdo → contrato listo',
+          detail: 'Sin medición hoy. Datos del cliente se digitan manualmente en el contrato generando errores y tiempos largos.',
+          baseline: 'TBD', target: '<30 min',
+          impacts: 'Prellenado del contrato desde CRM (único source of truth) · Plantilla única versionada centralmente · Audit trail de generación y modificaciones · Envío automático al cliente 24h antes para revisión' },
+        { desc: 'Archivo automático en CRM con vínculo a unidad',
+          detail: 'Hoy archivo manual y dispar entre sucursales. Sin vínculo automático al CRM se pierde trazabilidad post-venta.',
+          baseline: '0%', target: '100%',
+          impacts: 'Hand-off digital a facturación con checklist · Vinculación automática contrato ↔ unidad en CRM · FAQ del contrato + registro de dudas frecuentes · Copia firmada al correo del cliente al instante' }
+      ] },
+    15: { macro: 'venta', title: 'Etapa 15 · Facturación y Entrega',
+      objective: 'Entregar a tiempo con una ceremonia memorable',
+      krs: [
+        { desc: '% entregas en fecha comprometida',
+          detail: 'Sin medición hoy. Retrasos en transferencia del Registro Civil, documentos físicos entregados en visitas separadas y detalles menores no resueltos afectan la experiencia final.',
+          baseline: 'TBD', target: '95%',
+          impacts: 'Courier de documentos finales · Playbook de entrega premium con checklist · Uso de canales digitales del Registro Civil cuando aplique · Portal de seguimiento del trámite para el cliente · Notificación automática en cada hito' },
+        { desc: 'NPS de entrega',
+          detail: 'Sin medición sistemática hoy. La entrega es el momento de mayor emocionalidad del cliente y define la recomendación futura.',
+          baseline: 'TBD', target: '>70',
+          impacts: 'Encuesta NPS automática 24h post-entrega · Seguimiento post-venta a 30 / 60 / 90 días · Ceremonia de entrega estandarizada y memorable · Checklist final firmado por el cliente · Kit de bienvenida con asistencia 24/7' },
+        { desc: 'Tiempo aprobaciones → factura emitida',
+          detail: 'Hoy errores frecuentes por datos digitados manualmente y envío de factura en papel en algunas sucursales. SLA formal acorta el ciclo.',
+          baseline: 'TBD', target: '<2h',
+          impacts: 'Factura digital por defecto con copia al correo · Prellenado de datos desde CRM · SLA formal: factura <2h post-aprobación · Dashboard de emisión de facturas pendientes · Cero errores en datos del cliente' }
+      ] }
+  }
+};
+
+function renderOKRsSlide(i) {
+  var meta = OKRS;
+  // North stars
+  var nsHtml = '';
+  for (var n = 0; n < meta.northStars.length; n++) {
+    var ns = meta.northStars[n];
+    nsHtml += '<div class="north-star ' + ns.macro + '">' +
+      '<div class="north-star-label">' + ns.label + '</div>' +
+      '<div class="north-star-metric">' + ns.metric + '</div>' +
+      '<div class="north-star-progress">' +
+        '<span class="north-star-baseline">' + ns.baseline + '</span>' +
+        '<span class="north-star-arrow">→</span>' +
+        '<span class="north-star-target">' + ns.target + '</span>' +
+        '<span class="north-star-unit">' + ns.unit + '</span>' +
+      '</div>' +
+      '<div class="ns-bar"><div class="ns-bar-fill" style="width: 30%;"></div></div>' +
+      '<div class="north-star-source">' + ns.source + '</div>' +
+    '</div>';
+  }
+  // Impacto estimado en el negocio
+  var impactHtml =
+    '<div class="impact-grid">' +
+      '<div class="impact-card compra">' +
+        '<div class="impact-eje">Eje Compra</div>' +
+        '<div class="impact-big"><span class="impact-big-number">+864</span><span class="impact-big-unit">compras / mes</span></div>' +
+        '<div class="impact-headline">Compramos 864 autos más al mes</div>' +
+        '<div class="impact-detail">De <strong>1.243 → 2.117 compras/mes</strong> · <strong>+10.368 autos/año</strong>. La palanca son los 2 North Stars del eje: más contactabilidad alimenta más conversión.</div>' +
+        '<div class="impact-money">~$638M / mes de margen estimado al revender</div>' +
+        '<div class="impact-assumptions">Supuestos: 26.459 leads/mes constantes · conversión Lead→Compra 4,7% → 8,0% · ticket promedio $9M · margen usados 8,2%.</div>' +
+      '</div>' +
+      '<div class="impact-card preparación">' +
+        '<div class="impact-eje">Eje Preparación</div>' +
+        '<div class="impact-big"><span class="impact-big-number">+527</span><span class="impact-big-unit">uds visibles</span></div>' +
+        '<div class="impact-headline">Vitrina con 527 autos más listos para vender</div>' +
+        '<div class="impact-detail">Stock publicado sube de <strong>1.790 → 2.317 uds</strong> (del 69,5% al 90% del inventario). Foto Tier 1/2 del <strong>67,7% → 95%</strong> — vitrina premium, sin Tier 4.</div>' +
+        '<div class="impact-money">Habilitador del eje Venta · ahorro $4,2M/mes en Impel</div>' +
+        '<div class="impact-assumptions">Supuestos: inventario base 2.574 uds constante · meta de publicación 90% · foto final in-house al momento de la inspección (deprecar Impel externo).</div>' +
+      '</div>' +
+      '<div class="impact-card venta">' +
+        '<div class="impact-eje">Eje Venta</div>' +
+        '<div class="impact-big"><span class="impact-big-number">+114</span><span class="impact-big-unit">ventas / mes</span></div>' +
+        '<div class="impact-headline">Vendemos 114 autos más al mes</div>' +
+        '<div class="impact-detail">De <strong>46 → 160 ventas/mes</strong> · <strong>+1.368 autos/año</strong>. Combina 3× el pipeline web (862 → 2.000 cotizaciones/mes) con mejor gestión de leads (descarte 68,8% → 50%).</div>' +
+        '<div class="impact-money">~$103M / mes de margen estimado adicional</div>' +
+        '<div class="impact-assumptions">Supuestos: 136.334 visitas/mes constantes · conv. cotización→venta 5,3% → 8% (alineado al impacto de Gestión de Leads) · ticket promedio $11M · margen usados 8,2%.</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="impact-totalizer">' +
+      '<div>' +
+        '<div class="impact-totalizer-label">Proyección anualizada al mover los 6 North Stars</div>' +
+        '<div class="impact-totalizer-sub">Compras y ventas no se suman 1:1 (cada compra alimenta una venta futura). El margen se materializa al completar el ciclo compra → preparación → venta.</div>' +
+      '</div>' +
+      '<div style="text-align:right;">' +
+        '<div class="impact-totalizer-value">+10.368 compras · +1.368 ventas · año</div>' +
+        '<div class="impact-totalizer-sub">Preparación habilita el flujo · sin 90% publicado + foto premium el margen se pierde en inventario</div>' +
+      '</div>' +
+    '</div>';
+
+  // Transformacionales
+  var transHtml = '';
+  for (var t = 0; t < meta.transformacionales.length; t++) {
+    var it = meta.transformacionales[t];
+    var macroTitle = (MACRO_META[it.macro] && MACRO_META[it.macro].title) || it.macro;
+    transHtml += '<div class="trans-card">' +
+      '<div class="trans-card-label">Apuesta transformacional · ' + macroTitle + '</div>' +
+      '<h4>' + it.title + '</h4>' +
+      '<div class="trans-card-kr">' + it.kr + '</div>' +
+      '<div class="trans-card-savings">💰 ' + it.savings + '</div>' +
+      '<div style="font-size:10px; color:var(--gray-500);">Owner: ' + it.owner + '</div>' +
+    '</div>';
+  }
+  // OKRs por etapa agrupados por macro
+  var macroOrder = ['compra','preparación','venta'];
+  var stageHtml = '';
+  for (var mi = 0; mi < macroOrder.length; mi++) {
+    var mkey = macroOrder[mi];
+    var mTitle = (MACRO_META[mkey] && MACRO_META[mkey].title) || mkey;
+    var stageIds = Object.keys(meta.byStage).filter(function(k){ return meta.byStage[k].macro === mkey; });
+    if (!stageIds.length) continue;
+    stageHtml += '<div class="okrs-macro-block">' +
+      '<div class="okrs-macro-head">' +
+        '<span class="okrs-macro-dot ' + mkey + '"></span>' +
+        '<span class="okrs-macro-title">Eje ' + mTitle + '</span>' +
+        '<span class="okrs-macro-sub">' + stageIds.length + ' etapas · ' + (stageIds.length * 3) + ' KRs</span>' +
+      '</div>' +
+      '<div class="stage-okrs-grid">';
+    for (var si = 0; si < stageIds.length; si++) {
+      var st = meta.byStage[stageIds[si]];
+      var krsHtml = '';
+      krsHtml += '<div class="kr-row" style="font-weight:700; color:var(--gray-500); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;">' +
+        '<div>Key Result</div><div>Baseline</div><div>Meta</div><div>Iniciativas que lo mueven</div>' +
+      '</div>';
+      for (var kr = 0; kr < st.krs.length; kr++) {
+        var k = st.krs[kr];
+        var detailHtml = k.detail ? '<div class="kr-detail">' + k.detail + '</div>' : '';
+        krsHtml += '<div class="kr-row">' +
+          '<div class="kr-desc"><div class="kr-desc-title">' + k.desc + '</div>' + detailHtml + '</div>' +
+          '<div class="kr-baseline">' + k.baseline + '</div>' +
+          '<div class="kr-target">' + k.target + '</div>' +
+          '<div class="kr-impacts">' + k.impacts + '</div>' +
+        '</div>';
+      }
+      stageHtml += '<div class="stage-okr-card macro-' + st.macro + '">' +
+        '<div class="stage-okr-head">' +
+          '<div>' +
+            '<div class="stage-okr-title">' + st.title + '</div>' +
+            '<div class="stage-okr-objective">Objetivo: ' + st.objective + '</div>' +
+          '</div>' +
+        '</div>' +
+        krsHtml +
+      '</div>';
+    }
+    stageHtml += '</div></div>';
+  }
+  return '<div class="slide exec-summary" data-slide="' + i + '">' +
+    '<div class="okrs-hero">' +
+      '<div class="eyebrow">Vista directorio · OKRs & Impacto</div>' +
+      '<h1>🎯 OKRs & Impacto — Journey Usados</h1>' +
+      '<p>Resumen ejecutivo del impacto que mueven las iniciativas del roadmap. 3 North Stars (una por macro), 4 apuestas transformacionales y 45 KRs distribuidos en las 15 etapas. Los baselines provienen de data real (CRM Llaima, BI, Clarity, Salazar-Israel) y las metas son propuestas calibradas a 6 meses — ajustables con los dueños de cada área.</p>' +
+    '</div>' +
+    '<div class="okrs-section-title">North Stars</div>' +
+    '<div class="okrs-section-sub">La métrica que el directorio debe ver primero por cada macro. Si sube, todo lo demás está funcionando.</div>' +
+    '<div class="north-star-grid">' + nsHtml + '</div>' +
+    '<div class="okrs-section-title">💰 Impacto estimado en el negocio</div>' +
+    '<div class="okrs-section-sub">Qué significan los 6 North Stars traducidos a compras y ventas adicionales. Todos los números están construidos sobre supuestos conservadores (tráfico y leads constantes, ticket y margen promedio del mercado usados CL) — reemplazables con la data real de Pricing y Operaciones.</div>' +
+    impactHtml +
+    '<div class="okrs-section-title">Apuestas transformacionales</div>' +
+    '<div class="okrs-section-sub">Iniciativas que mueven múltiples KRs a la vez y/o tienen impacto financiero cuantificado.</div>' +
+    '<div class="trans-grid">' + transHtml + '</div>' +
+    '<div class="okrs-section-title">OKRs por etapa</div>' +
+    '<div class="okrs-section-sub">Cada etapa tiene un Objective y 3 Key Results. Cada KR está linkeado a las iniciativas del Roadmap que lo mueven.</div>' +
+    stageHtml +
+    '<div class="okrs-legend"><strong>Cómo leer:</strong> Rojo = baseline actual · Verde = meta a 6 meses. La tercera columna nombra las iniciativas del Roadmap que impactan ese KR. KRs con baseline <strong>TBD</strong> requieren levantamiento de data antes de cerrar la meta (se marcan para priorización).</div>' +
+  '</div>';
+}
+
 function renderExecSummarySlide(i) {
+  // ----------- 1. Equipo -----------
+  var teamGroups = [
+    { macro: 'compra', title: 'Canales Digitales · Captación', members: [
+      { n: 'Martin Flores', r: 'Canales Digitales' },
+      { n: 'Constanza Araya', r: 'UX/UI' },
+      { n: 'Trinidad Madrigal', r: 'Marketing' }
+    ] },
+    { macro: 'compra', title: 'Lead Management · CRM Llaima', members: [
+      { n: 'Maryorin Vivas', r: 'Productos Digitales' },
+      { n: 'Jose Tomas Figueroa', r: 'Lead Management Usados' }
+    ] },
+    { macro: 'preparación', title: 'Preparación · Inventario y Foto', members: [
+      { n: 'Barbara Colle', r: 'Productos Digitales' },
+      { n: 'Raul Olivares', r: 'Pricing Usados' },
+      { n: 'Javiera Jerez', r: 'Vitrina Digital' },
+      { n: 'Natalia Reyes', r: 'Logística' }
+    ] },
+    { macro: 'venta', title: 'Venta · Vitrina Digital y Comercial', members: [
+      { n: 'Javiera Jerez', r: 'Vitrina Digital' },
+      { n: 'Barbara Colle', r: 'Productos Digitales' },
+      { n: 'Raul Olivares', r: 'Pricing Usados' }
+    ] },
+    { macro: 'cross', title: 'Cross · Voz del cliente + BI', members: [
+      { n: 'Felipe Arroyo', r: 'Experiencia de Clientes' },
+      { n: 'Equipo BI', r: 'Reportes de inventario y fotografías' },
+      { n: 'Operaciones Sucursales', r: 'Fuente de data operacional' }
+    ] }
+  ];
+  var teamHtml = '';
+  for (var tg = 0; tg < teamGroups.length; tg++) {
+    var grp = teamGroups[tg];
+    var memHtml = '';
+    for (var mm = 0; mm < grp.members.length; mm++) {
+      memHtml += '<div class="team-member"><span class="team-member-name">' + grp.members[mm].n + '</span><span class="team-member-role">· ' + grp.members[mm].r + '</span></div>';
+    }
+    teamHtml += '<div class="team-area-card ' + grp.macro + '">' +
+      '<div class="team-area-label">' + (grp.macro === 'cross' ? 'Cross · todo el journey' : 'Eje ' + (MACRO_META[grp.macro] && MACRO_META[grp.macro].title)) + '</div>' +
+      '<div class="team-area-title">' + grp.title + '</div>' +
+      memHtml +
+    '</div>';
+  }
+
+  // ----------- 2. Estructura del análisis -----------
+  var structHtml =
+    '<div class="struct-pyramid">' +
+      '<div class="struct-level l1"><span class="struct-level-label">Nivel 1</span><span class="struct-level-value">Journey punta a punta</span><span class="struct-level-desc">Vista global del recorrido del cliente y la unidad</span></div>' +
+      '<div class="struct-level l2"><span class="struct-level-label">Nivel 2 · Ejes</span><span class="struct-level-value">3</span><span class="struct-level-desc">Compra · Preparación · Venta</span></div>' +
+      '<div class="struct-level l3"><span class="struct-level-label">Nivel 3 · Procesos</span><span class="struct-level-value">16</span><span class="struct-level-desc">Unidades de análisis con KPIs propios</span></div>' +
+      '<div class="struct-level l4"><span class="struct-level-label">Nivel 4 · Subprocesos</span><span class="struct-level-value">56</span><span class="struct-level-desc">Hallazgos + mejoras + benchmark + impacto cliente</span></div>' +
+    '</div>' +
+    '<div class="struct-legend">' +
+      '<div class="struct-legend-item"><span class="struct-legend-dot" style="background:#0F6FC6"></span>Eje Compra: 5 procesos · 22 subprocesos · data real CRM Llaima (158.753 leads)</div>' +
+      '<div class="struct-legend-item"><span class="struct-legend-dot" style="background:#EF9F27"></span>Eje Preparación: 6 procesos · 17 subprocesos · snapshot BI (2.574 uds)</div>' +
+      '<div class="struct-legend-item"><span class="struct-legend-dot" style="background:#1D9E75"></span>Eje Venta: 5 procesos · 17 subprocesos · Clarity + Salazar-Israel (104.747 leads)</div>' +
+    '</div>';
+
+  // ----------- 3. Hallazgos más relevantes por macro -----------
+  var pains = {
+    compra: {
+      title: 'Eje Compra',
+      sub: 'El vendedor llega con intención y el funnel lo pierde en datos personales, tasación y Contact Center',
+      items: [
+        { rank: 1, t: 'Drop-off 24% en Datos Personales', d: 'De 86.312 usuarios que ingresan datos del vehículo, solo 65.554 completan sus datos personales. Es la mayor pérdida del funnel web. El modal OTP solo convierte el 17% (43.249 → 7.446).', i: '20.758 leads<br/>perdidos / mes' },
+        { rank: 2, t: 'Contactabilidad 53% con 21h al 1er contacto', d: 'Las categorías Alta y Muy Alta — las de mayor valor comercial — tienen la PEOR contactabilidad (33–43%). El CC opera en FIFO sin scoring, y ~40% de contactados reciben una sola llamada.', i: '~75k leads / 6m<br/>sin contactar' },
+        { rank: 3, t: 'Brecha 15% precio online vs. oferta final', d: 'El vendedor ve un precio en el sitio que luego no se confirma en sucursal, obligando a apelar para mejorar la oferta. 38% abandona al ver la tasación.', i: 'Vaivén de<br/>apelaciones + frustración' },
+        { rank: 4, t: '41,5% drop-off post-Resultado Tasación', d: 'De los 7.446 que completan el resultado verificado, 4.358 agendan — 3.088 desaparecen. El CTA "Agendar inspección" se pierde en el scroll con 963 sesiones de dead click.', i: '2da mayor pérdida<br/>del funnel' },
+        { rank: 5, t: '28% de no-show a la cita agendada', d: 'Solo 8% se re-agenda post no-show. Sin flujo automático de recuperación ni análisis de causas raíz por sucursal.', i: 'Capacidad ociosa<br/>del inspector' }
+      ]
+    },
+    preparación: {
+      title: 'Eje Preparación',
+      sub: 'El inventario existe pero no llega limpio a la vitrina: foto, precio y reservas inmovilizan stock',
+      items: [
+        { rank: 1, t: '32,3% del stock publicado sin foto Impel', d: '579 uds publicadas con foto de inspección o placeholder. El servicio Impel externo cuesta $4,2M/mes y no escala. Zona RM concentra 114 de 204 uds sin foto (55,9%).', i: '$4,2M / mes<br/>$50,4M / año' },
+        { rank: 2, t: '22,5% del inventario inmovilizado', d: '584 uds no elegibles para publicar: 407 reservadas, 166 con problemas legales, 9 UFM/falla mecánica, 2 no disponibles. Sin distinguir reserva comercial activa vs. fantasma.', i: '1 de cada 4<br/>unidades bloqueadas' },
+        { rank: 3, t: '166 uds "En acopio" sin definición operacional', d: 'Es el 83% de las 200 retenciones con stock disponible. "En acopio" opera como cajón de sastre: sin SLA, sin subcategoría, sin owner por motivo.', i: '83% del stock<br/>retenido' },
+        { rank: 4, t: 'Solo 69,5% del inventario en vitrina', d: '1.790 de 2.574 uds publicadas. Peor ejecución: Concepción J. Alessandri R. 1885 (51,5% sin foto) y Vitacura Padre Hurtado 1246 (48,4%).', i: '784 uds fuera<br/>del catálogo' },
+        { rank: 5, t: '17 uds bloqueadas hoy por falta de precio', d: 'Gate operacional concreto. Sin SLA Quiter → precio, sin alerta cuando una unidad lleva > X horas sin valor asignado.', i: '8,5% del stock<br/>retenido' }
+      ]
+    },
+    venta: {
+      title: 'Eje Venta',
+      sub: 'El comprador llega al sitio pero el funnel web y la gestión de leads queman oportunidades de alto valor',
+      items: [
+        { rank: 1, t: '3,9% conv. ficha → cotización (salto crítico)', d: 'De 21.872 sesiones en ficha solo 862 inician cotización. Es la mayor oportunidad de mejora del funnel del sitio. Error 303 en paso 4 del buy-process, exceso de preguntas y dead clicks en los steps del header.', i: '862 → ~1.700<br/>cotizaciones / mes' },
+        { rank: 2, t: '74.943 dead clicks / mes por swipe/zoom mobile', d: 'Carrusel de la ficha sin interacción táctil cuando el auto no tiene 360°. Los usuarios intentan desliizar y ampliar sin respuesta. Afecta prácticamente todos los autos sin vista 360°.', i: '3.792 sesiones<br/>con dead click' },
+        { rank: 3, t: '641 clientes Oro+VIP con VPP descartados', d: 'Salazar-Israel en 6 meses. El VPP no protege de descarte: con VPP se descarta +7pp más que sin VPP. Cuando avanzan, convierten mejor (4,0% vs. 3,3%) — potencial premium desperdiciado.', i: 'Enero 26:<br/>280 perdidos' },
+        { rank: 4, t: '95,3% descarte con financiamiento', d: 'Segmento de mayor margen: 10pp más de descarte que sin financiamiento. "No contesta" (22.364 casos · 31%) y "Descarte masivo" (8.613 · 12%) dominan el motivo. Sin pre-evaluación crediticia previa al CRM.', i: 'Segmento premium<br/>con peor gestión' },
+        { rank: 5, t: '273K dead clicks / mes en catálogo', d: 'Banners de campaña y bloques corporativos no clicables. Solo 4,4% de las sesiones usa el botón de filtros (2.749 clics / mes) — intención oculta por baja visibilidad.', i: 'Fricción silenciosa<br/>masiva' }
+      ]
+    }
+  };
+  function painBlockHtml(macroKey) {
+    var p = pains[macroKey];
+    var itemsHtml = '';
+    for (var pi = 0; pi < p.items.length; pi++) {
+      var it = p.items[pi];
+      itemsHtml += '<div class="pain-item">' +
+        '<div class="pain-rank">' + it.rank + '</div>' +
+        '<div class="pain-content">' +
+          '<div class="pain-title">' + it.t + '</div>' +
+          '<div class="pain-desc">' + it.d + '</div>' +
+        '</div>' +
+        '<div class="pain-impact"><span class="pain-impact-label">Impacto</span>' + it.i + '</div>' +
+      '</div>';
+    }
+    return '<div class="macro-pain-block ' + macroKey + '">' +
+      '<div class="macro-pain-head">' +
+        '<div class="macro-pain-icon ' + macroKey + '">' + (MACRO_META[macroKey] ? MACRO_META[macroKey].num : '') + '</div>' +
+        '<div><div class="macro-pain-title">' + p.title + '</div><div class="macro-pain-sub">' + p.sub + '</div></div>' +
+      '</div>' +
+      '<div class="pain-list">' + itemsHtml + '</div>' +
+    '</div>';
+  }
+  var painsHtml = painBlockHtml('compra') + painBlockHtml('preparación') + painBlockHtml('venta');
+
+  // ----------- 4. OKR framework -----------
+  var okrFwHtml =
+    '<div class="okr-framework">' +
+      '<div class="okr-layer">' +
+        '<div class="okr-layer-num">1</div>' +
+        '<div class="okr-layer-title">North Star</div>' +
+        '<div class="okr-layer-desc">La métrica única de cada macro. Si sube, todo lo demás está funcionando.</div>' +
+        '<div class="okr-layer-example">Ej: Conversión Lead → Compra · 4,7% → 8,0%</div>' +
+      '</div>' +
+      '<div class="okr-layer">' +
+        '<div class="okr-layer-num">2</div>' +
+        '<div class="okr-layer-title">Objective (por etapa)</div>' +
+        '<div class="okr-layer-desc">Qué queremos lograr en esa etapa. Cualitativo, inspirador, con foco.</div>' +
+        '<div class="okr-layer-example">Ej: Convertir más visitas en leads verificados con datos completos</div>' +
+      '</div>' +
+      '<div class="okr-layer">' +
+        '<div class="okr-layer-num">3</div>' +
+        '<div class="okr-layer-title">Key Results</div>' +
+        '<div class="okr-layer-desc">Métricas cuantitativas con baseline y meta. 3 KRs por etapa, total 45 KRs.</div>' +
+        '<div class="okr-layer-example">Ej: Drop-off Datos Personales · 24% → 12%</div>' +
+      '</div>' +
+      '<div class="okr-layer">' +
+        '<div class="okr-layer-num">4</div>' +
+        '<div class="okr-layer-title">Iniciativas (Roadmap)</div>' +
+        '<div class="okr-layer-desc">Las acciones concretas del Roadmap que mueven cada KR. Se linkean 1:N.</div>' +
+        '<div class="okr-layer-example">Ej: Validación WhatsApp bloqueante · Rediseño modal OTP · RUT autocompleto</div>' +
+      '</div>' +
+    '</div>';
+
+  // ----------- 5. Gobernanza -----------
+  var govHtml =
+    '<div class="gov-grid">' +
+      '<div class="gov-card monthly">' +
+        '<div class="gov-cadence">Mensual · 90 min</div>' +
+        '<div class="gov-title">🎯 Steering Committee — OKRs & Impacto</div>' +
+        '<div class="gov-meta">' +
+          '<span class="gov-meta-label">Audiencia</span><span class="gov-meta-value">Directorio · C-Level · Gerentes de área</span>' +
+          '<span class="gov-meta-label">Agenda</span><span class="gov-meta-value">North Stars, avance de KRs críticos, apuestas transformacionales, decisiones de alto impacto</span>' +
+          '<span class="gov-meta-label">Vista</span><span class="gov-meta-value">OKRs & Impacto (esta misma presentación)</span>' +
+        '</div>' +
+        '<div class="gov-outputs"><strong>Output:</strong> decisiones priorizadas, desbloqueos, ajustes a metas. Se minuta y se publica en 48h.</div>' +
+      '</div>' +
+      '<div class="gov-card biweekly">' +
+        '<div class="gov-cadence">Quincenal · 60 min</div>' +
+        '<div class="gov-title">📊 Review de OKRs por eje</div>' +
+        '<div class="gov-meta">' +
+          '<span class="gov-meta-label">Audiencia</span><span class="gov-meta-value">Líderes de área + Representante Cliente (Felipe Arroyo) + BI</span>' +
+          '<span class="gov-meta-label">Agenda</span><span class="gov-meta-value">Progreso de los 3 KRs por etapa, bloqueos, ajustes de SLA, datos BI pendientes (TBD)</span>' +
+          '<span class="gov-meta-label">Vista</span><span class="gov-meta-value">OKRs & Impacto + etapas específicas</span>' +
+        '</div>' +
+        '<div class="gov-outputs"><strong>Output:</strong> semáforo verde/ámbar/rojo por KR, tareas escaladas al Steering si están rojas.</div>' +
+      '</div>' +
+      '<div class="gov-card weekly">' +
+        '<div class="gov-cadence">Semanal · 30 min</div>' +
+        '<div class="gov-title">⚙️ Standup de iniciativas (por dueño)</div>' +
+        '<div class="gov-meta">' +
+          '<span class="gov-meta-label">Audiencia</span><span class="gov-meta-value">Dueños de iniciativa + PMO + equipo ejecutor</span>' +
+          '<span class="gov-meta-label">Agenda</span><span class="gov-meta-value">Progreso ágil de cada iniciativa del Roadmap, dependencias, riesgos, próximo hito</span>' +
+          '<span class="gov-meta-label">Vista</span><span class="gov-meta-value">Roadmap filtrado por dueño / estado</span>' +
+        '</div>' +
+        '<div class="gov-outputs"><strong>Output:</strong> actualización de estado en Roadmap (pendiente/en curso/hecho) + fecha comprometida.</div>' +
+      '</div>' +
+      '<div class="gov-card adhoc">' +
+        '<div class="gov-cadence">Ad-hoc · según tema</div>' +
+        '<div class="gov-title">🔍 Deep dive temático</div>' +
+        '<div class="gov-meta">' +
+          '<span class="gov-meta-label">Audiencia</span><span class="gov-meta-value">Dueño iniciativa + stakeholders directos + invitados (Legal / TI / Pricing según tema)</span>' +
+          '<span class="gov-meta-label">Agenda</span><span class="gov-meta-value">Diseño de solución (ej. foto in-house, cadencia multi-canal, bloqueo descarte automático)</span>' +
+          '<span class="gov-meta-label">Vista</span><span class="gov-meta-value">Etapa / subproceso relevante + benchmark</span>' +
+        '</div>' +
+        '<div class="gov-outputs"><strong>Output:</strong> propuesta técnica + estimación + alineamiento con dueños. Agenda discutida al siguiente Review.</div>' +
+      '</div>' +
+    '</div>';
+
+  // ----------- Slide completa -----------
   return '<div class="slide exec-summary" data-slide="' + i + '">' +
     '<div class="exec-hero">' +
-      '<div class="eyebrow">Resumen ejecutivo · vista global</div>' +
+      '<div class="eyebrow">Resumen ejecutivo · lectura para directorio</div>' +
       '<h1>📋 Journey del Cliente · Vehículos Usados Clicar</h1>' +
-      '<p>Síntesis del análisis punta a punta: alcance, números clave, hallazgos prioritarios y próximas decisiones. Diseñado para ser la primera diapositiva al presentar.</p>' +
+      '<p>Cómo se levantó el análisis, qué se estudió, qué duele más en cada eje y cómo gobernamos el avance. Esta vista es la primera diapositiva al presentar: de lo general a lo particular, con foco en decisiones accionables.</p>' +
     '</div>' +
-    '<div class="exec-kpi-row">' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Macro-etapas</div><div class="exec-kpi-value">3</div><div class="exec-kpi-sub">3 mapeadas (Venta con data parcial)</div></div>' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Sub-etapas end-to-end</div><div class="exec-kpi-value">16</div><div class="exec-kpi-sub">56 subprocesos con KPIs, hallazgos y mejoras</div></div>' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Leads analizados</div><div class="exec-kpi-value">158.753</div><div class="exec-kpi-sub">CRM Llaima · Oct 2025 - Mar 2026</div></div>' +
-      '<div class="exec-kpi"><div class="exec-kpi-label">Inventario (Preparación)</div><div class="exec-kpi-value">2.574<span class="suffix">uds</span></div><div class="exec-kpi-sub">Snapshot reporte BI 2026-04-17</div></div>' +
+    '<div class="exec-kpi-row three">' +
+      '<div class="exec-kpi compound">' +
+        '<div class="exec-kpi-label">Alcance del análisis</div>' +
+        '<div class="exec-kpi-compound-line"><span class="exec-kpi-compound-value">3</span><span class="exec-kpi-compound-label">ejes</span></div>' +
+        '<div class="exec-kpi-compound-line"><span class="exec-kpi-compound-value">16</span><span class="exec-kpi-compound-label">procesos analizados</span></div>' +
+        '<div class="exec-kpi-phrase">Mapeo end-to-end del recorrido del cliente y la unidad usada: Compra · Preparación · Venta.</div>' +
+      '</div>' +
+      '<div class="exec-kpi compound">' +
+        '<div class="exec-kpi-label">Profundidad del análisis</div>' +
+        '<div class="exec-kpi-compound-line"><span class="exec-kpi-compound-value">56</span><span class="exec-kpi-compound-label">subprocesos</span></div>' +
+        '<div class="exec-kpi-phrase">Cada subproceso documentado con data real, observación UX y perspectiva del cliente.</div>' +
+        '<div class="exec-kpi-tags">' +
+          '<span class="exec-kpi-tag">KPIs</span>' +
+          '<span class="exec-kpi-tag">Hallazgos</span>' +
+          '<span class="exec-kpi-tag">Mejoras</span>' +
+          '<span class="exec-kpi-tag">Benchmark</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="exec-kpi compound">' +
+        '<div class="exec-kpi-label">Tiempo de análisis por eje</div>' +
+        '<div class="exec-kpi-times">' +
+          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro compra">Compra</span><div><div class="exec-kpi-time-value">6 meses · 158.753 leads</div><div class="exec-kpi-time-source">CRM Llaima · Oct 2025 – Mar 2026</div></div></div>' +
+          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro preparación">Preparación</span><div><div class="exec-kpi-time-value">Snapshot · 2.574 uds</div><div class="exec-kpi-time-source">Reporte BI 2026-04-17</div></div></div>' +
+          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro venta">Venta</span><div><div class="exec-kpi-time-value">30 días Clarity + 6 meses Salazar</div><div class="exec-kpi-time-source">Microsoft Clarity (abr 26) + Salazar-Israel (104.747 leads)</div></div></div>' +
+        '</div>' +
+      '</div>' +
     '</div>' +
-    '<div class="exec-grid">' +
-      '<div class="exec-card warning">' +
-        '<h3>Hallazgos críticos</h3>' +
-        '<ul>' +
-          '<li><strong>32,3% del stock publicado no tiene foto Impel terminada</strong> (579 uds en vitrina con foto de inspección o placeholder) — vitrina degradada para el comprador. Costo del servicio Impel: <strong>$4,2M/mes</strong> que se pueden ahorrar con solución in-house durante la inspección.</li>' +
-          '<li><strong>22,5% del inventario inmovilizado</strong> (584 uds no elegibles): 407 reservadas, 166 con problemas legales, 9 UFM, 2 no disponibles.</li>' +
-          '<li><strong>Conversión Compra directa (40%) vs VPP (13%)</strong> con tasas de cierre similares (~50%) — la brecha está en la pre-calificación, no en el inspector.</li>' +
-          '<li><strong>Contactabilidad global 53% en Contact Center</strong> con 21 hrs al primer contacto. Categorías Alta/Muy Alta con la peor contactabilidad (33-43%).</li>' +
-          '<li><strong>38% abandona al ver la tasación web</strong>. Brecha del ~15% entre precio online y oferta final en sucursal genera un vaivén de apelaciones posterior.</li>' +
-        '</ul>' +
-      '</div>' +
-      '<div class="exec-card highlight">' +
-        '<h3>Iniciativas prioritarias (alta)</h3>' +
-        '<ul>' +
-          '<li><strong>[TRANSFORMACIONAL]</strong> Generar la foto final (cabina virtual 360) <strong>durante la inspección mecánica</strong> — solución in-house. Ataca el problema de raíz: toda unidad publicada sale con foto lista. <strong>Ahorro estimado $4,2M/mes ($50,4M/año)</strong> hoy pagados a Impel. Absorbe SLAs de foto, backlog y toda la operación del pipeline de fotografías externo.</li>' +
-          '<li>Desagregar "En acopio" en subcategorías accionables y diferenciar reserva activa vs. fantasma.</li>' +
-          '<li>Migrar confirmaciones y recordatorios a WhatsApp Business API con acciones interactivas.</li>' +
-          '<li>Cadencia automática de contacto (3 intentos 48h) + priorizar Alta/Muy Alta en las primeras 4 horas.</li>' +
-          '<li>Calibrar el precio inicial de tasación (compra directa y parte de pago) para acercarlo al precio final ofertado y eliminar el vaivén de apelaciones.</li>' +
-          '<li>Check-in digital vía QR + pre-carga documental 48h antes por WhatsApp.</li>' +
-        '</ul>' +
-      '</div>' +
-      '<div class="exec-card">' +
-        '<h3>Alcance del análisis</h3>' +
-        '<ul>' +
-          '<li><strong>Compra</strong> · 5 sub-etapas, 22 subprocesos — data real CRM Llaima (6 meses).</li>' +
-          '<li><strong>Preparación</strong> · 6 sub-etapas, 17 subprocesos — data parcial (snapshot inventario + reporte de fotografías).</li>' +
-          '<li><strong>Venta</strong> · 5 sub-etapas, 17 subprocesos — Captación Digital con data real Microsoft Clarity (30 días), Gestión de Leads con data Salazar-Israel (104.747 leads · 6 meses); resto con estructura inicial.</li>' +
-          '<li>Cada sub-etapa incluye KPIs operacionales, hallazgos, mejoras y un chip "Impacto cliente" con lineamientos específicos.</li>' +
-          '<li>Gráficos embebidos: funnel de leads, contactabilidad, tiempo 1er contacto, motivos de descarte, funnel de publicabilidad, composición fotos por zona, ranking sucursales por % sin foto, y comparativo Compra vs VPP.</li>' +
-        '</ul>' +
-      '</div>' +
-      '<div class="exec-card">' +
-        '<h3>Preguntas abiertas</h3>' +
-        '<ul>' +
-          '<li>¿Qué % del stock Impel corresponde hoy a cabina virtual 360 (Tier 1)? BI agrupa Tier 1+2.</li>' +
-          '<li>¿Cuántas de las 407 reservadas son comerciales activas vs. fantasma (>30 días sin avance)?</li>' +
-          '<li>¿Distribución % por origen de ingreso (VPP, B2B, Consignados, Test Car)?</li>' +
-          '<li>¿Target oficial de conversión VPP → compra? (hoy 13%) </li>' +
-          '<li>¿Existe ambiente de staging / teléfono de prueba autorizado para ejercicios de QA sin generar leads reales?</li>' +
-        '</ul>' +
-      '</div>' +
+    '<div class="exec-section">' +
+      '<div class="exec-section-title">01 · Equipo de levantamiento</div>' +
+      '<div class="exec-section-sub">El análisis se construyó con data, grabaciones y entrevistas aportadas por los siguientes equipos. Cada etapa tiene responsables nombrados (ver chips en cada slide) y Felipe Arroyo acompaña todas las etapas como representante de la voz del cliente.</div>' +
+      '<div class="team-grid">' + teamHtml + '</div>' +
+    '</div>' +
+    '<div class="exec-section">' +
+      '<div class="exec-section-title">02 · Cómo se compone el análisis (de lo general a lo particular)</div>' +
+      '<div class="exec-section-sub">Una pirámide de 4 niveles que permite navegar desde la vista global hasta los detalles operacionales sin perder contexto.</div>' +
+      structHtml +
+    '</div>' +
+    '<div class="exec-section">' +
+      '<div class="exec-section-title">03 · Hallazgos más relevantes por eje</div>' +
+      '<div class="exec-section-sub">Las 5 fricciones más dolorosas de cada eje — las que mueven la aguja al resolverse. Ordenadas por impacto potencial, no por frecuencia.</div>' +
+      '<div class="macro-pain-grid">' + painsHtml + '</div>' +
+    '</div>' +
+    '<div class="exec-section">' +
+      '<div class="exec-section-title">04 · Estructura OKR del journey</div>' +
+      '<div class="exec-section-sub">Cómo conectamos cada iniciativa del Roadmap con un impacto medible. Los detalles (métricas, baselines y metas) viven en la vista 🎯 <strong>OKRs & Impacto</strong>.</div>' +
+      okrFwHtml +
+    '</div>' +
+    '<div class="exec-section">' +
+      '<div class="exec-section-title">05 · Gobernanza — sesiones, cadencia y participantes</div>' +
+      '<div class="exec-section-sub">Modelo recomendado para presentar avances y mantener momentum. 4 instancias con cadencia distinta, audiencias distintas y outputs distintos — cada una usa una vista específica de esta misma presentación.</div>' +
+      govHtml +
     '</div>' +
   '</div>';
 }
@@ -2055,7 +2885,7 @@ function getActiveStages() {
   return out;
 }
 function buildFlatSlides() {
-  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'overview' }];
+  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'overview' }];
   var active = getActiveStages();
   for (var si = 0; si < active.length; si++) {
     var stage = active[si];
@@ -2068,7 +2898,7 @@ function buildFlatSlides() {
 
 // Flatten (initial)
 var flatSlides = buildFlatSlides();
-var TOTAL_SUBSTEPS = flatSlides.length - 4;
+var TOTAL_SUBSTEPS = flatSlides.length - 5;
 var currentSlide = 0;
 var chartInstances = {};
 var chartState = {};
@@ -3113,16 +3943,57 @@ function setMacro(macro) {
   if (macro !== currentMacro) {
     currentMacro = macro;
     flatSlides = buildFlatSlides();
-    TOTAL_SUBSTEPS = flatSlides.length - 4;
+    TOTAL_SUBSTEPS = flatSlides.length - 5;
     renderMacroTabs();
     renderStageTabs();
     renderSlides();
   }
-  goToSlide(3);
+  goToSlide(4);
 }
 
 function goToExecSummary() { goToSlide(1); }
 function goToRoadmap() { goToSlide(2); }
+function goToOKRs() { goToSlide(3); }
+
+function goToRoadmapTarget(macro, stageName, substepName) {
+  if (!macro || !stageName) return;
+  var targetStage = null;
+  for (var i = 0; i < journey.stages.length; i++) {
+    var s = journey.stages[i];
+    if (s.macro !== macro) continue;
+    if (s.fullName === stageName || s.name === stageName) { targetStage = s; break; }
+  }
+  if (!targetStage) {
+    var lower = (stageName || '').toLowerCase();
+    for (var k = 0; k < journey.stages.length; k++) {
+      var s2 = journey.stages[k];
+      if (s2.macro !== macro) continue;
+      if ((s2.fullName || '').toLowerCase().indexOf(lower) >= 0 || (s2.name || '').toLowerCase().indexOf(lower) >= 0) { targetStage = s2; break; }
+    }
+  }
+  if (!targetStage) return;
+  if (currentMacro !== macro) { setMacro(macro); }
+  var subIdx = 0;
+  if (substepName && targetStage.substeps) {
+    for (var ss = 0; ss < targetStage.substeps.length; ss++) {
+      if ((targetStage.substeps[ss].title || '').toLowerCase() === (substepName || '').toLowerCase()) { subIdx = ss; break; }
+    }
+    if (subIdx === 0) {
+      var lowSub = (substepName || '').toLowerCase();
+      for (var sp = 0; sp < targetStage.substeps.length; sp++) {
+        var t = (targetStage.substeps[sp].title || '').toLowerCase();
+        if (t.indexOf(lowSub) >= 0 || lowSub.indexOf(t) >= 0) { subIdx = sp; break; }
+      }
+    }
+  }
+  for (var f = 0; f < flatSlides.length; f++) {
+    var fs = flatSlides[f];
+    if (fs.type === 'substep' && fs.stageId === targetStage.id && fs.subIdx === subIdx) {
+      goToSlide(f);
+      return;
+    }
+  }
+}
 
 function renderStepper(stage, activeIdx) {
   var header = document.getElementById('stage-header');
@@ -3153,7 +4024,7 @@ function renderStepper(stage, activeIdx) {
       ? '<div class="sh-title-line"><div class="sh-title">' + stage.fullName + '</div><span class="sh-arrow"></span>' + respHtml + '</div>'
       : '<div class="sh-title">' + stage.fullName + '</div>';
     header.innerHTML =
-      '<div class="sh-eyebrow">Etapa ' + posInMacro + ' de ' + activeStages.length + ' - Macro: ' + macroLabel + '</div>' +
+      '<div class="sh-eyebrow">Proceso ' + posInMacro + ' de ' + activeStages.length + ' · Eje: ' + macroLabel + '</div>' +
       titleLine +
       (desc ? '<p class="sh-desc">' + desc + '</p>' : '') +
       resourcesHtml;
@@ -3198,6 +4069,8 @@ function renderSlides() {
       html += renderExecSummarySlide(i);
     } else if (s.type === 'roadmap') {
       html += renderRoadmapSlide(i);
+    } else if (s.type === 'okrs') {
+      html += renderOKRsSlide(i);
     } else if (s.type === 'overview') {
       html += renderOverviewSlide(i);
     } else {
@@ -3235,6 +4108,15 @@ function renderSlides() {
   if (roadmapFilterBtns.length) applyRoadmapFilters();
   var downloadBtn = area.querySelector('#roadmap-download-btn');
   if (downloadBtn) downloadBtn.addEventListener('click', downloadRoadmapExcel);
+  var stageLinks = area.querySelectorAll('.roadmap-stage-link');
+  for (var rsl = 0; rsl < stageLinks.length; rsl++) {
+    (function(btn){
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        goToRoadmapTarget(btn.getAttribute('data-rm-macro'), btn.getAttribute('data-rm-stage'), btn.getAttribute('data-rm-substep'));
+      });
+    })(stageLinks[rsl]);
+  }
   initPrepCharts();
   bindVtaViewToggles(area);
   highlightRecordatorios(area);
@@ -3338,7 +4220,7 @@ function renderHomeSlide(i) {
     var cls = 'macro-card' + (disabled || !mapped ? ' disabled' : '');
     var dataAttr = (disabled || !mapped) ? '' : ' data-goto-macro="' + mkey + '"';
     var stats = mapped
-      ? '<span>' + stagesForMacro.length + ' sub-etapas</span><span>' + subsForMacro + ' subprocesos</span>'
+      ? '<span>' + stagesForMacro.length + ' procesos</span><span>' + subsForMacro + ' subprocesos</span>'
       : '<span>Sin mapeo aún</span>';
     var cta = (disabled || !mapped) ? 'Pendiente' : 'Ver análisis &rsaquo;';
     cardsHtml += '<div class="' + cls + '"' + dataAttr + '>';
@@ -3355,16 +4237,16 @@ function renderHomeSlide(i) {
     '<div class="overview-header">' +
       '<div class="eyebrow">Vista global - Análisis punta a punta</div>' +
       '<h1>Journey del Cliente - Vehículos Usados Clicar</h1>' +
-      '<p class="lede">Mapeo punta a punta del recorrido de la unidad usada y del cliente vendedor. El análisis está organizado en 3 macro-etapas que van desde la captación digital inicial hasta la venta al cliente final, pasando por la preparación operacional interna del vehículo.</p>' +
+      '<p class="lede">Mapeo punta a punta del recorrido de la unidad usada y del cliente vendedor. El análisis está organizado en 3 ejes que van desde la captación digital inicial hasta la venta al cliente final, pasando por la preparación operacional interna del vehículo.</p>' +
     '</div>' +
     '<div class="overview-kpis">' +
-      '<div class="overview-kpi"><div class="ov-label">Macro-etapas</div><div class="ov-value">3</div><div class="ov-sublabel">Mapeadas: ' + mappedMacros + ' de 3</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Ejes</div><div class="ov-value">3</div><div class="ov-sublabel">Mapeados: ' + mappedMacros + ' de 3</div></div>' +
       '<div class="overview-kpi"><div class="ov-label">Sub-etapas mapeadas</div><div class="ov-value">' + mappedStages + '</div><div class="ov-sublabel">End-to-end en ' + mappedMacros + ' macros</div></div>' +
       '<div class="overview-kpi"><div class="ov-label">Subprocesos mapeados</div><div class="ov-value">' + mappedSubs + '</div><div class="ov-sublabel">Con KPIs, hallazgos y mejoras</div></div>' +
       '<div class="overview-kpi"><div class="ov-label">Data real</div><div class="ov-value">1<span class="suffix"> / 3</span></div><div class="ov-sublabel">Solo Compra - CRM Llaima</div></div>' +
     '</div>' +
     '<div class="journey-map">' +
-      '<div class="alcance-block-title">Macro-etapas del journey</div>' +
+      '<div class="alcance-block-title">Ejes del journey</div>' +
       '<div class="alcance-block-sub">Click en una macro para abrir su análisis.</div>' +
       '<div class="macro-cards">' + cardsHtml + '</div>' +
       '<div class="home-footer-note">Compra usa data real del CRM Llaima (158.753 leads, Oct 25 - Mar 26). Preparación está en levantamiento y muestra KPIs como TBD hasta integrar data desde BI y Operaciones. Venta aún no está mapeada.</div>' +
@@ -3393,7 +4275,7 @@ function renderOverviewSlide(i) {
 
   return '<div class="slide overview" data-slide="' + i + '">' +
     '<div class="overview-header">' +
-      '<div class="eyebrow">Macro-etapa ' + meta.num + ' de 3</div>' +
+      '<div class="eyebrow">Eje ' + meta.num + ' de 3</div>' +
       '<h1>' + meta.title + '</h1>' +
       '<p class="lede">' + meta.description + '</p>' +
     '</div>' +
@@ -4147,11 +5029,16 @@ function updateChrome() {
     stepper.style.display = 'none';
     breadcrumb.innerHTML = '<span class="bc-stage">Roadmap de mejoras</span>';
     counter.innerHTML = '<span class="current">-</span> <span class="total">' + ROADMAP.length + ' iniciativas</span>';
+  } else if (slide.type === 'okrs') {
+    for (var th4 = 0; th4 < tabs.length; th4++) tabs[th4].classList.remove('active');
+    stepper.style.display = 'none';
+    breadcrumb.innerHTML = '<span class="bc-stage">OKRs & Impacto</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">Vista directorio</span>';
   } else if (slide.type === 'overview') {
     for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
     stepper.style.display = 'none';
     var macroTitle = (MACRO_META[currentMacro] && MACRO_META[currentMacro].title) || 'Vista general';
-    breadcrumb.innerHTML = '<span class="bc-stage">Macro: ' + macroTitle + '</span>';
+    breadcrumb.innerHTML = '<span class="bc-stage">Eje: ' + macroTitle + '</span>';
     counter.innerHTML = '<span class="current">-</span> <span class="total">/ ' + TOTAL_SUBSTEPS + ' subprocesos</span>';
   } else {
     var stage = null;
@@ -4166,7 +5053,7 @@ function updateChrome() {
     stepper.style.display = 'block';
     renderStepper(stage, slide.subIdx);
     breadcrumb.innerHTML = '<span class="bc-stage">Etapa ' + stage.id + ' - ' + stage.fullName + '</span><span class="bc-sep">&rsaquo;</span><span class="bc-substep">' + sub.num + '. ' + sub.title + '</span>';
-    counter.innerHTML = '<span class="current">' + (currentSlide - 3) + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
+    counter.innerHTML = '<span class="current">' + (currentSlide - 4) + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
   }
   prevBtn.disabled = currentSlide === 0;
   nextBtn.disabled = currentSlide === flatSlides.length - 1;
@@ -4240,6 +5127,7 @@ function init() {
           var v = btn.getAttribute('data-view');
           if (v === 'exec-summary') goToExecSummary();
           else if (v === 'roadmap') goToRoadmap();
+          else if (v === 'okrs') goToOKRs();
         });
       })(viewBtns[vbi2]);
     }

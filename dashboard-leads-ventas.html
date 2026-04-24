@@ -27,7 +27,8 @@
   .filter-summary strong { color: #1a1a18; }
 
   /* KPIs */
-  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); gap: 10px; margin-bottom: 20px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px; }
+  @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); } }
   .kpi { background: #fff; border-radius: 12px; padding: 14px 16px; border: 0.5px solid #e0dfd8; }
   .kpi-label { font-size: 10px; color: #888780; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
   .kpi-value { font-size: 22px; font-weight: 700; line-height: 1; }
@@ -118,7 +119,6 @@
     <div class="kpi"><div class="kpi-label">Total leads</div><div class="kpi-value" id="kTotal">—</div><div class="kpi-sub" id="kTotalSub">—</div></div>
     <div class="kpi red"><div class="kpi-label">Tasa de descarte</div><div class="kpi-value" id="kDesc">—</div><div class="kpi-sub" id="kDescSub">—</div></div>
     <div class="kpi green"><div class="kpi-label">Conversión</div><div class="kpi-value" id="kConv">—</div><div class="kpi-sub" id="kConvSub">—</div></div>
-    <div class="kpi green"><div class="kpi-label">Mejor mes</div><div class="kpi-value" id="kBest">—</div><div class="kpi-sub" id="kBestSub">—</div></div>
     <div class="kpi red"><div class="kpi-label">Peor mes</div><div class="kpi-value" id="kWorst">—</div><div class="kpi-sub" id="kWorstSub">—</div></div>
     <div class="kpi amber"><div class="kpi-label">Sin gestionar</div><div class="kpi-value" id="kNuevo">—</div><div class="kpi-sub">etapa "Nuevo"</div></div>
     <div class="kpi red"><div class="kpi-label">Financ. desc.</div><div class="kpi-value" id="kFinanc">—</div><div class="kpi-sub">mayor margen perdido</div></div>
@@ -210,10 +210,10 @@
     </div>
     <div id="s3-segValor" class="view">
       <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Bronce</div>
-        <div class="leg"><div class="leg-dot" style="background:#F0997B"></div>Oro</div>
-        <div class="leg"><div class="leg-dot" style="background:#888780"></div>Plata</div>
-        <div class="leg"><div class="leg-dot" style="background:#534AB7"></div>VIP</div>
+        <div class="leg"><div class="leg-dot" style="background:#B87333"></div>Bronce</div>
+        <div class="leg"><div class="leg-dot" style="background:#D4A017"></div>Oro</div>
+        <div class="leg"><div class="leg-dot" style="background:#A8A9AD"></div>Plata</div>
+        <div class="leg"><div class="leg-dot" style="background:#5B3BA5"></div>VIP</div>
       </div>
       <div class="chart-wrap" style="height:240px;"><canvas id="cSegValor"></canvas></div>
       <div class="insight r" style="margin-top:10px;">💎 641 clientes Oro y VIP con VPP fueron descartados. Enero 2026 es el peor mes con 280 perdidos.</div>
@@ -359,12 +359,148 @@ function makeChart(id, config) {
   charts[id] = new Chart(ctx, config);
 }
 
+// Plugin: dibuja el valor (% o número en es-CL) sobre cada punto de línea
+const linePctLabelsPlugin = {
+  id: 'linePctLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const datasets = chart.data.datasets || [];
+    const chartType = (chart.config && chart.config.type) || '';
+    ctx.save();
+    ctx.font = '700 10px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    datasets.forEach((ds, d) => {
+      const effType = ds.type || chartType;
+      if (effType !== 'line') return;
+      const meta = chart.getDatasetMeta(d);
+      if (!meta || !meta.data || !chart.isDatasetVisible(d)) return;
+      const color = (typeof ds.borderColor === 'string' && ds.borderColor) ? ds.borderColor : '#333';
+      const above = (d % 2 === 0);
+      const isNum = ds._lblFormat === 'num';
+      meta.data.forEach((pt, i) => {
+        if (!pt) return;
+        const val = ds.data[i];
+        if (val == null) return;
+        const label = isNum
+          ? Math.round(val).toLocaleString('es-CL')
+          : (Math.abs(val) >= 10 ? val.toFixed(0) : val.toFixed(1)) + (ds._lblSuffix || '%');
+        const tw = ctx.measureText(label).width + 8;
+        const yBox = above ? (pt.y - 20) : (pt.y + 4);
+        const yText = above ? (pt.y - 6) : (pt.y + 18);
+        ctx.fillStyle = 'rgba(255,255,255,0.94)';
+        ctx.fillRect(pt.x - tw/2, yBox, tw, 16);
+        ctx.fillStyle = color;
+        ctx.fillText(label, pt.x, yText - 2);
+      });
+    });
+    ctx.restore();
+  }
+};
+
+// Plugin: etiqueta dentro de cada segmento de un stacked bar + total sobre la barra
+const stackedLabelsPlugin = {
+  id: 'stackedLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const n = chart.data.labels.length;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '700 10px -apple-system, BlinkMacSystemFont, sans-serif';
+    // valor dentro de cada segmento
+    chart.data.datasets.forEach((ds, d) => {
+      const meta = chart.getDatasetMeta(d);
+      if (!meta || !chart.isDatasetVisible(d)) return;
+      meta.data.forEach((bar, i) => {
+        if (!bar) return;
+        const v = ds.data[i];
+        if (v == null || v < 15) return;
+        const h = Math.abs(bar.base - bar.y);
+        if (h < 16) return;
+        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        ctx.fillText(v, bar.x, (bar.base + bar.y) / 2);
+      });
+    });
+    // total sobre cada barra
+    ctx.font = '800 12px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textBaseline = 'bottom';
+    const totalByMonth = new Array(n).fill(0);
+    chart.data.datasets.forEach((ds, d) => {
+      if (!chart.isDatasetVisible(d)) return;
+      for (let i = 0; i < n; i++) totalByMonth[i] += (ds.data[i] || 0);
+    });
+    const topMeta = chart.getDatasetMeta(chart.data.datasets.length - 1);
+    if (topMeta && topMeta.data) {
+      topMeta.data.forEach((bar, i) => {
+        if (!bar) return;
+        const label = totalByMonth[i].toLocaleString('es-CL');
+        const tw = ctx.measureText(label).width + 10;
+        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        ctx.fillRect(bar.x - tw/2, bar.y - 22, tw, 18);
+        ctx.strokeStyle = '#1a1a18';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(bar.x - tw/2, bar.y - 22, tw, 18);
+        ctx.fillStyle = '#1a1a18';
+        ctx.fillText(label, bar.x, bar.y - 7);
+      });
+    }
+    ctx.restore();
+  }
+};
+
+// Plugin: etiqueta valor sobre cada barra simple
+const simpleBarLabelsPlugin = {
+  id: 'simpleBarLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.font = '700 11px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    chart.data.datasets.forEach((ds, d) => {
+      const meta = chart.getDatasetMeta(d);
+      if (!meta || !chart.isDatasetVisible(d)) return;
+      ctx.fillStyle = '#1a1a18';
+      meta.data.forEach((bar, i) => {
+        if (!bar) return;
+        const v = ds.data[i];
+        if (v == null) return;
+        ctx.fillText(v.toLocaleString('es-CL'), bar.x, bar.y - 4);
+      });
+    });
+    ctx.restore();
+  }
+};
+
+// Plugin: etiqueta Total leads sobre cada barra (para chart cVol)
+const volBarLabelsPlugin = {
+  id: 'volBarLabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const barMeta = chart.getDatasetMeta(0);
+    if (!barMeta || !barMeta.data) return;
+    ctx.save();
+    ctx.font = '700 11px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = '#1a1a18';
+    barMeta.data.forEach((bar, i) => {
+      if (!bar) return;
+      const v = chart.data.datasets[0].data[i];
+      if (v != null) ctx.fillText(v.toLocaleString('es-CL'), bar.x, bar.y - 4);
+    });
+    ctx.restore();
+  }
+};
+
 // ─── UPDATE KPIs ────────────────────────────────────────────────────
 function updateKPIs() {
   const idxs = getIdxs();
   if(!idxs.length) {
-    ['kTotal','kDesc','kConv','kBest','kWorst','kNuevo','kFinanc','kVIP'].forEach(id=>{
-      document.getElementById(id).textContent='—';
+    ['kTotal','kDesc','kConv','kWorst','kNuevo','kFinanc','kVIP'].forEach(id=>{
+      var el = document.getElementById(id);
+      if (el) el.textContent='—';
     });
     return;
   }
@@ -379,9 +515,8 @@ function updateKPIs() {
   const convSum = sum(convArr);
   const nuevoSum= sum(nuevoArr);
 
-  // mejor / peor mes conversión
+  // peor mes conversión
   const convRates = totArr.map((t,i)=>pct(convArr[i],t));
-  const bestIdx = convRates.indexOf(Math.max(...convRates));
   const worstIdx= convRates.indexOf(Math.min(...convRates));
 
   // VIP+Oro filtrado
@@ -396,8 +531,6 @@ function updateKPIs() {
   document.getElementById('kDescSub').textContent = fmt(descSum)+' descartados';
   document.getElementById('kConv').textContent = pct(convSum,totSum)+'%';
   document.getElementById('kConvSub').textContent = fmt(convSum)+' entregados';
-  document.getElementById('kBest').textContent = labels[bestIdx]||'—';
-  document.getElementById('kBestSub').textContent = (convRates[bestIdx]||0)+'% conversión';
   document.getElementById('kWorst').textContent = labels[worstIdx]||'—';
   document.getElementById('kWorstSub').textContent = (convRates[worstIdx]||0)+'% conversión';
   document.getElementById('kNuevo').textContent = fmt(nuevoSum);
@@ -416,11 +549,12 @@ function updateCharts() {
 
   // Vol + conv
   makeChart('cVol',{type:'bar',data:{labels:lbs,datasets:[
-    {label:'Total leads',data:totArr,backgroundColor:'#B5D4F4',borderWidth:0,yAxisID:'y'},
-    {label:'% conversión',data:convRate,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#1D9E75',tension:0.3,yAxisID:'y2'}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+    {label:'Total leads',data:totArr,backgroundColor:'#B5D4F4',borderWidth:0,yAxisID:'y',order:2},
+    {label:'% conversión',data:convRate,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:3,pointRadius:6,pointBackgroundColor:'#1D9E75',pointBorderColor:'#ffffff',pointBorderWidth:2,tension:0.3,yAxisID:'y2',order:0,clip:false,_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.datasetIndex===0?'Total leads: '+ctx.parsed.y.toLocaleString('es-CL'):'% conversión: '+ctx.parsed.y.toFixed(1)+'%';}}}},
     scales:{y:{beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'},grid:{color:'rgba(0,0,0,0.04)'}},
-      y2:{position:'right',beginAtZero:true,max:Math.max(...convRate)*1.5+2,ticks:{callback:v=>v+'%'},grid:{display:false}}}}});
+      y2:{position:'right',beginAtZero:true,max:Math.ceil(Math.max(...convRate)*1.5+2),ticks:{stepSize:2,callback:v=>Math.round(v)+'%'},grid:{display:false}}}},
+    plugins:[volBarLabelsPlugin, linePctLabelsPlugin]});
 
   // Etapas
   makeChart('cEtapas',{type:'bar',data:{labels:lbs,datasets:[
@@ -429,65 +563,65 @@ function updateCharts() {
     {label:'Calificado',data:filter(RAW.cal),backgroundColor:'#378ADD',borderWidth:0},
     {label:'En gestión',data:filter(RAW.gest),backgroundColor:'#EF9F27',borderWidth:0},
     {label:'Nuevo',data:filter(RAW.nuevo),backgroundColor:'#888780',borderWidth:0}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'}}}}});
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:28}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(items){if(!items.length)return '';var idx=items[0].dataIndex;var tot=filter(RAW.total)[idx]||0;return items[0].label+' · Total leads: '+tot.toLocaleString('es-CL');},label:function(ctx){var v=ctx.parsed.y||0;var tot=filter(RAW.total)[ctx.dataIndex]||0;var p=tot>0?(v/tot*100).toFixed(1):'0';return ctx.dataset.label+': '+v.toLocaleString('es-CL')+' ('+p+'%)';}}}},
+    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'}}}},plugins:[stackedLabelsPlugin]});
 
   // Descarte global
   makeChart('cDescGlobal',{type:'line',data:{labels:lbs,datasets:[
     {label:'% descarte',data:descRate,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,
-      pointBackgroundColor:descRate.map(v=>v>74?'#E24B4A':v>68?'#EF9F27':'#1D9E75')}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{min:Math.max(0,Math.min(...descRate)-5),max:Math.min(100,Math.max(...descRate)+5),ticks:{callback:v=>v+'%'}}}}});
+      pointBackgroundColor:descRate.map(v=>v>74?'#E24B4A':v>68?'#EF9F27':'#1D9E75'),_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{min:Math.max(0,Math.min(...descRate)-5),max:Math.min(100,Math.max(...descRate)+5),ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
 
   // Temperatura descarte
   makeChart('cTempDesc',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Caliente',data:filter(RAW.descC),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2,pointRadius:4,fill:true,tension:0.3},
-    {label:'Tibio',data:filter(RAW.descT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3]},
-    {label:'Frío',data:filter(RAW.descF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2]}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}}});
+    {label:'Caliente',data:filter(RAW.descC),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2,pointRadius:4,fill:true,tension:0.3,_lblSuffix:'%'},
+    {label:'Tibio',data:filter(RAW.descT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],_lblSuffix:'%'},
+    {label:'Frío',data:filter(RAW.descF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
 
   // Temperatura conversión
   makeChart('cTempConv',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Caliente',data:filter(RAW.convC),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3},
-    {label:'Tibio',data:filter(RAW.convT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3]},
-    {label:'Frío',data:filter(RAW.convF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2]}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}}});
+    {label:'Caliente',data:filter(RAW.convC),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,_lblSuffix:'%'},
+    {label:'Tibio',data:filter(RAW.convT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],_lblSuffix:'%'},
+    {label:'Frío',data:filter(RAW.convF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
 
   // VPP descarte
   const vppNoD = filter(RAW.vppNoTotal).map((t,i)=>pct(filter(RAW.vppNoDesc)[i],t));
   const vppSiD = filter(RAW.vppSiTotal).map((t,i)=>pct(filter(RAW.vppSiDesc)[i],t));
   makeChart('cVPPDesc',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Con VPP',data:vppSiD,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3},
-    {label:'Sin VPP',data:vppNoD,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3]}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}}});
+    {label:'Con VPP',data:vppSiD,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,_lblSuffix:'%'},
+    {label:'Sin VPP',data:vppNoD,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
 
   // VPP conversión
   const vppNoC = filter(RAW.vppNoTotal).map((t,i)=>pct(filter(RAW.vppNoConv)[i],t));
   const vppSiC = filter(RAW.vppSiTotal).map((t,i)=>pct(filter(RAW.vppSiConv)[i],t));
   makeChart('cVPPConv',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Con VPP',data:vppSiC,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3},
-    {label:'Sin VPP',data:vppNoC,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3]}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}}});
+    {label:'Con VPP',data:vppSiC,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,_lblSuffix:'%'},
+    {label:'Sin VPP',data:vppNoC,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
 
-  // Segmento valor
+  // Segmento valor — colores asociados al metal del segmento
   makeChart('cSegValor',{type:'bar',data:{labels:lbs,datasets:[
-    {label:'Bronce',data:filter(RAW.bronce),backgroundColor:'#EF9F27',borderWidth:0},
-    {label:'Oro',data:filter(RAW.oro),backgroundColor:'#F0997B',borderWidth:0},
-    {label:'Plata',data:filter(RAW.plata),backgroundColor:'#888780',borderWidth:0},
-    {label:'VIP',data:filter(RAW.vip),backgroundColor:'#534AB7',borderWidth:0}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}}});
+    {label:'Bronce',data:filter(RAW.bronce),backgroundColor:'#B87333',borderWidth:0},
+    {label:'Oro',data:filter(RAW.oro),backgroundColor:'#D4A017',borderWidth:0},
+    {label:'Plata',data:filter(RAW.plata),backgroundColor:'#A8A9AD',borderWidth:0},
+    {label:'VIP',data:filter(RAW.vip),backgroundColor:'#5B3BA5',borderWidth:0}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:28}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(items){if(!items.length)return '';var idx=items[0].dataIndex;var tot=(filter(RAW.bronce)[idx]||0)+(filter(RAW.oro)[idx]||0)+(filter(RAW.plata)[idx]||0)+(filter(RAW.vip)[idx]||0);return items[0].label+' · Total: '+tot.toLocaleString('es-CL');},label:function(ctx){var v=ctx.parsed.y||0;var idx=ctx.dataIndex;var tot=(filter(RAW.bronce)[idx]||0)+(filter(RAW.oro)[idx]||0)+(filter(RAW.plata)[idx]||0)+(filter(RAW.vip)[idx]||0);var p=tot>0?(v/tot*100).toFixed(1):'0';return ctx.dataset.label+': '+v.toLocaleString('es-CL')+' ('+p+'%)';}}}},
+    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}},plugins:[stackedLabelsPlugin]});
 
   // Financiamiento
   makeChart('cFinancChart',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Con financiamiento',data:filter(RAW.financSi),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3},
-    {label:'Sin financiamiento',data:filter(RAW.financNo),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3]}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{min:75,max:100,ticks:{callback:v=>v+'%'}}}}});
+    {label:'Con financiamiento',data:filter(RAW.financSi),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,_lblSuffix:'%'},
+    {label:'Sin financiamiento',data:filter(RAW.financNo),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],_lblSuffix:'%'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{min:75,max:100,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
 
   // Motivos acumulado
   const nc  = sum(filter(RAW.noContesta));
@@ -501,16 +635,16 @@ function updateCharts() {
     labels:['No contesta','Neg. desiste\ninfo','Desc.\nmasivo','Neg. sin\nmotivos','Neg.\nfinanc.','Duplicado','Neg. stock'],
     datasets:[{data:[nc,nd,dm,ns,nf,dup,nst],
       backgroundColor:['#3266ad','#73726c','#E24B4A','#888780','#E24B4A','#B5D4F4','#EF9F27'],borderWidth:0}]
-  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'}},x:{ticks:{font:{size:10}}}}}});
+  },options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'}},x:{ticks:{font:{size:10}}}}},plugins:[simpleBarLabelsPlugin]});
 
   // Motivos tendencia
   makeChart('cMotTend',{type:'line',data:{labels:lbs,datasets:[
-    {label:'No contesta',data:filter(RAW.noContesta),borderColor:'#3266ad',borderWidth:2,pointRadius:3,tension:0.3,backgroundColor:'transparent'},
-    {label:'Neg. financ.',data:filter(RAW.negFinanc),borderColor:'#E24B4A',borderWidth:2,pointRadius:3,tension:0.3,backgroundColor:'transparent',borderDash:[5,3]},
-    {label:'Desiste info',data:filter(RAW.negDesiste),borderColor:'#73726c',borderWidth:2,pointRadius:3,tension:0.3,backgroundColor:'transparent',borderDash:[2,2]}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString('es-CL')}}}}});
+    {label:'No contesta',data:filter(RAW.noContesta),borderColor:'#3266ad',borderWidth:2,pointRadius:4,tension:0.3,backgroundColor:'transparent',_lblFormat:'num'},
+    {label:'Neg. financ.',data:filter(RAW.negFinanc),borderColor:'#E24B4A',borderWidth:2,pointRadius:4,tension:0.3,backgroundColor:'transparent',borderDash:[5,3],_lblFormat:'num'},
+    {label:'Desiste info',data:filter(RAW.negDesiste),borderColor:'#73726c',borderWidth:2,pointRadius:4,tension:0.3,backgroundColor:'transparent',borderDash:[2,2],_lblFormat:'num'}
+  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
+    scales:{y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString('es-CL')}}}},plugins:[linePctLabelsPlugin]});
 }
 
 // ─── FILTROS ────────────────────────────────────────────────────────
