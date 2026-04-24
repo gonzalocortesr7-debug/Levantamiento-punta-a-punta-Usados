@@ -523,20 +523,44 @@
   .team-member:first-of-type { border-top: none; }
   .team-member-name { font-weight: 700; }
   .team-member-role { color: var(--gray-500); font-size: 11px; }
-  /* Estructura del análisis (pirámide) */
-  .struct-pyramid { display: flex; flex-direction: column; gap: 4px; padding: 12px 0; max-width: 800px; margin: 0 auto; }
-  .struct-level { display: flex; align-items: center; justify-content: center; padding: 14px 20px; color: var(--white); text-align: center; border-radius: 4px; margin: 0 auto; width: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-  .struct-level.l1 { background: #0B3B6F; width: 100%; }
-  .struct-level.l2 { background: #0F6FC6; width: 75%; }
-  .struct-level.l3 { background: #378ADD; width: 55%; }
-  .struct-level.l4 { background: #7FB4E8; width: 40%; color: var(--navy); }
-  .struct-level-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.9; margin-right: 8px; }
-  .struct-level-value { font-size: 15px; font-weight: 700; margin-right: 8px; }
-  .struct-level-desc { font-size: 11px; opacity: 0.9; }
-  .struct-level.l4 .struct-level-label { opacity: 1; }
-  .struct-legend { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 11px; color: var(--gray-700); }
-  .struct-legend-item { display: flex; align-items: center; gap: 6px; }
-  .struct-legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  /* Estructura del análisis · cards por eje */
+  .eje-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .eje-card { background: var(--white); border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .eje-card.compra { border-top-color: #0F6FC6; }
+  .eje-card.preparación { border-top-color: #EF9F27; }
+  .eje-card.venta { border-top-color: #1D9E75; }
+  .eje-card-head { display: flex; align-items: center; gap: 10px; }
+  .eje-card-num { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 15px; font-weight: 800; flex-shrink: 0; }
+  .eje-card.compra .eje-card-num { background: #0F6FC6; }
+  .eje-card.preparación .eje-card-num { background: #EF9F27; }
+  .eje-card.venta .eje-card-num { background: #1D9E75; }
+  .eje-card-title { font-size: 16px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  .eje-card-sub { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+  .eje-card-stats { display: flex; gap: 18px; padding: 10px 0; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100); }
+  .eje-card-stat { display: flex; flex-direction: column; gap: 2px; }
+  .eje-card-stat-value { font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .eje-card.compra .eje-card-stat-value { color: #0F6FC6; }
+  .eje-card.preparación .eje-card-stat-value { color: #8A5A00; }
+  .eje-card.venta .eje-card-stat-value { color: #0F6E56; }
+  .eje-card-stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gray-500); }
+  .eje-card-scope { font-size: 11px; color: var(--gray-700); line-height: 1.5; }
+  .eje-card-scope strong { color: var(--navy); font-weight: 700; }
+  .eje-card-source { font-size: 10.5px; color: var(--gray-500); font-style: italic; line-height: 1.4; padding-top: 6px; border-top: 1px dashed var(--gray-200); margin-top: auto; }
+  /* Cierre OKR: cómo presentarlos */
+  .okr-closing { margin-top: 22px; background: linear-gradient(135deg, #0B3B6F 0%, #1D6EC9 100%); color: var(--white); padding: 20px 24px; border-radius: 6px; }
+  .okr-closing-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .okr-closing p { font-size: 12.5px; line-height: 1.55; opacity: 0.92; margin-bottom: 14px; max-width: 920px; }
+  .okr-closing-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+  .okr-closing-step { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .okr-closing-step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--clicar-green); color: var(--white); font-size: 11px; font-weight: 800; }
+  .okr-closing-step-title { font-size: 12px; font-weight: 700; }
+  .okr-closing-step-desc { font-size: 11px; opacity: 0.88; line-height: 1.4; }
+  .okr-closing-cta { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; background: var(--clicar-green); color: var(--white); text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; border: none; cursor: pointer; font-family: inherit; }
+  .okr-closing-cta:hover { background: #108a60; }
+  @media (max-width: 960px) {
+    .eje-cards-grid { grid-template-columns: 1fr; }
+    .okr-closing-flow { grid-template-columns: 1fr 1fr; }
+  }
   /* Hallazgos por macro */
   .macro-pain-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .macro-pain-block { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); padding: 16px 18px; }
@@ -667,6 +691,31 @@
   .kr-impacts strong { color: var(--navy); }
   .okrs-macro-block { margin-bottom: 22px; }
   .okrs-macro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-200); }
+  .okr-eje-switcher { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; padding: 10px 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; }
+  .okr-eje-tabs { display: inline-flex; gap: 6px; }
+  .okr-eje-tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; font-family: inherit; font-size: 12px; font-weight: 700; color: var(--gray-700); cursor: pointer; transition: all 0.15s; }
+  .okr-eje-tab:hover { background: var(--navy-soft); border-color: var(--navy); color: var(--navy); }
+  .okr-eje-tab.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+  .okr-eje-tab-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .okr-eje-tab-dot.compra { background: #0F6FC6; }
+  .okr-eje-tab-dot.preparación { background: #EF9F27; }
+  .okr-eje-tab-dot.venta { background: #1D9E75; }
+  .okr-eje-tab.active .okr-eje-tab-dot { box-shadow: 0 0 0 2px rgba(255,255,255,0.4); }
+  .okr-eje-nav { display: inline-flex; gap: 6px; align-items: center; }
+  .okr-eje-progress { font-size: 11px; color: var(--gray-500); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-right: 6px; }
+  .okr-eje-arrow { width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: var(--white); border: none; cursor: pointer; font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; transition: background 0.15s, transform 0.15s; font-family: inherit; }
+  .okr-eje-arrow:hover { background: #0A5499; transform: translateX(1px); }
+  .okr-eje-arrow.prev:hover { transform: translateX(-1px); }
+  .okr-eje-arrow:disabled { background: var(--gray-200); color: var(--gray-500); cursor: not-allowed; transform: none; }
+  .okr-eje-panes { position: relative; }
+  .okr-eje-pane { display: none; }
+  .okr-eje-pane.active { display: block; animation: fadeInOkr 0.25s ease; }
+  @keyframes fadeInOkr { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
+  @media (max-width: 900px) {
+    .okr-eje-switcher { flex-direction: column; align-items: stretch; gap: 10px; }
+    .okr-eje-tabs { flex-wrap: wrap; }
+    .okr-eje-nav { justify-content: flex-end; }
+  }
   .okrs-macro-dot { width: 12px; height: 12px; border-radius: 50%; }
   .okrs-macro-dot.compra { background: #0F6FC6; }
   .okrs-macro-dot.preparación { background: #EF9F27; }
@@ -1877,8 +1926,8 @@ var OKRS = {
   northStars: [
     { macro: 'compra', label: 'Eje Compra',
       metric: 'Conversión end-to-end Lead → Compra concretada',
-      baseline: '4,7%', target: '8,0%', unit: 'conversión',
-      source: 'CRM Llaima · 158.753 leads Oct 25 – Mar 26 · 7.515 compras' },
+      baseline: '2,0%', target: '3,5%', unit: 'conversión',
+      source: 'Data comercial Ene-Abr 2026 · 19.150 leads/mes · 376 compras/mes promedio' },
     { macro: 'compra', label: 'Eje Compra',
       metric: 'Contactabilidad global del pool de leads',
       baseline: '53%', target: '70%', unit: 'de leads contactados',
@@ -2190,11 +2239,11 @@ function renderOKRsSlide(i) {
     '<div class="impact-grid">' +
       '<div class="impact-card compra">' +
         '<div class="impact-eje">Eje Compra</div>' +
-        '<div class="impact-big"><span class="impact-big-number">+864</span><span class="impact-big-unit">compras / mes</span></div>' +
-        '<div class="impact-headline">Compramos 864 autos más al mes</div>' +
-        '<div class="impact-detail">De <strong>1.243 → 2.117 compras/mes</strong> · <strong>+10.368 autos/año</strong>. La palanca son los 2 North Stars del eje: más contactabilidad alimenta más conversión.</div>' +
-        '<div class="impact-money">~$638M / mes de margen estimado al revender</div>' +
-        '<div class="impact-assumptions">Supuestos: 26.459 leads/mes constantes · conversión Lead→Compra 4,7% → 8,0% · ticket promedio $9M · margen usados 8,2%.</div>' +
+        '<div class="impact-big"><span class="impact-big-number">+294</span><span class="impact-big-unit">compras / mes</span></div>' +
+        '<div class="impact-headline">Compramos 294 autos más al mes</div>' +
+        '<div class="impact-detail">De <strong>376 → 670 compras/mes</strong> · <strong>+3.528 autos/año</strong>. La palanca son los 2 North Stars del eje: más contactabilidad alimenta más conversión.</div>' +
+        '<div class="impact-money">~$353M / mes de margen estimado al revender</div>' +
+        '<div class="impact-assumptions">Supuestos: 19.150 leads/mes promedio Ene-Abr 2026 · conversión Lead→Compra 2,0% → 3,5% · margen promedio por auto $1.200.000 (rango $1M–$1,5M).</div>' +
       '</div>' +
       '<div class="impact-card preparación">' +
         '<div class="impact-eje">Eje Preparación</div>' +
@@ -2206,11 +2255,11 @@ function renderOKRsSlide(i) {
       '</div>' +
       '<div class="impact-card venta">' +
         '<div class="impact-eje">Eje Venta</div>' +
-        '<div class="impact-big"><span class="impact-big-number">+114</span><span class="impact-big-unit">ventas / mes</span></div>' +
-        '<div class="impact-headline">Vendemos 114 autos más al mes</div>' +
-        '<div class="impact-detail">De <strong>46 → 160 ventas/mes</strong> · <strong>+1.368 autos/año</strong>. Combina 3× el pipeline web (862 → 2.000 cotizaciones/mes) con mejor gestión de leads (descarte 68,8% → 50%).</div>' +
-        '<div class="impact-money">~$103M / mes de margen estimado adicional</div>' +
-        '<div class="impact-assumptions">Supuestos: 136.334 visitas/mes constantes · conv. cotización→venta 5,3% → 8% (alineado al impacto de Gestión de Leads) · ticket promedio $11M · margen usados 8,2%.</div>' +
+        '<div class="impact-big"><span class="impact-big-number">+134</span><span class="impact-big-unit">ventas / mes</span></div>' +
+        '<div class="impact-headline">Vendemos 134 autos más al mes</div>' +
+        '<div class="impact-detail">De <strong>46 → 180 ventas/mes</strong> · <strong>+1.608 autos/año</strong>. Combina 3× el pipeline web (862 → 2.000 cotizaciones/mes) + recuperación de segmentos premium (Oro/VIP+VPP) y flujo diferenciado para financiamiento.</div>' +
+        '<div class="impact-money">~$161M / mes de margen estimado adicional</div>' +
+        '<div class="impact-assumptions">Supuestos: 136.334 visitas/mes constantes · conv. cotización→venta 5,3% → 9% (up vs. 8% por recuperación de segmentos de alto valor) · margen promedio por auto $1.200.000 (rango $1M–$1,5M).</div>' +
       '</div>' +
     '</div>' +
     '<div class="impact-totalizer">' +
@@ -2219,7 +2268,7 @@ function renderOKRsSlide(i) {
         '<div class="impact-totalizer-sub">Compras y ventas no se suman 1:1 (cada compra alimenta una venta futura). El margen se materializa al completar el ciclo compra → preparación → venta.</div>' +
       '</div>' +
       '<div style="text-align:right;">' +
-        '<div class="impact-totalizer-value">+10.368 compras · +1.368 ventas · año</div>' +
+        '<div class="impact-totalizer-value">+3.528 compras · +1.608 ventas · año</div>' +
         '<div class="impact-totalizer-sub">Preparación habilita el flujo · sin 90% publicado + foto premium el margen se pierde en inventario</div>' +
       '</div>' +
     '</div>';
@@ -2237,15 +2286,18 @@ function renderOKRsSlide(i) {
       '<div style="font-size:10px; color:var(--gray-500);">Owner: ' + it.owner + '</div>' +
     '</div>';
   }
-  // OKRs por etapa agrupados por macro
+  // OKRs por etapa agrupados por macro · switcher por eje
   var macroOrder = ['compra','preparación','venta'];
-  var stageHtml = '';
+  var availableEjes = [];
+  var panesHtml = '';
   for (var mi = 0; mi < macroOrder.length; mi++) {
     var mkey = macroOrder[mi];
     var mTitle = (MACRO_META[mkey] && MACRO_META[mkey].title) || mkey;
     var stageIds = Object.keys(meta.byStage).filter(function(k){ return meta.byStage[k].macro === mkey; });
     if (!stageIds.length) continue;
-    stageHtml += '<div class="okrs-macro-block">' +
+    availableEjes.push({ key: mkey, title: mTitle, count: stageIds.length });
+    var isFirstEje = (availableEjes.length === 1);
+    var paneHtml = '<div class="okrs-macro-block">' +
       '<div class="okrs-macro-head">' +
         '<span class="okrs-macro-dot ' + mkey + '"></span>' +
         '<span class="okrs-macro-title">Eje ' + mTitle + '</span>' +
@@ -2268,7 +2320,7 @@ function renderOKRsSlide(i) {
           '<div class="kr-impacts">' + k.impacts + '</div>' +
         '</div>';
       }
-      stageHtml += '<div class="stage-okr-card macro-' + st.macro + '">' +
+      paneHtml += '<div class="stage-okr-card macro-' + st.macro + '">' +
         '<div class="stage-okr-head">' +
           '<div>' +
             '<div class="stage-okr-title">' + st.title + '</div>' +
@@ -2278,8 +2330,26 @@ function renderOKRsSlide(i) {
         krsHtml +
       '</div>';
     }
-    stageHtml += '</div></div>';
+    paneHtml += '</div></div>';
+    panesHtml += '<div class="okr-eje-pane' + (isFirstEje ? ' active' : '') + '" data-okr-pane="' + mkey + '">' + paneHtml + '</div>';
   }
+  var tabsHtml = '';
+  for (var te = 0; te < availableEjes.length; te++) {
+    var ej = availableEjes[te];
+    tabsHtml += '<button type="button" class="okr-eje-tab' + (te === 0 ? ' active' : '') + '" data-okr-tab="' + ej.key + '">' +
+      '<span class="okr-eje-tab-dot ' + ej.key + '"></span>Eje ' + ej.title +
+    '</button>';
+  }
+  var stageHtml =
+    '<div class="okr-eje-switcher">' +
+      '<div class="okr-eje-tabs">' + tabsHtml + '</div>' +
+      '<div class="okr-eje-nav">' +
+        '<span class="okr-eje-progress" data-okr-progress>1 / ' + availableEjes.length + '</span>' +
+        '<button type="button" class="okr-eje-arrow prev" data-okr-nav="prev" aria-label="Eje anterior">←</button>' +
+        '<button type="button" class="okr-eje-arrow next" data-okr-nav="next" aria-label="Siguiente eje">→</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="okr-eje-panes">' + panesHtml + '</div>';
   return '<div class="slide exec-summary" data-slide="' + i + '">' +
     '<div class="okrs-hero">' +
       '<div class="eyebrow">Vista directorio · OKRs & Impacto</div>' +
@@ -2345,18 +2415,56 @@ function renderExecSummarySlide(i) {
     '</div>';
   }
 
-  // ----------- 2. Estructura del análisis -----------
+  // ----------- 2. Estructura del análisis · cards por eje -----------
   var structHtml =
-    '<div class="struct-pyramid">' +
-      '<div class="struct-level l1"><span class="struct-level-label">Nivel 1</span><span class="struct-level-value">Journey punta a punta</span><span class="struct-level-desc">Vista global del recorrido del cliente y la unidad</span></div>' +
-      '<div class="struct-level l2"><span class="struct-level-label">Nivel 2 · Ejes</span><span class="struct-level-value">3</span><span class="struct-level-desc">Compra · Preparación · Venta</span></div>' +
-      '<div class="struct-level l3"><span class="struct-level-label">Nivel 3 · Procesos</span><span class="struct-level-value">16</span><span class="struct-level-desc">Unidades de análisis con KPIs propios</span></div>' +
-      '<div class="struct-level l4"><span class="struct-level-label">Nivel 4 · Subprocesos</span><span class="struct-level-value">56</span><span class="struct-level-desc">Hallazgos + mejoras + benchmark + impacto cliente</span></div>' +
+    '<div class="eje-cards-grid">' +
+      '<div class="eje-card compra">' +
+        '<div class="eje-card-head">' +
+          '<div class="eje-card-num">1</div>' +
+          '<div><div class="eje-card-title">Eje Compra</div><div class="eje-card-sub">Del cliente vendedor al cierre en sucursal</div></div>' +
+        '</div>' +
+        '<div class="eje-card-stats">' +
+          '<div class="eje-card-stat"><div class="eje-card-stat-value">5</div><div class="eje-card-stat-label">Procesos</div></div>' +
+          '<div class="eje-card-stat"><div class="eje-card-stat-value">22</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
+        '</div>' +
+        '<div class="eje-card-scope">Captación Digital · Tasación y Agendamiento · Gestión de Leads · Oportunidad y Check-In · Inspección y Cierre</div>' +
+        '<div class="eje-card-source">Data real CRM Llaima · 158.753 leads Oct 25 – Mar 26 (6 meses)</div>' +
+      '</div>' +
+      '<div class="eje-card preparación">' +
+        '<div class="eje-card-head">' +
+          '<div class="eje-card-num">2</div>' +
+          '<div><div class="eje-card-title">Eje Preparación</div><div class="eje-card-sub">De la unidad adquirida a la vitrina digital</div></div>' +
+        '</div>' +
+        '<div class="eje-card-stats">' +
+          '<div class="eje-card-stat"><div class="eje-card-stat-value">6</div><div class="eje-card-stat-label">Procesos</div></div>' +
+          '<div class="eje-card-stat"><div class="eje-card-stat-value">17</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
+        '</div>' +
+        '<div class="eje-card-scope">Ingreso Quiter + Recepción · Asignación de Precio · Publicación Web · Foto Impel · Clasificación en Catálogo</div>' +
+        '<div class="eje-card-source">Snapshot BI 2026-04-17 · 2.574 uds inventario · 1.790 publicadas</div>' +
+      '</div>' +
+      '<div class="eje-card venta">' +
+        '<div class="eje-card-head">' +
+          '<div class="eje-card-num">3</div>' +
+          '<div><div class="eje-card-title">Eje Venta</div><div class="eje-card-sub">Del comprador al auto entregado</div></div>' +
+        '</div>' +
+        '<div class="eje-card-stats">' +
+          '<div class="eje-card-stat"><div class="eje-card-stat-value">5</div><div class="eje-card-stat-label">Procesos</div></div>' +
+          '<div class="eje-card-stat"><div class="eje-card-stat-value">17</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
+        '</div>' +
+        '<div class="eje-card-scope">Captación Digital · Gestión de Leads · Reserva y Medios de Pago · Firma de Contrato · Facturación y Entrega</div>' +
+        '<div class="eje-card-source">Microsoft Clarity (30 días) + Salazar-Israel · 104.747 leads Oct 25 – Mar 26</div>' +
+      '</div>' +
     '</div>' +
-    '<div class="struct-legend">' +
-      '<div class="struct-legend-item"><span class="struct-legend-dot" style="background:#0F6FC6"></span>Eje Compra: 5 procesos · 22 subprocesos · data real CRM Llaima (158.753 leads)</div>' +
-      '<div class="struct-legend-item"><span class="struct-legend-dot" style="background:#EF9F27"></span>Eje Preparación: 6 procesos · 17 subprocesos · snapshot BI (2.574 uds)</div>' +
-      '<div class="struct-legend-item"><span class="struct-legend-dot" style="background:#1D9E75"></span>Eje Venta: 5 procesos · 17 subprocesos · Clarity + Salazar-Israel (104.747 leads)</div>' +
+    '<div class="okr-closing">' +
+      '<div class="okr-closing-title">🎯 OKRs principales · cómo presentarlos al directorio</div>' +
+      '<p>El análisis se traduce en <strong>6 North Stars</strong> (2 por eje) + <strong>45 Key Results</strong> (3 por proceso) + <strong>4 apuestas transformacionales</strong>. La narrativa recomendada va de lo macro (el número único) a lo específico (los KRs que lo mueven), siempre terminando en la iniciativa accionable del Roadmap.</p>' +
+      '<div class="okr-closing-flow">' +
+        '<div class="okr-closing-step"><div class="okr-closing-step-num">1</div><div class="okr-closing-step-title">Abrir con las North Stars</div><div class="okr-closing-step-desc">2 métricas por eje: si suben, todo lo demás está funcionando. 2-3 min de exposición.</div></div>' +
+        '<div class="okr-closing-step"><div class="okr-closing-step-num">2</div><div class="okr-closing-step-title">Traducir al impacto en negocio</div><div class="okr-closing-step-desc">+294 compras/mes · +134 ventas/mes · +~$514M margen adicional estimado combinado.</div></div>' +
+        '<div class="okr-closing-step"><div class="okr-closing-step-num">3</div><div class="okr-closing-step-title">Mostrar las apuestas transformacionales</div><div class="okr-closing-step-desc">4 iniciativas que mueven múltiples KRs a la vez y tienen impacto financiero cuantificado.</div></div>' +
+        '<div class="okr-closing-step"><div class="okr-closing-step-num">4</div><div class="okr-closing-step-title">Drill-down según interés</div><div class="okr-closing-step-desc">Entrar al eje que el directorio priorice — cada KR tiene su detalle, iniciativas y data que lo justifica.</div></div>' +
+      '</div>' +
+      '<button type="button" class="okr-closing-cta" onclick="goToOKRs()">Ver vista OKRs & Impacto →</button>' +
     '</div>';
 
   // ----------- 3. Hallazgos más relevantes por macro -----------
@@ -4117,9 +4225,57 @@ function renderSlides() {
       });
     })(stageLinks[rsl]);
   }
+  bindOkrEjeSwitcher(area);
   initPrepCharts();
   bindVtaViewToggles(area);
   highlightRecordatorios(area);
+}
+
+function bindOkrEjeSwitcher(area) {
+  var tabs = area.querySelectorAll('[data-okr-tab]');
+  if (!tabs.length) return;
+  var order = [];
+  for (var t = 0; t < tabs.length; t++) order.push(tabs[t].getAttribute('data-okr-tab'));
+  function activate(key) {
+    var idx = order.indexOf(key);
+    if (idx < 0) idx = 0;
+    var allTabs = area.querySelectorAll('[data-okr-tab]');
+    for (var i = 0; i < allTabs.length; i++) {
+      allTabs[i].classList.toggle('active', allTabs[i].getAttribute('data-okr-tab') === key);
+    }
+    var panes = area.querySelectorAll('[data-okr-pane]');
+    for (var p = 0; p < panes.length; p++) {
+      panes[p].classList.toggle('active', panes[p].getAttribute('data-okr-pane') === key);
+    }
+    var progress = area.querySelector('[data-okr-progress]');
+    if (progress) progress.textContent = (idx + 1) + ' / ' + order.length;
+    var prevBtn = area.querySelector('[data-okr-nav="prev"]');
+    var nextBtn = area.querySelector('[data-okr-nav="next"]');
+    if (prevBtn) prevBtn.disabled = (idx === 0);
+    if (nextBtn) nextBtn.disabled = (idx === order.length - 1);
+  }
+  for (var j = 0; j < tabs.length; j++) {
+    (function(btn){
+      btn.addEventListener('click', function(){ activate(btn.getAttribute('data-okr-tab')); });
+    })(tabs[j]);
+  }
+  var prevBtn = area.querySelector('[data-okr-nav="prev"]');
+  var nextBtn = area.querySelector('[data-okr-nav="next"]');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function(){
+      var active = area.querySelector('[data-okr-tab].active');
+      var idx = active ? order.indexOf(active.getAttribute('data-okr-tab')) : 0;
+      if (idx > 0) activate(order[idx - 1]);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function(){
+      var active = area.querySelector('[data-okr-tab].active');
+      var idx = active ? order.indexOf(active.getAttribute('data-okr-tab')) : 0;
+      if (idx < order.length - 1) activate(order[idx + 1]);
+    });
+  }
+  activate(order[0]);
 }
 
 function bindVtaViewToggles(area) {
