@@ -265,6 +265,47 @@
   }
   .data-insight strong { color: var(--navy); }
   .data-note { font-size: 10px; color: var(--gray-500); font-style: italic; margin-top: 8px; }
+  /* Firma de Contrato · hallazgos visual */
+  .firma-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 18px; }
+  @media (max-width: 1100px) { .firma-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); } }
+  .firma-card {
+    position: relative; background: var(--white); border: 1px solid var(--gray-200); border-top: 4px solid var(--navy);
+    border-radius: 6px; padding: 16px 14px 14px; display: flex; flex-direction: column; gap: 8px; transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .firma-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+  .firma-card-num {
+    position: absolute; top: -14px; left: 14px; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--navy); color: var(--white); display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .firma-card.eco { border-top-color: #C0549B; }
+  .firma-card.eco .firma-card-num { background: #C0549B; }
+  .firma-card.op { border-top-color: #D9822B; }
+  .firma-card.op .firma-card-num { background: #D9822B; }
+  .firma-card.vol { border-top-color: #5B3BA5; }
+  .firma-card.vol .firma-card-num { background: #5B3BA5; }
+  .firma-card-title { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-top: 4px; }
+  .firma-card-desc { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; flex: 1; }
+  .firma-card-tag {
+    align-self: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 10px; margin-top: 4px;
+  }
+  .firma-card.eco .firma-card-tag { background: #F7E4EF; color: #8E2E71; }
+  .firma-card.op .firma-card-tag { background: #FDEBD1; color: #945010; }
+  .firma-card.vol .firma-card-tag { background: #E4DFF5; color: #3F2885; }
+  .firma-section { margin-top: 28px; background: linear-gradient(180deg, #FAFAFB 0%, #FFFFFF 100%); border: 1px solid var(--gray-200); border-radius: 6px; overflow: hidden; }
+  .firma-section-header {
+    padding: 14px 20px; background: var(--navy); color: var(--white);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .firma-section-title { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+  .firma-section-sub { font-size: 11px; opacity: 0.8; font-weight: 500; }
+  .firma-legend { display: flex; gap: 14px; padding: 12px 20px; border-top: 1px solid var(--gray-100); font-size: 11px; color: var(--gray-700); background: #FCFCFD; flex-wrap: wrap; }
+  .firma-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .firma-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .firma-legend-dot.eco { background: #C0549B; }
+  .firma-legend-dot.op { background: #D9822B; }
+  .firma-legend-dot.vol { background: #5B3BA5; }
   .controls {
     display: flex; align-items: center; justify-content: space-between;
     padding: 14px 40px; background: var(--white); border-top: 1px solid var(--gray-200); flex-shrink: 0;
@@ -463,6 +504,7 @@
   .vta-view-toggle { display: inline-flex; background: var(--gray-100); border-radius: 4px; padding: 2px; border: 1px solid var(--gray-200); }
   .vta-view-toggle button { padding: 4px 12px; background: transparent; border: none; color: var(--gray-700); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
   .vta-view-toggle button.active { background: var(--navy); color: var(--white); }
+  .ins-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
   .vta-view { display: none; }
   .vta-view.active { display: block; }
   .vta-table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 4px; }
@@ -1121,61 +1163,7 @@ var journey = {
       ]
     },
     {
-      id: 2, macro: "compra", name: "Tasación y Agend.", fullName: "Tasación y Agendamiento",
-      video: { url: null, title: "Video del proceso - Tasación y Agendamiento" },
-      route: "Tasación -> Agendamiento -> Confirmación - Cita presencial",
-      description: "El sistema entrega una tasación automatizada del vehículo con dos precios diferenciados (compra directa y parte de pago) basados en datos de mercado, y el cliente selecciona sucursal y horario para llevarlo presencialmente. Se envían confirmaciones y recordatorios por email/SMS. Las métricas clave son la precisión del precio online vs. oferta final, la tasa de agendamiento efectiva y la gestión del no-show en la cita presencial.",
-      substeps: [
-        { num: 1, title: "Tasación Automatizada",
-          description: "El algoritmo entrega dos precios diferenciados al vendedor: uno para compra directa (más bajo) y otro para parte de pago al comprar otro vehículo (más alto). Ambos se basan en datos de mercado.",
-          kpis: [{value:"7.420",suffix:"/mes",label:"Tasaciones generadas"},{value:"68",suffix:"%",label:"Precisión precio online vs. oferta final"},{value:"TBD",suffix:"%",label:"Tasaciones que requieren apelación posterior"}],
-          hallazgos: ["El precio online suele discrepar del precio final ofertado en sucursal, lo que obliga al cliente a apelar para mejorar la oferta — genera un vaivén frustrante","Algoritmo no incorpora datos de transacciones reales internas de Clicar","Sin diferenciación por condición mecánica declarada por el vendedor","Dos precios (compra directa vs. parte de pago) pueden no quedar claros para el vendedor sin contexto adicional"],
-          mejoras: ["Calibrar el precio online para que se acerque al precio final ofertado y eliminar el vaivén de apelaciones posteriores","Refinar el algoritmo con transacciones reales Q1 2026 (lo que efectivamente compró Clicar y a qué precio)","Incluir preguntas de condición mecánica que ajusten ambos precios desde el inicio","Explicar claramente qué diferencia al precio de compra directa del de parte de pago"]
-        },
-        { num: 2, title: "Selección de Sucursal",
-          description: "El vendedor elige región, ciudad, sucursal, fecha y horario disponibles para llevar el vehículo a inspección.",
-          kpis: [{value:"62",suffix:"%",label:"Tasa de agendamiento"},{value:"3,4",suffix:"",label:"Sucursales promedio mostradas"},{value:"78",suffix:"%",label:"Eligen sucursal más cercana"}],
-          hallazgos: [
-            "Distribución desigual: sucursales céntricas sobrecargadas.",
-            "No se muestra disponibilidad en tiempo real.",
-            "Sin indicador de tiempo de espera estimado.",
-            "El título 'Formulario de contacto' no refleja la acción que el usuario está realizando — genera desconexión con la intención de agendar.",
-            "Los datos de contacto (nombre, apellido, teléfono, email) se repiten como formulario editable, cuando el usuario ya los ingresó en el paso anterior — genera fatiga y transmite que el sistema no confía en sus propios datos.",
-            "El campo Región aparece vacío por un bug de persistencia, pese a haber sido ingresado previamente.",
-            "Se requieren tres campos (Región, Ciudad, Sucursal) para llegar a un solo dato, sobrecargando innecesariamente este paso.",
-            "Fecha y horario se seleccionan con dropdowns en vez de controles visuales: el usuario no puede ver el contexto temporal ni el día de la semana en mobile."
-          ],
-          mejoras: [
-            "Sugerir sucursales con menor carga mediante balanceo.",
-            "Integrar disponibilidad en tiempo real desde CRM.",
-            "Mostrar tiempo de espera estimado por sucursal.",
-            "Cambiar el título a 'Agenda tu inspección' o 'Elige fecha y lugar para la inspección de tu auto'.",
-            "Mostrar los datos de contacto ya ingresados en modo solo lectura, con opción '¿Editar datos?' que active la edición solo si el usuario lo necesita.",
-            "Corregir el bug de persistencia que deja el campo Región vacío.",
-            "Consolidar Región, Ciudad y Sucursal en un único selector con filtro en cascada integrado.",
-            "Reemplazar el dropdown de fechas por un calendario visual con días disponibles destacados.",
-            "Reemplazar el dropdown de horarios por chips o botones visuales seleccionables de un vistazo.",
-            "Incorporar geolocalización opcional para sugerir la sucursal más cercana, eliminando la necesidad de seleccionar región y ciudad manualmente.",
-            "Señalar los horarios de menor demanda al estilo Kavak, reduciendo la ansiedad del usuario y distribuyendo mejor la carga operacional.",
-            "Mostrar un resumen de la selección en tiempo real antes de confirmar ('Has seleccionado el día X a las Y hrs en sucursal Z'), al estilo Bruno Fritsch — reduce errores y da seguridad al usuario antes de enviar."
-          ]
-        },
-        { num: 3, title: "Confirmación y Recordatorio",
-          description: "Se envía confirmación por email y SMS, más recordatorio 24h antes.",
-          kpis: [{value:"22",suffix:"%",label:"Apertura email confirmación"},{value:"61",suffix:"%",label:"Lectura SMS confirmación"},{value:"45",suffix:"%",label:"Interacción con recordatorio 24h"}],
-          hallazgos: ["Confirmación vía email tiene tasa de apertura muy baja","Recordatorio solo 24h antes; sin segundo recordatorio","Sin opción de confirmar/cancelar desde el mensaje"],
-          mejoras: ["Migrar confirmaciones a WhatsApp Business API","Doble recordatorio: 24h antes + 2h antes vía WhatsApp","Botones interactivos en WhatsApp: Confirmar/Reagendar/Cancelar"]
-        },
-        { num: 4, title: "Gestión No-Show",
-          description: "Proceso de seguimiento cuando el vendedor no asiste a la cita.",
-          kpis: [{value:"28",suffix:"%",label:"Tasa de no-show"},{value:"8",suffix:"%",label:"Re-agendamiento post no-show"},{value:"$2,1",suffix:"M",label:"Costo estimado por no-show"}],
-          hallazgos: ["Sin seguimiento automatizado post no-show","Solo 8% de no-shows se re-agendan","Sin análisis de causas raíz de no-show"],
-          mejoras: ["Flujo automático de re-agendamiento: WhatsApp 30min + llamada 2h","Dashboard de causas de no-show por sucursal","Overbooking controlado en franjas con alto no-show histórico"]
-        }
-      ]
-    },
-    {
-      id: 3, macro: "compra", name: "Gestión de Leads", fullName: "Gestión de Leads",
+      id: 2, macro: "compra", name: "Gestión de Leads", fullName: "Gestión de Leads",
       video: { url: null, title: "Video del proceso - Gestión de Leads" },
       route: "Nuevos Leads -> Leads tomados (CC) -> Leads con cita - CRM Llaima",
       description: "Los leads generados desde web ingresan al pool del Contact Center, se asignan a agentes, se realizan contactos telefónicos de seguimiento y se califican para traspaso a sucursal. El foco está en contactabilidad, velocidad de primer contacto, tasa de agendamiento y conversión a oportunidad real. Esta etapa analiza 158.753 leads entre Oct 25 y Mar 26 segmentados en 8 categorías de calificación.",
@@ -1214,7 +1202,7 @@ var journey = {
       ]
     },
     {
-      id: 4, macro: "compra", name: "Oportunidad", fullName: "Oportunidad y Check-In",
+      id: 3, macro: "compra", name: "Oportunidad", fullName: "Oportunidad y Check-In",
       video: { url: null, title: "Video del proceso - Oportunidad y Check-In" },
       route: "Oportunidad -> Check In -> Check In Realizado - Sucursal",
       description: "Al confirmar la cita se crea la oportunidad formal en CRM Llaima y se prepara la llegada del cliente a la sucursal. Incluye check-in presencial, verificación documental del vehículo y del vendedor y asignación del asesor comercial. El objetivo es reducir tiempos de espera, evitar fricciones administrativas y entregar al asesor toda la información previa del lead (datos web, tasación inicial e historial de contacto).",
@@ -1246,7 +1234,7 @@ var journey = {
       ]
     },
     {
-      id: 5, macro: "compra", name: "Inspección y Cierre", fullName: "Inspección y Cierre Comercial",
+      id: 4, macro: "compra", name: "Inspección y Cierre", fullName: "Inspección y Cierre Comercial",
       video: { url: null, title: "Video del proceso - Inspección y Cierre" },
       route: "Inspección -> Validación Comercial - Oferta definitiva",
       description: "Evaluación técnica y documental del vehículo, registro fotográfico estandarizado, cálculo de la oferta final considerando costos de re-acondicionamiento, validación comercial por jefatura cuando excede la autonomía del asesor y negociación/cierre con el cliente. Cierra la compra del vehículo o lo registra como no-cierre con razones estructuradas para activar flujos de seguimiento posteriores.",
@@ -1254,8 +1242,8 @@ var journey = {
         { num: 1, title: "Inspección Técnica",
           description: "Evaluación mecánica, carrocería e interior del vehículo. Incluye el funnel mensual comparativo de oportunidades creadas -> inspeccionadas -> compradas separado por tipo de vínculo (Compra directa vs VPP). Nota: el total 7.515 compras (Oct 25 - Abr 26) incluye VPP; el baseline de ~376 compras/mes del Eje Compra corresponde solo a Compra directa (data Ene - Abr 26).",
           kpis: [{value:"45.628",suffix:"",label:"Oportunidades creadas (Oct 25 - Abr 26)"},{value:"14.940",suffix:"",label:"Inspecciones realizadas"},{value:"7.515",suffix:"",label:"Compras concretadas (incluye VPP)"}],
-          hallazgos: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es más eficiente end-to-end: 40% conversión vs 13% VPP","La brecha está en la pre-calificación: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspección es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caída en Marzo 26 en Compra: 75% insp vs. 83-87% histórico - alerta a revisar","<strong>Nota:</strong> las 7.515 compras totales incluyen VPP (2.409) + Compra directa (5.106). El baseline del Eje Compra (~376/mes) es solo Compra directa"],
-          mejoras: ["Análisis de leads VPP no inspeccionados (75% del pipeline VPP) para identificar patrones de descarte y filtros mejorables","Revisar caída de inspecciones en Marzo 26 en Compra directa","Tiempo variable (30-90 min) según experiencia del inspector","Checklist digital con tiempos objetivo por item","Categorización obligatoria de hallazgos por severidad"],
+          hallazgos: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es más eficiente end-to-end: 40% conversión vs 13% VPP","La brecha está en la pre-calificación: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspección es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caída en Marzo 26 en Compra: 75% insp vs. 83-87% histórico - alerta a revisar","Autofact caduca a los 7 días y no vuelve a actualizarse, obligando a renovar la consulta cuando la oportunidad avanza pasado ese plazo","<strong>Nota:</strong> las 7.515 compras totales incluyen VPP (2.409) + Compra directa (5.106). El baseline del Eje Compra (~376/mes) es solo Compra directa"],
+          mejoras: ["Análisis de leads VPP no inspeccionados (75% del pipeline VPP) para identificar patrones de descarte y filtros mejorables","Revisar caída de inspecciones en Marzo 26 en Compra directa","Tiempo variable (30-90 min) según experiencia del inspector","Checklist digital con tiempos objetivo por item","Categorización obligatoria de hallazgos por severidad","Actualizar Autofact automáticamente al actualizar la oportunidad si el reporte está vencido"],
           chartType: 'insp-vínculo'
         },
         { num: 2, title: "Registro Fotográfico",
@@ -1267,8 +1255,8 @@ var journey = {
         { num: 3, title: "Cálculo Oferta Final",
           description: "Se calcula precio de compra final.",
           kpis: [{value:"48",suffix:"%",label:"Conversión inspección -> compra"},{value:"15",suffix:"%",label:"Brecha online vs final"},{value:"8,2",suffix:"%",label:"Margen promedio usados"}],
-          hallazgos: ["Diferencia >15% entre tasación online y oferta final","Costo de re-acondicionamiento se estima subjetivamente","Sin visibilidad de demanda actual del modelo"],
-          mejoras: ["Dashboard de brecha tasación vs oferta por sucursal","Tabla estandarizada de costos de re-acondicionamiento","Integrar datos de demanda al algoritmo"]
+          hallazgos: ["Diferencia >15% entre tasación online y oferta final","Costo de re-acondicionamiento se estima subjetivamente","Sin visibilidad de demanda actual del modelo","Tasadores estudian el precio de publicación en portales en el 50% de los autos que se compran y la información no se registra en la oportunidad"],
+          mejoras: ["Dashboard de brecha tasación vs oferta por sucursal","Tabla estandarizada de costos de re-acondicionamiento","Integrar datos de demanda al algoritmo","Crear un campo en la Opp de compra para registrar el precio de publicación visto por el tasador (trazabilidad y feedback al algoritmo de pricing)"]
         },
         { num: 4, title: "Validación Comercial",
           description: "Aprobación por jefatura cuando excede autonomía del asesor.",
@@ -1367,10 +1355,10 @@ var journey = {
       ],
       substeps: [
         { num: 1, title: "Captura de foto de producto",
-          description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspección). 204 uds (11,4%) están publicadas SIN ninguna foto.",
-          kpis: [{value:"1.586",suffix:"uds",label:"Publicadas con foto capturada (88,6%)"},{value:"204",suffix:"uds",label:"Publicadas sin foto (11,4%)"},{value:"TBD",suffix:"hrs",label:"Publicación -> foto tomada"}],
-          hallazgos: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
-          mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '204 sin foto' con owner por sucursal","Priorización de stock premium y alta rotación durante la transición"]
+          description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspección). 204 uds (11,4%) están publicadas SIN ninguna foto. Tiempo real en sucursal → foto Impel: promedio ~10,1 días según origen (VPP Usados 6,6 · Test Car 7 · Compra/Salida Com. Nuevos 9 · B2B 12,7 · Carflex 13 · VPP Nuevos 13,7).",
+          kpis: [{value:"1.586",suffix:"uds",label:"Publicadas con foto capturada (88,6%)"},{value:"204",suffix:"uds",label:"Publicadas sin foto (11,4%)"},{value:"10,1",suffix:"días",label:"Sucursal disponible -> foto Impel (promedio)"}],
+          hallazgos: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel — peor en VPP Nuevos (13,7 días), Carflex (13) y B2B (12,7); mejor en VPP Usados (6,6 días)","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
+          mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '204 sin foto' con owner por sucursal","SLA transitorio <72h para los orígenes más lentos (VPP Nuevos, Carflex, B2B)","Priorización de stock premium y alta rotación durante la transición"]
         },
         { num: 2, title: "Post-procesado Impel (fondo limpio)",
           description: "Salida estándar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad. Data real BI 2026-04-17: 1.211 unidades con foto Impel terminada (67,7% del stock publicado). Nota: el BI agrupa Tier 1 + Tier 2 como IMPEL - la adopción específica de cabina virtual 360 requiere reporte Impel detallado.",
@@ -1494,11 +1482,9 @@ var journey = {
           hallazgos: [
             "<strong>Salto crítico del funnel</strong>: de 21.872 fichas a solo 862 cotizaciones = 3,9% de conversión. Es la mayor oportunidad de mejora del funnel del sitio.",
             "Dead clicks en la foto del auto del header del buy-process y en los indicadores numéricos de paso (1·2·3·4·5): el usuario intenta interactuar esperando navegar entre pasos o ampliar la foto.",
-            "<strong>Error 303 en paso 4</strong> del buy-process — en revisión por el equipo de desarrollo, prioridad crítica.",
             "Demasiadas preguntas en el flujo generan fricción y abandono, a pesar de que los datos ya se capturan a partir del paso 1."
           ],
           mejoras: [
-            "<strong>Corregir error 303 en buy-process paso 4</strong> — prioridad crítica, en revisión por desarrollo.",
             "Eliminar la foto del header en el flujo de cotización y reemplazar los steps por un indicador de progreso no clicable.",
             "Reducir la fricción del flujo eliminando preguntas innecesarias — dejar solo la información relevante para aumentar la velocidad de experiencia.",
             "Experimentar con variantes del flujo (menos campos, single-page) para mover el 3,9% de conversión ficha → cotización."
@@ -1614,26 +1600,27 @@ var journey = {
     {
       id: 14, macro: "venta", name: "Firma de Contrato", fullName: "Firma de Contrato",
       video: { url: null, title: "Video del proceso - Firma de Contrato" },
-      route: "Condiciones acordadas -> Generación de contrato -> Revisión del cliente -> Firma formal",
-      description: "Formalización del acuerdo comercial entre el comprador y Clicar. Incluye generación del contrato con las condiciones pactadas (precio, medio de pago, plazos, parte de pago si aplica), revisión por el cliente y firma (presencial o digital). Aún por mapear con data real.",
+      route: "Condiciones acordadas -> Firma plataforma externa -> Cotejo manual Quiter vs Autofact -> Transferencia",
+      description: "Formalización del acuerdo comercial entre el comprador y Clicar. Hoy la firma se realiza en una plataforma externa al ecosistema de usados, sin integración nativa, lo que obliga a cotejos manuales diarios contra Quiter y Autofact para autorizar la transferencia. El volumen es alto: entre 1.700 y 1.800 transferencias mensuales, de las cuales 100-150 corren por alto DPS y requieren revisión manual diaria adicional.",
       substeps: [
-        { num: 1, title: "Generación del contrato",
-          description: "Emisión del contrato con todas las condiciones acordadas prellenadas desde CRM.",
-          kpis: [{value:"TBD",suffix:"min",label:"Tiempo acuerdo -> contrato listo"},{value:"TBD",suffix:"%",label:"% contratos generados sin error"},{value:"TBD",suffix:"%",label:"% contratos con prellenado automático"}],
-          hallazgos: ["Datos del cliente digitados manualmente en el contrato -> errores","Sin plantilla única entre sucursales","Sin trazabilidad de quién generó el contrato"],
-          mejoras: ["Prellenado del contrato desde CRM (un solo source of truth)","Plantilla única versionada centralmente","Audit trail de generación y modificaciones"]
+        { num: 1, title: "Firma del contrato en plataforma externa",
+          description: "El contrato se celebra y almacena en una plataforma fuera del ecosistema de usados, sin integración nativa con Quiter ni con el historial del proceso. El cliente firma, pero la evidencia queda desconectada del ciclo de venta interno.",
+          kpis: [{value:"100",suffix:"%",label:"Firmas en plataforma externa"},{value:"0",suffix:"%",label:"Integración nativa con Quiter"},{value:"TBD",suffix:"min",label:"Tiempo acuerdo -> contrato firmado"}],
+          hallazgos: ["<strong>Firma en plataforma externa:</strong> el contrato se celebra y almacena fuera del ecosistema de usados, sin integración nativa con Quiter ni Autofact","<strong>Pérdida de trazabilidad:</strong> no hay registro unificado del ciclo de venta; el contrato queda desconectado del historial del proceso en Quiter","Sin audit trail consolidado entre contrato firmado, oportunidad comercial y transferencia ejecutada","El cliente recibe evidencia por la plataforma externa, no por un canal oficial de Clicar"],
+          mejoras: ["<strong>[TRANSFORMACIONAL]</strong> Integración de la plataforma de firma al ecosistema de usados (Quiter + Autofact) con webhook bidireccional","Unificar el contrato firmado + oportunidad + transferencia en un único registro consultable desde Quiter","Audit trail end-to-end con timestamp de cada evento (generado, enviado, firmado, archivado, transferido)","Entregar copia firmada automáticamente desde Clicar al cliente con branding oficial"],
+          chartType: 'firma-hallazgos'
         },
-        { num: 2, title: "Revisión del cliente",
-          description: "El comprador revisa el contrato, hace consultas y valida las condiciones antes de firmar.",
-          kpis: [{value:"TBD",suffix:"min",label:"Tiempo promedio de revisión"},{value:"TBD",suffix:"%",label:"% contratos modificados en revisión"},{value:"TBD",suffix:"%",label:"% clientes que consultan a un tercero"}],
-          hallazgos: ["Cliente no recibe el contrato antes de la cita para revisarlo con tiempo","Cambios manuales generan re-impresión","Dudas del cliente manejadas de forma oral sin registro"],
-          mejoras: ["Envío del contrato al cliente 24h antes de la firma","Proceso ágil de enmiendas digitales","FAQ del contrato + registro de dudas frecuentes"]
+        { num: 2, title: "Verificación Quiter vs Autofact",
+          description: "Antes de autorizar cada transferencia, el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas. Es un control crítico pero 100% manual que escala linealmente con el volumen.",
+          kpis: [{value:"100",suffix:"%",label:"Verificación manual diaria"},{value:"1",suffix:"equipo",label:"Trámites concentra el cotejo"},{value:"TBD",suffix:"min",label:"Tiempo promedio por verificación"}],
+          hallazgos: ["<strong>Verificación manual diaria Quiter vs. Autofact:</strong> el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas antes de autorizar cada transferencia","Cuello de botella humano: la capacidad del equipo de Trámites define el throughput diario de transferencias","Riesgo de error humano en cotejos manuales a alto volumen (>55 transferencias/día hábil)","Sin alertas automáticas de discrepancia entre sistemas; se detectan solo cuando alguien las revisa"],
+          mejoras: ["Reconciliación automática Quiter ↔ Autofact con motor de reglas (coincidencia RUT + patente + montos)","Workflow con semáforo: verde = autoriza automáticamente · amarillo = revisa Trámites · rojo = bloquea con alerta","Dashboard diario con SLA de cotejo por operador y por discrepancia detectada","Historial estructurado de motivos de discrepancia para retroalimentar el origen del error"]
         },
-        { num: 3, title: "Firma del contrato",
-          description: "Firma formal (presencial o digital) y archivo en CRM con copia al comprador.",
-          kpis: [{value:"TBD",suffix:"%",label:"% firmas digitales vs. presenciales"},{value:"TBD",suffix:"min",label:"Duración de la ceremonia de firma"},{value:"TBD",suffix:"%",label:"% contratos archivados automáticamente"}],
-          hallazgos: ["Firma presencial por defecto aunque aplique digital","Archivo manual en carpetas físicas en algunas sucursales","Cliente recibe la copia por email de forma no estandarizada"],
-          mejoras: ["Firma digital por defecto (DocuSign / similar)","Archivo automático en CRM con vínculo a la unidad","Entrega inmediata de copia firmada por email al cliente"]
+        { num: 3, title: "Transferencia y riesgo operacional",
+          description: "El volumen mensual de transferencias es alto (1.700-1.800 uds/mes) y opera en un proceso manual. Un subconjunto de 100-150 unidades por mes corre por alto DPS y requiere revisión manual diaria diferenciada, sin trazabilidad propia dentro del ecosistema.",
+          kpis: [{value:"1.700-1.800",suffix:"/mes",label:"Transferencias mensuales"},{value:"100-150",suffix:"/mes",label:"Subset por alto DPS"},{value:"100",suffix:"%",label:"Proceso manual"}],
+          hallazgos: ["<strong>Alto volumen mensual de transferencias:</strong> 1.700-1.800 unidades/mes se transfieren mediante un proceso manual, lo que representa un riesgo operativo significativo","<strong>100-150 unidades/mes por alto DPS:</strong> subconjunto mensual con riesgo diferenciado que requiere revisión manual diaria, sin trazabilidad propia dentro del ecosistema","No hay segmentación sistémica de casos por riesgo: alto DPS comparte cola con transferencias estándar","Impacto en tiempo de cierre: el cliente espera más cuando cae en el subset de alto DPS sin saberlo"],
+          mejoras: ["Flujo diferenciado sistémico para alto DPS con tagging automático en Quiter y SLA propio","Automatizar el 80% del volumen estándar (reglas claras) y liberar al equipo humano para el 20% con riesgo","Dashboard ejecutivo semanal: volumen total · tasa de auto-autorización · alto DPS · discrepancias detectadas","Panel del cliente con estado de la transferencia (tracking visible estilo courier)"]
         }
       ]
     },
@@ -1680,12 +1667,6 @@ var ROADMAP = [
   { iniciativa: "Autocompletar datos del vehículo desde la patente vía Autofact",
     description: "Integración con Autofact (~$1.200.000 / mes) que precarga marca, modelo, año y versión a partir de la patente. Reemplaza la intención previa de integración directa con SII/Registro Civil y ataca el 18% de errores en datos ingresados manualmente. Alternativa evaluada: compra de la base de patentamiento (~$3.000.000 one-shot).",
     macro: "compra", stage: "Captación Digital", substep: "Ingreso Datos del Vehículo", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
-  { iniciativa: "Calibrar el precio inicial de tasación para eliminar el vaivén de apelaciones",
-    description: "El precio online (tanto compra directa como parte de pago) suele discrepar del precio final ofertado en sucursal (brecha ~15%), lo que obliga al cliente a apelar para mejorar la oferta. Refinar el algoritmo con transacciones reales Q1 2026 e incluir condición mecánica permite entregar un precio inicial más cercano al final, reduciendo frustración del cliente y carga operativa de apelaciones.",
-    macro: "compra", stage: "Tasación y Agendamiento", substep: "Tasación Automatizada", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
-  { iniciativa: "Automatizar confirmaciones y recordatorios vía Paula (agente virtual)",
-    description: "Paula envía de forma automática según reglas: a las citas con estado distinto a 'confirmado' les manda confirmación el día anterior; a todas las citas del día les manda recordatorio (independiente del estado) reforzando los documentos que el cliente debe llevar. Reemplaza el email (22% apertura) y SMS (61% lectura) con botones interactivos de WhatsApp.",
-    macro: "compra", stage: "Tasación y Agendamiento", substep: "Confirmación y Recordatorio", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Cadencia automática de contacto (llamada → WhatsApp) con descalificación automatizada en Creatio",
     description: "Hoy ~40% de los contactados recibe una sola llamada sin reintentos. La cadencia debe ser llamada y luego WhatsApp a todos los que no contesten, con un journey automatizado en Creatio que descalifica por no contactabilidad una vez agotados los intentos. Se elimina el canal SMS del flujo.",
     macro: "compra", stage: "Gestión de Leads", substep: "Contacto Telefónico", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
@@ -1722,9 +1703,6 @@ var ROADMAP = [
   { iniciativa: "Liberación automática de reservas después de 48h sin avance en Llaima",
     description: "403 uds reservadas hoy (69% del inventario no disponible). Una regla automática en Llaima que libere la reserva a las 48h sin avance devuelve el stock a la vitrina sin intervención manual y evita que las reservas fantasma inmovilicen inventario.",
     macro: "preparación", stage: "Publicación en Sitio Web", substep: "No disponibles para publicar", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
-  { iniciativa: "Corregir error 303 en buy-process paso 4",
-    description: "Error 303 identificado en el paso 4 del flujo de cotización (buy-process). Hoy 862 sesiones/mes llegan a iniciar cotización desde ficha (3,9% de conversión) y una parte no logra completar por este error. En revisión por el equipo de desarrollo, prioridad crítica para destrabar el principal cuello de botella del funnel del sitio.",
-    macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Habilitar swipe/zoom en carrusel de fotos de inspección en mobile",
     description: "Cuando el auto tiene foto de inspección pero no vista 360°, el contenedor de la imagen no registra gestos de swipe ni zoom. Los usuarios lo intentan y no obtienen respuesta, generando 74.943 dead clicks mensuales. Habilitar interacción táctil + indicador 'Desliza para ver más fotos' elimina la fricción visual más grande de la ficha.",
     macro: "venta", stage: "Captación Digital", substep: "Ficha de auto — /marcas/", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
@@ -1980,7 +1958,7 @@ var OKRS = {
       kr: '<strong>641 clientes Oro+VIP con VPP descartados / 6 meses → 0</strong> · Conversión con VPP: 3,3% → 4,0%',
       savings: 'Data Salazar-Israel · ventas premium recuperables',
       owner: 'Por asignar · Lead Management Usados' },
-    { title: 'Corregir error 303 + habilitar swipe/zoom mobile en ficha',
+    { title: 'Habilitar swipe/zoom mobile en ficha + reducir fricción del buy-process',
       macro: 'venta',
       kr: '<strong>Conv. ficha → cotización: 3,9% → 8%</strong> · Dead clicks mobile: 74.943 / mes → <10.000',
       savings: '862 → ~1.700 cotizaciones / mes (sin cambiar tráfico)',
@@ -2008,23 +1986,7 @@ var OKRS = {
           baseline: '41,5%', target: '25%',
           impacts: 'CTA Agendar visible y fijo · Contexto de mercado (rango comparable) · Retargeting vía WhatsApp a 48h · Reemplazar asterisco por ícono ⓘ con explicación · Diferenciar modalidades por beneficio real' }
       ] },
-    2: { macro: 'compra', title: 'Etapa 2 · Tasación y Agendamiento',
-      objective: 'Reducir brecha entre precio online y final + subir show rate',
-      krs: [
-        { desc: 'Brecha precio online vs. oferta final',
-          detail: 'El vendedor ve un precio en el sitio que en sucursal suele ajustarse a la baja (brecha ~15%), obligando a apelar. Genera vaivén, frustración y reduce confianza. Meta <8% elimina el grueso de apelaciones posteriores.',
-          baseline: '~15%', target: '<8%',
-          impacts: 'Calibración con transacciones reales Q1 2026 (qué compró Clicar y a qué precio) · Condición mecánica declarada en el flujo · Explicar factores del precio en el resultado · Comunicar "sujeto a revisión mecánica" al estilo Bruno Fritsch · Apelación digital trazable' },
-        { desc: 'Tasa de no-show a la cita',
-          detail: 'Hoy 28% no asiste a la cita agendada; solo 8% se re-agenda post no-show. Impacto directo en capacidad ociosa del inspector y aging de leads.',
-          baseline: '28%', target: '15%',
-          impacts: 'Paula automatizada (agente virtual WhatsApp) · Confirmación + recordatorios 24h y 2h antes · Botones interactivos Confirmar/Reagendar/Cancelar · Flujo automático de re-agendamiento post no-show · Análisis de causas raíz por sucursal' },
-        { desc: 'Tasa de agendamiento efectiva',
-          detail: '62% de los leads que completan tasación agendan. Con cascada de selección más eficiente y disponibilidad en tiempo real, la meta es 75% (~1.500 agendamientos extra / mes).',
-          baseline: '62%', target: '75%',
-          impacts: 'Disponibilidad en tiempo real desde CRM · Horarios menos concurridos destacados (estilo Kavak) · Cascada Región → Sucursal (estilo Salfa/Gildemeister) · Calendario visual con días disponibles · Geolocalización opcional para sugerir sucursal' }
-      ] },
-    3: { macro: 'compra', title: 'Etapa 3 · Gestión de Leads',
+    2: { macro: 'compra', title: 'Etapa 2 · Gestión de Leads',
       objective: 'Alcanzar a más leads, más rápido y con mejor priorización',
       krs: [
         { desc: 'Contactabilidad global del pool',
@@ -2040,7 +2002,7 @@ var OKRS = {
           baseline: '1,2%', target: '3,0%',
           impacts: 'Scoring de leads para no-FIFO · Motivo obligatorio de no-cierre con lista cerrada · Flujo post-descarte con contacto CC a 48h · Validación anti-duplicados por RUT + patente · Checklist de calificación estandarizado en CRM' }
       ] },
-    4: { macro: 'compra', title: 'Etapa 4 · Oportunidad y Check-In',
+    3: { macro: 'compra', title: 'Etapa 3 · Oportunidad y Check-In',
       objective: 'Eliminar fricción administrativa en la llegada del cliente',
       krs: [
         { desc: 'Tiempo promedio de espera en check-in',
@@ -2056,7 +2018,7 @@ var OKRS = {
           baseline: '72%', target: '88%',
           impacts: 'Notificación push al asesor al check-in · Ficha completa del lead con historial web en el móvil del asesor · Dashboard de carga de asesores en tiempo real · Reglas de balanceo automático de clientes' }
       ] },
-    5: { macro: 'compra', title: 'Etapa 5 · Inspección y Cierre',
+    4: { macro: 'compra', title: 'Etapa 4 · Inspección y Cierre',
       objective: 'Subir la tasa de cierre y registrar el 100% de los no-cierres',
       krs: [
         { desc: 'Tasa de cierre final',
@@ -2158,7 +2120,7 @@ var OKRS = {
         { desc: 'Conversión ficha → cotización',
           detail: 'Hoy 3,9% (862 cotizaciones de 21.872 fichas). Salto crítico del funnel: 862 → ~1.700 cotizaciones / mes sin cambiar tráfico.',
           baseline: '3,9%', target: '8,0%',
-          impacts: 'Corregir error 303 en paso 4 del buy-process · Eliminar foto del header del buy-process · Reemplazar steps por indicador de progreso no clicable · Reducir preguntas innecesarias · Corregir botón "Mes anterior" del calendario (3.198 dead clicks)' },
+          impacts: 'Eliminar foto del header del buy-process · Reemplazar steps por indicador de progreso no clicable · Reducir preguntas innecesarias · Corregir botón "Mes anterior" del calendario (3.198 dead clicks)' },
         { desc: 'Dead clicks en ficha mobile (swipe/zoom)',
           detail: '74.943 dead clicks / mes atribuidos a intentos de swipe y zoom sin respuesta en el carrusel. Afecta prácticamente todos los autos sin vista 360°.',
           baseline: '74.943 / mes', target: '<10.000',
@@ -2374,7 +2336,7 @@ function renderOKRsSlide(i) {
     '<div class="okrs-hero">' +
       '<div class="eyebrow">Vista directorio · OKRs & Impacto</div>' +
       '<h1>🎯 OKRs & Impacto — Journey Usados</h1>' +
-      '<p>Resumen ejecutivo del impacto que mueven las iniciativas del roadmap. 3 North Stars (una por macro), 4 apuestas transformacionales y 45 KRs distribuidos en las 15 etapas. Los baselines provienen de data real (CRM Llaima, BI, Clarity, Salazar-Israel) y las metas son propuestas calibradas a 6 meses — ajustables con los dueños de cada área.</p>' +
+      '<p>Resumen ejecutivo del impacto que mueven las iniciativas del roadmap. 3 North Stars (una por macro), 4 apuestas transformacionales y KRs distribuidos en las etapas del journey. Los baselines provienen de data real (CRM Llaima, BI, Clarity, Salazar-Israel) y las metas son propuestas calibradas a 6 meses — ajustables con los dueños de cada área.</p>' +
     '</div>' +
     '<div class="okrs-section-title">North Stars</div>' +
     '<div class="okrs-section-sub">La métrica que el directorio debe ver primero por cada macro. Si sube, todo lo demás está funcionando.</div>' +
@@ -2447,7 +2409,7 @@ function renderExecSummarySlide(i) {
           '<div class="eje-card-stat"><div class="eje-card-stat-value">5</div><div class="eje-card-stat-label">Procesos</div></div>' +
           '<div class="eje-card-stat"><div class="eje-card-stat-value">22</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
         '</div>' +
-        '<div class="eje-card-scope">Captación Digital · Tasación y Agendamiento · Gestión de Leads · Oportunidad y Check-In · Inspección y Cierre</div>' +
+        '<div class="eje-card-scope">Captación Digital · Gestión de Leads · Oportunidad y Check-In · Inspección y Cierre</div>' +
         '<div class="eje-card-source">Data real CRM Llaima · 158.753 leads Oct 25 – Mar 26 (6 meses)</div>' +
       '</div>' +
       '<div class="eje-card preparación">' +
@@ -2515,7 +2477,7 @@ function renderExecSummarySlide(i) {
       title: 'Eje Venta',
       sub: 'El comprador llega al sitio pero el funnel web y la gestión de leads queman oportunidades de alto valor',
       items: [
-        { rank: 1, t: '3,9% conv. ficha → cotización (salto crítico)', d: 'De 21.872 sesiones en ficha solo 862 inician cotización. Es la mayor oportunidad de mejora del funnel del sitio. Error 303 en paso 4 del buy-process, exceso de preguntas y dead clicks en los steps del header.', i: '862 → ~1.700<br/>cotizaciones / mes' },
+        { rank: 1, t: '3,9% conv. ficha → cotización (salto crítico)', d: 'De 21.872 sesiones en ficha solo 862 inician cotización. Es la mayor oportunidad de mejora del funnel del sitio. Exceso de preguntas y dead clicks en los steps del header generan fricción y abandono.', i: '862 → ~1.700<br/>cotizaciones / mes' },
         { rank: 2, t: '74.943 dead clicks / mes por swipe/zoom mobile', d: 'Carrusel de la ficha sin interacción táctil cuando el auto no tiene 360°. Los usuarios intentan desliizar y ampliar sin respuesta. Afecta prácticamente todos los autos sin vista 360°.', i: '3.792 sesiones<br/>con dead click' },
         { rank: 3, t: '641 clientes Oro+VIP con VPP descartados', d: 'Salazar-Israel en 6 meses. El VPP no protege de descarte: con VPP se descarta +7pp más que sin VPP. Cuando avanzan, convierten mejor (4,0% vs. 3,3%) — potencial premium desperdiciado.', i: 'Enero 26:<br/>280 perdidos' },
         { rank: 4, t: '95,3% descarte con financiamiento', d: 'Segmento de mayor margen: 10pp más de descarte que sin financiamiento. "No contesta" (22.364 casos · 31%) y "Descarte masivo" (8.613 · 12%) dominan el motivo. Sin pre-evaluación crediticia previa al CRM.', i: 'Segmento premium<br/>con peor gestión' },
@@ -2693,19 +2655,14 @@ var RESPONSABLES_POR_ETAPA = {
     { nombre: "Trinidad Madrigal", rol: "Marketing" }
   ],
   2: [
-    { nombre: "Martin Flores", rol: "Canales Digitales" },
-    { nombre: "Constanza Araya", rol: "UX/UI" },
-    { nombre: "Trinidad Madrigal", rol: "Marketing" }
-  ],
-  3: [
     { nombre: "Maryorin Vivas", rol: "Productos Digitales" },
     { nombre: "Jose Tomas Figueroa", rol: "Lead Management Usados" }
   ],
-  4: [
+  3: [
     { nombre: "Barbara Colle", rol: "Productos Digitales" },
     { nombre: "Raul Olivares", rol: "Pricing Usados" }
   ],
-  5: [
+  4: [
     { nombre: "Barbara Colle", rol: "Productos Digitales" },
     { nombre: "Raul Olivares", rol: "Pricing Usados" }
   ],
@@ -2775,23 +2732,19 @@ var CLIENTE_POR_SUBSTEP = {
   "1.3": { kpis: ["7.446 completan el resultado verificado / mes","41,5% drop-off post-resultado (no agendan)","38% abandona al ver la tasación","2.944 sesiones con dead clicks convirtieron igual (usuarios altamente comprometidos)"], lineamientos: ["Explicar por qué el precio es un rango y qué factores lo determinan","Diferenciar modalidades por beneficio real, no solo por nombre","CTA 'Agendar' siempre visible y funcional al primer toque","Retargeting para el 38% que abandona sin agendar"] },
   "1.4": { kpis: ["4.358 llegan a agendar inspección / mes","58,5% conversión resultado -> agenda","34% declara interés en financiamiento al agendar"], lineamientos: ["Cambiar 'Formulario de contacto' por 'Agenda tu inspección'","No pedir datos que ya ingresó el usuario","Calendario visual con días disponibles en lugar de dropdowns","Mostrar resumen de selección antes de confirmar"] },
   "1.5": { kpis: ["Confirmación de la inspección agendada","Momento de mayor compromiso e intención del flujo","% que entiende el próximo paso (TBD)"], lineamientos: ["Pantalla de confirmación memorable con fecha/hora/sucursal destacadas","Checklist claro de documentos que debe llevar","Confirmación automática por WhatsApp y correo con botón de reagendar","CTA alternativo para los que no agendaron"] },
-  "2.1": { kpis: ["Brecha promedio precio online vs. oferta final: ~15%","% clientes que deben apelar para mejorar el precio (TBD)","Confianza del cliente en los precios entregados (TBD)"], lineamientos: ["Entregar un precio inicial lo más cercano posible al final para evitar el vaivén de apelaciones","Explicar con claridad por qué hay dos precios (compra directa vs. parte de pago) y qué los diferencia","Ser explícitos sobre qué factores pueden ajustar el precio (condición mecánica, documentación, etc.)"] },
-  "2.2": { kpis: ["78% elige la sucursal más cercana","% sin sucursal conveniente (TBD)","Tiempo promedio hasta la cita (TBD)"], lineamientos: ["Ofrecer horario extendido y fines de semana","Mostrar tiempo de espera estimado por sucursal"] },
-  "2.3": { kpis: ["22% apertura de email de confirmación","61% lectura del SMS","45% interactúa con el recordatorio 24h"], lineamientos: ["Un solo canal preferido por el cliente","Facilitar reagendar o cancelar en 1 click","Segundo recordatorio 2h antes vía WhatsApp"] },
-  "2.4": { kpis: ["28% tasa de no-show","8% reagenda post-no-show","Razones de no-show (TBD)"], lineamientos: ["Preguntar razón sin juzgar","Ofrecer reagendamiento proactivo por WhatsApp"] },
-  "3.1": { kpis: ["Tiempo percibido hasta el primer contacto (TBD)","% satisfacción con la velocidad de respuesta (TBD)"], lineamientos: ["Dar expectativa clara de cuándo lo van a contactar","No dejar el lead 'en cola' silenciosamente"] },
-  "3.2": { kpis: ["15% clientes re-asignados por indisponibilidad","NPS de la primera conversación (TBD)"], lineamientos: ["Evitar cambiar de agente si ya hubo contacto previo","Pasar la ficha completa al agente que toma el lead"] },
-  "3.3": { kpis: ["53% contactabilidad global","21 hrs (CC) tiempo al primer contacto","NPS de la llamada (TBD)"], lineamientos: ["Máximo 3 intentos antes de pasar a canal alternativo","Respetar horario del cliente","Saludar por nombre y referirse a su vehículo"] },
-  "3.4": { kpis: ["9,3% tasa de agendamiento","% claridad del próximo paso post-llamada (TBD)"], lineamientos: ["Dejar el próximo paso por escrito (WhatsApp)","Confirmar fecha y sucursal al cierre de la llamada"] },
-  "4.1": { kpis: ["% cliente informado del código de oportunidad (TBD)","12% leads sin vinculado correcto al origen web"], lineamientos: ["Compartir código de referencia con el cliente","Consolidar un solo ID por cliente sin duplicados"] },
-  "4.2": { kpis: ["18 min tiempo de espera promedio","34% espera >25 min en horario peak","NPS check-in: 67"], lineamientos: ["Mantener al cliente informado si hay demora","Habilitar check-in digital vía QR","Anunciar en pantalla cuando el asesor esté listo"] },
-  "4.3": { kpis: ["85% vendedores con documentos completos","22 min tiempo de verificación","15% requiere documentación adicional"], lineamientos: ["Enviar checklist 48h antes vía WhatsApp","No repetir verificaciones ya hechas en web","Aceptar documentos digitales cuando sea posible"] },
-  "4.4": { kpis: ["72% tasa de asistencia efectiva","8 min tiempo asignación → contacto","4,2 clientes simultáneos por asesor"], lineamientos: ["Presentar el asesor antes de que el cliente pregunte","Entregar la ficha del lead al asesor con historial web completo"] },
-  "5.1": { kpis: ["45 min tiempo promedio de inspección","% clientes que presencian la inspección (TBD)","Transparencia percibida (TBD)"], lineamientos: ["Invitar al cliente a observar la inspección","Explicar cada hallazgo en lenguaje no técnico","No sorprender con hallazgos al final"] },
-  "5.2": { kpis: ["18 fotos promedio por vehículo","% clientes que reciben el set de fotos (TBD)","Calidad percibida (TBD)"], lineamientos: ["Compartir las fotos con el cliente al cierre","Mostrar cómo se usan las fotos en la inspección"] },
-  "5.3": { kpis: ["15% brecha promedio online vs. oferta final","% clientes que aceptan la brecha (TBD)","Razones desglosadas al cliente (TBD)"], lineamientos: ["Desglosar cada ajuste con evidencia visual","No sorprender con el número final","Ofrecer argumentos comparativos de mercado"] },
-  "5.4": { kpis: ["35 min tiempo promedio de aprobación","60% de ofertas requieren validación de jefatura","92% tasa de aprobación final"], lineamientos: ["Informar al cliente si la espera será >15 min","Ofrecer café o agua durante la espera","Pre-aprobar dentro de rangos sin hacer esperar al cliente"] },
-  "5.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial (TBD)"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
+  "2.1": { kpis: ["Tiempo percibido hasta el primer contacto (TBD)","% satisfacción con la velocidad de respuesta (TBD)"], lineamientos: ["Dar expectativa clara de cuándo lo van a contactar","No dejar el lead 'en cola' silenciosamente"] },
+  "2.2": { kpis: ["15% clientes re-asignados por indisponibilidad","NPS de la primera conversación (TBD)"], lineamientos: ["Evitar cambiar de agente si ya hubo contacto previo","Pasar la ficha completa al agente que toma el lead"] },
+  "2.3": { kpis: ["53% contactabilidad global","21 hrs (CC) tiempo al primer contacto","NPS de la llamada (TBD)"], lineamientos: ["Máximo 3 intentos antes de pasar a canal alternativo","Respetar horario del cliente","Saludar por nombre y referirse a su vehículo"] },
+  "2.4": { kpis: ["9,3% tasa de agendamiento","% claridad del próximo paso post-llamada (TBD)"], lineamientos: ["Dejar el próximo paso por escrito (WhatsApp)","Confirmar fecha y sucursal al cierre de la llamada"] },
+  "3.1": { kpis: ["% cliente informado del código de oportunidad (TBD)","12% leads sin vinculado correcto al origen web"], lineamientos: ["Compartir código de referencia con el cliente","Consolidar un solo ID por cliente sin duplicados"] },
+  "3.2": { kpis: ["18 min tiempo de espera promedio","34% espera >25 min en horario peak","NPS check-in: 67"], lineamientos: ["Mantener al cliente informado si hay demora","Habilitar check-in digital vía QR","Anunciar en pantalla cuando el asesor esté listo"] },
+  "3.3": { kpis: ["85% vendedores con documentos completos","22 min tiempo de verificación","15% requiere documentación adicional"], lineamientos: ["Enviar checklist 48h antes vía WhatsApp","No repetir verificaciones ya hechas en web","Aceptar documentos digitales cuando sea posible"] },
+  "3.4": { kpis: ["72% tasa de asistencia efectiva","8 min tiempo asignación → contacto","4,2 clientes simultáneos por asesor"], lineamientos: ["Presentar el asesor antes de que el cliente pregunte","Entregar la ficha del lead al asesor con historial web completo"] },
+  "4.1": { kpis: ["45 min tiempo promedio de inspección","% clientes que presencian la inspección (TBD)","Transparencia percibida (TBD)"], lineamientos: ["Invitar al cliente a observar la inspección","Explicar cada hallazgo en lenguaje no técnico","No sorprender con hallazgos al final"] },
+  "4.2": { kpis: ["18 fotos promedio por vehículo","% clientes que reciben el set de fotos (TBD)","Calidad percibida (TBD)"], lineamientos: ["Compartir las fotos con el cliente al cierre","Mostrar cómo se usan las fotos en la inspección"] },
+  "4.3": { kpis: ["15% brecha promedio online vs. oferta final","% clientes que aceptan la brecha (TBD)","Razones desglosadas al cliente (TBD)"], lineamientos: ["Desglosar cada ajuste con evidencia visual","No sorprender con el número final","Ofrecer argumentos comparativos de mercado"] },
+  "4.4": { kpis: ["35 min tiempo promedio de aprobación","60% de ofertas requieren validación de jefatura","92% tasa de aprobación final"], lineamientos: ["Informar al cliente si la espera será >15 min","Ofrecer café o agua durante la espera","Pre-aprobar dentro de rangos sin hacer esperar al cliente"] },
+  "4.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial (TBD)"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
   "6.1": { kpis: ["Tiempo adquisición → sistema (TBD)","% unidades con origen trazable al cliente (TBD)"], lineamientos: ["El origen del auto debe ser consultable por el comprador si pregunta","Trazabilidad completa en la ficha pública cuando aplique"] },
   "6.2": { kpis: ["Tiempo compra → auto físicamente recibido (TBD)","% vendedores informados de la recepción del auto (TBD)"], lineamientos: ["Notificar al vendedor cuando el auto es recibido (transparencia post-venta)","Registrar discrepancias con evidencia para retroalimentar al origen"] },
   "6.3": { kpis: ["% ubicación correcta cuando el comprador pregunta (TBD)","Tiempo recepción → disponibilidad para visita (TBD)"], lineamientos: ["Mantener la ubicación actualizada en tiempo real","Evitar unidades 'fantasma' entre recepción y publicación"] },
@@ -2800,7 +2753,7 @@ var CLIENTE_POR_SUBSTEP = {
   "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación (TBD)","% fichas con todos los campos completos (TBD)"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
   "8.2": { kpis: ["200 uds (10,1%) que el cliente no puede ver","166 uds atrapadas 'En acopio' (83%)","Tiempo promedio retenido (TBD)"], lineamientos: ["Destrabar inventario retenido semanalmente","Owner claro por cada motivo de retención"] },
   "8.3": { kpis: ["580 uds (22,5%) no elegibles para publicar","403 reservadas (69% del no disponible)","166 con problema legal"], lineamientos: ["Solo reservar con cliente comprometido","Resolver problemas legales con SLA definido","Evitar reservas fantasma que inmovilizan stock"] },
-  "9.1": { kpis: ["204 uds (11,4%) con placeholder 'Estamos preparando esta imagen'","RM concentra 114 de esas 204 uds (55,9%)","Tiempo publicación → foto capturada (TBD)"], lineamientos: ["Toda unidad publicada debe tener foto en <72h","Priorizar stock premium y de alto ticket"] },
+  "9.1": { kpis: ["204 uds (11,4%) con placeholder 'Estamos preparando esta imagen'","RM concentra 114 de esas 204 uds (55,9%)","~10,1 días promedio entre disponibilidad en sucursal y foto Impel (rango 6,6 VPP Usados → 13,7 VPP Nuevos)"], lineamientos: ["Toda unidad publicada debe tener foto en <72h","Priorizar stock premium y de alto ticket"] },
   "9.2": { kpis: ["1.211 uds con foto Impel (67,7% del publicado)","579 uds publicadas sin Impel lista (32,3%)","Sur lidera con 74,8% / RM peor con 65,3%"], lineamientos: ["Fondo limpio es el mínimo aceptable para publicar","Automatizar entrega al sitio web ni bien Impel esté listo"] },
   "9.3": { kpis: ["% en cabina virtual 360 (TBD - BI no separa Tier 1 de Tier 2)","Techo teórico actual: 1.211 uds","Diferencial de conversión vs. foto estándar (TBD)"], lineamientos: ["Priorizar segmento lujo en las primeras semanas","Plan de escalamiento con hitos semanales publicados"] },
   "9.4": { kpis: ["579 uds en backlog visible (32,3% del publicado)","375 con foto de inspección que ensucia la vitrina","204 sin ninguna foto (placeholder)"], lineamientos: ["SLA máximo 72h para upgrade o despublicar","Backlog visible con owner asignado por zona"] },
@@ -2811,7 +2764,7 @@ var CLIENTE_POR_SUBSTEP = {
   "11.1": { kpis: ["136.334 sesiones totales (30 días)","85,7% tráfico mobile (106.867 ses.)","58,4% bounce rate — más de la mitad abandona sin interactuar","3:07 min duración promedio por sesión"], lineamientos: ["Diseño mobile-first real: 85,7% del tráfico decide desde el móvil","La narrativa debe responder a las 4 etapas del viaje del comprador (categoría → modelo → precio → confianza)","El freno principal es la confianza, no el precio — priorizar testimonios, garantías y transparencia"] },
   "11.2": { kpis: ["62.955 sesiones del catálogo (30 días)","56% rebota en pág. 1 sin ver ningún auto","41% llegan a ficha desde catálogo","2.749 clics en botón filtros (solo 4,4% de sesiones)","273K dead clicks mensuales en banners no clicables"], lineamientos: ["Listado ordenado por calidad visual: autos sin foto al final","Filtros y buscador visibles — el usuario quiere refinar","Cero dead clicks: banner clicable o banner eliminado","Si el filtro no tiene stock, sugerir alternativas en vez de mostrar vacío"] },
   "11.3": { kpis: ["21.872 sesiones en ficha (30 días)","4:30 min tiempo promedio en página","17,3% de sesiones con dead click (3.792)","56,1% quickback rate (abandono rápido)","74.943 dead clicks mensuales por falta de swipe/zoom"], lineamientos: ["El carrusel de fotos debe responder a gestos táctiles (swipe + zoom)","Indicador visual 'Desliza para ver más fotos' en mobile","Marca de agua 'Foto en proceso' para autos con foto de inspección, gestionar expectativa visual"] },
-  "11.4": { kpis: ["862 sesiones inician cotización (30 días)","3,9% conversión ficha -> cotización — mayor oportunidad del funnel","19,4% de sesiones con dead click (167 de 862)","Error 303 en paso 4 del buy-process"], lineamientos: ["Resolver el error 303 del paso 4 — prioridad crítica","Indicador de progreso claro y no clicable en los steps","Solo preguntar lo esencial: menos campos = más conversión","Confirmar al usuario cada hito con mensaje claro"] },
+  "11.4": { kpis: ["862 sesiones inician cotización (30 días)","3,9% conversión ficha -> cotización — mayor oportunidad del funnel","19,4% de sesiones con dead click (167 de 862)"], lineamientos: ["Indicador de progreso claro y no clicable en los steps","Solo preguntar lo esencial: menos campos = más conversión","Confirmar al usuario cada hito con mensaje claro"] },
   "12.1": { kpis: ["104.747 leads ingresados (Oct 25 – Mar 26)","68,8% tasa de descarte global","5,3% conversión (5.587 entregados)","13.548 leads sin gestionar en etapa 'Nuevo' (13%)"], lineamientos: ["Nunca dejar un lead sin dueño / sin gestión >24h","Replicar condiciones de marzo 2026 (mejor mes, 8,2% conversión)","Capacity planning en meses peak (Ene 26 con +25% de volumen convirtió peor)"] },
   "12.2": { kpis: ["Leads 'Caliente' se descartan +13pp más que 'Frío'","Conversión Caliente 3,9% vs. Frío 4,6% (promedio)","Tibio en Feb 26 convirtió 12,3% — señal no aprovechada"], lineamientos: ["No priorizar por 'temperatura' hasta validar que correlaciona con conversión real","Criterio único de temperatura entre sucursales, revisado trimestralmente","Scoring basado en comportamiento observado, no en intuición del asesor"] },
   "12.3": { kpis: ["+7pp descarte con VPP vs. sin VPP","641 Oro + VIP con VPP descartados (6 meses)","4,0% conversión cuando avanzan vs. 3,3% sin VPP"], lineamientos: ["Bloquear descarte automático de leads Oro/VIP + VPP sin revisión","SLA de contacto más agresivo para clientes con VPP","Reporte visible por sucursal del % Premium descartados"] },
@@ -2912,21 +2865,6 @@ var BENCHMARK_POR_SUBSTEP = {
       "Benchmark externo (Kavak / Salfa / Gildemeister) pendiente de levantar — confirmar si sus catálogos resuelven la visibilidad del filtro y el tratamiento de autos sin foto."
     ]
   },
-  "2.2": {
-    referentes: "Bruno Fritsch · Kavak · Gildemeister · Salfa · TrueCar · DFSK",
-    hallazgos: [
-      "<strong>Bruno Fritsch</strong> es el único referente que muestra un resumen de la selección en tiempo real ('Has seleccionado el día X a las Y hrs').",
-      "Ningún referente chileno — incluyendo Clicar — confirma visualmente la selección antes de enviar.",
-      "<strong>Kavak</strong> indica qué horarios son 'menos concurridos', reduciendo la ansiedad del usuario y distribuyendo mejor la demanda.",
-      "Ningún referente chileno implementa el hint de horarios de menor demanda.",
-      "<strong>Gildemeister</strong> y <strong>Salfa</strong> filtran sucursales correctamente en cascada (Región → Sucursal); Clicar requiere tres campos para llegar al mismo dato."
-    ],
-    oportunidades: [
-      "Resumen de la selección en tiempo real al estilo Bruno Fritsch antes de confirmar.",
-      "Marcar horarios 'menos concurridos' al estilo Kavak.",
-      "Consolidar Región → Sucursal en cascada como Gildemeister / Salfa."
-    ]
-  }
 };
 
 function renderBenchmarkChip(stageId, subNum) {
@@ -2955,8 +2893,8 @@ var MACRO_META = {
   compra: {
     num: 1,
     title: "Compra",
-    description: "Recorrido completo del cliente vendedor desde que llega a clicar.cl hasta el cierre comercial en sucursal. Cubre captación digital, tasación y agendamiento, gestión de leads en Contact Center, check-in presencial e inspección con cierre comercial. El análisis se apoya en data real del CRM Llaima.",
-    shortDescription: "Captación digital, tasación, gestión de leads en CC, check-in e inspección con cierre comercial.",
+    description: "Recorrido completo del cliente vendedor desde que llega a clicar.cl hasta el cierre comercial en sucursal. Cubre captación digital, gestión de leads en Contact Center, check-in presencial e inspección con cierre comercial. El análisis se apoya en data real del CRM Llaima.",
+    shortDescription: "Captación digital, gestión de leads en CC, check-in e inspección con cierre comercial.",
     status: { text: "Data real - Oct 2025 a Mar 2026", variant: "real" },
     disabled: false,
     universoValue: "158.753",
@@ -2993,15 +2931,18 @@ var MACRO_META = {
   venta: {
     num: 3,
     title: "Venta",
-    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Estructura inicial levantada; pendiente de integrar data real.",
+    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Análisis apoyado en data real de Salazar-Israel (104.747 leads) y Microsoft Clarity.",
     shortDescription: "Captación digital, gestión de leads, reserva y medios de pago, firma de contrato, facturación y entrega.",
-    status: { text: "Estructura inicial - data pendiente", variant: "wip" },
+    status: { text: "Data real - Oct 2025 a Mar 2026", variant: "real" },
     disabled: false,
-    universoValue: "TBD", universoValueClass: "placeholder",
-    universoLabel: "Compradores / mes", universoSub: "Pendiente de integración con CRM de venta", universoSubClass: "action",
-    periodoValue: "TBD", periodoValueClass: "placeholder",
-    periodoLabel: "Periodo", periodoSub: "Pendiente de definir ventana de análisis", periodoSubClass: "action",
-    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Los KPIs están como TBD hasta integrar data real del CRM de venta y operaciones de entrega."
+    universoValue: "104.747",
+    universoValueClass: "",
+    universoLabel: "Leads analizados",
+    universoSub: "Data Salazar-Israel · 6 meses", universoSubClass: "",
+    periodoValue: "6 meses",
+    periodoValueClass: "",
+    periodoLabel: "Periodo", periodoSub: "Oct 2025 - Mar 2026 (cerrado)", periodoSubClass: "",
+    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Data real integrada para Captación Digital (Clarity) y Gestión de Leads (Salazar-Israel 104.747 leads). Reserva, Firma y Facturación con data parcial, pendiente de ampliar."
   }
 };
 var currentMacro = "compra";
@@ -3316,7 +3257,7 @@ function renderVtaFunnelSection(slideIdx) {
         '</div>' +
       '</div>' +
     '</div>' +
-    '<div class="data-insight"><strong>Salto crítico:</strong> de 21.872 fichas a solo 862 cotizaciones = <strong>3,9% de conversión</strong>. Es la mayor oportunidad de mejora del funnel del sitio. Trabajar sobre los dead clicks de la ficha (74.943/mes en swipe/zoom) y la fricción del buy-process (error 303 en paso 4, exceso de preguntas) puede mover este número con impacto directo en leads.</div>' +
+    '<div class="data-insight"><strong>Salto crítico:</strong> de 21.872 fichas a solo 862 cotizaciones = <strong>3,9% de conversión</strong>. Es la mayor oportunidad de mejora del funnel del sitio. Trabajar sobre los dead clicks de la ficha (74.943/mes en swipe/zoom) y la fricción del buy-process (exceso de preguntas y steps clicables) puede mover este número con impacto directo en leads.</div>' +
     '</div>' +
     '<div class="vta-view" data-vta-pane="' + blockId + '-table">' +
       '<div class="vta-block">' + funnelTable + '</div>' +
@@ -3895,30 +3836,36 @@ function initPrepCharts() {
 // ============================================================
 // INSPECCION Y CIERRE - DATA REAL por tipo de vínculo (Compra vs VPP)
 // ============================================================
-var INSP_MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26','Abr 26'];
+var INSP_MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
 var INSP_COMPRA = {
   label: 'Compra',
   color: '#0F6FC6',
-  creadas: [1037, 884, 784, 1030, 668, 1060, 615],
-  inspeccionadas: [872, 770, 669, 851, 583, 800, 466],
-  compradas: [385, 311, 364, 448, 287, 372, 242],
-  insp_pct: [84, 87, 85, 83, 87, 75, 76],
-  conv_pct: [44, 40, 54, 53, 49, 47, 52],
-  total_creadas: 6078, total_insp: 5011, total_comp: 2409,
-  pct_insp: 82, pct_conv: 48, pct_total: 40,
-  label_insp: '% Insp. sobre Oportunidad'
+  leads: [27256, 31333, 20554, 31768, 21498, 26447],
+  creadas: [1037, 884, 784, 1030, 668, 1060],
+  inspeccionadas: [872, 770, 669, 851, 583, 800],
+  compradas: [385, 311, 364, 448, 287, 372],
+  insp_pct: [84.1, 87.1, 85.3, 82.6, 87.3, 75.5],
+  conv_pct: [37.1, 35.2, 46.4, 43.5, 43.0, 35.1],
+  conv_lead_pct: [1.4, 1.0, 1.8, 1.4, 1.3, 1.4],
+  total_leads: 158856, total_creadas: 5463, total_insp: 4545, total_comp: 2167,
+  pct_insp: 83.2, pct_conv: 47.7, pct_conv_lead: 1.4, pct_total: 39.7,
+  label_insp: '% Insp. sobre Oportunidad',
+  entry_label: 'Leads totales', entry_key: 'leads'
 };
 var INSP_VPP = {
   label: 'VPP',
   color: '#F0A830',
-  creadas: [7201, 6715, 5982, 6820, 5869, 6963, null],
-  inspeccionadas: [1809, 1750, 1523, 1714, 1382, 1751, null],
-  compradas: [989, 928, 841, 881, 675, 792, null],
-  insp_pct: [25, 26, 25, 25, 24, 25, null],
-  conv_pct: [55, 53, 55, 51, 49, 45, null],
-  total_creadas: 39550, total_insp: 9929, total_comp: 5106,
-  pct_insp: 25, pct_conv: 51, pct_total: 13,
-  label_insp: '% Insp. sobre Tasación'
+  tasaciones: [7201, 6715, 5982, 6820, 5869, 6963],
+  creadas: [2262, 2220, 1935, 2228, 1747, 2093],
+  inspeccionadas: [1809, 1750, 1523, 1714, 1382, 1751],
+  compradas: [989, 928, 841, 881, 675, 792],
+  insp_pct: [25, 26, 25, 25, 24, 25],
+  conv_pct: [55, 53, 55, 51, 49, 45],
+  conv_tas_pct: [14, 14, 14, 13, 12, 11],
+  total_tasaciones: 39550, total_creadas: 12485, total_insp: 9929, total_comp: 5106,
+  pct_insp: 25, pct_conv: 51, pct_tas: 31.5, pct_total: 13,
+  label_insp: '% Insp. sobre Tasación',
+  entry_label: 'Tasaciones', entry_key: 'tasaciones'
 };
 
 function buildInspVolumenCfg() {
@@ -3927,18 +3874,19 @@ function buildInspVolumenCfg() {
     data: {
       labels: INSP_MESES,
       datasets: [
-        { label: 'Compra - Creadas', data: INSP_COMPRA.creadas, backgroundColor: '#0F6FC655', borderColor: '#0F6FC6', borderWidth: 1, stack: 'compra' },
+        { label: 'Compra - Oportunidades', data: INSP_COMPRA.creadas, backgroundColor: '#0F6FC655', borderColor: '#0F6FC6', borderWidth: 1, stack: 'compra' },
         { label: 'Compra - Inspeccionadas', data: INSP_COMPRA.inspeccionadas, backgroundColor: '#0F6FC6aa', borderColor: '#0F6FC6', borderWidth: 1, stack: 'compra' },
         { label: 'Compra - Compradas', data: INSP_COMPRA.compradas, backgroundColor: '#0F6FC6', borderColor: '#0B1F65', borderWidth: 1, stack: 'compra' },
-        { label: 'VPP - Creadas', data: INSP_VPP.creadas, backgroundColor: '#F0A83055', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
-        { label: 'VPP - Inspeccionadas', data: INSP_VPP.inspeccionadas, backgroundColor: '#F0A830aa', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
+        { label: 'VPP - Tasaciones', data: INSP_VPP.tasaciones, backgroundColor: '#F0A83033', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
+        { label: 'VPP - Oportunidades', data: INSP_VPP.creadas, backgroundColor: '#F0A83077', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
+        { label: 'VPP - Inspeccionadas', data: INSP_VPP.inspeccionadas, backgroundColor: '#F0A830bb', borderColor: '#F0A830', borderWidth: 1, stack: 'vpp' },
         { label: 'VPP - Compradas', data: INSP_VPP.compradas, backgroundColor: '#F0A830', borderColor: '#8A5A00', borderWidth: 1, stack: 'vpp' }
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top', labels: { color: '#404040', font: { size: 11 }, boxWidth: 14 } },
+        legend: { position: 'top', labels: { color: '#404040', font: { size: 10 }, boxWidth: 12 } },
         tooltip: { backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding: 10 }
       },
       scales: {
@@ -3947,6 +3895,43 @@ function buildInspVolumenCfg() {
       }
     }
   };
+}
+
+function inspBuildTable(tabId) {
+  var h = '<table class="data-table"><thead><tr><th>Métrica</th>';
+  for (var m = 0; m < INSP_MESES.length; m++) h += '<th>' + INSP_MESES[m] + '</th>';
+  h += '<th>Total</th></tr></thead><tbody>';
+  var rowCompra = function(label, data, tot, fmt) {
+    var r = '<tr><td><span class="ins-dot" style="background:#0F6FC6"></span>' + label + '</td>';
+    for (var i = 0; i < data.length; i++) r += '<td>' + (fmt ? fmt(data[i]) : data[i].toLocaleString('es-CL')) + '</td>';
+    r += '<td><strong>' + (fmt ? fmt(tot) : tot.toLocaleString('es-CL')) + '</strong></td></tr>';
+    return r;
+  };
+  var rowVpp = function(label, data, tot, fmt) {
+    var r = '<tr><td><span class="ins-dot" style="background:#F0A830"></span>' + label + '</td>';
+    for (var i = 0; i < data.length; i++) r += '<td>' + (fmt ? fmt(data[i]) : data[i].toLocaleString('es-CL')) + '</td>';
+    r += '<td><strong>' + (fmt ? fmt(tot) : tot.toLocaleString('es-CL')) + '</strong></td></tr>';
+    return r;
+  };
+  var pctFmt = function(v){ return v.toLocaleString('es-CL', {maximumFractionDigits:1}) + '%'; };
+  if (tabId === 'volumen') {
+    h += rowCompra('Compra — Leads totales', INSP_COMPRA.leads, INSP_COMPRA.total_leads);
+    h += rowCompra('Compra — Oportunidades', INSP_COMPRA.creadas, INSP_COMPRA.total_creadas);
+    h += rowCompra('Compra — Inspeccionadas', INSP_COMPRA.inspeccionadas, INSP_COMPRA.total_insp);
+    h += rowCompra('Compra — Compradas', INSP_COMPRA.compradas, INSP_COMPRA.total_comp);
+    h += rowVpp('VPP — Tasaciones', INSP_VPP.tasaciones, INSP_VPP.total_tasaciones);
+    h += rowVpp('VPP — Oportunidades', INSP_VPP.creadas, INSP_VPP.total_creadas);
+    h += rowVpp('VPP — Inspeccionadas', INSP_VPP.inspeccionadas, INSP_VPP.total_insp);
+    h += rowVpp('VPP — Compradas', INSP_VPP.compradas, INSP_VPP.total_comp);
+  } else if (tabId === 'pct-insp') {
+    h += rowCompra('Compra — % Insp. / Oportunidad', INSP_COMPRA.insp_pct, INSP_COMPRA.pct_insp, pctFmt);
+    h += rowVpp('VPP — % Insp. / Tasación', INSP_VPP.insp_pct, INSP_VPP.pct_insp, pctFmt);
+  } else if (tabId === 'pct-conv') {
+    h += rowCompra('Compra — % Compra / Inspección', INSP_COMPRA.conv_pct, INSP_COMPRA.pct_conv, pctFmt);
+    h += rowVpp('VPP — % Compra / Inspección', INSP_VPP.conv_pct, INSP_VPP.pct_conv, pctFmt);
+  }
+  h += '</tbody></table>';
+  return h;
 }
 
 function buildInspLineCfg(field, unit) {
@@ -3989,27 +3974,40 @@ function buildInspChart(canvasId, tabId) {
 }
 
 function renderInspVinculoSection(slideIdx) {
-  var summaryCard = function(d){
-    return '<div class="ins-summary-card" style="border-left: 4px solid ' + d.color + '">' +
-      '<div class="ins-summary-head"><span class="ins-summary-dot" style="background:' + d.color + '"></span><span class="ins-summary-title">' + d.label + '</span></div>' +
-      '<div class="ins-summary-row"><span>Creadas</span><strong>' + d.total_creadas.toLocaleString('es-CL') + '</strong></div>' +
-      '<div class="ins-summary-row"><span>Inspeccionadas</span><strong>' + d.total_insp.toLocaleString('es-CL') + ' (' + d.pct_insp + '%)</strong></div>' +
-      '<div class="ins-summary-row"><span>Compradas</span><strong>' + d.total_comp.toLocaleString('es-CL') + ' (' + d.pct_conv + '%)</strong></div>' +
-      '<div class="ins-summary-row highlight"><span>Conversión total</span><strong>' + d.pct_total + '%</strong></div>' +
-    '</div>';
-  };
+  var summaryCompra = '<div class="ins-summary-card" style="border-left: 4px solid ' + INSP_COMPRA.color + '">' +
+    '<div class="ins-summary-head"><span class="ins-summary-dot" style="background:' + INSP_COMPRA.color + '"></span><span class="ins-summary-title">Compra</span></div>' +
+    '<div class="ins-summary-row"><span>Leads totales</span><strong>' + INSP_COMPRA.total_leads.toLocaleString('es-CL') + '</strong></div>' +
+    '<div class="ins-summary-row"><span>Oportunidades</span><strong>' + INSP_COMPRA.total_creadas.toLocaleString('es-CL') + '</strong></div>' +
+    '<div class="ins-summary-row"><span>Inspeccionadas</span><strong>' + INSP_COMPRA.total_insp.toLocaleString('es-CL') + ' (' + INSP_COMPRA.pct_insp + '%)</strong></div>' +
+    '<div class="ins-summary-row"><span>Compradas</span><strong>' + INSP_COMPRA.total_comp.toLocaleString('es-CL') + ' (' + INSP_COMPRA.pct_conv.toLocaleString('es-CL',{maximumFractionDigits:1}) + '%)</strong></div>' +
+    '<div class="ins-summary-row highlight"><span>% Compras / Leads</span><strong>' + INSP_COMPRA.pct_conv_lead + '%</strong></div>' +
+  '</div>';
+  var summaryVpp = '<div class="ins-summary-card" style="border-left: 4px solid ' + INSP_VPP.color + '">' +
+    '<div class="ins-summary-head"><span class="ins-summary-dot" style="background:' + INSP_VPP.color + '"></span><span class="ins-summary-title">VPP</span></div>' +
+    '<div class="ins-summary-row"><span>Tasaciones</span><strong>' + INSP_VPP.total_tasaciones.toLocaleString('es-CL') + '</strong></div>' +
+    '<div class="ins-summary-row"><span>Oportunidades</span><strong>' + INSP_VPP.total_creadas.toLocaleString('es-CL') + '</strong></div>' +
+    '<div class="ins-summary-row"><span>Inspeccionadas</span><strong>' + INSP_VPP.total_insp.toLocaleString('es-CL') + ' (' + INSP_VPP.pct_insp + '%)</strong></div>' +
+    '<div class="ins-summary-row"><span>Compradas</span><strong>' + INSP_VPP.total_comp.toLocaleString('es-CL') + ' (' + INSP_VPP.pct_conv + '%)</strong></div>' +
+    '<div class="ins-summary-row highlight"><span>% Compras / Tasaciones</span><strong>' + INSP_VPP.pct_total + '%</strong></div>' +
+  '</div>';
   return '<div class="data-section">' +
     '<div class="data-section-header">' +
-      '<div><div class="data-section-title">Inspección y cierre - Compra vs VPP</div><div class="data-section-subtitle">Funnel mensual Creadas -> Inspeccionadas -> Compradas separado por tipo de vínculo. Ventana: Oct 2025 - Abr 2026 (VPP sin data de Abril aún).</div></div>' +
+      '<div><div class="data-section-title">Inspección y cierre - Compra vs VPP</div><div class="data-section-subtitle">Funnel mensual Leads/Tasaciones → Oportunidades → Inspeccionadas → Compradas separado por tipo de vínculo. Ventana: Oct 2025 - Mar 2026.</div></div>' +
+      '<div class="vta-view-toggle"><button data-insp-view="chart" class="active" data-insp-slide="' + slideIdx + '">Gráfico</button><button data-insp-view="table" data-insp-slide="' + slideIdx + '">Tabla</button></div>' +
     '</div>' +
-    '<div class="ins-summary-grid">' + summaryCard(INSP_COMPRA) + summaryCard(INSP_VPP) + '</div>' +
+    '<div class="ins-summary-grid">' + summaryCompra + summaryVpp + '</div>' +
     '<div class="data-tabs" data-insp-tabs="' + slideIdx + '">' +
       '<button class="data-tab active" data-insp-tab="volumen">Volumen mensual (funnel)</button>' +
       '<button class="data-tab" data-insp-tab="pct-insp">% Inspección</button>' +
       '<button class="data-tab" data-insp-tab="pct-conv">% Conversión a Compra</button>' +
     '</div>' +
-    '<div class="chart-wrap" style="height: 380px; margin-top: 12px;"><canvas id="insp-chart-' + slideIdx + '" data-insp-chart data-insp-slide="' + slideIdx + '"></canvas></div>' +
-    '<div class="data-insight"><strong>Dos funnels muy distintos:</strong> Compra convierte 40% end-to-end con un pipeline pequeno (6.078 creadas) y alta tasa de inspección (82%). VPP convierte solo 13% end-to-end pero con volumen masivo (39.550 creadas) y filtro fuerte en inspección (solo 25%). Ambos comparten una tasa de cierre post-inspección similar (~48-51%), indicando que una vez que el auto llega a la mesa, la decisión de compra es comparable - la diferencia está en la pre-calificación. Monitorear la caída de Marzo 26 en Compra (75% insp, vs 83-87% histórico).</div>' +
+    '<div data-insp-block="chart" data-insp-slide-block="' + slideIdx + '">' +
+      '<div class="chart-wrap" style="height: 380px; margin-top: 12px;"><canvas id="insp-chart-' + slideIdx + '" data-insp-chart data-insp-slide="' + slideIdx + '"></canvas></div>' +
+    '</div>' +
+    '<div data-insp-block="table" data-insp-slide-block="' + slideIdx + '" style="display:none; margin-top:12px;" id="insp-table-' + slideIdx + '">' +
+      inspBuildTable('volumen') +
+    '</div>' +
+    '<div class="data-insight"><strong>Dos funnels muy distintos:</strong> Compra convierte ~40% Oportunidad → Compra con un pipeline pequeño (5.463 oportunidades en 6 meses) y alta tasa de inspección (83,2%). VPP procesa 39.550 tasaciones pero solo 31% llegan a oportunidad, 25% de las tasaciones a inspección y termina en 13% compras/tasaciones. La tasa de cierre post-inspección es comparable (~48-51%), indicando que la diferencia está en la pre-calificación. Alerta: caída en Marzo 26 en ambos (Compra 75% insp vs. 83-87% histórico; VPP 45% conv. vs. 53-55%).</div>' +
   '</div>';
 }
 
@@ -4022,13 +4020,31 @@ function initInspCharts() {
     buildInspChart(canvas.id, 'volumen');
     var tabs = document.querySelectorAll('[data-insp-tabs="' + slideIdx + '"] .data-tab');
     for (var t = 0; t < tabs.length; t++) {
-      (function(tab, cvId, tabsAll){
+      (function(tab, cvId, tabsAll, sIdx){
         tab.addEventListener('click', function(){
           for (var j = 0; j < tabsAll.length; j++) tabsAll[j].classList.remove('active');
           tab.classList.add('active');
-          buildInspChart(cvId, tab.getAttribute('data-insp-tab'));
+          var tabId = tab.getAttribute('data-insp-tab');
+          buildInspChart(cvId, tabId);
+          var tbl = document.getElementById('insp-table-' + sIdx);
+          if (tbl) tbl.innerHTML = inspBuildTable(tabId);
         });
-      })(tabs[t], canvas.id, tabs);
+      })(tabs[t], canvas.id, tabs, slideIdx);
+    }
+    var viewBtns = document.querySelectorAll('[data-insp-view][data-insp-slide="' + slideIdx + '"]');
+    for (var v = 0; v < viewBtns.length; v++) {
+      (function(btn, sIdx){
+        btn.addEventListener('click', function(){
+          var view = btn.getAttribute('data-insp-view');
+          var sibs = document.querySelectorAll('[data-insp-view][data-insp-slide="' + sIdx + '"]');
+          for (var k = 0; k < sibs.length; k++) sibs[k].classList.remove('active');
+          btn.classList.add('active');
+          var blocks = document.querySelectorAll('[data-insp-block][data-insp-slide-block="' + sIdx + '"]');
+          for (var b = 0; b < blocks.length; b++) {
+            blocks[b].style.display = blocks[b].getAttribute('data-insp-block') === view ? '' : 'none';
+          }
+        });
+      })(viewBtns[v], slideIdx);
     }
   }
 }
@@ -4490,6 +4506,7 @@ function renderSubstepSlide(i, stage, sub) {
     else if (sub.chartType === 'vta-mercado') chartHtml = renderVtaMercadoSection(i);
     else if (sub.chartType === 'vta-funnel') chartHtml = renderVtaFunnelSection(i);
     else if (sub.chartType && sub.chartType.indexOf('vta-leads-') === 0) chartHtml = renderVtaLeadsSection(i, sub.chartType);
+    else if (sub.chartType === 'firma-hallazgos') chartHtml = renderFirmaHallazgosSection(i);
     else chartHtml = renderChartSection(i, sub.chartType);
   }
 
@@ -4505,6 +4522,43 @@ function renderSubstepSlide(i, stage, sub) {
       '<div class="col-block kpis-block"><div class="col-header kpis">KPIs</div><div class="col-body">' + kpisHtml + '</div></div>' +
       '<div class="col-block hallazgos-block"><div class="col-header hallazgos">Hallazgos</div><div class="col-body"><ul class="bullet-list">' + hHtml + '</ul></div></div>' +
       '<div class="col-block mejoras-block"><div class="col-header mejoras">Mejoras propuestas</div><div class="col-body"><ul class="bullet-list">' + mHtml + '</ul></div></div>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderFirmaHallazgosSection(slideIdx) {
+  var findings = [
+    { cat: 'eco', tag: 'Ecosistema', title: 'Firma en plataforma externa',
+      desc: 'El contrato se celebra y almacena fuera del ecosistema de usados, sin integración nativa con Quiter ni Autofact.' },
+    { cat: 'eco', tag: 'Ecosistema', title: 'Pérdida de trazabilidad',
+      desc: 'No hay registro unificado del ciclo de venta; el contrato queda desconectado del historial del proceso.' },
+    { cat: 'op', tag: 'Operación manual', title: 'Verificación manual diaria Quiter vs. Autofact',
+      desc: 'El equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas antes de autorizar cada transferencia.' },
+    { cat: 'vol', tag: 'Volumen y riesgo', title: 'Alto volumen mensual de transferencias',
+      desc: 'Se transfieren entre 1.700 y 1.800 unidades por mes mediante un proceso manual, lo que representa un riesgo operativo significativo.' },
+    { cat: 'vol', tag: 'Volumen y riesgo', title: '100-150 unidades por alto DPS',
+      desc: 'Un subconjunto mensual se transfiere por alto DPS con riesgo diferenciado. Estas unidades requieren revisión manual diaria, sin trazabilidad propia dentro del ecosistema.' }
+  ];
+  var cards = '';
+  for (var i = 0; i < findings.length; i++) {
+    var f = findings[i];
+    cards += '<div class="firma-card ' + f.cat + '">' +
+      '<div class="firma-card-num">' + (i + 1) + '</div>' +
+      '<div class="firma-card-title">' + f.title + '</div>' +
+      '<div class="firma-card-desc">' + f.desc + '</div>' +
+      '<span class="firma-card-tag">' + f.tag + '</span>' +
+    '</div>';
+  }
+  return '<div class="firma-section">' +
+    '<div class="firma-section-header">' +
+      '<div><div class="firma-section-title">Hallazgos clave del proceso de firma</div>' +
+      '<div class="firma-section-sub">5 puntos críticos agrupados por categoría · base para el roadmap de mejoras</div></div>' +
+    '</div>' +
+    '<div class="firma-grid">' + cards + '</div>' +
+    '<div class="firma-legend">' +
+      '<span class="firma-legend-item"><span class="firma-legend-dot eco"></span>Ecosistema — integración y trazabilidad</span>' +
+      '<span class="firma-legend-item"><span class="firma-legend-dot op"></span>Operación manual — control humano crítico</span>' +
+      '<span class="firma-legend-item"><span class="firma-legend-dot vol"></span>Volumen y riesgo — escala y casos diferenciados</span>' +
     '</div>' +
   '</div>';
 }
