@@ -74,16 +74,19 @@
 
   /* ============ CHEVRONS ============ */
   .chevrons{
-    position:fixed;top:52px;left:240px;right:0;height:56px;z-index:40;
+    position:fixed;top:52px;left:0;right:0;height:74px;z-index:40;
     background:var(--paper);border-bottom:1px solid var(--border);
     display:flex;align-items:stretch;padding:0 28px;gap:4px;
   }
   .chev{
-    flex:1;min-width:0;display:flex;align-items:center;justify-content:center;
-    gap:10px;font-size:12.5px;font-weight:500;letter-spacing:0.02em;
+    flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:4px;font-size:12.5px;font-weight:500;letter-spacing:0.02em;
     color:var(--ink-500);cursor:pointer;position:relative;
-    padding:0 14px;transition:color .15s;
+    padding:8px 14px;transition:color .15s;text-align:center;
   }
+  .chev-top{display:flex;align-items:center;gap:8px}
+  .chev-sub{font-size:9.5px;font-family:'IBM Plex Sans',sans-serif;color:var(--ink-400);font-weight:400;letter-spacing:0.01em;line-height:1.25;max-width:100%;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical}
+  .chev.active .chev-sub{color:var(--green-700);font-weight:500}
   .chev::after{
     content:"";position:absolute;right:-10px;top:50%;transform:translateY(-50%);
     width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;
@@ -102,43 +105,12 @@
     background:var(--green-800);
   }
 
-  /* ============ SIDENAV ============ */
-  .sidenav{
-    position:fixed;left:0;top:52px;bottom:0;width:240px;z-index:45;
-    background:var(--paper-2);border-right:1px solid var(--border);
-    padding:20px 0;overflow-y:auto;
-  }
-  .sidenav-title{
-    font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;
-    color:var(--ink-500);font-weight:600;padding:0 22px 14px;
-  }
-  .nav-list{list-style:none;margin:0;padding:0 10px}
-  .nav-item{
-    display:flex;align-items:center;gap:10px;padding:8px 12px;
-    font-size:12.5px;color:var(--ink-700);cursor:pointer;
-    border-radius:3px;margin-bottom:1px;letter-spacing:0.01em;
-    transition:background .13s,color .13s;
-  }
-  .nav-item:hover{background:var(--paper);color:var(--ink-900)}
-  .nav-item.active{background:var(--green-800);color:#fff}
-  .nav-item.active .nav-num{color:#A9D8B2}
-  .nav-num{
-    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
-    color:var(--ink-400);letter-spacing:0.04em;min-width:22px;
-  }
-  .nav-label{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-  /* Stage group label */
-  .nav-group{
-    font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
-    color:var(--ink-400);font-weight:600;padding:14px 22px 6px;
-  }
-
   /* ============ MAIN SLIDE ============ */
   .stage{
-    margin-left:240px;margin-top:108px;margin-bottom:56px;
-    padding:44px 56px 60px;min-height:calc(100vh - 108px - 56px);
+    margin-left:0;margin-top:126px;margin-bottom:56px;
+    padding:44px 56px 60px;min-height:calc(100vh - 126px - 56px);max-width:1280px;margin-right:auto;
   }
+  .stage{margin-left:auto}
   .slide{display:none;animation:fade .28s ease-out}
   .slide.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
@@ -209,7 +181,7 @@
 
   /* ============ FOOTER BAR ============ */
   .footer-bar{
-    position:fixed;left:240px;right:0;bottom:0;height:56px;
+    position:fixed;left:0;right:0;bottom:0;height:56px;
     background:var(--paper);border-top:1px solid var(--border);
     display:flex;align-items:center;justify-content:space-between;
     padding:0 28px;z-index:40;
@@ -486,10 +458,10 @@
 
   /* Responsive */
   @media (max-width:1100px){
-    .sidenav{display:none}
-    .chevrons{left:0}
-    .stage{margin-left:0}
-    .footer-bar{left:0}
+    .chevrons{padding:0 12px;height:auto;flex-wrap:wrap}
+    .chev{padding:6px 8px}
+    .chev-sub{display:none}
+    .stage{margin-top:140px}
     .kpi-row{grid-template-columns:repeat(2,1fr)}
     .two-col,.subetapa,.tier-grid,.three-col,.q-list{grid-template-columns:1fr}
     .cover{padding:40px 28px}
@@ -514,49 +486,28 @@
   <div class="topbar-meta"><b>Canales Digitales</b> · Americar Tech · Abril 2026</div>
 </header>
 
-<!-- SIDENAV -->
-<nav class="sidenav">
-  <div class="sidenav-title">Contenido</div>
-  <ul class="nav-list" id="navList">
-    <li class="nav-item active" data-slide="1" data-stage="ctx"><span class="nav-num">01</span><span class="nav-label">Portada</span></li>
-    <li class="nav-item" data-slide="2" data-stage="ctx"><span class="nav-num">02</span><span class="nav-label">Contexto</span></li>
-    <li class="nav-item" data-slide="3" data-stage="ctx"><span class="nav-num">03</span><span class="nav-label">Ruta de la macro-etapa</span></li>
-
-    <div class="nav-group">Diagnóstico</div>
-    <li class="nav-item" data-slide="4" data-stage="diag"><span class="nav-num">04</span><span class="nav-label">Snapshot del inventario</span></li>
-    <li class="nav-item" data-slide="5" data-stage="diag"><span class="nav-num">05</span><span class="nav-label">Funnel de publicabilidad</span></li>
-    <li class="nav-item" data-slide="6" data-stage="diag"><span class="nav-num">06</span><span class="nav-label">Pipeline de fotos</span></li>
-    <li class="nav-item" data-slide="7" data-stage="diag"><span class="nav-num">07</span><span class="nav-label">Cobertura por zona</span></li>
-    <li class="nav-item" data-slide="8" data-stage="diag"><span class="nav-num">08</span><span class="nav-label">Jerarquía de 4 tiers</span></li>
-
-    <div class="nav-group">Sub-etapas</div>
-    <li class="nav-item" data-slide="9" data-stage="sub"><span class="nav-num">09</span><span class="nav-label">Quiter + ubicación</span></li>
-    <li class="nav-item" data-slide="10" data-stage="sub"><span class="nav-num">10</span><span class="nav-label">Precio de venta</span></li>
-    <li class="nav-item" data-slide="11" data-stage="sub"><span class="nav-num">11</span><span class="nav-label">Publicación en sitio</span></li>
-    <li class="nav-item" data-slide="12" data-stage="sub"><span class="nav-num">12</span><span class="nav-label">Foto Impel ⭐</span></li>
-    <li class="nav-item" data-slide="13" data-stage="sub"><span class="nav-num">13</span><span class="nav-label">Orden en catálogo ⭐</span></li>
-
-    <div class="nav-group">Hallazgos</div>
-    <li class="nav-item" data-slide="14" data-stage="hall"><span class="nav-num">14</span><span class="nav-label">Data real · inventario</span></li>
-    <li class="nav-item" data-slide="15" data-stage="hall"><span class="nav-num">15</span><span class="nav-label">Data real · bloqueos</span></li>
-    <li class="nav-item" data-slide="16" data-stage="hall"><span class="nav-num">16</span><span class="nav-label">Pipeline de fotos · I</span></li>
-    <li class="nav-item" data-slide="17" data-stage="hall"><span class="nav-num">17</span><span class="nav-label">Pipeline de fotos · II</span></li>
-
-    <div class="nav-group">Mejoras</div>
-    <li class="nav-item" data-slide="18" data-stage="mej"><span class="nav-num">18</span><span class="nav-label">Corto plazo · 30d</span></li>
-    <li class="nav-item" data-slide="19" data-stage="mej"><span class="nav-num">19</span><span class="nav-label">Mediano plazo · 90d</span></li>
-    <li class="nav-item" data-slide="20" data-stage="mej"><span class="nav-num">20</span><span class="nav-label">Largo plazo</span></li>
-    <li class="nav-item" data-slide="21" data-stage="mej"><span class="nav-num">21</span><span class="nav-label">Preguntas abiertas</span></li>
-  </ul>
-</nav>
-
 <!-- CHEVRONS -->
 <div class="chevrons">
-  <div class="chev active" data-stage="ctx" data-slide="1"><span class="chev-num">I</span><span>Contexto</span></div>
-  <div class="chev" data-stage="diag" data-slide="4"><span class="chev-num">II</span><span>Diagnóstico</span></div>
-  <div class="chev" data-stage="sub" data-slide="9"><span class="chev-num">III</span><span>Sub-etapas</span></div>
-  <div class="chev" data-stage="hall" data-slide="14"><span class="chev-num">IV</span><span>Hallazgos</span></div>
-  <div class="chev" data-stage="mej" data-slide="18"><span class="chev-num">V</span><span>Mejoras</span></div>
+  <div class="chev active" data-stage="ctx" data-slide="1">
+    <div class="chev-top"><span class="chev-num">I</span><span>Contexto</span></div>
+    <div class="chev-sub">Portada · Contexto · Ruta</div>
+  </div>
+  <div class="chev" data-stage="diag" data-slide="4">
+    <div class="chev-top"><span class="chev-num">II</span><span>Diagnóstico</span></div>
+    <div class="chev-sub">Inventario · Funnel · Fotos · Zonas · Tiers</div>
+  </div>
+  <div class="chev" data-stage="sub" data-slide="9">
+    <div class="chev-top"><span class="chev-num">III</span><span>Sub-etapas</span></div>
+    <div class="chev-sub">Quiter · Precio · Publicación · Impel · Catálogo</div>
+  </div>
+  <div class="chev" data-stage="hall" data-slide="14">
+    <div class="chev-top"><span class="chev-num">IV</span><span>Hallazgos</span></div>
+    <div class="chev-sub">Inventario · Bloqueos · Pipeline I-II</div>
+  </div>
+  <div class="chev" data-stage="mej" data-slide="18">
+    <div class="chev-top"><span class="chev-num">V</span><span>Mejoras</span></div>
+    <div class="chev-sub">Corto · Mediano · Largo plazo · Preguntas</div>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -1230,7 +1181,6 @@
   let current = 1;
 
   const slides = document.querySelectorAll('.slide');
-  const navItems = document.querySelectorAll('.nav-item');
   const chevs = document.querySelectorAll('.chev');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
@@ -1250,23 +1200,17 @@
     if(n < 1 || n > TOTAL) return;
     current = n;
     slides.forEach(s => s.classList.toggle('active', +s.dataset.slide === n));
-    navItems.forEach(i => i.classList.toggle('active', +i.dataset.slide === n));
     const stage = stageMap[n];
     chevs.forEach(c => c.classList.toggle('active', c.dataset.stage === stage));
     prevBtn.disabled = n === 1;
     nextBtn.disabled = n === TOTAL;
     curSlide.textContent = String(n).padStart(2, '0');
     progress.style.width = (n / TOTAL * 100).toFixed(2) + '%';
-    // Scroll the sidenav to keep active visible
-    const activeNav = document.querySelector('.nav-item.active');
-    if(activeNav) activeNav.scrollIntoView({block:'nearest', behavior:'smooth'});
-    // Scroll main area to top
     window.scrollTo({top: 0, behavior: 'instant'});
   }
 
   prevBtn.addEventListener('click', () => go(current - 1));
   nextBtn.addEventListener('click', () => go(current + 1));
-  navItems.forEach(i => i.addEventListener('click', () => go(+i.dataset.slide)));
   chevs.forEach(c => c.addEventListener('click', () => go(+c.dataset.slide)));
 
   document.addEventListener('keydown', (e) => {
