@@ -268,6 +268,22 @@
   .controls {
     display: flex; align-items: center; justify-content: space-between;
     padding: 14px 40px; background: var(--white); border-top: 1px solid var(--gray-200); flex-shrink: 0;
+    position: relative;
+  }
+  .progress-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gray-100);
+  }
+  .progress-bar-fill {
+    height: 100%; background: var(--clicar-green); transition: width 0.25s ease;
+  }
+  .kbd-hint {
+    font-size: 10px; color: var(--gray-500); font-weight: 500; margin-left: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .kbd-hint kbd {
+    display: inline-block; padding: 1px 5px; background: var(--gray-100); border: 1px solid var(--gray-300);
+    border-radius: 3px; font-family: inherit; font-size: 10px; color: var(--gray-700); font-weight: 600;
+    min-width: 16px; text-align: center;
   }
   .controls-left { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--gray-500); font-weight: 500; }
   .home-btn {
@@ -280,6 +296,8 @@
   .bc-stage { color: var(--navy); font-weight: 700; }
   .bc-sep { color: var(--gray-300); }
   .bc-substep { color: var(--gray-700); font-weight: 500; }
+  .bc-link { background: transparent; border: none; font-family: inherit; font-size: inherit; font-weight: inherit; color: inherit; cursor: pointer; padding: 2px 4px; border-radius: 3px; transition: background 0.12s, color 0.12s; }
+  .bc-link:hover { background: var(--navy-soft); color: var(--navy); }
   .controls-center { font-size: 13px; color: var(--gray-700); font-weight: 600; font-variant-numeric: tabular-nums; }
   .controls-center .current { color: var(--navy); font-weight: 700; font-size: 15px; }
   .controls-center .total { color: var(--gray-500); font-weight: 500; }
@@ -835,12 +853,14 @@
   <main class="slide-area" id="slide-area"></main>
 
   <footer class="controls">
+    <div class="progress-bar"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
     <div class="controls-left">
       <button class="home-btn" id="home-btn">Vista general</button>
       <div class="breadcrumb" id="breadcrumb"></div>
     </div>
     <div class="controls-center" id="counter"></div>
     <div class="controls-right">
+      <span class="kbd-hint"><kbd>&larr;</kbd><kbd>&rarr;</kbd> navegar</span>
       <button class="nav-btn" id="prev-btn">&larr; Anterior</button>
       <button class="nav-btn primary" id="next-btn">Siguiente &rarr;</button>
     </div>
@@ -1232,9 +1252,9 @@ var journey = {
       description: "Evaluación técnica y documental del vehículo, registro fotográfico estandarizado, cálculo de la oferta final considerando costos de re-acondicionamiento, validación comercial por jefatura cuando excede la autonomía del asesor y negociación/cierre con el cliente. Cierra la compra del vehículo o lo registra como no-cierre con razones estructuradas para activar flujos de seguimiento posteriores.",
       substeps: [
         { num: 1, title: "Inspección Técnica",
-          description: "Evaluación mecánica, carrocería e interior del vehículo. Incluye el funnel mensual comparativo de oportunidades creadas -> inspeccionadas -> compradas separado por tipo de vínculo (Compra directa vs VPP).",
-          kpis: [{value:"45.628",suffix:"",label:"Oportunidades creadas (Oct 25 - Abr 26)"},{value:"14.940",suffix:"",label:"Inspecciones realizadas"},{value:"7.515",suffix:"",label:"Compras concretadas"}],
-          hallazgos: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es más eficiente end-to-end: 40% conversión vs 13% VPP","La brecha está en la pre-calificación: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspección es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caída en Marzo 26 en Compra: 75% insp vs. 83-87% histórico - alerta a revisar"],
+          description: "Evaluación mecánica, carrocería e interior del vehículo. Incluye el funnel mensual comparativo de oportunidades creadas -> inspeccionadas -> compradas separado por tipo de vínculo (Compra directa vs VPP). Nota: el total 7.515 compras (Oct 25 - Abr 26) incluye VPP; el baseline de ~376 compras/mes del Eje Compra corresponde solo a Compra directa (data Ene - Abr 26).",
+          kpis: [{value:"45.628",suffix:"",label:"Oportunidades creadas (Oct 25 - Abr 26)"},{value:"14.940",suffix:"",label:"Inspecciones realizadas"},{value:"7.515",suffix:"",label:"Compras concretadas (incluye VPP)"}],
+          hallazgos: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es más eficiente end-to-end: 40% conversión vs 13% VPP","La brecha está en la pre-calificación: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspección es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caída en Marzo 26 en Compra: 75% insp vs. 83-87% histórico - alerta a revisar","<strong>Nota:</strong> las 7.515 compras totales incluyen VPP (2.409) + Compra directa (5.106). El baseline del Eje Compra (~376/mes) es solo Compra directa"],
           mejoras: ["Análisis de leads VPP no inspeccionados (75% del pipeline VPP) para identificar patrones de descarte y filtros mejorables","Revisar caída de inspecciones en Marzo 26 en Compra directa","Tiempo variable (30-90 min) según experiencia del inspector","Checklist digital con tiempos objetivo por item","Categorización obligatoria de hallazgos por severidad"],
           chartType: 'insp-vínculo'
         },
@@ -1319,7 +1339,7 @@ var journey = {
         { num: 1, title: "Publicación efectiva",
           description: "La unidad aparece en el catálogo web con su ficha. Snapshot actual: 1.790 unidades publicadas sobre un inventario total de 2.574.",
           kpis: [{value:"1.790",suffix:"uds",label:"Publicadas hoy"},{value:"69,5",suffix:"%",label:"Publicadas vs. inventario total"},{value:"89,9",suffix:"%",label:"Publicadas vs. disponibles"}],
-          hallazgos: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","584 unidades (22,7% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
+          hallazgos: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","580 unidades (22,5% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
           mejoras: ["Reporte diario de brecha disponibles vs. publicadas (meta: >95%)","Monitoreo del mix de motivos de no-publicación para atacar el más frecuente","Definir campos mínimos obligatorios para publicar (con bloqueo)","SLA máximo Quiter -> publicación (ej. 24-48h)"],
           chartType: 'prep-funnel'
         },
@@ -1397,8 +1417,8 @@ var journey = {
         },
         { num: 3, title: "Auditoría de calidad visible",
           description: "Revisión operativa del catálogo público para detectar degradación de vitrina. El ranking de sucursales por % sin-foto identifica los puntos de intervención prioritarios (ver gráfico).",
-          kpis: [{value:"51,5",suffix:"%",label:"Peor sucursal (Concepcion J. Alessandri R. 1885)"},{value:"48,4",suffix:"%",label:"2da peor (Vitacura Padre Hurtado 1246)"},{value:"43",suffix:"uds",label:"Sin foto en top 3 peores sucursales"}],
-          hallazgos: ["3 sucursales concentran 43 de las 204 unidades sin foto (21%): J. Alessandri 1885, Vitacura Padre Hurtado 1246, Jose Miguel Carrera 6197","Carshopping A. Vespucio 2451 es la sucursal con MAS unidades sin foto en absoluto (33 uds) aunque %relativo es 19,4%","Auditoría actual de fotos de inspección es diaria pero sin métrica agregada por sucursal","Sin auditoría sistemática de placeholders Tier 4","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
+          kpis: [{value:"51,5",suffix:"%",label:"Peor sucursal (Concepción J. Alessandri R. 1885)"},{value:"48,4",suffix:"%",label:"2da peor (Vitacura Padre Hurtado 1246)"},{value:"43",suffix:"uds",label:"Sin foto en top 3 peores sucursales"}],
+          hallazgos: ["3 sucursales concentran 43 de las 204 unidades sin foto (21%): J. Alessandri 1885, Vitacura Padre Hurtado 1246, José Miguel Carrera 6197","Carshopping A. Vespucio 2451 es la sucursal con MÁS unidades sin foto en absoluto (33 uds) aunque %relativo es 19,4%","Auditoría actual de fotos de inspección es diaria pero sin métrica agregada por sucursal","Sin auditoría sistemática de placeholders Tier 4","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] La auditoría por sucursal deja de ser necesaria cuando la foto se genera durante la inspección (in-house): todas las sucursales entregan unidades con foto lista el mismo día","Mientras se desarrolla: intervención focalizada en top 5 peores sucursales + ranking interno","SLA transitorio por sucursal: no más de 10% sin-foto"],
           chartType: 'prep-foto-sucursal'
         },
@@ -1700,7 +1720,7 @@ var ROADMAP = [
     description: "166 uds (83% de las retenidas) caen hoy en 'En acopio', categoría que opera como cajón de sastre. Subcategorizar (recién llegado, pendiente limpieza, pendiente docs) permite SLAs y owners diferenciados.",
     macro: "preparación", stage: "Publicación en Sitio Web", substep: "No publicadas del stock disponible", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Liberación automática de reservas después de 48h sin avance en Llaima",
-    description: "407 uds reservadas hoy (69% del inventario no disponible). Una regla automática en Llaima que libere la reserva a las 48h sin avance devuelve el stock a la vitrina sin intervención manual y evita que las reservas fantasma inmovilicen inventario.",
+    description: "403 uds reservadas hoy (69% del inventario no disponible). Una regla automática en Llaima que libere la reserva a las 48h sin avance devuelve el stock a la vitrina sin intervención manual y evita que las reservas fantasma inmovilicen inventario.",
     macro: "preparación", stage: "Publicación en Sitio Web", substep: "No disponibles para publicar", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Corregir error 303 en buy-process paso 4",
     description: "Error 303 identificado en el paso 4 del flujo de cotización (buy-process). Hoy 862 sesiones/mes llegan a iniciar cotización desde ficha (3,9% de conversión) y una parte no logra completar por este error. En revisión por el equipo de desarrollo, prioridad crítica para destrabar el principal cuello de botella del funnel del sitio.",
@@ -1925,13 +1945,13 @@ function handleRoadmapFilter(btn) {
 var OKRS = {
   northStars: [
     { macro: 'compra', label: 'Eje Compra',
-      metric: 'Conversión end-to-end Lead → Compra concretada',
-      baseline: '2,0%', target: '3,5%', unit: 'conversión',
-      source: 'Data comercial Ene-Abr 2026 · 19.150 leads/mes · 376 compras/mes promedio' },
-    { macro: 'compra', label: 'Eje Compra',
       metric: 'Contactabilidad global del pool de leads',
       baseline: '53%', target: '70%', unit: 'de leads contactados',
       source: 'CRM Llaima · Alta/Muy Alta con peor contactabilidad hoy (33-43%)' },
+    { macro: 'compra', label: 'Eje Compra',
+      metric: 'Conversión end-to-end Lead → Compra concretada',
+      baseline: '2,0%', target: '3,5%', unit: 'conversión',
+      source: 'Data comercial Ene-Abr 2026 · 19.150 leads/mes · 376 compras/mes promedio' },
     { macro: 'preparación', label: 'Eje Preparación',
       metric: '% stock publicado con foto Tier 1 / 2 (Impel)',
       baseline: '67,7%', target: '95%', unit: 'del stock publicado',
@@ -2088,7 +2108,7 @@ var OKRS = {
       objective: 'Publicar más stock, más rápido y con data completa',
       krs: [
         { desc: '% stock publicado vs. inventario total',
-          detail: 'Hoy 69,5% del inventario está publicado (1.790 de 2.574 uds). 200 uds disponibles retenidas (10,1%) + 584 no elegibles (22,7%). Subir a 90% ≈ +500 uds visibles al comprador.',
+          detail: 'Hoy 69,5% del inventario está publicado (1.790 de 2.574 uds). 200 uds disponibles retenidas (10,1%) + 580 no elegibles (22,5%). Subir a 90% ≈ +500 uds visibles al comprador.',
           baseline: '69,5%', target: '90%',
           impacts: 'Desagregar "En acopio" en subcategorías accionables · Liberación automática de reservas fantasma · SLA máximo Quiter → publicación (<24-48h) · Bloqueo de publicación sin campos mínimos · Reporte diario de brecha disponibles vs. publicadas' },
         { desc: 'Unidades retenidas "En acopio"',
@@ -2096,7 +2116,7 @@ var OKRS = {
           baseline: '166 uds', target: '<50',
           impacts: 'Subcategorías accionables (recién llegado · pendiente limpieza · pendiente documentación) · Owner y SLA <48h por subcategoría · Dashboard diario con alerta cuando una categoría crece · Aging por unidad retenida' },
         { desc: 'Reservas fantasma liberadas automáticamente',
-          detail: '407 uds reservadas hoy (69% del inventario no disponible). Reservas sin avance inmovilizan stock que debería volver a vitrina.',
+          detail: '403 uds reservadas hoy (69% del inventario no disponible). Reservas sin avance inmovilizan stock que debería volver a vitrina.',
           baseline: '0', target: '100%',
           impacts: 'Regla en Llaima: liberación a 48h sin avance · Alerta al asesor antes del vencimiento · Panel del cliente con estado de la reserva · Diferenciar reserva comercial activa vs. fantasma (>30 días sin avance)' }
       ] },
@@ -2168,7 +2188,7 @@ var OKRS = {
       objective: 'Mover reservas reales a ventas y digitalizar el pago',
       krs: [
         { desc: '% reservas que terminan en venta',
-          detail: 'Data hoy pendiente (TBD). Hipótesis: reservas fantasma inmovilizan stock sin avance real (407 uds reservadas en Preparación).',
+          detail: 'Data hoy pendiente (TBD). Hipótesis: reservas fantasma inmovilizan stock sin avance real (403 uds reservadas en Preparación).',
           baseline: 'TBD', target: '>70%',
           impacts: 'Liberación automática de reservas fantasma a 48h sin avance · Panel visible al cliente con estado y vencimiento · Alerta al asesor antes del vencimiento · Separar reservas comerciales activas de fantasma' },
         { desc: '% pagos digitales vs. presenciales',
@@ -2485,7 +2505,7 @@ function renderExecSummarySlide(i) {
       sub: 'El inventario existe pero no llega limpio a la vitrina: foto, precio y reservas inmovilizan stock',
       items: [
         { rank: 1, t: '32,3% del stock publicado sin foto Impel', d: '579 uds publicadas con foto de inspección o placeholder. El servicio Impel externo cuesta $4,2M/mes y no escala. Zona RM concentra 114 de 204 uds sin foto (55,9%).', i: '$4,2M / mes<br/>$50,4M / año' },
-        { rank: 2, t: '22,5% del inventario inmovilizado', d: '584 uds no elegibles para publicar: 407 reservadas, 166 con problemas legales, 9 UFM/falla mecánica, 2 no disponibles. Sin distinguir reserva comercial activa vs. fantasma.', i: '1 de cada 4<br/>unidades bloqueadas' },
+        { rank: 2, t: '22,5% del inventario inmovilizado', d: '580 uds no elegibles para publicar: 403 reservadas, 166 con problemas legales, 9 UFM/falla mecánica, 2 no disponibles. Sin distinguir reserva comercial activa vs. fantasma.', i: '1 de cada 4<br/>unidades bloqueadas' },
         { rank: 3, t: '166 uds "En acopio" sin definición operacional', d: 'Es el 83% de las 200 retenciones con stock disponible. "En acopio" opera como cajón de sastre: sin SLA, sin subcategoría, sin owner por motivo.', i: '83% del stock<br/>retenido' },
         { rank: 4, t: 'Solo 69,5% del inventario en vitrina', d: '1.790 de 2.574 uds publicadas. Peor ejecución: Concepción J. Alessandri R. 1885 (51,5% sin foto) y Vitacura Padre Hurtado 1246 (48,4%).', i: '784 uds fuera<br/>del catálogo' },
         { rank: 5, t: '17 uds bloqueadas hoy por falta de precio', d: 'Gate operacional concreto. Sin SLA Quiter → precio, sin alerta cuando una unidad lleva > X horas sin valor asignado.', i: '8,5% del stock<br/>retenido' }
@@ -2779,7 +2799,7 @@ var CLIENTE_POR_SUBSTEP = {
   "7.2": { kpis: ["% unidades con ajuste de precio en primeros 30 días (TBD)","% clientes que vieron precio distinto al reservar (TBD)"], lineamientos: ["Respetar el precio cuando hay reserva activa","Comunicar proactivamente cualquier cambio al cliente afectado"] },
   "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación (TBD)","% fichas con todos los campos completos (TBD)"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
   "8.2": { kpis: ["200 uds (10,1%) que el cliente no puede ver","166 uds atrapadas 'En acopio' (83%)","Tiempo promedio retenido (TBD)"], lineamientos: ["Destrabar inventario retenido semanalmente","Owner claro por cada motivo de retención"] },
-  "8.3": { kpis: ["584 uds (22,7%) no elegibles para publicar","407 reservadas (69% del no disponible)","166 con problema legal"], lineamientos: ["Solo reservar con cliente comprometido","Resolver problemas legales con SLA definido","Evitar reservas fantasma que inmovilizan stock"] },
+  "8.3": { kpis: ["580 uds (22,5%) no elegibles para publicar","403 reservadas (69% del no disponible)","166 con problema legal"], lineamientos: ["Solo reservar con cliente comprometido","Resolver problemas legales con SLA definido","Evitar reservas fantasma que inmovilizan stock"] },
   "9.1": { kpis: ["204 uds (11,4%) con placeholder 'Estamos preparando esta imagen'","RM concentra 114 de esas 204 uds (55,9%)","Tiempo publicación → foto capturada (TBD)"], lineamientos: ["Toda unidad publicada debe tener foto en <72h","Priorizar stock premium y de alto ticket"] },
   "9.2": { kpis: ["1.211 uds con foto Impel (67,7% del publicado)","579 uds publicadas sin Impel lista (32,3%)","Sur lidera con 74,8% / RM peor con 65,3%"], lineamientos: ["Fondo limpio es el mínimo aceptable para publicar","Automatizar entrega al sitio web ni bien Impel esté listo"] },
   "9.3": { kpis: ["% en cabina virtual 360 (TBD - BI no separa Tier 1 de Tier 2)","Techo teórico actual: 1.211 uds","Diferencial de conversión vs. foto estándar (TBD)"], lineamientos: ["Priorizar segmento lujo en las primeras semanas","Plan de escalamiento con hitos semanales publicados"] },
@@ -3048,21 +3068,21 @@ var PREP_FUNNEL = {
   total: 2574,
   publicadas: 1790,
   no_publicadas_disp: 200,
-  no_disponibles: 584
+  no_disponibles: 580
 };
 var PREP_FOTOS_ZONA = [
-  { zona: 'Concepcion',    impel: 157, inspección: 43,  sin_foto: 32,  total: 232 },
+  { zona: 'Concepción',    impel: 157, inspección: 43,  sin_foto: 32,  total: 232 },
   { zona: 'Longitudinal',  impel: 183, inspección: 57,  sin_foto: 26,  total: 266 },
   { zona: 'Metropolitana', impel: 610, inspección: 210, sin_foto: 114, total: 934 },
   { zona: 'Sur',           impel: 151, inspección: 33,  sin_foto: 18,  total: 202 },
   { zona: 'Temuco',        impel: 110, inspección: 32,  sin_foto: 14,  total: 156 }
 ];
 var PREP_FOTOS_SUCURSAL = [
-  { s: 'Clinica J. Alessandri R. 2121',           z: 'Concepcion',    impel: 37,  inspección: 10, sin_foto: 4,  total: 51 },
-  { s: 'Concepcion C. Colon 8961',                z: 'Concepcion',    impel: 40,  inspección: 3,  sin_foto: 2,  total: 45 },
-  { s: 'Concepcion J. Alessandri R. 1885',        z: 'Concepcion',    impel: 2,   inspección: 14, sin_foto: 17, total: 33 },
-  { s: 'Concepcion Paicavi 2592',                 z: 'Concepcion',    impel: 38,  inspección: 14, sin_foto: 5,  total: 57 },
-  { s: 'Vega 21 de Mayo 3225',                    z: 'Concepcion',    impel: 40,  inspección: 2,  sin_foto: 4,  total: 46 },
+  { s: 'Clinica J. Alessandri R. 2121',           z: 'Concepción',    impel: 37,  inspección: 10, sin_foto: 4,  total: 51 },
+  { s: 'Concepción C. Colón 8961',                z: 'Concepción',    impel: 40,  inspección: 3,  sin_foto: 2,  total: 45 },
+  { s: 'Concepción J. Alessandri R. 1885',        z: 'Concepción',    impel: 2,   inspección: 14, sin_foto: 17, total: 33 },
+  { s: 'Concepción Paicaví 2592',                 z: 'Concepción',    impel: 38,  inspección: 14, sin_foto: 5,  total: 57 },
+  { s: 'Vega 21 de Mayo 3225',                    z: 'Concepción',    impel: 40,  inspección: 2,  sin_foto: 4,  total: 46 },
   { s: 'Chillan Av Brasil 80',                    z: 'Longitudinal',  impel: 27,  inspección: 12, sin_foto: 5,  total: 44 },
   { s: 'Chillan Ecuador 330',                     z: 'Longitudinal',  impel: 13,  inspección: 5,  sin_foto: 2,  total: 20 },
   { s: 'Chillan Ecuador 768',                     z: 'Longitudinal',  impel: 20,  inspección: 6,  sin_foto: 2,  total: 28 },
@@ -3112,7 +3132,7 @@ function buildPrepFunnelCfg() {
       datasets: [
         { label: 'Publicadas (1.790 - 69,5%)', data: [f.publicadas], backgroundColor: '#0B5C1F', borderWidth: 0 },
         { label: 'Disponibles no publicadas (200 - 7,8%)', data: [f.no_publicadas_disp], backgroundColor: '#F0A830', borderWidth: 0 },
-        { label: 'No disponibles (584 - 22,7%)', data: [f.no_disponibles], backgroundColor: '#C00000', borderWidth: 0 }
+        { label: 'No disponibles (580 - 22,5%)', data: [f.no_disponibles], backgroundColor: '#C00000', borderWidth: 0 }
       ]
     },
     options: {
@@ -3843,9 +3863,9 @@ function renderPrepChartSection(slideIdx, chartType) {
     'prep-foto-sucursal': { t: 'Ranking sucursales por % sin foto', s: 'Top 15 sucursales con mayor % de unidades sin foto (publicaciones con placeholder). Filtro: sucursales con >= 10 uds.' }
   };
   var insights = {
-    'prep-funnel': '<strong>1 de cada 4 unidades (22,7%) ni siquiera es elegible</strong> para publicar. De las 1.990 disponibles, 200 (10,1%) están retenidas por motivos operacionales (83% en acopio, 8,5% sin precio). La vitrina solo muestra 1.790 / 2.574 = 69,5% del inventario total.',
+    'prep-funnel': '<strong>1 de cada 4 unidades (22,5%) ni siquiera es elegible</strong> para publicar. De las 1.990 disponibles, 200 (10,1%) están retenidas por motivos operacionales (83% en acopio, 8,5% sin precio). La vitrina solo muestra 1.790 / 2.574 = 69,5% del inventario total.',
     'prep-foto-zona': '<strong>Zona Metropolitana concentra el problema:</strong> 114 de las 204 unidades sin foto del sistema (55,9%) están en RM. En cambio Zona Sur muestra la mejor ejecución con solo 8,9% sin foto. Ningún zona supera el 75% de cobertura Impel.',
-    'prep-foto-sucursal': '<strong>Dos sucursales superan el 48% de sin-foto:</strong> Concepcion J. Alessandri R. 1885 (51,5%) y Vitacura Padre Hurtado 1246 (48,4%) son intervenciones prioritarias. Jose Miguel Carrera 6197 le sigue con 36,7%. Estas 3 sucursales aportan 43 de las 204 uds sin foto (21%).'
+    'prep-foto-sucursal': '<strong>Dos sucursales superan el 48% de sin-foto:</strong> Concepción J. Alessandri R. 1885 (51,5%) y Vitacura Padre Hurtado 1246 (48,4%) son intervenciones prioritarias. José Miguel Carrera 6197 le sigue con 36,7%. Estas 3 sucursales aportan 43 de las 204 uds sin foto (21%).'
   };
   var t = titles[chartType] || { t: '', s: '' };
   return '<div class="data-section">' +
@@ -5208,11 +5228,20 @@ function updateChrome() {
     }
     stepper.style.display = 'block';
     renderStepper(stage, slide.subIdx);
-    breadcrumb.innerHTML = '<span class="bc-stage">Etapa ' + stage.id + ' - ' + stage.fullName + '</span><span class="bc-sep">&rsaquo;</span><span class="bc-substep">' + sub.num + '. ' + sub.title + '</span>';
+    breadcrumb.innerHTML = '<button class="bc-link bc-stage" data-bc-macro="' + stage.macro + '" title="Volver a vista general del eje">Etapa ' + stage.id + ' - ' + stage.fullName + '</button><span class="bc-sep">&rsaquo;</span><span class="bc-substep">' + sub.num + '. ' + sub.title + '</span>';
     counter.innerHTML = '<span class="current">' + (currentSlide - 4) + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
+    var bcMacroBtn = breadcrumb.querySelector('[data-bc-macro]');
+    if (bcMacroBtn) bcMacroBtn.addEventListener('click', function() {
+      setMacro(this.getAttribute('data-bc-macro'));
+    });
   }
   prevBtn.disabled = currentSlide === 0;
   nextBtn.disabled = currentSlide === flatSlides.length - 1;
+  var progressFill = document.getElementById('progress-bar-fill');
+  if (progressFill) {
+    var pct = flatSlides.length > 1 ? (currentSlide / (flatSlides.length - 1)) * 100 : 0;
+    progressFill.style.width = pct + '%';
+  }
 }
 
 // VIDEO MODAL
@@ -5258,6 +5287,7 @@ function closeDocModal() {
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
   iframeWrap.innerHTML = '';
+  _docIframeEscAttached = false;
 }
 
 // INIT
