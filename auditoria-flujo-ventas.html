@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Auditoría del Flujo de Ventas Digital — Clicar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --si-navy:#0f2240;
+    --si-navy-2:#0B1F65;
+    --si-blue:#1a3e6e;
+    --si-mid:#2a5da8;
+    --si-accent:#c8102e;
+    --si-accent-soft:#fde8ec;
+    --si-gold:#b8960c;
+    --si-gold-soft:#fef7e0;
+    --si-green:#176b37;
+    --si-green-soft:#e6f3ec;
+    --si-light:#e8f0fb;
+    --si-border:#d0d9e8;
+    --si-border-2:#e4ebf5;
+    --si-muted:#6b7a99;
+    --si-ink:#2d3a55;
+    --si-bg:#f5f7fb;
+    --si-white:#ffffff;
+    --radius:6px;
+    --shadow-sm:0 1px 3px rgba(15,34,64,.08),0 1px 2px rgba(15,34,64,.04);
+    --shadow:0 4px 16px rgba(15,34,64,.10),0 1px 4px rgba(15,34,64,.06);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--si-bg);color:var(--si-navy);
+    font-size:14px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'DM Mono',ui-monospace,monospace}
+
+  /* TOPBAR */
+  .topbar{
+    background:var(--si-navy);color:#fff;
+    padding:0 40px;height:56px;
+    display:flex;align-items:center;justify-content:space-between;
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    box-shadow:0 2px 8px rgba(0,0,0,.25);
+  }
+  .topbar-brand{display:flex;align-items:center;gap:14px}
+  .topbar-logo{
+    width:34px;height:34px;background:var(--si-accent);
+    border-radius:4px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:12px;color:#fff;letter-spacing:-0.02em;
+  }
+  .topbar-name{font-size:15px;font-weight:700;letter-spacing:.01em}
+  .topbar-name span{font-weight:300;opacity:.75;margin-left:6px}
+  .topbar-meta{font-size:11px;color:rgba(255,255,255,.55);font-weight:400;letter-spacing:0.03em}
+  .topbar-meta b{color:#fff;font-weight:600}
+
+  /* SIDENAV */
+  .sidenav{
+    position:fixed;top:56px;left:0;bottom:0;width:248px;
+    background:#fff;border-right:1px solid var(--si-border);
+    padding:24px 14px;overflow-y:auto;z-index:40;
+  }
+  .sidenav-title{
+    font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--si-muted);margin:0 14px 14px 14px;font-weight:600;
+  }
+  .nav-list{list-style:none}
+  .nav-item{
+    display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;
+    padding:10px 14px;margin-bottom:2px;border-radius:4px;cursor:pointer;
+    color:var(--si-ink);font-size:13px;line-height:1.35;
+    border-left:2px solid transparent;transition:all .15s;
+  }
+  .nav-item:hover{background:var(--si-bg);color:var(--si-navy)}
+  .nav-item.active{
+    background:var(--si-light);color:var(--si-navy);
+    border-left-color:var(--si-accent);font-weight:600;
+  }
+  .nav-item.active .nav-num{color:var(--si-accent)}
+  .nav-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--si-muted);font-weight:500}
+  .nav-label{font-weight:500}
+
+  /* CHEVRONS */
+  .chevrons{
+    position:fixed;top:56px;left:248px;right:0;height:48px;z-index:30;
+    background:#fff;border-bottom:1px solid var(--si-border);
+    display:flex;align-items:stretch;padding:0 40px;
+  }
+  .chev{
+    flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    padding:0 22px 0 18px;font-size:12px;font-weight:500;
+    color:var(--si-muted);cursor:pointer;position:relative;
+    transition:all .15s;
+  }
+  .chev:not(:last-child)::after{
+    content:"";position:absolute;right:-7px;top:50%;
+    width:14px;height:14px;border-top:1px solid var(--si-border);
+    border-right:1px solid var(--si-border);
+    transform:translateY(-50%) rotate(45deg);background:#fff;z-index:1;
+  }
+  .chev:hover{color:var(--si-navy);background:var(--si-bg)}
+  .chev.active{color:#fff;background:var(--si-navy);font-weight:600}
+  .chev.active::after{background:var(--si-navy);border-color:var(--si-navy)}
+  .chev-num{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.08em;opacity:0.7}
+  .chev.active .chev-num{opacity:1;color:var(--si-light)}
+
+  /* MAIN */
+  main{
+    margin-left:248px;margin-top:104px;
+    min-height:calc(100vh - 104px);
+    padding:32px 40px 110px 40px;max-width:1300px;
+  }
+  .slide{display:none;animation:fadeIn .3s ease-out}
+  .slide.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* Slide head */
+  .slide-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    padding-bottom:18px;border-bottom:2px solid var(--si-navy);
+    margin-bottom:28px;
+  }
+  .slide-eyebrow{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;
+    color:var(--si-accent);text-transform:uppercase;margin-bottom:8px;font-weight:500;
+  }
+  .slide-title{
+    font-size:28px;line-height:1.15;letter-spacing:-0.015em;
+    font-weight:700;color:var(--si-navy);margin:0;
+  }
+  .slide-sub{color:var(--si-muted);font-size:14px;margin-top:6px;max-width:720px;font-weight:400}
+  .slide-tag{
+    font-family:'DM Mono',monospace;font-size:10.5px;
+    color:var(--si-muted);letter-spacing:0.06em;font-weight:500;
+    white-space:nowrap;padding-bottom:4px;
+  }
+
+  /* KPI Cards */
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+  .kpi-row.three{grid-template-columns:repeat(3,1fr)}
+  .kpi-card{
+    background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);
+    padding:18px 20px;position:relative;box-shadow:var(--shadow-sm);
+    border-top:3px solid var(--si-navy);
+  }
+  .kpi-card.accent{border-top-color:var(--si-mid)}
+  .kpi-card.warn{border-top-color:var(--si-gold)}
+  .kpi-card.danger{border-top-color:var(--si-accent)}
+  .kpi-val{
+    font-size:32px;line-height:1;letter-spacing:-0.02em;
+    color:var(--si-navy);margin-bottom:10px;font-weight:700;
+  }
+  .kpi-val.danger{color:var(--si-accent)}
+  .kpi-val.warn{color:var(--si-gold)}
+  .kpi-val.accent{color:var(--si-mid)}
+  .kpi-label{font-size:12.5px;font-weight:600;color:var(--si-navy);margin-bottom:2px}
+  .kpi-note{font-size:11.5px;color:var(--si-muted);font-weight:400}
+
+  /* Section head */
+  .sec-head{
+    display:flex;align-items:center;gap:10px;
+    font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--si-navy);margin-bottom:14px;font-weight:700;
+  }
+  .sec-dot{width:7px;height:7px;border-radius:50%;background:var(--si-mid)}
+  .sec-dot.accent{background:var(--si-accent)}
+  .sec-dot.gold{background:var(--si-gold)}
+  .sec-dot.green{background:var(--si-green)}
+
+  /* Two col */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+  /* Panels */
+  .panel{
+    background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow-sm);
+  }
+  .panel.tinted{background:var(--si-light);border-color:var(--si-mid);border-left:3px solid var(--si-mid)}
+  .panel.danger-tint{background:var(--si-accent-soft);border-color:#f4b0bb;border-left:3px solid var(--si-accent)}
+  .panel.warn-tint{background:var(--si-gold-soft);border-color:#e8d79a;border-left:3px solid var(--si-gold)}
+  .panel.success-tint{background:var(--si-green-soft);border-color:#bfd9c9;border-left:3px solid var(--si-green)}
+  .panel h3{
+    font-size:15px;font-weight:700;color:var(--si-navy);
+    margin:0 0 6px 0;letter-spacing:-0.005em;line-height:1.3;
+  }
+  .panel p{font-size:13px;color:var(--si-ink);margin:0 0 4px 0;line-height:1.55}
+  .panel p.muted{color:var(--si-muted);font-size:12.5px}
+  .panel .item{padding:14px 0;border-bottom:1px solid var(--si-border-2)}
+  .panel .item:last-child{border-bottom:none;padding-bottom:0}
+  .panel .item:first-child{padding-top:0}
+
+  /* Bullet list */
+  .blist{list-style:none}
+  .blist li{
+    position:relative;padding:10px 0 10px 18px;font-size:13px;color:var(--si-ink);
+    border-bottom:1px dashed var(--si-border-2);line-height:1.5;
+  }
+  .blist li:last-child{border-bottom:none}
+  .blist li::before{
+    content:"";position:absolute;left:0;top:17px;
+    width:8px;height:2px;background:var(--si-mid);border-radius:1px;
+  }
+  .blist.accent li::before{background:var(--si-accent)}
+  .blist.gold li::before{background:var(--si-gold)}
+  .blist b{color:var(--si-navy);font-weight:600}
+
+  /* Callout */
+  .callout{
+    background:var(--si-navy);color:#e8f0fb;
+    padding:22px 26px;border-radius:var(--radius);
+    display:grid;grid-template-columns:42px 1fr;gap:16px;align-items:start;
+    margin-top:24px;box-shadow:var(--shadow);
+  }
+  .callout-icon{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--si-accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:800;
+  }
+  .callout strong{color:#fff;font-weight:700;font-size:15px;display:block;margin-bottom:4px}
+  .callout p{margin:0;font-size:13px;color:#b8c7e0;line-height:1.55}
+
+  /* Warn bar */
+  .warn-bar{
+    background:var(--si-gold-soft);border:1px solid #e8d79a;
+    border-left:3px solid var(--si-gold);
+    padding:14px 18px;border-radius:var(--radius);
+    font-size:12.5px;color:#5B4206;
+    display:flex;gap:10px;align-items:flex-start;margin-top:20px;
+  }
+  .warn-bar b{color:#3F2804;font-weight:700}
+
+  /* Market tiles */
+  .market-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+  .market-tile{
+    background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);
+    padding:22px 22px 20px;box-shadow:var(--shadow-sm);
+    border-top:3px solid var(--si-mid);
+  }
+  .market-tile .big{
+    font-size:28px;line-height:1;letter-spacing:-0.02em;
+    color:var(--si-navy);margin-bottom:12px;font-weight:700;
+  }
+  .market-tile.dark{background:var(--si-navy);border-color:var(--si-navy);border-top-color:var(--si-accent)}
+  .market-tile.dark .big{color:#fff}
+  .market-tile.dark .lbl{color:#fff}
+  .market-tile.dark .sub{color:#a0afc9}
+  .lbl{font-size:12.5px;font-weight:600;color:var(--si-navy);margin-bottom:4px}
+  .sub{font-size:11.5px;color:var(--si-muted);line-height:1.4}
+
+  /* Journey */
+  .journey{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+  .j-card{
+    background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);
+    padding:22px 20px 20px;position:relative;box-shadow:var(--shadow-sm);
+    border-top:3px solid var(--si-mid);
+  }
+  .j-card.emphasis{background:var(--si-navy);border-color:var(--si-navy);border-top-color:var(--si-accent)}
+  .j-num{
+    font-size:34px;line-height:1;letter-spacing:-0.02em;
+    color:var(--si-mid);margin-bottom:14px;font-weight:800;
+    font-family:'DM Mono',monospace;
+  }
+  .j-card.emphasis .j-num{color:var(--si-accent)}
+  .j-q{
+    font-size:15px;font-weight:700;color:var(--si-navy);
+    margin-bottom:8px;letter-spacing:-0.005em;
+  }
+  .j-card.emphasis .j-q{color:#fff}
+  .j-d{font-size:12px;color:var(--si-ink);line-height:1.5}
+  .j-card.emphasis .j-d{color:#b8c7e0}
+
+  /* Funnel 4 */
+  .funnel-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:22px;margin-bottom:14px}
+  .funnel-vis{
+    background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);
+    padding:22px 24px;box-shadow:var(--shadow-sm);
+  }
+  .funnel-row{margin-bottom:14px}
+  .funnel-row:last-child{margin-bottom:0}
+  .funnel-bar{display:flex;align-items:stretch;height:42px;border-radius:4px;overflow:hidden;margin-bottom:6px}
+  .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11.5px;font-weight:600;letter-spacing:0.01em;padding:0 10px;white-space:nowrap}
+  .seg.navy{background:var(--si-navy)}
+  .seg.blue{background:var(--si-blue)}
+  .seg.mid{background:var(--si-mid)}
+  .seg.gold{background:var(--si-gold)}
+  .seg.accent{background:var(--si-accent)}
+  .seg.muted{background:#9fb0c9}
+  .funnel-caption{font-size:11px;color:var(--si-muted);display:flex;justify-content:space-between;font-weight:500}
+  .funnel-caption strong{color:var(--si-navy);font-weight:700}
+
+  .findings-list .find{
+    padding:14px 0;border-bottom:1px solid var(--si-border-2);
+    display:grid;grid-template-columns:28px 1fr;gap:12px;
+  }
+  .findings-list .find:last-child{border-bottom:none}
+  .find-n{font-family:'DM Mono',monospace;font-size:12px;color:var(--si-accent);font-weight:700;padding-top:2px}
+  .find h4{font-size:14px;font-weight:700;color:var(--si-navy);margin:0 0 4px 0;letter-spacing:-0.005em;line-height:1.3}
+  .find p{font-size:12.5px;color:var(--si-ink);margin:0;line-height:1.5}
+
+  /* vfunnel 5 */
+  .vfunnel{display:flex;flex-direction:column;gap:10px;max-width:960px}
+  .vstep{
+    background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);
+    padding:18px 24px;display:grid;grid-template-columns:1fr auto auto;
+    gap:22px;align-items:center;box-shadow:var(--shadow-sm);
+    border-left:3px solid var(--si-navy);
+  }
+  .vstep .title{font-size:16px;font-weight:700;color:var(--si-navy);margin:0 0 3px 0}
+  .vstep .url{font-family:'DM Mono',monospace;font-size:11px;color:var(--si-muted)}
+  .vstep .num{font-size:28px;font-weight:800;color:var(--si-navy);letter-spacing:-0.02em;line-height:1;font-family:'DM Mono',monospace}
+  .vstep .pct{font-size:11px;color:var(--si-muted);text-align:right;min-width:110px}
+  .vstep .pct b{display:block;font-family:'DM Mono',monospace;font-size:14px;color:var(--si-mid);font-weight:700;margin-bottom:2px}
+  .vstep.highlight{border-color:#f4b0bb;background:var(--si-accent-soft);border-left-color:var(--si-accent)}
+  .vstep.highlight .num{color:var(--si-accent)}
+  .vstep.highlight .pct b{color:var(--si-accent)}
+  .vstep.step-1{border-left-color:var(--si-blue);margin-left:20px}
+  .vstep.step-2{border-left-color:var(--si-mid);margin-left:40px}
+  .vstep.step-3{margin-left:60px}
+
+  /* Traffic */
+  .traffic-list{display:flex;flex-direction:column;gap:10px}
+  .traffic-row{display:grid;grid-template-columns:160px 1fr 50px;gap:14px;align-items:center;font-size:13px}
+  .traffic-row .src{color:var(--si-navy);font-weight:500}
+  .traffic-bar{background:var(--si-light);height:8px;border-radius:1px;overflow:hidden}
+  .traffic-fill{background:var(--si-mid);height:100%;border-radius:1px}
+  .traffic-row .val{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--si-navy);text-align:right;font-weight:600}
+
+  /* Tables */
+  .table-wrap{background:#fff;border:1px solid var(--si-border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+  table.summary{width:100%;border-collapse:collapse;font-size:13px}
+  table.summary thead th{
+    text-align:left;padding:14px 18px;font-size:10.5px;
+    letter-spacing:0.08em;text-transform:uppercase;
+    color:#fff;font-weight:700;background:var(--si-navy);
+  }
+  table.summary tbody td{padding:14px 18px;border-bottom:1px solid var(--si-border-2);vertical-align:top;color:var(--si-ink);line-height:1.5}
+  table.summary tbody tr:hover td{background:var(--si-bg)}
+  table.summary tbody tr:last-child td{border-bottom:none}
+  table.summary td.area{font-weight:600;color:var(--si-navy);white-space:nowrap}
+  table.summary td.mej{color:var(--si-navy)}
+  .prio{display:inline-block;padding:3px 10px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+  .prio.alta{background:var(--si-accent-soft);color:var(--si-accent);border:1px solid #f4b0bb}
+  .prio.media{background:var(--si-gold-soft);color:#7d6507;border:1px solid #e8d79a}
+
+  /* Source */
+  .source{
+    font-family:'DM Mono',monospace;font-size:10.5px;
+    color:var(--si-muted);letter-spacing:0.04em;margin-top:20px;
+    padding-top:14px;border-top:1px solid var(--si-border-2);
+  }
+
+  /* Cover */
+  .cover{
+    min-height:calc(100vh - 220px);
+    background:linear-gradient(135deg,var(--si-navy) 0%,var(--si-navy-2) 50%,var(--si-blue) 100%);
+    color:#fff;border-radius:var(--radius);padding:56px 64px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;box-shadow:var(--shadow);
+  }
+  .cover::before{
+    content:"";position:absolute;right:-120px;bottom:-120px;
+    width:480px;height:480px;border-radius:50%;
+    background:radial-gradient(circle,rgba(200,16,46,0.22),transparent 65%);
+    pointer-events:none;
+  }
+  .cover::after{
+    content:"";position:absolute;right:60px;top:60px;
+    width:130px;height:130px;border-radius:50%;
+    border:1px solid rgba(232,240,251,0.14);pointer-events:none;
+  }
+  .cover-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(232,240,251,0.1);padding:7px 14px;border-radius:4px;
+    font-size:11px;letter-spacing:0.2em;font-weight:600;
+    margin-bottom:auto;align-self:flex-start;
+    border:1px solid rgba(232,240,251,0.18);
+  }
+  .cover-badge-dot{width:8px;height:8px;background:var(--si-accent);border-radius:2px}
+  .cover-title{
+    font-size:56px;line-height:1.05;letter-spacing:-0.025em;
+    margin:auto 0;max-width:820px;font-weight:800;
+  }
+  .cover-title em{font-style:normal;font-weight:300;color:#b8c7e0;display:block;margin-top:14px;font-size:22px;letter-spacing:0.02em}
+  .cover-sub{
+    font-size:13px;letter-spacing:0.15em;text-transform:uppercase;
+    color:#b8c7e0;margin-top:20px;font-weight:500;
+  }
+  .cover-foot{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    font-size:12px;color:#8a9cb8;border-top:1px solid rgba(232,240,251,0.16);
+    padding-top:20px;margin-top:36px;letter-spacing:0.03em;
+  }
+  .cover-foot b{color:#fff;font-weight:600}
+
+  /* Conclusion */
+  .conclusion{
+    background:var(--si-navy);color:#e8f0fb;padding:20px 24px;border-radius:var(--radius);
+    margin-top:22px;font-size:13px;line-height:1.55;box-shadow:var(--shadow);
+  }
+  .conclusion b{color:#fff;font-weight:700}
+  .conclusion .tag{
+    display:inline-block;background:var(--si-accent);color:#fff;
+    padding:3px 10px;border-radius:3px;font-size:10px;
+    letter-spacing:0.1em;font-weight:700;text-transform:uppercase;
+    margin-right:12px;
+  }
+
+  /* Footer bar */
+  .footer-bar{
+    position:fixed;left:248px;right:0;bottom:0;height:54px;
+    background:#fff;border-top:1px solid var(--si-border);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;z-index:40;
+  }
+  .progress{flex:1;margin:0 24px;height:3px;background:var(--si-border-2);position:relative;border-radius:2px;overflow:hidden}
+  .progress-fill{position:absolute;left:0;top:0;bottom:0;background:var(--si-accent);transition:width .3s ease-out;border-radius:2px}
+  .nav-btn{
+    background:#fff;border:1px solid var(--si-border);
+    padding:8px 16px;font-family:'Inter',sans-serif;font-weight:600;
+    font-size:12px;letter-spacing:0.02em;color:var(--si-navy);
+    cursor:pointer;border-radius:4px;
+    display:inline-flex;align-items:center;gap:6px;transition:all .15s;
+  }
+  .nav-btn:hover{background:var(--si-navy);color:#fff;border-color:var(--si-navy)}
+  .nav-btn:disabled{opacity:0.3;cursor:not-allowed}
+  .nav-btn:disabled:hover{background:#fff;color:var(--si-navy);border-color:var(--si-border)}
+  .slide-count{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--si-muted);letter-spacing:0.05em;white-space:nowrap;font-weight:500}
+  .slide-count b{color:var(--si-navy);font-weight:700}
+
+  @media (max-width: 980px){
+    .sidenav{display:none}
+    .chevrons{left:0;padding:0 16px;overflow-x:auto}
+    main{margin-left:0;padding:24px 20px 110px 20px}
+    .footer-bar{left:0}
+    .cover{padding:40px 28px}
+    .cover-title{font-size:38px}
+    .kpi-row,.market-grid,.journey{grid-template-columns:repeat(2,1fr)}
+    .two-col,.funnel-wrap{grid-template-columns:1fr}
+    .slide-head{flex-direction:column;align-items:flex-start;gap:8px}
+    .topbar{padding:0 20px}
+    .topbar-meta{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo">CL</div>
+    <div class="topbar-name">Clicar <span>· Auditoría de Flujo de Ventas Digital</span></div>
+  </div>
+  <div class="topbar-meta"><b>Canales Digitales</b> · Americar Tech · Abril 2026</div>
+</header>
+
+<nav class="sidenav">
+  <div class="sidenav-title">Contenido</div>
+  <ul class="nav-list" id="navList">
+    <li class="nav-item active" data-slide="1"><span class="nav-num">01</span><span class="nav-label">Portada</span></li>
+    <li class="nav-item" data-slide="2"><span class="nav-num">02</span><span class="nav-label">El Mercado Habla</span></li>
+    <li class="nav-item" data-slide="3"><span class="nav-num">03</span><span class="nav-label">Viaje del Comprador</span></li>
+    <li class="nav-item" data-slide="4"><span class="nav-num">04</span><span class="nav-label">Funnel · 5 meses</span></li>
+    <li class="nav-item" data-slide="5"><span class="nav-num">05</span><span class="nav-label">Funnel · 30 días</span></li>
+    <li class="nav-item" data-slide="6"><span class="nav-num">06</span><span class="nav-label">Home</span></li>
+    <li class="nav-item" data-slide="7"><span class="nav-num">07</span><span class="nav-label">Catálogo</span></li>
+    <li class="nav-item" data-slide="8"><span class="nav-num">08</span><span class="nav-label">Ficha de auto</span></li>
+    <li class="nav-item" data-slide="9"><span class="nav-num">09</span><span class="nav-label">Flujo de cotización</span></li>
+    <li class="nav-item" data-slide="10"><span class="nav-num">10</span><span class="nav-label">Resumen · Home/Cat.</span></li>
+    <li class="nav-item" data-slide="11"><span class="nav-num">11</span><span class="nav-label">Resumen · Ficha/Cot.</span></li>
+  </ul>
+</nav>
+
+<div class="chevrons">
+  <div class="chev active" data-stage="context" data-slide="1"><span class="chev-num">I</span><span>Contexto</span></div>
+  <div class="chev" data-stage="funnel" data-slide="4"><span class="chev-num">II</span><span>Funnel</span></div>
+  <div class="chev" data-stage="home" data-slide="6"><span class="chev-num">III</span><span>Home</span></div>
+  <div class="chev" data-stage="cat" data-slide="7"><span class="chev-num">IV</span><span>Catálogo</span></div>
+  <div class="chev" data-stage="ficha" data-slide="8"><span class="chev-num">V</span><span>Ficha</span></div>
+  <div class="chev" data-stage="cot" data-slide="9"><span class="chev-num">VI</span><span>Cotización</span></div>
+  <div class="chev" data-stage="sum" data-slide="10"><span class="chev-num">VII</span><span>Resumen</span></div>
+</div>
+
+<main>
+
+<!-- S1 COVER -->
+<section class="slide active" data-slide="1">
+  <div class="cover">
+    <span class="cover-badge"><span class="cover-badge-dot"></span>CLICAR · AMERICAR TECH</span>
+    <div>
+      <h1 class="cover-title">Auditoría del Flujo<br/>de Ventas Digital<em>Home · Catálogo · Ficha de auto · Cotización</em></h1>
+      <div class="cover-sub">Análisis de comportamiento de usuarios</div>
+    </div>
+    <div class="cover-foot">
+      <div><b>Microsoft Clarity</b> · Últimos 30 días<br/>Periodo complementario · Nov 2025 – Mar 2026</div>
+      <div style="text-align:right"><b>Canales Digitales</b> · Americar Tech<br/>Abril 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- S2 MERCADO -->
+<section class="slide" data-slide="2">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">01 · Contexto de mercado</div>
+      <h2 class="slide-title">El Mercado Habla</h2>
+      <div class="slide-sub">Qué buscan los chilenos al comprar un auto usado.</div>
+    </div>
+    <div class="slide-tag">Google Trends · Ubersuggest</div>
+  </div>
+
+  <div class="market-grid">
+    <div class="market-tile"><div class="big">142M</div><div class="lbl">Búsquedas 2025</div><div class="sub">Mercado en ebullición digital</div></div>
+    <div class="market-tile"><div class="big">$9M – $13M</div><div class="lbl">Ticket promedio</div><div class="sub">Financiamiento es parte del producto, no un extra</div></div>
+    <div class="market-tile"><div class="big">SUV</div><div class="lbl">Categoría líder</div><div class="sub">40% del total de búsquedas de categoría</div></div>
+    <div class="market-tile dark"><div class="big">El miedo</div><div class="lbl">Freno principal</div><div class="sub">Mayor inhibidor de compra del mercado</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">!</div>
+    <div>
+      <strong>El mayor freno de compra no es el precio. Es el miedo.</strong>
+      <p>Quien logre convertir esa ansiedad en certeza, gana el mercado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S3 JOURNEY -->
+<section class="slide" data-slide="3">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">02 · Customer journey</div>
+      <h2 class="slide-title">El Viaje del Comprador en Chile</h2>
+      <div class="slide-sub">El comprador no empieza por la marca — empieza por su vida.</div>
+    </div>
+    <div class="slide-tag">4 etapas de decisión</div>
+  </div>
+
+  <div class="journey">
+    <div class="j-card"><div class="j-num">01</div><div class="j-q">¿Qué auto?</div><div class="j-d">Estilo de vida primero. SUV lidera con 40% de búsquedas de categoría.</div></div>
+    <div class="j-card"><div class="j-num">02</div><div class="j-q">¿Qué modelo?</div><div class="j-d">Búsqueda quirúrgica: "Toyota RAV4 usado Chile". Alta intención.</div></div>
+    <div class="j-card"><div class="j-num">03</div><div class="j-q">¿Cuánto vale?</div><div class="j-d">Ticket $9–$13M. Financiamiento es parte del producto, no un extra.</div></div>
+    <div class="j-card emphasis"><div class="j-num">04</div><div class="j-q">¿Es confiable?</div><div class="j-d">El mayor freno. Casi nadie lo resuelve bien. Aquí está la oportunidad.</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">→</div>
+    <div>
+      <strong>La oportunidad estratégica</strong>
+      <p>Clicar tiene la oportunidad de ser el primer actor del mercado en resolver las 4 etapas con excelencia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- S4 FUNNEL 5M -->
+<section class="slide" data-slide="4">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">03 · Noviembre 2025 — Marzo 2026</div>
+      <h2 class="slide-title">Funnel de conversión · clicar.cl</h2>
+      <div class="slide-sub">Sesiones totales y origen del tráfico a lo largo del proceso comercial.</div>
+    </div>
+    <div class="slide-tag">5 meses de datos</div>
+  </div>
+
+  <div class="funnel-wrap">
+    <div class="funnel-vis">
+      <div class="sec-head"><span class="sec-dot"></span>Descomposición del funnel</div>
+      <div class="funnel-row">
+        <div class="funnel-bar"><div class="seg navy" style="flex:1">100% · clicar.cl</div></div>
+        <div class="funnel-caption"><span>Sesiones totales</span><strong>100%</strong></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-bar"><div class="seg blue" style="flex:70">70% Origen pago</div><div class="seg muted" style="flex:30">30% Directo / orgánico</div></div>
+        <div class="funnel-caption"><span>Composición del tráfico</span><strong></strong></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-bar"><div class="seg navy" style="flex:42">42% Ventas</div><div class="seg mid" style="flex:21">21% Tasación</div><div class="seg gold" style="flex:37">37% Otros</div></div>
+        <div class="funnel-caption"><span>Distribución por canal</span><strong></strong></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-bar"><div class="seg blue" style="flex:81">81% Catálogo</div><div class="seg gold" style="flex:19">19% PDP directo</div></div>
+        <div class="funnel-caption"><span>Dentro de Ventas</span><strong></strong></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-bar"><div class="seg mid" style="flex:24">24% Continúa</div><div class="seg gold" style="flex:76">76% Abandono</div></div>
+        <div class="funnel-caption"><span>Desde ficha de auto (PDP)</span><strong></strong></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-bar"><div class="seg accent" style="flex:1">0,24% Cotización final</div></div>
+        <div class="funnel-caption"><span>Conversión final</span><strong style="color:var(--si-accent)">0,24%</strong></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-head"><span class="sec-dot accent"></span>Lectura de los datos · 3 puntos críticos</div>
+      <div class="findings-list panel" style="padding:0 24px">
+        <div class="find"><div class="find-n">01</div><div><h4>37% del tráfico se va a "Otros"</h4><p>Más de 1 de cada 3 visitas no entra al flujo comercial (Ventas ni Tasación). Revisar arquitectura de navegación y CTAs principales.</p></div></div>
+        <div class="find"><div class="find-n">02</div><div><h4>Catálogo → PDP: solo 19%</h4><p>Del usuario en Ventas, 81% se queda en catálogo y apenas 19% llega a la ficha. Filtros, cards y búsqueda son el foco de optimización.</p></div></div>
+        <div class="find"><div class="find-n">03</div><div><h4>Abandono en PDP del 76%</h4><p>Solo 24% avanza desde la ficha y la cotización final queda en 0,24%. Revisar precio visible, stock, CTA y fricción del formulario.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conclusion">
+    <span class="tag">Conclusión</span>
+    La conversión final <b>(0,24%)</b> se explica por fugas acumuladas — <b>"Otros" 37%</b>, <b>Catálogo→PDP 19%</b> y <b>Abandono PDP 76%</b>. Atacar estos 3 saltos es la mayor palanca del funnel.
+  </div>
+
+  <div class="source">Fuente: analítica clicar.cl · Periodo: Nov 2025 – Mar 2026</div>
+</section>
+
+<!-- S5 FUNNEL 30D -->
+<section class="slide" data-slide="5">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">04 · Últimos 30 días</div>
+      <h2 class="slide-title">Funnel de conversión · volumen absoluto</h2>
+      <div class="slide-sub">Desde sesiones totales hasta inicio de cotización en el buy-process.</div>
+    </div>
+    <div class="slide-tag">Microsoft Clarity · 22 mar – 22 abr 2026</div>
+  </div>
+
+  <div class="vfunnel">
+    <div class="vstep"><div><div class="title">Sesiones totales</div><div class="url">clicar.cl (todos los ingresos)</div></div><div class="num">136.334</div><div class="pct"><b>100%</b>del tráfico</div></div>
+    <div class="vstep step-1"><div><div class="title">Catálogo de autos usados</div><div class="url">/vehiculos/usado</div></div><div class="num">62.955</div><div class="pct"><b>46,2%</b>del total</div></div>
+    <div class="vstep step-2"><div><div class="title">Ficha de auto</div><div class="url">/marcas/ — detalle del vehículo</div></div><div class="num">21.872</div><div class="pct"><b>34,7%</b>del catálogo</div></div>
+    <div class="vstep step-3 highlight"><div><div class="title">Buy-process · inicia cotización</div><div class="url">Flujo de datos de contacto y financiamiento</div></div><div class="num">862</div><div class="pct"><b>3,9%</b>de la ficha</div></div>
+  </div>
+
+  <div class="warn-bar">
+    <span style="font-size:16px;line-height:1">⚠</span>
+    <div><b>Salto crítico:</b> de 21.872 fichas a solo 862 cotizaciones = <b>3,9% de conversión</b> — mayor oportunidad de mejora del funnel.</div>
+  </div>
+</section>
+
+<!-- S6 HOME -->
+<section class="slide" data-slide="6">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">05 · Home</div>
+      <h2 class="slide-title">Contexto general del sitio</h2>
+      <div class="slide-sub">Volumen, composición y calidad del tráfico en la puerta de entrada.</div>
+    </div>
+    <div class="slide-tag">Microsoft Clarity · 30 días</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-val">136.334</div><div class="kpi-label">Sesiones totales</div><div class="kpi-note">Últimos 30 días</div></div>
+    <div class="kpi-card accent"><div class="kpi-val accent">85,7%</div><div class="kpi-label">Tráfico mobile</div><div class="kpi-note">106.867 sesiones</div></div>
+    <div class="kpi-card warn"><div class="kpi-val warn">58,4%</div><div class="kpi-label">Bounce rate</div><div class="kpi-note">Promedio del sitio</div></div>
+    <div class="kpi-card"><div class="kpi-val">3:07</div><div class="kpi-label">Duración promedio</div><div class="kpi-note">min · por sesión</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="sec-head"><span class="sec-dot"></span>Principales fuentes de tráfico</div>
+      <div class="traffic-list">
+        <div class="traffic-row"><div class="src">Ads Meta (FB/Instagram)</div><div class="traffic-bar"><div class="traffic-fill" style="width:100%"></div></div><div class="val">36%</div></div>
+        <div class="traffic-row"><div class="src">Google Paid Search</div><div class="traffic-bar"><div class="traffic-fill" style="width:55.5%"></div></div><div class="val">20%</div></div>
+        <div class="traffic-row"><div class="src">Directo</div><div class="traffic-bar"><div class="traffic-fill" style="width:50%"></div></div><div class="val">18%</div></div>
+        <div class="traffic-row"><div class="src">Google Orgánico</div><div class="traffic-bar"><div class="traffic-fill" style="width:22%"></div></div><div class="val">8%</div></div>
+        <div class="traffic-row"><div class="src">Instagram (rrss)</div><div class="traffic-bar"><div class="traffic-fill" style="width:17%"></div></div><div class="val">6%</div></div>
+        <div class="traffic-row"><div class="src">Otros</div><div class="traffic-bar"><div class="traffic-fill" style="width:33%"></div></div><div class="val">12%</div></div>
+      </div>
+    </div>
+
+    <div class="panel warn-tint">
+      <div class="sec-head"><span class="sec-dot gold"></span>Propuesta · Banner principal</div>
+      <div class="item">
+        <h3>Contenedor con dimensiones fijas — no usa todo el ancho</h3>
+        <p>Hoy el banner vive en un contenedor acotado con bandas laterales que recortan la primera pantalla — justo donde el 85,7% del tráfico (mobile) decide si avanza o rebota.</p>
+      </div>
+      <div class="item">
+        <h3>Banner full width + reglas de arte para marketing</h3>
+        <p>Llevar el banner a <b>full width screen</b>. Maximiza el área útil de la primera pantalla — especialmente en mobile — y entrega un home más moderno e inmersivo.</p>
+        <p style="margin-top:6px">Guideline que proteja la pieza al ocupar todo el ancho: sin texto en el banner (riesgo de recorte entre breakpoints), zona segura para elementos críticos y resoluciones mínimas para mobile y desktop.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="source">Fuente: Microsoft Clarity · 22 mar – 22 abr 2026</div>
+</section>
+
+<!-- S7 CATALOGO -->
+<section class="slide" data-slide="7">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">06 · Catálogo</div>
+      <h2 class="slide-title">Listado y discovery de vehículos</h2>
+      <div class="slide-sub">Dónde entra el tráfico de ventas y cómo se comporta antes de llegar a la ficha.</div>
+    </div>
+    <div class="slide-tag">Microsoft Clarity · 30 días</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-val">62.955</div><div class="kpi-label">Sesiones</div><div class="kpi-note">Últimos 30 días</div></div>
+    <div class="kpi-card accent"><div class="kpi-val accent">87,5%</div><div class="kpi-label">Tráfico mobile</div><div class="kpi-note">52.153 sesiones</div></div>
+    <div class="kpi-card danger"><div class="kpi-val danger">56%</div><div class="kpi-label">Rebotan en pág. 1</div><div class="kpi-note">Sin ver ningún auto</div></div>
+    <div class="kpi-card"><div class="kpi-val">41%</div><div class="kpi-label">Llegan a ficha</div><div class="kpi-note">Del catálogo</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="sec-head"><span class="sec-dot"></span>Estado actual · ya implementado</div>
+      <ul class="blist">
+        <li>Autos sin foto van al final del listado</li>
+        <li>Orden random cada 24h para los 100 autos más antiguos — visibilidad equitativa</li>
+        <li>Botón de filtros: 2.749 clics en 30 días (4,4% de sesiones)</li>
+        <li>Buscador de texto: 30% del uso viene desde el catálogo</li>
+        <li><b style="color:var(--si-accent)">273K dead clicks</b> en banners de campaña y bloques no clicables</li>
+        <li>Filtro devuelve 0 resultados en algunas combinaciones sin stock disponible</li>
+      </ul>
+    </div>
+
+    <div class="panel warn-tint">
+      <div class="sec-head"><span class="sec-dot gold"></span>Mejoras propuestas</div>
+      <ul class="blist gold">
+        <li>Marca de agua <b>"Foto en proceso"</b> para autos con foto de inspección — mejora expectativa visual mientras avanza la operación de fotos</li>
+        <li>Mayor visibilidad del buscador de texto dentro del catálogo</li>
+        <li>Optimizar filtros para evitar combinaciones sin stock</li>
+        <li>Mayor visibilidad para el botón de filtro</li>
+        <li>Optimizar Hero (primera pantalla antes de scroll) enfocado en conversión — los banners actuales han generado 273K dead clicks mensuales</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="source">Fuente: Microsoft Clarity · 22 mar – 22 abr 2026</div>
+</section>
+
+<!-- S8 FICHA -->
+<section class="slide" data-slide="8">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">07 · Ficha de auto</div>
+      <h2 class="slide-title">Product Detail Page · el cuello de botella</h2>
+      <div class="slide-sub">Altísimo tiempo de permanencia, pero baja conversión hacia cotización.</div>
+    </div>
+    <div class="slide-tag">Microsoft Clarity · 30 días</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-val">21.872</div><div class="kpi-label">Sesiones</div><div class="kpi-note">Últimos 30 días</div></div>
+    <div class="kpi-card accent"><div class="kpi-val accent">4:30</div><div class="kpi-label">Tiempo promedio</div><div class="kpi-note">Total en página</div></div>
+    <div class="kpi-card warn"><div class="kpi-val warn">17,3%</div><div class="kpi-label">Con dead click</div><div class="kpi-note">3.792 sesiones</div></div>
+    <div class="kpi-card danger"><div class="kpi-val danger">56,1%</div><div class="kpi-label">Quickback rate</div><div class="kpi-note">Abandono rápido</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel danger-tint">
+      <div class="sec-head"><span class="sec-dot accent"></span>Hallazgos detectados</div>
+      <div class="item"><h3>Foto de inspección mobile sin interacción táctil</h3><p>Cuando el auto no tiene vista 360° pero sí fotos de inspección, el contenedor de la imagen principal no registra swipe ni zoom en mobile. Los usuarios intentan navegar entre fotos y no obtienen respuesta. Afecta prácticamente a todos los autos sin 360°.</p></div>
+      <div class="item"><h3>Miedo a comprar usado · principal inhibidor</h3><p>Clicar no comunica en ficha los respaldos que entrega (revisión certificada, historial verificado, garantía postventa, talleres propios). La competencia tampoco lo hace — hay espacio para diferenciarse. La ficha hoy tampoco muestra opiniones de otros compradores ni el historial del vehículo.</p></div>
+    </div>
+
+    <div class="panel tinted">
+      <div class="sec-head"><span class="sec-dot"></span>Propuestas de mejora</div>
+      <div class="item"><h3>Comparador de autos usados</h3><p>Comparar hasta 3 vehículos lado a lado (precio, kilómetros, año, versión, equipamiento). Aumenta la interacción, incrementa tiempo de permanencia y ataca el quickback rate de 56,1%.</p></div>
+      <div class="item"><h3>Optimizar Hero</h3><p>Rediseñar la primera pantalla de la ficha (antes del scroll) para enfocarla en conversión: foto + datos clave + CTA de cotización visibles sin scroll. Mismo aprendizaje aplicado al catálogo.</p></div>
+      <div class="item"><h3>Opiniones, rating y microcopy de respaldo</h3><p>Bloque con rating y opiniones de compradores reales + microcopy de respaldos (revisión certificada, garantía, talleres propios). Ataca directo el miedo a comprar usado — el mayor freno del mercado.</p></div>
+      <div class="item"><h3>Historial del auto</h3><p>Mostrar en la ficha el historial del vehículo: dueños previos, mantenciones realizadas, estado legal. Convierte información que hoy vive en trastienda en argumento de venta.</p></div>
+    </div>
+  </div>
+
+  <div class="source">Fuente: Microsoft Clarity · 22 mar – 22 abr 2026</div>
+</section>
+
+<!-- S9 COTIZACION -->
+<section class="slide" data-slide="9">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">08 · Flujo de cotización</div>
+      <h2 class="slide-title">Buy-process · donde se pierde el lead</h2>
+      <div class="slide-sub">El último salto del funnel concentra la mayor oportunidad de mejora.</div>
+    </div>
+    <div class="slide-tag">Microsoft Clarity · 30 días</div>
+  </div>
+
+  <div class="kpi-row three">
+    <div class="kpi-card"><div class="kpi-val">862</div><div class="kpi-label">Inician cotización</div><div class="kpi-note">Desde ficha de auto</div></div>
+    <div class="kpi-card danger"><div class="kpi-val danger">3,9%</div><div class="kpi-label">Conversión ficha → cotización</div><div class="kpi-note">Alta oportunidad de mejora</div></div>
+    <div class="kpi-card warn"><div class="kpi-val warn">19,4%</div><div class="kpi-label">Sesiones con dead click</div><div class="kpi-note">167 de 862 sesiones</div></div>
+  </div>
+
+  <div class="panel danger-tint" style="margin-bottom:18px">
+    <div class="sec-head"><span class="sec-dot accent"></span>Hallazgo · UX del encabezado</div>
+    <h3>Dead clicks en foto del auto y en los indicadores de paso</h3>
+    <p>La foto del auto que aparece en el encabezado del buy-process y los indicadores numéricos de pasos (1·2·3·4·5) reciben dead clicks frecuentes. El usuario intenta interactuar esperando navegar entre pasos o ampliar la foto.</p>
+    <p style="margin-top:10px"><b>Propuesta:</b> eliminar la foto del header en el flujo de cotización y reemplazar los steps clicables por un indicador de progreso no clicable.</p>
+  </div>
+
+  <div class="panel tinted">
+    <div class="sec-head"><span class="sec-dot"></span>Optimización UX · fricción del formulario</div>
+    <p>Actualmente hay muchas preguntas en el flujo de cotización, lo que genera fricción y provoca abandono, a pesar de que los datos se capturan a partir del paso 1. Se necesita disminuir la fricción y aumentar la velocidad de experiencia del flujo eliminando preguntas no necesarias, dejando sólo la información relevante.</p>
+  </div>
+
+  <div class="source">Fuente: Microsoft Clarity · 22 mar – 22 abr 2026</div>
+</section>
+
+<!-- S10 RESUMEN HOME/CAT -->
+<section class="slide" data-slide="10">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">09 · Plan de acción · parte I</div>
+      <h2 class="slide-title">Resumen de mejoras · Home | Catálogo</h2>
+      <div class="slide-sub">Prioridad, mejora propuesta y métrica de seguimiento para cada iniciativa.</div>
+    </div>
+    <div class="slide-tag">5 iniciativas</div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="summary">
+      <thead><tr><th style="width:110px">Área</th><th style="width:90px">Prioridad</th><th>Mejora propuesta</th><th style="width:280px">Medición</th></tr></thead>
+      <tbody>
+        <tr><td class="area">Home</td><td><span class="prio alta">Alta</span></td><td class="mej">Banner principal full width screen inmersivo en primera pantalla.</td><td>Bounce rate del home (hoy 58,4%) + duración promedio (hoy 3:07)</td></tr>
+        <tr><td class="area">Catálogo</td><td><span class="prio media">Media</span></td><td class="mej">Mayor visibilidad del buscador de texto dentro del catálogo.</td><td>hd_click_searcher desde catálogo (hoy 30% del uso)</td></tr>
+        <tr><td class="area">Catálogo</td><td><span class="prio alta">Alta</span></td><td class="mej">Optimizar Hero del catálogo (primera pantalla antes del scroll, enfocada en conversión).</td><td>Rebote en página 1 del catálogo (hoy 56%) · Dead clicks mensuales (hoy 273K)</td></tr>
+        <tr><td class="area">Catálogo</td><td><span class="prio media">Media</span></td><td class="mej">Sugerir alternativas atractivas cuando el filtro devuelve 0 resultados.</td><td>Tasa de abandono en filtros sin stock</td></tr>
+        <tr><td class="area">Catálogo</td><td><span class="prio media">Media</span></td><td class="mej">Marca de agua "Foto en proceso" en autos sin fotografía formal.</td><td>CTR de tarjetas con marca de agua vs sin foto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="source">Fuente: Microsoft Clarity · 22 mar – 22 abr 2026</div>
+</section>
+
+<!-- S11 RESUMEN FICHA/COT -->
+<section class="slide" data-slide="11">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">10 · Plan de acción · parte II</div>
+      <h2 class="slide-title">Resumen de mejoras · Ficha | Flujo de cotización</h2>
+      <div class="slide-sub">Prioridad, mejora propuesta y métrica de seguimiento para cada iniciativa.</div>
+    </div>
+    <div class="slide-tag">7 iniciativas</div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="summary">
+      <thead><tr><th style="width:130px">Área</th><th style="width:90px">Prioridad</th><th>Mejora propuesta</th><th style="width:280px">Medición</th></tr></thead>
+      <tbody>
+        <tr><td class="area">Ficha</td><td><span class="prio media">Media</span></td><td class="mej">Swipe / zoom en carrusel de fotos de inspección mobile (sin dependencia de 360°).</td><td>Dead clicks en foto principal (hoy 74.943/mes) + quickback rate (hoy 56,1%)</td></tr>
+        <tr><td class="area">Ficha</td><td><span class="prio media">Media</span></td><td class="mej">Comparador de autos usados (hasta 3 vehículos lado a lado).</td><td>Tiempo promedio en ficha (hoy 4:30) + % sesiones que usan comparador</td></tr>
+        <tr><td class="area">Ficha</td><td><span class="prio alta">Alta</span></td><td class="mej">Optimizar Hero de la ficha (foto + datos clave + CTA de cotización sin scroll).</td><td>Conversión ficha → cotización (hoy 3,9%)</td></tr>
+        <tr><td class="area">Ficha</td><td><span class="prio alta">Alta</span></td><td class="mej">Microcopy de respaldos (revisión, garantía, talleres) + opiniones y rating de clientes.</td><td>Conversión ficha → cotización + scroll depth en ficha</td></tr>
+        <tr><td class="area">Ficha</td><td><span class="prio media">Media</span></td><td class="mej">Historial del auto (dueños previos, kilometraje, mantenciones, estado legal).</td><td>Scroll depth en ficha + tiempo promedio en ficha</td></tr>
+        <tr><td class="area">Flujo cotización</td><td><span class="prio alta">Alta</span></td><td class="mej">Eliminar foto del header y reemplazar steps clicables por indicador de progreso.</td><td>Dead clicks en header buy-process (hoy 19,4% sesiones)</td></tr>
+        <tr><td class="area">Flujo cotización</td><td><span class="prio media">Media</span></td><td class="mej">Reducir fricción del flujo eliminando preguntas no esenciales.</td><td>Tasa de completación del buy-process + n° de leads/mes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="source">Fuente: Microsoft Clarity · 22 mar – 22 abr 2026</div>
+</section>
+
+</main>
+
+<div class="footer-bar">
+  <button class="nav-btn" id="prevBtn">← Anterior</button>
+  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="slide-count"><b id="currentNum">01</b> / <span id="totalNum">11</span></div>
+    <button class="nav-btn" id="nextBtn">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const navItems = document.querySelectorAll('.nav-item');
+  const chevs = document.querySelectorAll('.chev');
+  const total = slides.length;
+  let current = 1;
+  const $ = id => document.getElementById(id);
+  $('totalNum').textContent = String(total).padStart(2,'0');
+
+  const stageMap = {
+    1:'context',2:'context',3:'context',
+    4:'funnel',5:'funnel',
+    6:'home',7:'cat',8:'ficha',9:'cot',
+    10:'sum',11:'sum'
+  };
+
+  function go(n){
+    n = Math.max(1, Math.min(total, n));
+    current = n;
+    slides.forEach(s => s.classList.toggle('active', Number(s.dataset.slide) === n));
+    navItems.forEach(i => i.classList.toggle('active', Number(i.dataset.slide) === n));
+    const stage = stageMap[n];
+    chevs.forEach(c => c.classList.toggle('active', c.dataset.stage === stage));
+    $('currentNum').textContent = String(n).padStart(2,'0');
+    $('progressFill').style.width = (n/total*100) + '%';
+    $('prevBtn').disabled = n === 1;
+    $('nextBtn').disabled = n === total;
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  navItems.forEach(i => i.addEventListener('click', () => go(Number(i.dataset.slide))));
+  chevs.forEach(c => c.addEventListener('click', () => go(Number(c.dataset.slide))));
+  $('prevBtn').addEventListener('click', () => go(current - 1));
+  $('nextBtn').addEventListener('click', () => go(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(current - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(1); }
+    else if (e.key === 'End') { e.preventDefault(); go(total); }
+  });
+
+  go(1);
+})();
+</script>
+
+</body>
+</html>

@@ -525,6 +525,44 @@
   .insp-table tbody tr.row-pct td:first-child { color: #6F4700; font-weight: 600; font-style: normal; }
   .insp-table tbody tr.row-pct td.col-total { background: #F1EAD0; color: #6F4700; font-style: normal; }
   .insp-table tbody tr.row-pct:hover td { background: #F1EAD0; }
+  /* Foto Impel · tiempos por origen */
+  .impel-tiempos-section { margin-top: 28px; }
+  .impel-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 16px 20px; background: linear-gradient(180deg, #FAFBFD 0%, #FFFFFF 100%); border-bottom: 1px solid var(--gray-100); }
+  @media (max-width: 900px) { .impel-stats { grid-template-columns: repeat(2, 1fr); } }
+  .impel-stat { background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 12px 14px; }
+  .impel-stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 6px; }
+  .impel-stat-value { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; line-height: 1; }
+  .impel-stat-value span { font-size: 11px; font-weight: 500; color: var(--gray-500); margin-left: 4px; letter-spacing: 0; }
+  .impel-stat-value.avg { color: #EF9F27; }
+  .impel-stat-value.best { color: #1D9E75; }
+  .impel-stat-value.worst { color: #C0392B; }
+  .impel-stat-value.gap { color: var(--navy); }
+  .impel-table { width: 100%; border: 0; }
+  .impel-table thead th { background: var(--navy); color: var(--white); font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; text-align: left; }
+  .impel-table thead th.col-rank { width: 50px; text-align: center; }
+  .impel-table thead th.col-origen { width: 200px; }
+  .impel-table thead th.col-dias { width: 110px; text-align: right; }
+  .impel-table thead th.col-delta { width: 110px; text-align: right; }
+  .impel-table tbody td { padding: 10px 14px; border-bottom: 1px solid var(--gray-100); font-size: 12.5px; color: var(--gray-700); vertical-align: middle; font-variant-numeric: tabular-nums; }
+  .impel-table tbody tr:last-child td { border-bottom: 0; }
+  .impel-table tbody tr:hover td { background: var(--gray-50); }
+  .impel-table td.col-rank { text-align: center; }
+  .impel-table td.col-origen strong { color: var(--navy); font-weight: 700; }
+  .impel-table td.col-dias { text-align: right; color: var(--navy); }
+  .impel-table td.col-dias strong { font-size: 14px; }
+  .impel-table td.col-dias-unit, .impel-table .col-dias-unit { font-size: 10px; color: var(--gray-500); margin-left: 2px; font-weight: 500; }
+  .impel-table td.col-delta { text-align: right; font-weight: 700; font-size: 12px; }
+  .impel-table td.col-delta.pos { color: #1D9E75; }
+  .impel-table td.col-delta.neg { color: #C0392B; }
+  .impel-table td.col-delta.neu { color: var(--gray-500); }
+  .impel-rank-pill { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; color: var(--white); font-size: 11px; font-weight: 700; }
+  .impel-rank-pill.best { background: #1D9E75; }
+  .impel-rank-pill.good { background: #6FBE8A; }
+  .impel-rank-pill.mid { background: #F0A830; }
+  .impel-rank-pill.bad { background: #D97B2E; }
+  .impel-rank-pill.worst { background: #C0392B; }
+  .impel-bar-wrap { width: 100%; height: 12px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+  .impel-bar { height: 100%; border-radius: 6px; transition: width 0.3s ease; }
   .vta-view { display: none; }
   .vta-view.active { display: block; }
   .vta-table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 4px; }
@@ -1375,10 +1413,11 @@ var journey = {
       ],
       substeps: [
         { num: 1, title: "Captura de foto de producto",
-          description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspección). 204 uds (11,4%) están publicadas SIN ninguna foto. Tiempo real en sucursal → foto Impel: promedio ~10,1 días según origen (VPP Usados 6,6 · Test Car 7 · Compra/Salida Com. Nuevos 9 · B2B 12,7 · Carflex 13 · VPP Nuevos 13,7).",
+          description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspección). 204 uds (11,4%) están publicadas SIN ninguna foto.",
           kpis: [{value:"1.586",suffix:"uds",label:"Publicadas con foto capturada (88,6%)"},{value:"204",suffix:"uds",label:"Publicadas sin foto (11,4%)"},{value:"10,1",suffix:"días",label:"Sucursal disponible -> foto Impel (promedio)"}],
-          hallazgos: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel — peor en VPP Nuevos (13,7 días), Carflex (13) y B2B (12,7); mejor en VPP Usados (6,6 días)","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
-          mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '204 sin foto' con owner por sucursal","SLA transitorio <72h para los orígenes más lentos (VPP Nuevos, Carflex, B2B)","Priorización de stock premium y alta rotación durante la transición"]
+          hallazgos: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","<strong>Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel</strong> — ver tabla de tiempos por origen","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
+          mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '204 sin foto' con owner por sucursal","SLA transitorio <72h para los orígenes más lentos (VPP Nuevos, Carflex, B2B)","Priorización de stock premium y alta rotación durante la transición"],
+          chartType: 'foto-impel-tiempos'
         },
         { num: 2, title: "Post-procesado Impel (fondo limpio)",
           description: "Salida estándar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad. Data real BI 2026-04-17: 1.211 unidades con foto Impel terminada (67,7% del stock publicado). Nota: el BI agrupa Tier 1 + Tier 2 como IMPEL - la adopción específica de cabina virtual 360 requiere reporte Impel detallado.",
@@ -1441,6 +1480,7 @@ var journey = {
     {
       id: 11, macro: "venta", name: "Captación Digital", fullName: "Captación Digital (Venta)",
       video: { url: null, title: "Video del proceso - Captación Digital (Venta)" },
+      resources: [{ href: "./auditoria-flujo-ventas.html", label: "Auditoría Flujo Ventas Digital — 11 slides (Clarity + Mercado)" }],
       route: "Home -> Catálogo -> Ficha de auto -> Cotización (buy-process)",
       description: "Recorrido del cliente comprador en clicar.cl: Home → Catálogo → Ficha de auto → Cotización. Análisis de comportamiento basado en Microsoft Clarity (22 mar – 22 abr 2026): 136.334 sesiones totales con 85,7% tráfico mobile. Contexto de mercado: 142M búsquedas 2025 en Google (Google Trends/Ubersuggest), ticket promedio $9M–$13M, SUV lidera con 40% del total de búsquedas. Freno principal de compra en el mercado chileno: el miedo / desconfianza, mayor inhibidor que el precio.",
       substeps: [
@@ -4553,6 +4593,7 @@ function renderSubstepSlide(i, stage, sub) {
     else if (sub.chartType === 'vta-funnel') chartHtml = renderVtaFunnelSection(i);
     else if (sub.chartType && sub.chartType.indexOf('vta-leads-') === 0) chartHtml = renderVtaLeadsSection(i, sub.chartType);
     else if (sub.chartType === 'firma-hallazgos') chartHtml = renderFirmaHallazgosSection(i);
+    else if (sub.chartType === 'foto-impel-tiempos') chartHtml = renderFotoImpelTiemposSection(i);
     else chartHtml = renderChartSection(i, sub.chartType);
   }
 
@@ -4569,6 +4610,58 @@ function renderSubstepSlide(i, stage, sub) {
       '<div class="col-block hallazgos-block"><div class="col-header hallazgos">Hallazgos</div><div class="col-body"><ul class="bullet-list">' + hHtml + '</ul></div></div>' +
       '<div class="col-block mejoras-block"><div class="col-header mejoras">Mejoras propuestas</div><div class="col-body"><ul class="bullet-list">' + mHtml + '</ul></div></div>' +
     '</div>' +
+  '</div>';
+}
+
+function renderFotoImpelTiemposSection(slideIdx) {
+  var rows = [
+    { origen: 'VPP Usados',            dias: 6.6,  rank: 'best' },
+    { origen: 'Test Car',              dias: 7.0,  rank: 'good' },
+    { origen: 'Compra',                dias: 9.0,  rank: 'mid' },
+    { origen: 'Salida Comercial Nuevos', dias: 9.0, rank: 'mid' },
+    { origen: 'B2B',                   dias: 12.7, rank: 'bad' },
+    { origen: 'Carflex',               dias: 13.0, rank: 'bad' },
+    { origen: 'VPP Nuevos',            dias: 13.7, rank: 'worst' }
+  ];
+  var max = 15;
+  var avg = 10.1;
+  var colors = { best: '#1D9E75', good: '#6FBE8A', mid: '#F0A830', bad: '#D97B2E', worst: '#C0392B' };
+  var body = '';
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    var pct = (r.dias / max) * 100;
+    var delta = r.dias - avg;
+    var deltaStr = (delta > 0 ? '+' : '') + delta.toLocaleString('es-CL', {maximumFractionDigits:1}) + ' d';
+    var deltaCls = delta > 0 ? 'neg' : (delta < 0 ? 'pos' : 'neu');
+    body += '<tr>' +
+      '<td class="col-rank"><span class="impel-rank-pill ' + r.rank + '">' + (i + 1) + '</span></td>' +
+      '<td class="col-origen"><strong>' + r.origen + '</strong></td>' +
+      '<td class="col-bar"><div class="impel-bar-wrap"><div class="impel-bar" style="width:' + pct + '%; background:' + colors[r.rank] + '"></div></div></td>' +
+      '<td class="col-dias"><strong>' + r.dias.toLocaleString('es-CL', {maximumFractionDigits:1}) + '</strong> <span class="col-dias-unit">días</span></td>' +
+      '<td class="col-delta ' + deltaCls + '">' + deltaStr + '</td>' +
+    '</tr>';
+  }
+  return '<div class="data-section impel-tiempos-section">' +
+    '<div class="data-section-header">' +
+      '<div><div class="data-section-title">Tiempo real en sucursal → foto Impel</div><div class="data-section-subtitle">Días promedio entre que la unidad queda disponible en sucursal y pasa a foto Impel, por origen de compra.</div></div>' +
+    '</div>' +
+    '<div class="impel-stats">' +
+      '<div class="impel-stat"><div class="impel-stat-label">Promedio</div><div class="impel-stat-value avg">10,1 <span>días</span></div></div>' +
+      '<div class="impel-stat"><div class="impel-stat-label">Mejor origen</div><div class="impel-stat-value best">6,6 <span>días · VPP Usados</span></div></div>' +
+      '<div class="impel-stat"><div class="impel-stat-label">Peor origen</div><div class="impel-stat-value worst">13,7 <span>días · VPP Nuevos</span></div></div>' +
+      '<div class="impel-stat"><div class="impel-stat-label">Brecha</div><div class="impel-stat-value gap">+7,1 <span>días (2,1×)</span></div></div>' +
+    '</div>' +
+    '<table class="data-table impel-table">' +
+      '<thead><tr>' +
+        '<th class="col-rank">#</th>' +
+        '<th class="col-origen">Origen de compra</th>' +
+        '<th class="col-bar">Distribución</th>' +
+        '<th class="col-dias">Días</th>' +
+        '<th class="col-delta">vs. promedio</th>' +
+      '</tr></thead>' +
+      '<tbody>' + body + '</tbody>' +
+    '</table>' +
+    '<div class="data-insight"><strong>Brecha 2,1× entre el origen más rápido y el más lento.</strong> Los orígenes VPP Nuevos, Carflex y B2B duplican el tiempo del promedio y superan en ~7 días al mejor (VPP Usados). Priorizar SLA transitorio <72h en los 3 orígenes más lentos para destrabar el flujo foto → vitrina.</div>' +
   '</div>';
 }
 
