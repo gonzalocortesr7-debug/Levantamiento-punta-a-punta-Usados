@@ -464,6 +464,31 @@
   .cliente-tooltip li::before { content: "\2022"; position: absolute; left: 4px; color: var(--navy); font-weight: 700; }
   .benchmark-chip-wrap { position: relative; margin-left: auto; }
   .benchmark-chip-wrap + .cliente-chip-wrap { margin-left: 8px; }
+  /* Insights CX · chip con tooltip */
+  .cx-chip-wrap { position: relative; display: inline-block; margin-left: auto; vertical-align: middle; }
+  .cx-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px 6px 10px; background: linear-gradient(180deg, #FFF8EA 0%, #FFEDC4 100%); color: #6F4700; border: 1px solid #F0D388; border-radius: 14px; font-size: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.06em; font-family: inherit; transition: background 0.15s, border-color 0.15s, transform 0.12s; }
+  .cx-chip:hover, .cx-chip:focus { background: linear-gradient(180deg, #FFEDC4 0%, #F8DD9C 100%); border-color: #D9822B; outline: none; transform: translateY(-1px); }
+  .cx-chip-dot { width: 7px; height: 7px; border-radius: 50%; background: #D9822B; box-shadow: 0 0 0 3px rgba(217, 130, 43, 0.18); flex-shrink: 0; }
+  .cx-chip-count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; background: #6F4700; color: #FFEDC4; border-radius: 9px; font-size: 10px; font-weight: 800; letter-spacing: 0; margin-left: 2px; }
+  .cx-tooltip { position: absolute; top: calc(100% + 10px); right: 0; width: min(560px, 92vw); max-width: calc(100vw - 80px); background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; box-shadow: 0 18px 48px rgba(15, 34, 64, 0.18), 0 4px 12px rgba(15, 34, 64, 0.08); z-index: 100; display: none; text-align: left; font-weight: 400; text-transform: none; letter-spacing: 0; overflow: hidden; }
+  .cx-chip-wrap:hover .cx-tooltip, .cx-chip-wrap:focus-within .cx-tooltip { display: block; animation: cxTtFade 0.18s ease-out; }
+  @keyframes cxTtFade { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+  .cx-tooltip::before { content: ""; position: absolute; top: -7px; right: 22px; width: 12px; height: 12px; background: linear-gradient(135deg, #FFF8EA 50%, transparent 50%); border-left: 1px solid var(--gray-200); border-top: 1px solid var(--gray-200); transform: rotate(45deg); }
+  .cx-tt-head { display: flex; align-items: flex-start; gap: 12px; padding: 14px 18px; background: linear-gradient(180deg, #FFF8EA 0%, #FFFCF3 100%); border-bottom: 1px solid #F0D388; }
+  .cx-tt-head-icon { width: 32px; height: 32px; border-radius: 50%; background: #D9822B; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(217, 130, 43, 0.35); }
+  .cx-tt-head-title { font-size: 13px; font-weight: 700; color: #6F4700; letter-spacing: 0; margin-bottom: 2px; }
+  .cx-tt-head-sub { font-size: 11px; color: #8A5A00; font-weight: 500; line-height: 1.4; }
+  .cx-tt-body { padding: 14px 18px 16px; max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+  .cx-tt-card { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 14px; background: #FAFBFC; border: 1px solid var(--gray-200); border-radius: 4px; transition: border-color 0.12s; }
+  .cx-tt-card:hover { border-color: #F0D388; }
+  .cx-tt-card-num { width: 26px; height: 26px; border-radius: 50%; background: #FFEDC4; color: #6F4700; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; line-height: 1; }
+  .cx-tt-card-body { min-width: 0; }
+  .cx-tt-text { font-size: 12.5px; color: var(--gray-700); line-height: 1.55; margin-bottom: 10px; }
+  .cx-tt-meta { display: flex; flex-direction: column; gap: 7px; padding-top: 8px; border-top: 1px dashed var(--gray-200); }
+  .cx-tt-meta-item { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: baseline; font-size: 11.5px; line-height: 1.45; }
+  .cx-tt-meta-label { font-size: 9px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); white-space: nowrap; }
+  .cx-tt-meta-value { color: var(--navy); font-weight: 600; }
+  .cx-tt-card:nth-child(1) .cx-tt-card-num { background: #D9822B; color: #fff; }
   .benchmark-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #E6F0FB; color: #0B3B6F; border: 1px solid #A8C6E6; border-radius: 14px; font-size: 10px; font-weight: 700; cursor: help; text-transform: uppercase; letter-spacing: 0.04em; font-family: inherit; }
   .benchmark-chip::before { content: "\1F4CA"; font-size: 12px; }
   .benchmark-chip:hover, .benchmark-chip:focus { background: #A8C6E6; outline: none; }
@@ -1439,7 +1464,8 @@ var journey = {
       route: "Toma de foto -> Procesamiento Impel -> Cabina virtual 360 (opcional)",
       description: "Etapa crítica del pipeline visual. La foto de producto se captura y luego se procesa en el software Impel, que aplica fondo limpio (Tier 2, estándar) o cabina virtual 360 (Tier 1, incorporación reciente 2026-04-13 con look tipo estudio giratorio y branding CLICAR). Es el cuello de botella operacional: cuando Impel no alcanza, la unidad queda publicada con foto de inspección (Tier 3) o sin foto (Tier 4).",
       resources: [
-        { label: "Hallazgos Preparación (detalle)", href: "hallazgos-preparación.md" }
+        { label: "Análisis Preparación · 21 slides (foto Impel + tiers)", href: "analisis-preparacion-foto-impel.html" },
+        { label: "Hallazgos Preparación (detalle)", href: "hallazgos-preparacion.md" }
       ],
       substeps: [
         { num: 1, title: "Captura de foto de producto",
@@ -1475,7 +1501,7 @@ var journey = {
       route: "Estado de foto -> Posición en catálogo (4 tiers)",
       description: "Resultado operativo del pipeline visible al cliente. La distribución del stock entre los 4 tiers determina la calidad de la vitrina digital: Tier 1 (cabina virtual 360) y Tier 2 (Impel fondo limpio) ocupan páginas 1-2; Tier 3 (foto inspección) aparece al medio auditado diariamente; Tier 4 (sin foto, placeholder) va al fin del catálogo. Evidencia actual (2026-04-20): en clicar.cl/seminuevos-lujo?page=6 los 3 primeros vehículos del grid son Tier 4 (Lexus RX, Volvo XC90, BMW X5) - lujo con ticket >= $46M.",
       resources: [
-        { label: "Hallazgos Preparación (detalle)", href: "hallazgos-preparación.md" },
+        { label: "Hallazgos Preparación (detalle)", href: "hallazgos-preparacion.md" },
         { label: "Evidencia: catálogo lujo p.6", href: "https://www.clicar.cl/seminuevos-lujo?page=6" }
       ],
       substeps: [
@@ -2816,7 +2842,87 @@ function renderResponsables(stageId) {
 }
 
 // ============================================================
-// IMPACTO CLIENTE - KPIs y lineamientos por sub-etapa
+// INSIGHTS CX por proceso (etapa) — fuente: Insights Clicar.xlsx
+// Cada entrada va por stage.id y se renderiza en el header del proceso
+// ============================================================
+var INSIGHTS_POR_ETAPA = {
+  // COMPRA · Gestión de Lead (id=2)
+  2: [
+    { insight: 'Sin acciones de prospección/seguimiento sistemáticas a clientes descartados — la encuesta CSAT a descartados está inactiva.', kpi: 'CSAT Descartados', accion: 'Reactivar encuesta a clientes descartados' },
+    { insight: 'En Usados, el proceso de tasación e inspección es lo más importante para los clientes que no dejan VPP, pero es el segundo atributo peor evaluado después del precio.', kpi: 'NPS Compra · CSAT Atributos', accion: 'Reactivar encuesta a clientes Compra e incorporar preguntas diferenciadas para clientes VPP' }
+  ],
+  // COMPRA · Oportunidad + Inspección y Cierre (id=3 y 4)
+  3: [
+    { insight: 'Atributos de confianza y transparencia en el proceso de tasación e inspección, junto con la asesoría del ejecutivo, son los más sensibles en clientes neutros y detractores.', kpi: 'NPS Compra · CSAT Atributos', accion: 'Modelo de Atención · Compra' }
+  ],
+  4: [
+    { insight: 'Atributos de confianza y transparencia en el proceso de tasación e inspección, junto con la asesoría del ejecutivo, son los más sensibles en clientes neutros y detractores.', kpi: 'NPS Compra · CSAT Atributos', accion: 'Modelo de Atención · Compra' }
+  ],
+  // PREPARACIÓN · Ingreso Quiter + Publicación Web (id=6 y 8)
+  6: [
+    { insight: 'El 11% de los clientes detractores o neutros señala problemas con plazos de entrega, y el 30% manifiesta temas asociados a la preparación del vehículo.', kpi: 'NPS VU', accion: '' }
+  ],
+  8: [
+    { insight: 'El 11% de los clientes detractores o neutros señala problemas con plazos de entrega, y el 30% manifiesta temas asociados a la preparación del vehículo.', kpi: 'NPS VU', accion: '' }
+  ],
+  // VENTA · Captación Digital + Gestión de Leads (id=11 y 12)
+  11: [
+    { insight: 'Hoy hay clientes persona natural categorizados como VIP (5%) y Oro (10%) sobre los cuales no existen acciones de prospección específicas. Son los clientes más rentables para la empresa, representando una parte relevante del margen.', kpi: 'CSAT Lead', accion: 'Incorporar preguntas por proceso de cotización para oportunidades de origen digital' }
+  ],
+  12: [
+    { insight: 'Hoy hay clientes persona natural categorizados como VIP (5%) y Oro (10%) sobre los cuales no existen acciones de prospección específicas. Son los clientes más rentables para la empresa, representando una parte relevante del margen.', kpi: 'CSAT Lead', accion: 'Incorporar preguntas por proceso de cotización para oportunidades de origen digital' }
+  ],
+  // VENTA · Reserva y Medios de Pago + Firma de Contrato (id=13 y 14)
+  13: [
+    { insight: 'Atributos de confianza y transparencia en el proceso de tasación e inspección, junto con la asesoría del ejecutivo, son los más sensibles en clientes neutros y detractores. El precio, si bien es el atributo de más baja evaluación, es el menos sensible en clientes neutros y detractores: saben que recibirán un precio menor que en venta particular, por lo que se deben potenciar los atributos de proceso.', kpi: 'NPS VU · Atributos VPP', accion: 'Modelo de Atención · VU/VPP · Incorporar preguntas diferenciadas para clientes VPP' }
+  ],
+  14: [
+    { insight: 'Atributos de confianza y transparencia en el proceso de tasación e inspección, junto con la asesoría del ejecutivo, son los más sensibles en clientes neutros y detractores. El precio, si bien es el atributo de más baja evaluación, es el menos sensible en clientes neutros y detractores: saben que recibirán un precio menor que en venta particular, por lo que se deben potenciar los atributos de proceso.', kpi: 'NPS VU · Atributos VPP', accion: 'Modelo de Atención · VU/VPP · Incorporar preguntas diferenciadas para clientes VPP' }
+  ],
+  // VENTA · Facturación y Entrega (id=15)
+  15: [
+    { insight: 'Desde piso se ha levantado que existen demoras en la emisión de factura que retrasan el proceso de entrega. Algunos clientes han comentado en encuestas esperas en sucursal de 3, 5 y hasta 8 horas.', kpi: 'NPS VU · Atributo Entrega', accion: '' }
+  ]
+};
+
+function renderInsightsCx(stageId) {
+  var arr = INSIGHTS_POR_ETAPA[stageId];
+  if (!arr || !arr.length) return '';
+  var cards = '';
+  for (var i = 0; i < arr.length; i++) {
+    var it = arr[i];
+    var metaParts = '';
+    if (it.kpi) metaParts += '<div class="cx-tt-meta-item"><span class="cx-tt-meta-label">KPI</span><span class="cx-tt-meta-value">' + it.kpi + '</span></div>';
+    if (it.accion) metaParts += '<div class="cx-tt-meta-item"><span class="cx-tt-meta-label">Acción Área CX</span><span class="cx-tt-meta-value">' + it.accion + '</span></div>';
+    cards += '<div class="cx-tt-card">' +
+      '<div class="cx-tt-card-num">' + (i + 1) + '</div>' +
+      '<div class="cx-tt-card-body">' +
+        '<div class="cx-tt-text">' + it.insight + '</div>' +
+        (metaParts ? '<div class="cx-tt-meta">' + metaParts + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }
+  return '<div class="cx-chip-wrap">' +
+    '<button class="cx-chip" type="button" tabindex="0" aria-haspopup="dialog">' +
+      '<span class="cx-chip-dot"></span>' +
+      'Insights CX · Área Cliente' +
+      '<span class="cx-chip-count">' + arr.length + '</span>' +
+    '</button>' +
+    '<div class="cx-tooltip" role="tooltip">' +
+      '<div class="cx-tt-head">' +
+        '<div class="cx-tt-head-icon">💡</div>' +
+        '<div>' +
+          '<div class="cx-tt-head-title">Insights de Cliente · Área CX</div>' +
+          '<div class="cx-tt-head-sub">Hallazgos y acciones priorizadas para este proceso</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="cx-tt-body">' + cards + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+// ============================================================
+// IMPACTO CLIENTE — sub-etapa (legacy, no se usa)
 // ============================================================
 var CLIENTE_POR_SUBSTEP = {
   "1.1": { kpis: ["Tasa de abandono del formulario (TBD)","Tiempo promedio de completado (TBD)","Campos con mayor fricción reportada (TBD)"], lineamientos: ["Mostrar progreso y campos restantes","Autocompletar a partir de la patente siempre que se pueda","Una duda por vez, no todo junto"] },
@@ -4287,9 +4393,10 @@ function renderStepper(stage, activeIdx) {
     }
     var macroLabel = MACRO_LABELS[stage.macro] || stage.macro || 'Compra';
     var respHtml = renderResponsables(stage.id);
+    var insightsHtml = renderInsightsCx(stage.id);
     var titleLine = respHtml
-      ? '<div class="sh-title-line"><div class="sh-title">' + stage.fullName + '</div><span class="sh-arrow"></span>' + respHtml + '</div>'
-      : '<div class="sh-title">' + stage.fullName + '</div>';
+      ? '<div class="sh-title-line"><div class="sh-title">' + stage.fullName + '</div><span class="sh-arrow"></span>' + respHtml + insightsHtml + '</div>'
+      : '<div class="sh-title-line"><div class="sh-title">' + stage.fullName + '</div>' + insightsHtml + '</div>';
     header.innerHTML =
       '<div class="sh-eyebrow">Proceso ' + posInMacro + ' de ' + activeStages.length + ' · Eje: ' + macroLabel + '</div>' +
       titleLine +
@@ -4639,7 +4746,6 @@ function renderSubstepSlide(i, stage, sub) {
       '<h1>' + sub.title + '</h1>' +
       '<p class="subtitle">' + sub.description + '</p>' +
       renderBenchmarkChip(stage.id, sub.num) +
-      renderClienteChip(stage.id, sub.num) +
     '</div>' +
     chartHtml +
     '<div class="content-grid">' +
