@@ -505,6 +505,26 @@
   .vta-view-toggle button { padding: 4px 12px; background: transparent; border: none; color: var(--gray-700); font-family: inherit; font-size: 11px; font-weight: 700; cursor: pointer; border-radius: 3px; letter-spacing: 0.04em; text-transform: uppercase; }
   .vta-view-toggle button.active { background: var(--navy); color: var(--white); }
   .ins-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .insp-tables-grid { display: flex; flex-direction: column; gap: 16px; padding: 12px; }
+  .insp-table-block { background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .insp-table-head { padding: 10px 16px; color: var(--white); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px; }
+  .insp-table-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+  .insp-table { width: 100%; margin: 0; border: 0; }
+  .insp-table thead th { background: var(--gray-50); color: var(--gray-700); font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 9px 12px; border-bottom: 1px solid var(--gray-200); text-align: left; }
+  .insp-table thead th.col-total { text-align: right; background: #F0F4FA; color: var(--navy); }
+  .insp-table tbody td { padding: 9px 12px; border-bottom: 1px solid var(--gray-100); font-size: 12.5px; color: var(--gray-700); font-variant-numeric: tabular-nums; }
+  .insp-table tbody td:first-child { color: var(--navy); font-weight: 600; white-space: nowrap; }
+  .insp-table tbody td.col-total { text-align: right; background: #F9FBFD; color: var(--navy); }
+  .insp-table tbody tr:last-child td { border-bottom: 0; }
+  .insp-table tbody tr.row-highlight td { background: #FAFBFC; }
+  .insp-table tbody tr.row-highlight td:first-child { color: var(--navy); font-weight: 700; }
+  .insp-table tbody tr.row-highlight td.col-total { background: #EFF4FA; font-size: 13px; }
+  .insp-table tbody tr:hover td { background: var(--gray-50); }
+  .insp-table tbody tr.row-highlight:hover td { background: #EDF2F8; }
+  .insp-table tbody tr.row-pct td { background: #F7F3E8; color: #8A5A00; font-style: italic; }
+  .insp-table tbody tr.row-pct td:first-child { color: #6F4700; font-weight: 600; font-style: normal; }
+  .insp-table tbody tr.row-pct td.col-total { background: #F1EAD0; color: #6F4700; font-style: normal; }
+  .insp-table tbody tr.row-pct:hover td { background: #F1EAD0; }
   .vta-view { display: none; }
   .vta-view.active { display: block; }
   .vta-table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 4px; }
@@ -3898,40 +3918,66 @@ function buildInspVolumenCfg() {
 }
 
 function inspBuildTable(tabId) {
-  var h = '<table class="data-table"><thead><tr><th>Métrica</th>';
-  for (var m = 0; m < INSP_MESES.length; m++) h += '<th>' + INSP_MESES[m] + '</th>';
-  h += '<th>Total</th></tr></thead><tbody>';
-  var rowCompra = function(label, data, tot, fmt) {
-    var r = '<tr><td><span class="ins-dot" style="background:#0F6FC6"></span>' + label + '</td>';
-    for (var i = 0; i < data.length; i++) r += '<td>' + (fmt ? fmt(data[i]) : data[i].toLocaleString('es-CL')) + '</td>';
-    r += '<td><strong>' + (fmt ? fmt(tot) : tot.toLocaleString('es-CL')) + '</strong></td></tr>';
-    return r;
-  };
-  var rowVpp = function(label, data, tot, fmt) {
-    var r = '<tr><td><span class="ins-dot" style="background:#F0A830"></span>' + label + '</td>';
-    for (var i = 0; i < data.length; i++) r += '<td>' + (fmt ? fmt(data[i]) : data[i].toLocaleString('es-CL')) + '</td>';
-    r += '<td><strong>' + (fmt ? fmt(tot) : tot.toLocaleString('es-CL')) + '</strong></td></tr>';
-    return r;
-  };
   var pctFmt = function(v){ return v.toLocaleString('es-CL', {maximumFractionDigits:1}) + '%'; };
+  var buildRow = function(label, data, tot, fmt, bold) {
+    var r = '<tr' + (bold ? ' class="row-highlight"' : '') + '><td>' + label + '</td>';
+    for (var i = 0; i < data.length; i++) {
+      var v = data[i];
+      r += '<td>' + (v == null ? '—' : (fmt ? fmt(v) : v.toLocaleString('es-CL'))) + '</td>';
+    }
+    r += '<td class="col-total"><strong>' + (fmt ? fmt(tot) : tot.toLocaleString('es-CL')) + '</strong></td></tr>';
+    return r;
+  };
+  var buildHead = function() {
+    var h = '<thead><tr><th>Métrica</th>';
+    for (var m = 0; m < INSP_MESES.length; m++) h += '<th>' + INSP_MESES[m] + '</th>';
+    h += '<th class="col-total">Total</th></tr></thead>';
+    return h;
+  };
+  var buildSection = function(label, color, rowsHtml) {
+    return '<div class="insp-table-block">' +
+      '<div class="insp-table-head" style="background:' + color + '">' +
+        '<span class="insp-table-dot" style="background:#fff"></span>' + label +
+      '</div>' +
+      '<table class="data-table insp-table">' + buildHead() + '<tbody>' + rowsHtml + '</tbody></table>' +
+    '</div>';
+  };
+  var buildPctRow = function(label, data, tot, fmt) {
+    var r = '<tr class="row-pct"><td>' + label + '</td>';
+    for (var i = 0; i < data.length; i++) {
+      var v = data[i];
+      r += '<td>' + (v == null ? '—' : (fmt ? fmt(v) : v.toLocaleString('es-CL'))) + '</td>';
+    }
+    r += '<td class="col-total"><strong>' + (fmt ? fmt(tot) : tot.toLocaleString('es-CL')) + '</strong></td></tr>';
+    return r;
+  };
+  var compraRows = '', vppRows = '';
   if (tabId === 'volumen') {
-    h += rowCompra('Compra — Leads totales', INSP_COMPRA.leads, INSP_COMPRA.total_leads);
-    h += rowCompra('Compra — Oportunidades', INSP_COMPRA.creadas, INSP_COMPRA.total_creadas);
-    h += rowCompra('Compra — Inspeccionadas', INSP_COMPRA.inspeccionadas, INSP_COMPRA.total_insp);
-    h += rowCompra('Compra — Compradas', INSP_COMPRA.compradas, INSP_COMPRA.total_comp);
-    h += rowVpp('VPP — Tasaciones', INSP_VPP.tasaciones, INSP_VPP.total_tasaciones);
-    h += rowVpp('VPP — Oportunidades', INSP_VPP.creadas, INSP_VPP.total_creadas);
-    h += rowVpp('VPP — Inspeccionadas', INSP_VPP.inspeccionadas, INSP_VPP.total_insp);
-    h += rowVpp('VPP — Compradas', INSP_VPP.compradas, INSP_VPP.total_comp);
+    compraRows += buildRow('Leads totales', INSP_COMPRA.leads, INSP_COMPRA.total_leads);
+    compraRows += buildRow('Oportunidades creadas', INSP_COMPRA.creadas, INSP_COMPRA.total_creadas);
+    compraRows += buildRow('Inspeccionadas', INSP_COMPRA.inspeccionadas, INSP_COMPRA.total_insp);
+    compraRows += buildRow('Compradas', INSP_COMPRA.compradas, INSP_COMPRA.total_comp, null, true);
+    compraRows += buildPctRow('% Insp. sobre Oportunidad', INSP_COMPRA.insp_pct, INSP_COMPRA.pct_insp, pctFmt);
+    compraRows += buildPctRow('% Conv. Compra (compras / leads)', INSP_COMPRA.conv_lead_pct, INSP_COMPRA.pct_conv_lead, pctFmt);
+    vppRows += buildRow('Tasaciones', INSP_VPP.tasaciones, INSP_VPP.total_tasaciones);
+    vppRows += buildRow('Oportunidades creadas', INSP_VPP.creadas, INSP_VPP.total_creadas);
+    vppRows += buildRow('Inspeccionadas', INSP_VPP.inspeccionadas, INSP_VPP.total_insp);
+    vppRows += buildRow('Compradas', INSP_VPP.compradas, INSP_VPP.total_comp, null, true);
+    vppRows += buildPctRow('% Insp. sobre Tasaciones', INSP_VPP.insp_pct, INSP_VPP.pct_insp, pctFmt);
+    vppRows += buildPctRow('% Conv. Compra (sobre Insp.)', INSP_VPP.conv_pct, INSP_VPP.pct_conv, pctFmt);
+    vppRows += buildPctRow('Conversión (Compradas vs Tasaciones)', INSP_VPP.conv_tas_pct, INSP_VPP.pct_total, pctFmt);
   } else if (tabId === 'pct-insp') {
-    h += rowCompra('Compra — % Insp. / Oportunidad', INSP_COMPRA.insp_pct, INSP_COMPRA.pct_insp, pctFmt);
-    h += rowVpp('VPP — % Insp. / Tasación', INSP_VPP.insp_pct, INSP_VPP.pct_insp, pctFmt);
+    compraRows += buildRow('% Insp. / Oportunidad', INSP_COMPRA.insp_pct, INSP_COMPRA.pct_insp, pctFmt, true);
+    vppRows += buildRow('% Insp. / Tasación', INSP_VPP.insp_pct, INSP_VPP.pct_insp, pctFmt, true);
   } else if (tabId === 'pct-conv') {
-    h += rowCompra('Compra — % Compra / Inspección', INSP_COMPRA.conv_pct, INSP_COMPRA.pct_conv, pctFmt);
-    h += rowVpp('VPP — % Compra / Inspección', INSP_VPP.conv_pct, INSP_VPP.pct_conv, pctFmt);
+    compraRows += buildRow('% Compra / Inspección', INSP_COMPRA.conv_pct, INSP_COMPRA.pct_conv, pctFmt, true);
+    vppRows += buildRow('% Compra / Inspección', INSP_VPP.conv_pct, INSP_VPP.pct_conv, pctFmt, true);
+    vppRows += buildRow('% Compra / Tasación (end-to-end)', INSP_VPP.conv_tas_pct, INSP_VPP.pct_total, pctFmt);
   }
-  h += '</tbody></table>';
-  return h;
+  return '<div class="insp-tables-grid">' +
+    buildSection('Compra', '#0F6FC6', compraRows) +
+    buildSection('VPP', '#F0A830', vppRows) +
+  '</div>';
 }
 
 function buildInspLineCfg(field, unit) {
