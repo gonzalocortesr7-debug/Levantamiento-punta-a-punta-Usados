@@ -1635,19 +1635,19 @@ var journey = {
     {
       id: 12, macro: "venta", name: "Gestión de Leads", fullName: "Gestión de Leads (Venta)",
       video: { url: null, title: "Video del proceso - Gestión de Leads (Venta)" },
-      resources: [{ href: "./dashboard-leads-ventas.html", label: "Dashboard Ejecutivo — 104.747 leads" }],
+      resources: [{ href: "./dashboard-leads-ventas.html", label: "Dashboard Ejecutivo — 92.843 leads · 3.838 ventas" }],
       route: "Lead en CRM -> Volumen / Descarte -> Temperatura -> VPP y Segmentos -> Financiamiento / Motivos",
-      description: "Tramo de Contact Center / asesor comercial para el comprador. Análisis apoyado en data real de <strong>Salazar-Israel · Oct 2025 – Mar 2026 · 104.747 leads</strong>: tasa de descarte global 68,8%, conversión 5,3%, marzo 26 mejor mes (8,2%). Oportunidades identificadas: proteger clientes Oro/VIP con VPP, flujo diferenciado para financiamiento, redefinir criterio de temperatura y eliminar 'descarte masivo'.",
+      description: "Tramo de Contact Center / asesor comercial para el comprador. Análisis apoyado en data real de <strong>Salazar-Israel · Oct 2025 – Mar 2026 · 92.843 leads · 3.838 ventas digitales</strong>: tasa de descarte global 77,7%, conversión SQL 6,0%, conversión final lead → venta 4,1%, marzo 26 mejor mes (8,8% SQL). Oportunidades identificadas: proteger clientes Oro/VIP con VPP, flujo diferenciado para financiamiento, redefinir criterio de temperatura y eliminar 'descarte masivo'.",
       substeps: [
         { num: 1, title: "Volumen y conversión mensual",
-          description: "Tendencia del período Oct 2025 – Mar 2026: 104.747 leads totales, 72.113 descartados (68,8%), 5.587 entregados (5,3%). Mejor mes: Marzo 2026 con 8,2% de conversión. 13.548 leads quedan en etapa 'Nuevo' sin gestionar.",
+          description: "Tendencia del período Oct 2025 – Mar 2026: 92.843 leads totales, 72.113 descartados (77,7%), 5.587 SQL entregados (6,0%), 3.838 ventas cerradas (4,1%). Mejor mes: Marzo 2026 con 8,8% de conversión SQL. 13.548 leads quedan en etapa 'Nuevo' sin gestionar.",
           chartType: 'vta-leads-vol',
-          kpis: [{value:"104.747",suffix:"",label:"Total leads (6 meses)"},{value:"68,8",suffix:"%",label:"Tasa de descarte global"},{value:"5,3",suffix:"%",label:"Conversión global (entregados)"},{value:"13.548",suffix:"",label:"Leads sin gestionar (etapa Nuevo)"}],
+          kpis: [{value:"92.843",suffix:"",label:"Total leads (6 meses)"},{value:"77,7",suffix:"%",label:"Tasa de descarte global"},{value:"6,0",suffix:"%",label:"Conversión SQL (entregados)"},{value:"3.838",suffix:"",label:"Ventas cerradas (4,1% conv. final)"}],
           hallazgos: [
-            "Tasa de descarte del 68,8% sostenida en el período — el pipeline se quiebra antes de la entrega.",
-            "Marzo 2026 es el único mes donde todas las métricas mejoran simultáneamente (8,2% conversión, menor descarte y más entregados).",
-            "13.548 leads (13% del total) quedan en etapa 'Nuevo' sin haberse gestionado — volumen crítico sin dueño.",
-            "Pico de volumen en Enero 2026 (21.914 leads, +25% vs. promedio) coincide con una peor conversión — falta capacity en meses peak."
+            "Tasa de descarte del 77,7% sostenida en el período — el pipeline se quiebra antes de la entrega.",
+            "Marzo 2026 es el único mes donde todas las métricas mejoran simultáneamente (8,8% conversión SQL, menor descarte y más entregados).",
+            "13.548 leads (15% del total) quedan en etapa 'Nuevo' sin haberse gestionado — volumen crítico sin dueño.",
+            "Pico de volumen en Enero 2026 (19.810 leads, +28% vs. promedio) coincide con una peor conversión — falta capacity en meses peak."
           ],
           mejoras: [
             "<strong>Replicar las condiciones de marzo 2026</strong> en los meses de alto volumen — identificar qué se hizo distinto y estandarizar.",
@@ -1880,7 +1880,7 @@ var ROADMAP = [
     description: "'No contesta' = 22.364 casos (31% del total). Sumado a 'quería información' (9%) llega a 49% de los descartes. Validación básica de teléfono (SMS/WhatsApp) y email antes de asignar el lead reduce el volumen atrapado en este motivo.",
     macro: "venta", stage: "Gestión de Leads", substep: "Financiamiento y motivos de descarte", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Replicar las condiciones operacionales de marzo 2026",
-    description: "Marzo 2026 es el único mes en el período donde todas las métricas mejoran simultáneamente: 8,2% de conversión, menor descarte y más entregados. Identificar qué se hizo distinto (asignación, capacity, cadencia, criterios) y replicarlo en meses de alto volumen.",
+    description: "Marzo 2026 es el único mes en el período donde todas las métricas mejoran simultáneamente: 8,8% de conversión SQL, menor descarte y más entregados. Identificar qué se hizo distinto (asignación, capacity, cadencia, criterios) y replicarlo en meses de alto volumen.",
     macro: "venta", stage: "Gestión de Leads", substep: "Volumen y conversión mensual", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" }
 ];
 
@@ -2084,8 +2084,8 @@ var OKRS = {
       source: 'Microsoft Clarity · 22 mar – 22 abr 2026 · 3,9% conv. ficha -> cotización' },
     { macro: 'venta', label: 'Eje Venta',
       metric: 'Tasa de descarte del pool de leads',
-      baseline: '68,8%', target: '50%', unit: 'de leads descartados',
-      source: 'Salazar-Israel · 72.113 de 104.747 leads descartados (6 meses)' }
+      baseline: '77,7%', target: '60%', unit: 'de leads descartados',
+      source: 'Salazar-Israel · 72.113 de 92.843 leads descartados (6 meses)' }
   ],
   transformacionales: [
     { title: 'Generar la foto final durante la inspección mecánica (in-house)',
@@ -2274,9 +2274,9 @@ var OKRS = {
       objective: 'Reducir descarte y recuperar clientes premium',
       krs: [
         { desc: 'Tasa de descarte global (Salazar-Israel)',
-          detail: '68,8% del pool se descarta (72.113 de 104.747 leads en 6 meses). "No contesta" 31% y "Descarte masivo" 12% dominan.',
-          baseline: '68,8%', target: '50%',
-          impacts: 'Cadencia multi-canal automatizada (llamada → WhatsApp) · Scoring de leads (no FIFO) · Eliminar "Descarte masivo" como motivo válido · Validación de teléfono/email al ingreso al CRM · Replicar condiciones de marzo 26 (mejor mes, 8,2% conversión)' },
+          detail: '77,7% del pool se descarta (72.113 de 92.843 leads en 6 meses). "No contesta" 31% y "Descarte masivo" 12% dominan.',
+          baseline: '77,7%', target: '60%',
+          impacts: 'Cadencia multi-canal automatizada (llamada → WhatsApp) · Scoring de leads (no FIFO) · Eliminar "Descarte masivo" como motivo válido · Validación de teléfono/email al ingreso al CRM · Replicar condiciones de marzo 26 (mejor mes, 8,8% conversión SQL)' },
         { desc: 'Oro + VIP con VPP descartados (6 meses)',
           detail: '641 clientes premium perdidos en 6 meses (data Salazar-Israel). Con VPP se descarta +7pp más, pero cuando avanzan convierten mejor (4,0% vs. 3,3%).',
           baseline: '641', target: '0',
@@ -2574,7 +2574,7 @@ function renderExecSummarySlide(i) {
           '<div class="eje-card-stat"><div class="eje-card-stat-value">17</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
         '</div>' +
         '<div class="eje-card-scope">Captación Digital · Gestión de Leads · Reserva y Medios de Pago · Firma de Contrato · Facturación y Entrega</div>' +
-        '<div class="eje-card-source">Microsoft Clarity (30 días) + Salazar-Israel · 104.747 leads Oct 25 – Mar 26</div>' +
+        '<div class="eje-card-source">Microsoft Clarity (30 días) + Salazar-Israel · 92.843 leads Oct 25 – Mar 26</div>' +
       '</div>' +
     '</div>' +
     '<div class="okr-closing">' +
@@ -2753,7 +2753,7 @@ function renderExecSummarySlide(i) {
         '<div class="exec-kpi-times">' +
           '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro compra">Compra</span><div><div class="exec-kpi-time-value">6 meses · 158.753 leads</div><div class="exec-kpi-time-source">CRM Llaima · Oct 2025 – Mar 2026</div></div></div>' +
           '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro preparación">Preparación</span><div><div class="exec-kpi-time-value">Snapshot · 2.574 uds</div><div class="exec-kpi-time-source">Reporte BI 2026-04-17</div></div></div>' +
-          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro venta">Venta</span><div><div class="exec-kpi-time-value">30 días Clarity + 6 meses Salazar</div><div class="exec-kpi-time-source">Microsoft Clarity (abr 26) + Salazar-Israel (104.747 leads)</div></div></div>' +
+          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro venta">Venta</span><div><div class="exec-kpi-time-value">30 días Clarity + 6 meses Salazar</div><div class="exec-kpi-time-source">Microsoft Clarity (abr 26) + Salazar-Israel (92.843 leads)</div></div></div>' +
         '</div>' +
       '</div>' +
     '</div>' +
@@ -3013,7 +3013,7 @@ var CLIENTE_POR_SUBSTEP = {
   "11.2": { kpis: ["62.955 sesiones del catálogo (30 días)","56% rebota en pág. 1 sin ver ningún auto","41% llegan a ficha desde catálogo","2.749 clics en botón filtros (solo 4,4% de sesiones)","273K dead clicks mensuales en banners no clicables"], lineamientos: ["Listado ordenado por calidad visual: autos sin foto al final","Filtros y buscador visibles — el usuario quiere refinar","Cero dead clicks: banner clicable o banner eliminado","Si el filtro no tiene stock, sugerir alternativas en vez de mostrar vacío"] },
   "11.3": { kpis: ["21.872 sesiones en ficha (30 días)","4:30 min tiempo promedio en página","17,3% de sesiones con dead click (3.792)","56,1% quickback rate (abandono rápido)","74.943 dead clicks mensuales por falta de swipe/zoom"], lineamientos: ["El carrusel de fotos debe responder a gestos táctiles (swipe + zoom)","Indicador visual 'Desliza para ver más fotos' en mobile","Marca de agua 'Foto en proceso' para autos con foto de inspección, gestionar expectativa visual"] },
   "11.4": { kpis: ["862 sesiones inician cotización (30 días)","3,9% conversión ficha -> cotización — mayor oportunidad del funnel","19,4% de sesiones con dead click (167 de 862)"], lineamientos: ["Indicador de progreso claro y no clicable en los steps","Solo preguntar lo esencial: menos campos = más conversión","Confirmar al usuario cada hito con mensaje claro"] },
-  "12.1": { kpis: ["104.747 leads ingresados (Oct 25 – Mar 26)","68,8% tasa de descarte global","5,3% conversión (5.587 entregados)","13.548 leads sin gestionar en etapa 'Nuevo' (13%)"], lineamientos: ["Nunca dejar un lead sin dueño / sin gestión >24h","Replicar condiciones de marzo 2026 (mejor mes, 8,2% conversión)","Capacity planning en meses peak (Ene 26 con +25% de volumen convirtió peor)"] },
+  "12.1": { kpis: ["92.843 leads ingresados (Oct 25 – Mar 26)","77,7% tasa de descarte global","6,0% conversión SQL (5.587 entregados)","3.838 ventas cerradas (4,1% conv. final)","13.548 leads sin gestionar en etapa 'Nuevo' (15%)"], lineamientos: ["Nunca dejar un lead sin dueño / sin gestión >24h","Replicar condiciones de marzo 2026 (mejor mes, 8,8% conversión SQL)","Capacity planning en meses peak (Ene 26 con +28% de volumen convirtió peor)"] },
   "12.2": { kpis: ["Leads 'Caliente' se descartan +13pp más que 'Frío'","Conversión Caliente 3,9% vs. Frío 4,6% (promedio)","Tibio en Feb 26 convirtió 12,3% — señal no aprovechada"], lineamientos: ["No priorizar por 'temperatura' hasta validar que correlaciona con conversión real","Criterio único de temperatura entre sucursales, revisado trimestralmente","Scoring basado en comportamiento observado, no en intuición del asesor"] },
   "12.3": { kpis: ["+7pp descarte con VPP vs. sin VPP","641 Oro + VIP con VPP descartados (6 meses)","4,0% conversión cuando avanzan vs. 3,3% sin VPP"], lineamientos: ["Bloquear descarte automático de leads Oro/VIP + VPP sin revisión","SLA de contacto más agresivo para clientes con VPP","Reporte visible por sucursal del % Premium descartados"] },
   "12.4": { kpis: ["95,3% descarte con financiamiento (promedio)","-10pp vs. sin financiamiento","22.364 'No contesta' (31% del total)","8.613 'Descarte masivo' (12%, distorsiona métricas)"], lineamientos: ["Pre-evaluación crediticia ANTES de ingresar el lead al CRM","Motivo obligatorio y específico al descartar — eliminar 'Descarte masivo'","Validar teléfono y email al ingreso para reducir 'No contesta'"] },
@@ -3179,18 +3179,18 @@ var MACRO_META = {
   venta: {
     num: 3,
     title: "Venta",
-    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Análisis apoyado en data real de Salazar-Israel (104.747 leads) y Microsoft Clarity.",
+    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Análisis apoyado en data real de Salazar-Israel (92.843 leads) y Microsoft Clarity.",
     shortDescription: "Captación digital, gestión de leads, reserva y medios de pago, firma de contrato, facturación y entrega.",
     status: { text: "Data real - Oct 2025 a Mar 2026", variant: "real" },
     disabled: false,
-    universoValue: "104.747",
+    universoValue: "92.843",
     universoValueClass: "",
     universoLabel: "Leads analizados",
     universoSub: "Data Salazar-Israel · 6 meses", universoSubClass: "",
     periodoValue: "6 meses",
     periodoValueClass: "",
     periodoLabel: "Periodo", periodoSub: "Oct 2025 - Mar 2026 (cerrado)", periodoSubClass: "",
-    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Data real integrada para Captación Digital (Clarity) y Gestión de Leads (Salazar-Israel 104.747 leads). Reserva, Firma y Facturación con data parcial, pendiente de ampliar."
+    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Data real integrada para Captación Digital (Clarity) y Gestión de Leads (Salazar-Israel 92.843 leads). Reserva, Firma y Facturación con data parcial, pendiente de ampliar."
   }
 };
 var currentMacro = "compra";
@@ -3516,7 +3516,7 @@ function renderVtaFunnelSection(slideIdx) {
 
 // ============================================================
 // VENTA - GESTIÓN DE LEADS · Data real Salazar-Israel
-// Oct 2025 – Mar 2026 · 104.747 leads
+// Oct 2025 – Mar 2026 · 92.843 leads
 // ============================================================
 var VTA_LEADS_MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
 var VTA_LEADS = {
@@ -3944,15 +3944,15 @@ function renderVtaLeadsSection(slideIdx, type) {
   var blocks = {
     'vta-leads-vol': {
       title: 'Volumen y conversión mensual · Oct 2025 – Mar 2026',
-      subtitle: 'Total 104.747 leads · Salazar-Israel',
+      subtitle: 'Total 92.843 leads · Salazar-Israel',
       charts: [
         { kind:'vol', title:'Total leads vs % conversión', height:260 },
         { kind:'etapas', title:'Etapas por mes (apilado)', height:240 },
         { kind:'descarte', title:'% descarte global', height:200 }
       ],
       insights: [
-        { c:'r', t:'🚨 Tasa de descarte global del 68,8% (72.113 de 104.747). El pipeline se quiebra antes de la entrega.' },
-        { c:'g', t:'✅ Marzo 2026 es el mejor mes: 8,2% de conversión. Identificar qué se hizo distinto y replicarlo es la vía más corta a mejora.' },
+        { c:'r', t:'🚨 Tasa de descarte global del 77,7% (72.113 de 92.843). El pipeline se quiebra antes de la entrega.' },
+        { c:'g', t:'✅ Marzo 2026 es el mejor mes: 8,8% de conversión SQL. Identificar qué se hizo distinto y replicarlo es la vía más corta a mejora.' },
         { c:'w', t:'🟠 13.548 leads quedan en etapa "Nuevo" en el período — volumen significativo sin gestionar.' }
       ]
     },

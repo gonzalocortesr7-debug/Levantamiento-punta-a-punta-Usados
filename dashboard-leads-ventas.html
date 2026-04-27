@@ -3,705 +3,1076 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Ejecutivo — Leads Usados</title>
+<title>Dashboard Ejecutivo</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f4f3ee; color: #1a1a18; min-height: 100vh; }
-  .topbar { background: #1a1a18; color: #fff; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-  .topbar-title { font-size: 15px; font-weight: 500; }
-  .topbar-sub { font-size: 12px; opacity: 0.5; margin-top: 2px; }
-  .topbar-badge { background: #1D9E75; color: #fff; font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 500; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
-
-  /* FILTROS */
-  .filter-bar { background: #fff; border-radius: 14px; border: 0.5px solid #e0dfd8; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-  .filter-bar label { font-size: 12px; font-weight: 600; color: #5f5e5a; text-transform: uppercase; letter-spacing: 0.04em; }
-  .filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
-  .f-btn { padding: 5px 13px; border: 0.5px solid #d3d1c7; border-radius: 20px; font-size: 12px; cursor: pointer; background: transparent; color: #5f5e5a; font-family: inherit; transition: all 0.12s; }
-  .f-btn:hover { background: #f4f3ee; }
-  .f-btn.active { background: #1a1a18; color: #fff; border-color: #1a1a18; }
-  .f-btn.year { border-radius: 8px; }
-  .filter-divider { width: 1px; height: 28px; background: #e0dfd8; }
-  .filter-summary { margin-left: auto; font-size: 12px; color: #888780; white-space: nowrap; }
-  .filter-summary strong { color: #1a1a18; }
-
-  /* KPIs */
-  .kpi-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 20px; }
-  @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(130px,1fr)); } }
-  .kpi { background: #fff; border-radius: 12px; padding: 14px 16px; border: 0.5px solid #e0dfd8; }
-  .kpi-label { font-size: 10px; color: #888780; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .kpi-value { font-size: 22px; font-weight: 700; line-height: 1; }
-  .kpi-sub { font-size: 11px; color: #b4b2a9; margin-top: 3px; }
-  .kpi.red .kpi-value { color: #E24B4A; }
-  .kpi.green .kpi-value { color: #1D9E75; }
-  .kpi.amber .kpi-value { color: #BA7517; }
-  .kpi.purple .kpi-value { color: #534AB7; }
-
-  /* SECCIONES */
-  .section { background: #fff; border-radius: 16px; border: 0.5px solid #e0dfd8; padding: 22px; margin-bottom: 18px; }
-  .section-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-  .section-sub { font-size: 12px; color: #888780; margin-bottom: 14px; }
-  .tab-bar { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 16px; }
-  .tab { padding: 5px 13px; border: 0.5px solid #d3d1c7; border-radius: 20px; font-size: 12px; cursor: pointer; background: transparent; color: #5f5e5a; font-family: inherit; }
-  .tab.active { background: #1a1a18; color: #fff; border-color: #1a1a18; }
-  .view { display: none; }
-  .view.active { display: block; }
-  .chart-wrap { position: relative; width: 100%; }
-  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; font-size: 11px; color: #5f5e5a; }
-  .leg { display: flex; align-items: center; gap: 5px; }
-  .leg-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
-  .insight { border-radius: 0 10px 10px 0; padding: 9px 13px; margin: 7px 0; font-size: 12px; line-height: 1.6; }
-  .insight.r { border-left: 3px solid #E24B4A; background: #fdf3f3; color: #4A1B0C; }
-  .insight.w { border-left: 3px solid #EF9F27; background: #fdf6ec; color: #412402; }
-  .insight.g { border-left: 3px solid #1D9E75; background: #f0faf6; color: #04342C; }
-  .insight.b { border-left: 3px solid #378ADD; background: #f0f6fd; color: #042C53; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-  .seg-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid #f1efe8; font-size: 12px; }
-  .seg-row:last-child { border: none; }
-  .seg-label { width: 160px; color: #5f5e5a; flex-shrink: 0; }
-  .seg-bar-bg { flex: 1; height: 7px; background: #f1efe8; border-radius: 4px; overflow: hidden; }
-  .seg-bar { height: 7px; border-radius: 4px; transition: width 0.4s; }
-  .seg-val { width: 48px; text-align: right; font-weight: 700; font-size: 12px; }
-  .rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 10px; }
-  .rec-card { border: 0.5px solid #e0dfd8; border-radius: 12px; padding: 14px; background: #fafaf8; }
-  .rec-num { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
-  .rec-title { font-size: 12px; font-weight: 600; margin-bottom: 5px; }
-  .rec-desc { font-size: 11px; color: #5f5e5a; line-height: 1.6; }
-  .impact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 10px; margin-top: 14px; }
-  .impact { background: #f0faf6; border-radius: 10px; padding: 12px 14px; border: 0.5px solid #9FE1CB; }
-  .impact-value { font-size: 20px; font-weight: 700; color: #1D9E75; }
-  .impact-label { font-size: 11px; color: #0F6E56; margin-top: 2px; }
-  .divider { border: none; border-top: 0.5px solid #e0dfd8; margin: 16px 0; }
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-  .no-data { text-align: center; padding: 40px; color: #b4b2a9; font-size: 13px; }
-  .footer { text-align: center; font-size: 11px; color: #b4b2a9; padding: 20px; }
-  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } .topbar { padding: 12px 16px; } .container { padding: 14px; } }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f3ee;color:#1a1a18;}
+.topbar{background:#1a1a18;color:#fff;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.topbar-title{font-size:15px;font-weight:500;}
+.topbar-sub{font-size:12px;opacity:.5;margin-top:2px;}
+.topbar-badge{background:#1D9E75;color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
+.container{max-width:1100px;margin:0 auto;padding:24px;}
+.main-nav{display:flex;gap:4px;margin-bottom:20px;background:#fff;border-radius:14px;border:.5px solid #e0dfd8;padding:6px;}
+.nav-btn{flex:1;padding:10px 16px;border:none;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:#5f5e5a;font-family:inherit;text-align:center;}
+.nav-btn.active{background:#1a1a18;color:#fff;}
+.page{display:none;}
+.page.active{display:block;}
+.filter-bar{background:#fff;border-radius:14px;border:.5px solid #e0dfd8;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.filter-bar label{font-size:11px;font-weight:700;color:#5f5e5a;text-transform:uppercase;letter-spacing:.05em;}
+.filter-group{display:flex;gap:5px;flex-wrap:wrap;}
+.f-btn{padding:5px 12px;border:.5px solid #d3d1c7;border-radius:20px;font-size:12px;cursor:pointer;background:transparent;color:#5f5e5a;font-family:inherit;}
+.f-btn.active{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+.f-btn.year{border-radius:8px;}
+.filter-divider{width:1px;height:26px;background:#e0dfd8;}
+.filter-summary{margin-left:auto;font-size:12px;color:#888780;}
+.filter-summary strong{color:#1a1a18;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:9px;margin-bottom:18px;}
+.kpi{background:#fff;border-radius:12px;padding:13px 15px;border:.5px solid #e0dfd8;}
+.kpi-label{font-size:10px;color:#888780;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em;}
+.kpi-value{font-size:21px;font-weight:700;line-height:1;}
+.kpi-sub{font-size:11px;color:#b4b2a9;margin-top:3px;}
+.kpi.red .kpi-value{color:#E24B4A;}
+.kpi.green .kpi-value{color:#1D9E75;}
+.kpi.amber .kpi-value{color:#BA7517;}
+.kpi.blue .kpi-value{color:#185FA5;}
+.section{background:#fff;border-radius:16px;border:.5px solid #e0dfd8;padding:22px;margin-bottom:18px;}
+.section-title{font-size:14px;font-weight:600;margin-bottom:2px;}
+.section-sub{font-size:12px;color:#888780;margin-bottom:14px;}
+.tab-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;}
+.tab{padding:5px 13px;border:.5px solid #d3d1c7;border-radius:20px;font-size:12px;cursor:pointer;background:transparent;color:#5f5e5a;font-family:inherit;}
+.tab.active{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+.view{display:none;}
+.view.active{display:block;}
+.chart-wrap{position:relative;width:100%;}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;font-size:11px;color:#5f5e5a;}
+.leg{display:flex;align-items:center;gap:5px;}
+.leg-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.insight{border-radius:0 10px 10px 0;padding:9px 13px;margin:7px 0;font-size:12px;line-height:1.6;}
+.insight.r{border-left:3px solid #E24B4A;background:#fdf3f3;color:#4A1B0C;}
+.insight.w{border-left:3px solid #EF9F27;background:#fdf6ec;color:#412402;}
+.insight.g{border-left:3px solid #1D9E75;background:#f0faf6;color:#04342C;}
+.insight.b{border-left:3px solid #378ADD;background:#f0f6fd;color:#042C53;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.seg-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:.5px solid #f1efe8;font-size:12px;}
+.seg-row:last-child{border:none;}
+.seg-label{width:160px;color:#5f5e5a;flex-shrink:0;}
+.seg-bar-bg{flex:1;height:7px;background:#f1efe8;border-radius:4px;overflow:hidden;}
+.seg-bar{height:7px;border-radius:4px;}
+.seg-val{width:48px;text-align:right;font-weight:700;font-size:12px;}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
+.rec-card{border:.5px solid #e0dfd8;border-radius:12px;padding:14px;background:#fafaf8;}
+.rec-num{font-size:26px;font-weight:700;margin-bottom:6px;}
+.rec-title{font-size:12px;font-weight:600;margin-bottom:5px;}
+.rec-desc{font-size:11px;color:#5f5e5a;line-height:1.6;}
+.impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px;}
+.impact{background:#f0faf6;border-radius:10px;padding:12px 14px;border:.5px solid #9FE1CB;}
+.impact-value{font-size:20px;font-weight:700;color:#1D9E75;}
+.impact-label{font-size:11px;color:#0F6E56;margin-top:2px;}
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px;margin:10px 0 14px;}
+.sim-card{background:#f0faf6;border-radius:10px;padding:12px 14px;border:.5px solid #9FE1CB;}
+.sim-value{font-size:20px;font-weight:700;color:#1D9E75;}
+.sim-label{font-size:11px;color:#0F6E56;margin-top:2px;line-height:1.5;}
+.sim-sub{font-size:10px;color:#888780;}
+.divider{border:none;border-top:.5px solid #e0dfd8;margin:16px 0;}
+.funnel-wrap{display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+.funnel-step{display:flex;align-items:center;gap:12px;}
+.funnel-label{font-size:12px;color:#5f5e5a;width:150px;flex-shrink:0;text-align:right;}
+.funnel-bar-area{flex:1;}
+.funnel-bar-bg{height:34px;background:#f1efe8;border-radius:6px;overflow:hidden;}
+.funnel-bar-fill{height:34px;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:600;color:#fff;min-width:40px;}
+.funnel-val{font-size:12px;font-weight:700;width:75px;flex-shrink:0;}
+.funnel-pct{font-size:11px;color:#888780;width:55px;flex-shrink:0;}
+.arrow-down{text-align:center;font-size:13px;color:#d3d1c7;margin:-1px 0;padding-left:150px;}
+.table-wrap{overflow-x:auto;margin-top:8px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{text-align:left;padding:8px 10px;font-weight:600;color:#5f5e5a;border-bottom:.5px solid #e0dfd8;font-size:11px;text-transform:uppercase;}
+td{padding:8px 10px;border-bottom:.5px solid #f1efe8;}
+tr:last-child td{border:none;font-weight:600;background:#fafaf8;}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;}
+.footer{text-align:center;font-size:11px;color:#b4b2a9;padding:20px;}
+@media(max-width:640px){.grid2{grid-template-columns:1fr;}.topbar{padding:12px 16px;}.container{padding:12px;}.main-nav{flex-direction:column;}}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div>
-    <div class="topbar-title">Salazar-Israel · Leads Autos Usados</div>
-    <div class="topbar-sub">Oct 2025 → Mar 2026 · 104.747 leads</div>
+    <div class="topbar-title">Autos Usados</div>
+    <div class="topbar-sub">Oct 2025 a Mar 2026 - 92.843 leads - 3.838 ventas digitales</div>
   </div>
   <div class="topbar-badge">Dashboard Ejecutivo</div>
 </div>
-
 <div class="container">
-
-  <!-- FILTROS -->
-  <div class="filter-bar">
-    <label>Año</label>
-    <div class="filter-group" id="yearBtns">
-      <button class="f-btn year active" onclick="toggleYear('2025')">2025</button>
-      <button class="f-btn year active" onclick="toggleYear('2026')">2026</button>
-    </div>
-    <div class="filter-divider"></div>
-    <label>Mes</label>
-    <div class="filter-group" id="monthBtns">
-      <button class="f-btn active" onclick="toggleMonth('Oct 25')">Oct</button>
-      <button class="f-btn active" onclick="toggleMonth('Nov 25')">Nov</button>
-      <button class="f-btn active" onclick="toggleMonth('Dic 25')">Dic</button>
-      <button class="f-btn active" onclick="toggleMonth('Ene 26')">Ene</button>
-      <button class="f-btn active" onclick="toggleMonth('Feb 26')">Feb</button>
-      <button class="f-btn active" onclick="toggleMonth('Mar 26')">Mar</button>
-    </div>
-    <div class="filter-divider"></div>
-    <button class="f-btn" onclick="selectAll()" style="background:#f4f3ee;">Todos</button>
-    <button class="f-btn" onclick="clearAll()" style="color:#E24B4A;border-color:#E24B4A;">Limpiar</button>
-    <div class="filter-summary">Mostrando <strong id="filterCount">6</strong> de 6 meses</div>
+  <div class="main-nav">
+    <button class="nav-btn active" onclick="showPage('leads',this)">Cliente potencial (Leads)</button>
+    <button class="nav-btn" onclick="showPage('oport',this)">Oportunidades (Ventas)</button>
   </div>
 
-  <!-- KPIs -->
-  <div class="kpi-grid" id="kpiGrid">
-    <div class="kpi"><div class="kpi-label">Total leads</div><div class="kpi-value" id="kTotal">—</div><div class="kpi-sub" id="kTotalSub">—</div></div>
-    <div class="kpi red"><div class="kpi-label">Tasa de descarte</div><div class="kpi-value" id="kDesc">—</div><div class="kpi-sub" id="kDescSub">—</div></div>
-    <div class="kpi green"><div class="kpi-label">Conversión</div><div class="kpi-value" id="kConv">—</div><div class="kpi-sub" id="kConvSub">—</div></div>
-    <div class="kpi red"><div class="kpi-label">Peor mes</div><div class="kpi-value" id="kWorst">—</div><div class="kpi-sub" id="kWorstSub">—</div></div>
-    <div class="kpi amber"><div class="kpi-label">Sin gestionar</div><div class="kpi-value" id="kNuevo">—</div><div class="kpi-sub">etapa "Nuevo"</div></div>
-    <div class="kpi red"><div class="kpi-label">Financ. desc.</div><div class="kpi-value" id="kFinanc">—</div><div class="kpi-sub">mayor margen perdido</div></div>
-    <div class="kpi purple"><div class="kpi-label">VIP+Oro VPP desc.</div><div class="kpi-value" id="kVIP">—</div><div class="kpi-sub">clientes premium perdidos</div></div>
-  </div>
-
-  <!-- SECCIÓN 1 -->
-  <div class="section">
-    <div class="section-title">Visión general — volumen y conversión</div>
-    <div class="section-sub">Tendencia mensual del período seleccionado</div>
-    <div class="tab-bar">
-      <button class="tab active" onclick="showTab('s1','vol',this)">Volumen y conversión</button>
-      <button class="tab" onclick="showTab('s1','etapas',this)">Etapas por mes</button>
-      <button class="tab" onclick="showTab('s1','descarte',this)">Tasa de descarte</button>
-    </div>
-    <div id="s1-vol" class="view active">
-      <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#B5D4F4"></div>Total leads</div>
-        <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>% conversión (eje der.)</div>
+  <!-- LEADS -->
+  <div id="page-leads" class="page active">
+    <div class="filter-bar">
+      <label>Año</label>
+      <div class="filter-group" id="lyearBtns">
+        <button class="f-btn year active" onclick="toggleYear('leads','2025')">2025</button>
+        <button class="f-btn year active" onclick="toggleYear('leads','2026')">2026</button>
       </div>
-      <div class="chart-wrap" style="height:250px;"><canvas id="cVol"></canvas></div>
-    </div>
-    <div id="s1-etapas" class="view">
-      <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Descartado</div>
-        <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Entregado</div>
-        <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Calificado</div>
-        <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>En gestión</div>
-        <div class="leg"><div class="leg-dot" style="background:#888780"></div>Nuevo</div>
+      <div class="filter-divider"></div>
+      <label>Mes</label>
+      <div class="filter-group" id="lmonthBtns">
+        <button class="f-btn active" onclick="toggleMonth('leads',0)">Oct</button>
+        <button class="f-btn active" onclick="toggleMonth('leads',1)">Nov</button>
+        <button class="f-btn active" onclick="toggleMonth('leads',2)">Dic</button>
+        <button class="f-btn active" onclick="toggleMonth('leads',3)">Ene</button>
+        <button class="f-btn active" onclick="toggleMonth('leads',4)">Feb</button>
+        <button class="f-btn active" onclick="toggleMonth('leads',5)">Mar</button>
       </div>
-      <div class="chart-wrap" style="height:260px;"><canvas id="cEtapas"></canvas></div>
+      <div class="filter-divider"></div>
+      <button class="f-btn" onclick="selectAll('leads')">Todos</button>
+      <button class="f-btn" onclick="clearAll('leads')" style="color:#E24B4A;border-color:#E24B4A;">Limpiar</button>
+      <div class="filter-summary">Mostrando <strong id="lfilterCount">6</strong> de 6 meses</div>
     </div>
-    <div id="s1-descarte" class="view">
-      <div class="chart-wrap" style="height:250px;"><canvas id="cDescGlobal"></canvas></div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Total leads</div><div class="kpi-value" id="lkTotal">-</div><div class="kpi-sub" id="lkTotalSub">-</div></div>
+      <div class="kpi red"><div class="kpi-label">Tasa de descarte</div><div class="kpi-value" id="lkDesc">-</div><div class="kpi-sub" id="lkDescSub">-</div></div>
+      <div class="kpi green"><div class="kpi-label">Conv. SQL global</div><div class="kpi-value" id="lkConv">-</div><div class="kpi-sub">lead → entregado</div></div>
+      <div class="kpi green"><div class="kpi-label">Mejor mes SQL</div><div class="kpi-value" id="lkBest">-</div><div class="kpi-sub" id="lkBestSub">-</div></div>
+      <div class="kpi red"><div class="kpi-label">Peor mes SQL</div><div class="kpi-value" id="lkWorst">-</div><div class="kpi-sub" id="lkWorstSub">-</div></div>
+      <div class="kpi amber"><div class="kpi-label">Sin gestionar</div><div class="kpi-value" id="lkNuevo">-</div><div class="kpi-sub">etapa Nuevo</div></div>      <div class="kpi blue"><div class="kpi-label">% leads con VPP</div><div class="kpi-value" id="lkVPPpct">-</div><div class="kpi-sub" id="lkVPPsub">-</div></div>
+      <div class="kpi blue"><div class="kpi-label">% leads con financ.</div><div class="kpi-value" id="lkFinancPct">-</div><div class="kpi-sub" id="lkFinancSub">-</div></div>
+      <div class="kpi green"><div class="kpi-label">SQL conv. con VPP</div><div class="kpi-value" id="lkSQLvpp">-</div><div class="kpi-sub" id="lkSQLvppSub">-</div></div>
+      <div class="kpi green"><div class="kpi-label">SQL conv. con financ.</div><div class="kpi-value" id="lkSQLfinanc">-</div><div class="kpi-sub" id="lkSQLfinancSub">-</div></div>
     </div>
-  </div>
 
-  <!-- SECCIÓN 2 -->
-  <div class="section">
-    <div class="section-title">Temperatura vs conversión</div>
-    <div class="section-sub">¿Los leads calientes convierten más?</div>
-    <div class="grid2">
-      <div>
-        <p style="font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Tasa de descarte</p>
-        <div class="legend">
-          <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Caliente</div>
-          <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Tibio</div>
-          <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Frío</div>
+    <div class="section">
+      <div class="section-title">Visión general</div>
+      <div class="section-sub">Volumen y conversión mensual</div>
+      <div class="tab-bar">
+        <button class="tab active" onclick="showTab('ls1','vol',this)">Volumen y conversión</button>
+        <button class="tab" onclick="showTab('ls1','etapas',this)">Etapas</button>
+        <button class="tab" onclick="showTab('ls1','descarte',this)">Tasa de descarte</button>
+      </div>
+      <div id="ls1-vol" class="view active">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#B5D4F4"></div>Total leads</div><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>% conversión</div></div>
+        <div class="chart-wrap" style="height:280px;"><canvas id="lcVol"></canvas></div>
+      </div>
+      <div id="ls1-etapas" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Descartado</div><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Entregado</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Calificado</div><div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>En gestión</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Nuevo</div></div>
+        <div class="chart-wrap" style="height:280px;"><canvas id="lcEtapas"></canvas></div>
+      </div>
+      <div id="ls1-descarte" class="view">
+        <div class="chart-wrap" style="height:260px;"><canvas id="lcDescGlobal"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Conversión SQL por segmento</div>
+      <div class="section-sub">% de leads que llegan a Entregado a venta segúnVPP y financiamiento</div>
+      <div class="tab-bar">
+        <button class="tab active" onclick="showTab('lsql','vpp',this)">VPP</button>
+        <button class="tab" onclick="showTab('lsql','financ',this)">Financiamiento</button>
+        <button class="tab" onclick="showTab('lsql','ambos',this)">Comparativa</button>
+      </div>
+      <div id="lsql-vpp" class="view active">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Con VPP</div><div class="leg"><div class="leg-dot" style="background:#D3D1C7"></div>Sin VPP</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Global</div></div>
+        <div class="chart-wrap" style="height:280px;"><canvas id="lcSQLvpp"></canvas></div>
+        <div class="insight g" style="margin-top:10px;">Los leads con VPP convierten a SQL consistentemente más que los sin VPP.</div>
+      </div>
+      <div id="lsql-financ" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Con financiamiento</div><div class="leg"><div class="leg-dot" style="background:#D3D1C7"></div>Sin financiamiento</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Global</div></div>
+        <div class="chart-wrap" style="height:280px;"><canvas id="lcSQLfinancc"></canvas></div>
+        <div class="insight w" style="margin-top:10px;">Leads con financiamiento tienen tasa SQL más baja a pesar de ser el segmento de mayor margen.</div>
+      </div>
+      <div id="lsql-ambos" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Con VPP</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Con financ.</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Global</div></div>
+        <div class="chart-wrap" style="height:290px;"><canvas id="lcSQLambos"></canvas></div>
+        <div class="insight r" style="margin-top:10px;">Objetivo SQL: la tasa global debe subir a 20-29% para alcanzar una conversión final lead → venta de 7-10%.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Temperatura vs conversión</div>
+      <div class="section-sub">¿Los leads calientes convierten más?</div>
+      <div class="grid2">
+        <div>
+          <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Tasa de descarte</p>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Caliente</div><div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Tibio</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Frío</div></div>
+          <div class="chart-wrap" style="height:230px;"><canvas id="lcTempDesc"></canvas></div>
         </div>
-        <div class="chart-wrap" style="height:220px;"><canvas id="cTempDesc"></canvas></div>
-      </div>
-      <div>
-        <p style="font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Tasa de conversión</p>
-        <div class="legend">
-          <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Caliente</div>
-          <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Tibio</div>
-          <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Frío</div>
+        <div>
+          <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Tasa de conversión</p>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Caliente</div><div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Tibio</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Frío</div></div>
+          <div class="chart-wrap" style="height:230px;"><canvas id="lcTempConv"></canvas></div>
         </div>
-        <div class="chart-wrap" style="height:220px;"><canvas id="cTempConv"></canvas></div>
       </div>
+      <div class="insight r" style="margin-top:10px;">Los leads calientes se descartan MÁS que los fríos (+13pp). La temperatura no predice la conversión.</div>
     </div>
-    <div class="insight r" style="margin-top:10px;">🚨 Los leads calientes se descartan MÁS que los fríos en todos los meses (+13pp promedio). La temperatura no predice conversión.</div>
-  </div>
 
-  <!-- SECCIÓN 3 -->
-  <div class="section">
-    <div class="section-title">VPP y segmentos de valor</div>
-    <div class="section-sub">Clientes con auto en parte de pago e historial de compra</div>
-    <div class="tab-bar">
-      <button class="tab active" onclick="showTab('s3','vppDesc',this)">Descarte VPP</button>
-      <button class="tab" onclick="showTab('s3','vppConv',this)">Conversión VPP</button>
-      <button class="tab" onclick="showTab('s3','segValor',this)">Segmento de valor</button>
-    </div>
-    <div id="s3-vppDesc" class="view active">
-      <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Con VPP</div>
-        <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sin VPP</div>
+    <div class="section">
+      <div class="section-title">VPP y segmentos de valor</div>
+      <div class="section-sub">Clientes con auto en parte de pago e historial de compra</div>
+      <div class="tab-bar">
+        <button class="tab active" onclick="showTab('ls3','vppDesc',this)">Descarte VPP</button>
+        <button class="tab" onclick="showTab('ls3','vppConv',this)">Conversión VPP</button>
+        <button class="tab" onclick="showTab('ls3','segValor',this)">Segmento de valor</button>
       </div>
-      <div class="chart-wrap" style="height:240px;"><canvas id="cVPPDesc"></canvas></div>
-      <div class="insight r" style="margin-top:10px;">🚨 Con VPP se descarta más en todos los meses (+7pp). El VPP no protege de ser descartado.</div>
-    </div>
-    <div id="s3-vppConv" class="view">
-      <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Con VPP</div>
-        <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sin VPP</div>
+      <div id="ls3-vppDesc" class="view active">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Con VPP</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sin VPP</div></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="lcVPPDesc"></canvas></div>
+        <p style="font-size:11px;color:#888780;text-transform:uppercase;margin:14px 0 8px;">% descartados con VPP por mes</p>
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Desc. con VPP</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Desc. global</div></div>
+        <div class="chart-wrap" style="height:210px;"><canvas id="lcVPPDescPct"></canvas></div>
+        <div class="insight r" style="margin-top:8px;">Con VPP se descarta +7pp. Feb y Mar 2026 mejoran notoriamente.</div>
       </div>
-      <div class="chart-wrap" style="height:240px;"><canvas id="cVPPConv"></canvas></div>
-      <div class="insight g" style="margin-top:10px;">✅ Cuando avanzan, los leads con VPP convierten mejor (4,0% vs 3,3%). El potencial está siendo desaprovechado.</div>
-    </div>
-    <div id="s3-segValor" class="view">
-      <div class="legend">
-        <div class="leg"><div class="leg-dot" style="background:#B87333"></div>Bronce</div>
-        <div class="leg"><div class="leg-dot" style="background:#D4A017"></div>Oro</div>
-        <div class="leg"><div class="leg-dot" style="background:#A8A9AD"></div>Plata</div>
-        <div class="leg"><div class="leg-dot" style="background:#5B3BA5"></div>VIP</div>
+      <div id="ls3-vppConv" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Con VPP</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sin VPP</div></div>
+        <div class="chart-wrap" style="height:250px;"><canvas id="lcVPPConv"></canvas></div>
+        <div class="insight g" style="margin-top:8px;">Con VPP convierten mejor cuando son bien gestionados.</div>
       </div>
-      <div class="chart-wrap" style="height:240px;"><canvas id="cSegValor"></canvas></div>
-      <div class="insight r" style="margin-top:10px;">💎 641 clientes Oro y VIP con VPP fueron descartados. Enero 2026 es el peor mes con 280 perdidos.</div>
+      <div id="ls3-segValor" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Bronce</div><div class="leg"><div class="leg-dot" style="background:#F0997B"></div>Oro</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Plata</div><div class="leg"><div class="leg-dot" style="background:#534AB7"></div>VIP</div></div>
+        <div class="chart-wrap" style="height:250px;"><canvas id="lcSegValor"></canvas></div>
+        <div class="insight r" style="margin-top:8px;">641 clientes Oro y VIP con VPP descartados. Enero 2026 fue el peor mes.</div>
+      </div>
     </div>
-  </div>
 
-  <!-- SECCIÓN 4 -->
-  <div class="section">
-    <div class="section-title">Financiamiento — el segmento de mayor margen</div>
-    <div class="section-sub">Leads que quieren pagar con crédito · tasa de descarte</div>
-    <div class="legend">
-      <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Con financiamiento</div>
-      <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sin financiamiento</div>
-    </div>
-    <div class="chart-wrap" style="height:250px;"><canvas id="cFinancChart"></canvas></div>
-    <div class="insight r" style="margin-top:10px;">🚨 El segmento de mayor margen tiene la peor tasa de gestión: 95,3% de descarte — 10pp más que sin financiamiento.</div>
-    <hr class="divider">
-    <p style="font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px;">Descarte por segmento de valor con financiamiento</p>
-    <div id="segBars">
+    <div class="section">
+      <div class="section-title">Financiamiento - el segmento de mayor margen</div>
+      <div class="section-sub">Leads que quieren pagar con crédito</div>
+      <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Con financiamiento</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sin financiamiento</div></div>
+      <div class="chart-wrap" style="height:240px;"><canvas id="lcFinanc"></canvas></div>
+      <p style="font-size:11px;color:#888780;text-transform:uppercase;margin:14px 0 8px;">% descartados con financiamiento por mes</p>
+      <div class="legend"><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Desc. con financ.</div><div class="leg"><div class="leg-dot" style="background:#888780"></div>Desc. global</div></div>
+      <div class="chart-wrap" style="height:210px;"><canvas id="lcFinancDescPct"></canvas></div>
+      <div class="insight r" style="margin-top:10px;">Mayor margen, peor tasa: 95,3% de descarte, 10pp más que sin financiamiento.</div>
+      <hr class="divider">
+      <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:10px;">Descarte por segmento con financiamiento</p>
       <div class="seg-row"><span class="seg-label">VIP</span><div class="seg-bar-bg"><div class="seg-bar" style="width:93%;background:#534AB7;"></div></div><span class="seg-val" style="color:#534AB7;">93%</span></div>
       <div class="seg-row"><span class="seg-label">Oro</span><div class="seg-bar-bg"><div class="seg-bar" style="width:91%;background:#F0997B;"></div></div><span class="seg-val" style="color:#F0997B;">91%</span></div>
       <div class="seg-row"><span class="seg-label">Plata</span><div class="seg-bar-bg"><div class="seg-bar" style="width:89%;background:#888780;"></div></div><span class="seg-val" style="color:#888780;">89%</span></div>
       <div class="seg-row"><span class="seg-label">Bronce</span><div class="seg-bar-bg"><div class="seg-bar" style="width:87%;background:#EF9F27;"></div></div><span class="seg-val" style="color:#EF9F27;">87%</span></div>
       <div class="seg-row"><span class="seg-label">Sin segmento</span><div class="seg-bar-bg"><div class="seg-bar" style="width:96%;background:#D3D1C7;"></div></div><span class="seg-val" style="color:#888780;">96%</span></div>
     </div>
-  </div>
 
-  <!-- SECCIÓN 5 -->
-  <div class="section">
-    <div class="section-title">Motivos de descarte</div>
-    <div class="section-sub">¿Por qué se pierden los leads?</div>
-    <div class="grid2">
-      <div>
-        <p style="font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Top motivos acumulados</p>
-        <div class="chart-wrap" style="height:260px;"><canvas id="cMotivos"></canvas></div>
-      </div>
-      <div>
-        <p style="font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:8px;">Tendencia motivos críticos</p>
-        <div class="legend">
-          <div class="leg"><div class="leg-dot" style="background:#3266ad"></div>No contesta</div>
-          <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Neg. financ.</div>
-          <div class="leg"><div class="leg-dot" style="background:#73726c"></div>Desiste info</div>
+    <div class="section">
+      <div class="section-title">Impacto económico - margen perdido por descarte de financiamiento</div>
+      <div class="section-sub">Leads con financiamiento descartados x tasa conversión esperada x ticket promedio x margen 3%</div>
+      <div class="kpi-grid" id="margenKpis"></div>
+      <p style="font-size:11px;color:#888780;text-transform:uppercase;margin:14px 0 8px;">Margen perdido mensual (MM) vs margen del período</p>
+      <div class="legend"><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Margen perdido MM</div><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Margen % período</div></div>
+      <div class="chart-wrap" style="height:280px;"><canvas id="lcMargenPerdido"></canvas></div>
+      <div class="insight r" style="margin-top:10px;">El margen perdido acumulado representa el costo directo de no gestionar correctamente los leads con financiamiento.</div>
+      <div class="insight w">Supuestos: tasa de conversión esperada 8,5%, ticket promedio 13.500.000, margen financiamiento vs contado 3%.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Motivos de descarte</div>
+      <div class="section-sub">¿Por qué se pierden los leads?</div>
+      <div class="grid2">
+        <div>
+          <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Top motivos acumulados</p>
+          <div class="chart-wrap" style="height:270px;"><canvas id="lcMotivos"></canvas></div>
         </div>
-        <div class="chart-wrap" style="height:240px;"><canvas id="cMotTend"></canvas></div>
+        <div>
+          <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Tendencia motivos críticos</p>
+          <div class="legend"><div class="leg"><div class="leg-dot" style="background:#3266ad"></div>No contesta</div><div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Neg financ.</div><div class="leg"><div class="leg-dot" style="background:#73726c"></div>Desiste info</div></div>
+          <div class="chart-wrap" style="height:250px;"><canvas id="lcMotTend"></canvas></div>
+        </div>
+      </div>
+      <div class="insight b" style="margin-top:10px;">No contesta domina (31%). Descarte masivo (12%) distorsiona métricas y oculta oportunidades.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Recomendaciones y acciones prioritarias</div>
+      <div class="section-sub">Basadas en el análisis de leads - 6 meses</div>
+      <div class="rec-grid">
+        <div class="rec-card" style="border-color:#1D9E75;background:#f0faf6;">
+          <div class="rec-num" style="color:#1D9E75;">Foco</div>
+          <div class="rec-title" style="color:#1D9E75;">Mejorar la conversión SQL</div>
+          <div class="rec-desc">La tasa SQL actual es 6,0%. Cada +1% genera 928 SQL adicionales y 631 ventas extra sin aumentar el volumen de leads. Llevar la tasa al 10% significaría +3.714 SQL y +2.525 ventas adicionales.</div>
+        </div>
+        <div class="rec-card"><div class="rec-num" style="color:#E24B4A;">01</div><div class="rec-title">Proteger clientes Oro y VIP con VPP</div><div class="rec-desc">641 clientes premium descartados. Bloquear descarte automático sin revisión de supervisor.</div></div>
+        <div class="rec-card"><div class="rec-num" style="color:#E24B4A;">02</div><div class="rec-title">Flujo diferenciado para financiamiento</div><div class="rec-desc">95,3% de descarte en el segmento de mayor margen. Pre-evaluación crediticia antes del CRM.</div></div>
+        <div class="rec-card"><div class="rec-num" style="color:#EF9F27;">03</div><div class="rec-title">Redefinir criterio de temperatura</div><div class="rec-desc">Caliente se descarta más que frío. Estandarizar o reemplazar por scoring real.</div></div>
+        <div class="rec-card"><div class="rec-num" style="color:#EF9F27;">04</div><div class="rec-title">Eliminar descarte masivo</div><div class="rec-desc">8.613 casos que ocultan oportunidades. Exigir motivo específico obligatorio.</div></div>
+        <div class="rec-card"><div class="rec-num" style="color:#378ADD;">05</div><div class="rec-title">Calificación mínima al ingreso</div><div class="rec-desc">No contesta + quería información = 49% de descartes. Validación básica previa.</div></div>
+        <div class="rec-card"><div class="rec-num" style="color:#378ADD;">06</div><div class="rec-title">Replicar condiciones de marzo 2026</div><div class="rec-desc">Mejor mes en SQL (8,8%). Con esa tasa en todos los meses habría +2.578 ventas en el período.</div></div>
+      </div>
+      <hr class="divider">
+      <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Simulador - impacto por cada punto de mejora SQL</p>
+      <div class="sim-grid" id="sqlSimGrid"></div>
+      <hr class="divider">
+      <div class="impact-grid">
+        <div class="impact"><div class="impact-value">+631</div><div class="impact-label">ventas por cada +1% de SQL</div></div>
+        <div class="impact"><div class="impact-value">+2.525</div><div class="impact-label">ventas si SQL sube al 10%</div></div>
+        <div class="impact"><div class="impact-value">+641</div><div class="impact-label">leads Oro+VIP con VPP recuperables</div></div>
+        <div class="impact"><div class="impact-value">+2.738</div><div class="impact-label">si financiamiento baja 5pp de descarte</div></div>
       </div>
     </div>
-    <div class="insight b" style="margin-top:10px;">📞 "No contesta" domina (31% del total) — atacable con validación de datos al ingreso al CRM.</div>
-    <div class="insight w">🗑️ "Descarte masivo" (12%) distorsiona métricas y oculta oportunidades. Debe eliminarse como opción válida.</div>
   </div>
 
-  <!-- SECCIÓN 6 -->
-  <div class="section">
-    <div class="section-title">Recomendaciones y acciones prioritarias</div>
-    <div class="section-sub">Basadas en el análisis del período seleccionado</div>
-    <div class="rec-grid">
-      <div class="rec-card"><div class="rec-num" style="color:#E24B4A;">01</div><div class="rec-title">Proteger clientes Oro y VIP con VPP</div><div class="rec-desc">Bloquear descarte automático de leads Oro/VIP + VPP sin revisión de supervisor. 641 clientes premium recuperables.</div></div>
-      <div class="rec-card"><div class="rec-num" style="color:#E24B4A;">02</div><div class="rec-title">Flujo diferenciado para financiamiento</div><div class="rec-desc">Pre-evaluación crediticia antes del ingreso al CRM. El segmento de mayor margen no puede seguir con 95,3% de descarte.</div></div>
-      <div class="rec-card"><div class="rec-num" style="color:#EF9F27;">03</div><div class="rec-title">Redefinir criterio de temperatura</div><div class="rec-desc">Caliente se descarta más que frío. Estandarizar criterio entre sucursales o reemplazar por scoring basado en comportamiento.</div></div>
-      <div class="rec-card"><div class="rec-num" style="color:#EF9F27;">04</div><div class="rec-title">Eliminar "descarte masivo"</div><div class="rec-desc">8.613 casos en 6 meses. Oculta leads recuperables — exigir motivo específico obligatorio.</div></div>
-      <div class="rec-card"><div class="rec-num" style="color:#378ADD;">05</div><div class="rec-title">Calificación mínima al ingreso</div><div class="rec-desc">"No contesta" + "quería información" = 49% de descartes. Validación básica antes de asignar el lead.</div></div>
-      <div class="rec-card"><div class="rec-num" style="color:#378ADD;">06</div><div class="rec-title">Replicar las condiciones de marzo 2026</div><div class="rec-desc">Único mes donde todas las métricas mejoran (8,2% conversión). Identificar y replicar en meses de alto volumen.</div></div>
+  <!-- OPORTUNIDADES -->
+  <div id="page-oport" class="page">
+    <div class="filter-bar">
+      <label>Año</label>
+      <div class="filter-group" id="oyearBtns">
+        <button class="f-btn year active" onclick="toggleYear('oport','2025')">2025</button>
+        <button class="f-btn year active" onclick="toggleYear('oport','2026')">2026</button>
+      </div>
+      <div class="filter-divider"></div>
+      <label>Mes</label>
+      <div class="filter-group" id="omonthBtns">
+        <button class="f-btn active" onclick="toggleMonth('oport',0)">Oct</button>
+        <button class="f-btn active" onclick="toggleMonth('oport',1)">Nov</button>
+        <button class="f-btn active" onclick="toggleMonth('oport',2)">Dic</button>
+        <button class="f-btn active" onclick="toggleMonth('oport',3)">Ene</button>
+        <button class="f-btn active" onclick="toggleMonth('oport',4)">Feb</button>
+        <button class="f-btn active" onclick="toggleMonth('oport',5)">Mar</button>
+      </div>
+      <div class="filter-divider"></div>
+      <button class="f-btn" onclick="selectAll('oport')">Todos</button>
+      <button class="f-btn" onclick="clearAll('oport')" style="color:#E24B4A;border-color:#E24B4A;">Limpiar</button>
+      <div class="filter-summary">Mostrando <strong id="ofilterCount">6</strong> de 6 meses</div>
     </div>
-    <hr class="divider">
-    <p style="font-size:11px;color:#888780;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:10px;">Impacto estimado</p>
-    <div class="impact-grid">
-      <div class="impact"><div class="impact-value">+641</div><div class="impact-label">leads Oro+VIP con VPP recuperables</div></div>
-      <div class="impact"><div class="impact-value">+2.738</div><div class="impact-label">si financiamiento baja 5pp de descarte</div></div>
-      <div class="impact"><div class="impact-value">+8.613</div><div class="impact-label">leads reclasificables al eliminar desc. masivo</div></div>
-      <div class="impact"><div class="impact-value">+141%</div><div class="impact-label">más entregados si conversión llega a nivel marzo</div></div>
+    <div class="kpi-grid">
+      <div class="kpi green"><div class="kpi-label">Total ventas cerradas</div><div class="kpi-value" id="okTotal">-</div><div class="kpi-sub" id="okTotalSub">-</div></div>
+      <div class="kpi green"><div class="kpi-label">Conv. lead → venta</div><div class="kpi-value" id="okConvGlobal">-</div><div class="kpi-sub">tasa de cierre final</div></div>
+      <div class="kpi blue"><div class="kpi-label">Ventas con VPP</div><div class="kpi-value" id="okVppSi">-</div><div class="kpi-sub" id="okVppSiSub">-</div></div>
+      <div class="kpi green"><div class="kpi-label">Conv. lead VPP a venta</div><div class="kpi-value" id="okConvVpp">-</div><div class="kpi-sub">leads con VPP que cierran</div></div>
+      <div class="kpi blue"><div class="kpi-label">Ventas con financ.</div><div class="kpi-value" id="okFiSi">-</div><div class="kpi-sub" id="okFiSiSub">-</div></div>
+      <div class="kpi green"><div class="kpi-label">Conv. lead financ. a venta</div><div class="kpi-value" id="okConvFi">-</div><div class="kpi-sub">leads con financ. que cierran</div></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Embudo de conversión final: Lead → Venta</div>
+      <div class="section-sub">Tasa de cierre oficial</div>
+      <div class="tab-bar">
+        <button class="tab active" onclick="showTab('os0','funnel',this)">Embudo visual</button>
+        <button class="tab" onclick="showTab('os0','tendencia',this)">Conversión por mes</button>
+        <button class="tab" onclick="showTab('os0','tabla',this)">Tabla detalle</button>
+      </div>
+      <div id="os0-funnel" class="view active">
+        <div class="funnel-wrap" id="oFunnelViz"></div>
+        <div class="insight b" style="margin-top:12px;">Embudo completo desde el lead hasta la venta cerrada. El objetivo es alcanzar una tasa de cierre de 7-10%.</div>
+      </div>
+      <div id="os0-tendencia" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Conv. global</div><div class="leg"><div class="leg-dot" style="background:#534AB7"></div>Conv. VPP</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Conv. financ.</div></div>
+        <div class="chart-wrap" style="height:300px;"><canvas id="ocConvMes"></canvas></div>
+        <div class="insight g" style="margin-top:10px;">Los leads con VPP muestran una tasa de conversión a venta superior al promedio global.</div>
+      </div>
+      <div id="os0-tabla" class="view">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Mes</th><th>Leads</th><th>Ventas</th><th>Conv.</th><th>V.VPP</th><th>L.VPP</th><th>C.VPP</th><th>V.Financ.</th><th>L.Financ.</th><th>C.Financ.</th></tr></thead>
+            <tbody id="oTablaBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Ventas cerradas - VPP y financiamiento</div>
+      <div class="section-sub">Volumen y conversión por segmento mes a mes</div>
+      <div class="tab-bar">
+        <button class="tab active" onclick="showTab('os1','vpp',this)">VPP</button>
+        <button class="tab" onclick="showTab('os1','financ',this)">Financiamiento</button>
+        <button class="tab" onclick="showTab('os1','ambos',this)">Comparativa</button>
+      </div>
+      <div id="os1-vpp" class="view active">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Con VPP</div><div class="leg"><div class="leg-dot" style="background:#D3D1C7"></div>Sin VPP</div></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="ocVppBar"></canvas></div>
+        <p style="font-size:11px;color:#888780;text-transform:uppercase;margin:14px 0 8px;">Tasa conversión lead VPP a venta</p>
+        <div class="chart-wrap" style="height:210px;"><canvas id="ocVppConv"></canvas></div>
+        <div class="insight g" style="margin-top:10px;">Los leads con VPP convierten a venta a una tasa superior al promedio.</div>
+      </div>
+      <div id="os1-financ" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Con financiamiento</div><div class="leg"><div class="leg-dot" style="background:#D3D1C7"></div>Sin financiamiento</div></div>
+        <div class="chart-wrap" style="height:240px;"><canvas id="ocFiBar"></canvas></div>
+        <p style="font-size:11px;color:#888780;text-transform:uppercase;margin:14px 0 8px;">Tasa conversión lead financ. a venta</p>
+        <div class="chart-wrap" style="height:210px;"><canvas id="ocFiConv"></canvas></div>
+        <div class="insight w" style="margin-top:10px;">A pesar de ser el segmento de mayor margen, los leads con financiamiento tienen una conversión más baja.</div>
+      </div>
+      <div id="os1-ambos" class="view">
+        <div class="legend"><div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>Global</div><div class="leg"><div class="leg-dot" style="background:#534AB7"></div>Con VPP</div><div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Con financ.</div></div>
+        <div class="chart-wrap" style="height:300px;"><canvas id="ocAmbos"></canvas></div>
+        <div class="insight r" style="margin-top:10px;">Objetivo: llevar la tasa global al 7-10%. Con VPP es el segmento más cercano.</div>
+      </div>
     </div>
   </div>
 </div>
-
-<div class="footer">Dashboard ejecutivo · Salazar-Israel · Oct 2025 – Mar 2026 · 104.747 leads</div>
+<div class="footer">Dashboard ejecutivo - Salazar-Israel - Oct 2025 a Mar 2026</div>
 
 <script>
-// ─── DATOS COMPLETOS ───────────────────────────────────────────────
-const ALL_MONTHS = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
-const YEARS = { 'Oct 25':'2025','Nov 25':'2025','Dic 25':'2025','Ene 26':'2026','Feb 26':'2026','Mar 26':'2026' };
-
-const RAW = {
-  total:    [17204,17474,15821,21914,19004,13330],
-  desc:     [12871,13273,10215,14922,13108, 7724],
-  entreg:   [  881,  849,  477, 1202, 1082, 1096],
-  cal:      [  216,  225,    0,  421,  923,  811],
-  gest:     [  178,  120, 1082,  214,  311,  453],
-  nuevo:    [ 1717, 4997,  681, 2421, 2119, 1613],
-  // temperatura descarte%
-  descC:    [79,88,61,73,76,67],
-  descT:    [26,80,49,42,31,25],
-  descF:    [66,65,64,59,67,61],
-  // temperatura conversión%
-  convC:    [3.9,3.1,1.8,6.6,6.5,5.5],
-  convT:    [3.8,4.7,1.3,3.9,5.3,12.3],
-  convF:    [5.1,4.3,5.2,5.7,2.5,5.2],
-  // VPP
-  vppNoTotal:[14761,14885,13402,18125,15935,11182],
-  vppNoDesc: [ 9959, 1433,12992, 6871, 9720, 5323],
-  vppNoConv: [  521,  301,  238,  784,  481,  118],
-  vppSiTotal:[ 2443, 2589, 2419, 3789, 3069, 2148],
-  vppSiDesc: [ 1922, 2231, 1813, 2285,  923,  540],
-  vppSiConv: [  122,  177,   62,  229,  215,   81],
-  // segmento valor con VPP descartados
-  bronce:   [65,66,103,101,70,38],
-  oro:      [95,67, 60, 82,52,39],
-  plata:    [57,41, 45, 62,51,22],
-  vip:      [53,34, 40, 52,47,20],
-  // financiamiento tasa descarte%
-  financSi: [95.2,96.7,95.5,95.7,94.2,92.4],
-  financNo: [91.9,89.5,91.2,90.3,92.2,84.5],
-  // motivos
-  noContesta:    [3344,4820,3325,4503,3931,2441],
-  negFinanc:     [ 982,1377,1220, 724, 619, 407],
-  negDesiste:    [1575,3601,2655,1927,1931,1329],
-  descMasivo:    [ 972,1271,2673, 843,2708, 146],
-  negSinMotivo:  [ 877, 755, 373,1887,1253, 881],
-  duplicado:     [ 813, 965, 663, 843, 777, 711],
-  negStock:      [ 315, 371, 305, 372, 363, 244],
-};
-
-// ─── ESTADO DE FILTROS ──────────────────────────────────────────────
-let activeMonths = new Set(ALL_MONTHS);
-let activeYears  = new Set(['2025','2026']);
-
-// ─── CHARTS ─────────────────────────────────────────────────────────
-let charts = {};
-
-function getIdxs() {
-  return ALL_MONTHS.map((m,i)=>i).filter(i => activeMonths.has(ALL_MONTHS[i]));
-}
-function filter(arr) { return getIdxs().map(i=>arr[i]); }
-function filteredMonths() { return getIdxs().map(i=>ALL_MONTHS[i]); }
-function sum(arr) { return arr.reduce((a,b)=>a+b,0); }
-function pct(n,d) { return d>0?+(n/d*100).toFixed(1):0; }
-function fmt(n) { return n.toLocaleString('es-CL'); }
-
-function destroyChart(id) { if(charts[id]) { charts[id].destroy(); delete charts[id]; } }
-
-function makeChart(id, config) {
-  destroyChart(id);
-  const ctx = document.getElementById(id);
-  if(!ctx) return;
-  charts[id] = new Chart(ctx, config);
+// ============================================================
+// PLUGINS · etiquetas de valor sobre barras y % sobre líneas
+// Solo aplican cuando el chart explícitamente las activa vía
+// options.plugins.{barLabels|lineLabels|stackedLabels}.enabled = true
+// ============================================================
+function _drawPill(ctx, label, tx, ty, color) {
+  ctx.font = 'bold 10.5px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+  const tw = ctx.measureText(label).width + 8;
+  const th = 14;
+  const x0 = tx - tw/2, y0 = ty - th + 1;
+  const r = 3;
+  ctx.fillStyle = 'rgba(255,255,255,0.96)';
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x0+r, y0);
+  ctx.lineTo(x0+tw-r, y0);
+  ctx.quadraticCurveTo(x0+tw, y0, x0+tw, y0+r);
+  ctx.lineTo(x0+tw, y0+th-r);
+  ctx.quadraticCurveTo(x0+tw, y0+th, x0+tw-r, y0+th);
+  ctx.lineTo(x0+r, y0+th);
+  ctx.quadraticCurveTo(x0, y0+th, x0, y0+th-r);
+  ctx.lineTo(x0, y0+r);
+  ctx.quadraticCurveTo(x0, y0, x0+r, y0);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText(label, tx, ty + 1);
+  return { x0: x0, y0: y0, x1: x0 + tw, y1: y0 + th };
 }
 
-// Plugin: dibuja el valor (% o número en es-CL) sobre cada punto de línea
-const linePctLabelsPlugin = {
-  id: 'linePctLabels',
+function _rectsOverlap(a, b, padX, padY) {
+  if (!a || !b) return false;
+  return !(a.x1 + padX < b.x0 || a.x0 - padX > b.x1 || a.y1 + padY < b.y0 || a.y0 - padY > b.y1);
+}
+
+const lineLabelsPlugin = {
+  id: 'lineLabels',
   afterDatasetsDraw(chart) {
+    const opt = (chart.options.plugins || {}).lineLabels;
+    if (!opt || !opt.enabled) return;
     const ctx = chart.ctx;
-    const datasets = chart.data.datasets || [];
-    const chartType = (chart.config && chart.config.type) || '';
-    ctx.save();
-    ctx.font = '700 10px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    datasets.forEach((ds, d) => {
-      const effType = ds.type || chartType;
-      if (effType !== 'line') return;
-      const meta = chart.getDatasetMeta(d);
-      if (!meta || !meta.data || !chart.isDatasetVisible(d)) return;
-      const color = (typeof ds.borderColor === 'string' && ds.borderColor) ? ds.borderColor : '#333';
-      const above = (d % 2 === 0);
-      const isNum = ds._lblFormat === 'num';
-      meta.data.forEach((pt, i) => {
-        if (!pt) return;
-        const val = ds.data[i];
-        if (val == null) return;
-        const label = isNum
-          ? Math.round(val).toLocaleString('es-CL')
-          : (Math.abs(val) >= 10 ? val.toFixed(0) : val.toFixed(1)) + (ds._lblSuffix || '%');
+    const chartArea = chart.chartArea;
+    const fmt = opt.format || 'pct'; // 'pct' | 'num'
+    const placed = []; // collision tracking
+    chart.data.datasets.forEach((ds, di) => {
+      const isLine = ds.type === 'line' || (chart.config.type === 'line' && !ds.type);
+      if (!isLine) return;
+      if (ds._noLabels) return;
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      const color = ds.borderColor || '#1D9E75';
+      meta.data.forEach((point, i) => {
+        const v = ds.data[i];
+        if (v == null) return;
+        let label;
+        if (typeof v === 'number') {
+          if (fmt === 'num') {
+            label = v.toLocaleString('es-CL');
+          } else {
+            label = v.toLocaleString('es-CL', {maximumFractionDigits: 1}) + '%';
+          }
+        } else {
+          label = v;
+        }
+        ctx.save();
+        // Posicionamiento alternado: arriba por defecto, abajo si hay overlap
+        let ty = point.y - 8;
+        ctx.font = 'bold 10.5px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
         const tw = ctx.measureText(label).width + 8;
-        const yBox = above ? (pt.y - 20) : (pt.y + 4);
-        const yText = above ? (pt.y - 6) : (pt.y + 18);
-        ctx.fillStyle = 'rgba(255,255,255,0.94)';
-        ctx.fillRect(pt.x - tw/2, yBox, tw, 16);
-        ctx.fillStyle = color;
-        ctx.fillText(label, pt.x, yText - 2);
+        const candidateAbove = { x0: point.x - tw/2, y0: ty - 13, x1: point.x + tw/2, y1: ty + 1 };
+        const candidateBelow = { x0: point.x - tw/2, y0: point.y + 7, x1: point.x + tw/2, y1: point.y + 21 };
+        let useAbove = true;
+        for (let p = 0; p < placed.length; p++) {
+          if (_rectsOverlap(candidateAbove, placed[p], 2, 2)) { useAbove = false; break; }
+        }
+        // Verificar bounds del chartArea
+        if (useAbove && candidateAbove.y0 < chartArea.top + 2) useAbove = false;
+        let chosen;
+        if (useAbove) {
+          chosen = candidateAbove;
+        } else {
+          // Probar abajo; si también colisiona, intentar offset lateral
+          let belowOk = true;
+          for (let p = 0; p < placed.length; p++) {
+            if (_rectsOverlap(candidateBelow, placed[p], 2, 2)) { belowOk = false; break; }
+          }
+          if (belowOk && candidateBelow.y1 < chartArea.bottom - 2) {
+            chosen = candidateBelow;
+            ty = point.y + 21;
+          } else {
+            chosen = candidateAbove; // fallback aunque haya overlap leve
+          }
+        }
+        const rect = _drawPill(ctx, label, point.x, ty, color);
+        placed.push(rect);
+        ctx.restore();
       });
     });
-    ctx.restore();
   }
 };
 
-// Plugin: etiqueta dentro de cada segmento de un stacked bar + total sobre la barra
+const barLabelsPlugin = {
+  id: 'barLabels',
+  afterDatasetsDraw(chart) {
+    const opt = (chart.options.plugins || {}).barLabels;
+    if (!opt || !opt.enabled) return;
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, di) => {
+      const isBar = ds.type === 'bar' || (chart.config.type === 'bar' && !ds.type);
+      if (!isBar) return;
+      if (ds.stack && ds.stack !== '') return;
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((bar, i) => {
+        const v = ds.data[i];
+        if (v == null || v === 0) return;
+        const label = v.toLocaleString('es-CL');
+        ctx.save();
+        ctx.font = 'bold 11px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+        ctx.fillStyle = '#1a1a18';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(label, bar.x, bar.y - 4);
+        ctx.restore();
+      });
+    });
+  }
+};
+
 const stackedLabelsPlugin = {
   id: 'stackedLabels',
   afterDatasetsDraw(chart) {
+    const opt = (chart.options.plugins || {}).stackedLabels;
+    if (!opt || !opt.enabled) return;
     const ctx = chart.ctx;
-    const n = chart.data.labels.length;
-    ctx.save();
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font = '700 10px -apple-system, BlinkMacSystemFont, sans-serif';
-    // valor dentro de cada segmento
-    chart.data.datasets.forEach((ds, d) => {
-      const meta = chart.getDatasetMeta(d);
-      if (!meta || !chart.isDatasetVisible(d)) return;
+    chart.data.datasets.forEach((ds, di) => {
+      const isBar = ds.type === 'bar' || (chart.config.type === 'bar' && !ds.type);
+      if (!isBar) return;
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
       meta.data.forEach((bar, i) => {
-        if (!bar) return;
         const v = ds.data[i];
-        if (v == null || v < 15) return;
+        if (v == null || v < 5) return;
+        ctx.save();
+        ctx.font = 'bold 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const cy = (bar.y + bar.base) / 2;
+        ctx.fillText(v + '%', bar.x, cy);
+        ctx.restore();
+      });
+    });
+  }
+};
+
+// Etiquetas con números absolutos dentro de cada segmento de barra apilada
+// (para volúmenes mensuales por etapa, segmento, financiamiento)
+const stackedNumLabelsPlugin = {
+  id: 'stackedNumLabels',
+  afterDatasetsDraw(chart) {
+    const opt = (chart.options.plugins || {}).stackedNumLabels;
+    if (!opt || !opt.enabled) return;
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, di) => {
+      const isBar = ds.type === 'bar' || (chart.config.type === 'bar' && !ds.type);
+      if (!isBar) return;
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((bar, i) => {
+        const v = ds.data[i];
+        if (v == null || v === 0) return;
         const h = Math.abs(bar.base - bar.y);
         if (h < 16) return;
-        ctx.fillStyle = 'rgba(255,255,255,0.95)';
-        ctx.fillText(v, bar.x, (bar.base + bar.y) / 2);
+        ctx.save();
+        ctx.font = 'bold 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const cy = (bar.y + bar.base) / 2;
+        ctx.fillText(v.toLocaleString('es-CL'), bar.x, cy);
+        ctx.restore();
       });
     });
-    // total sobre cada barra
-    ctx.font = '800 12px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.textBaseline = 'bottom';
-    const totalByMonth = new Array(n).fill(0);
-    chart.data.datasets.forEach((ds, d) => {
-      if (!chart.isDatasetVisible(d)) return;
-      for (let i = 0; i < n; i++) totalByMonth[i] += (ds.data[i] || 0);
-    });
-    const topMeta = chart.getDatasetMeta(chart.data.datasets.length - 1);
-    if (topMeta && topMeta.data) {
-      topMeta.data.forEach((bar, i) => {
-        if (!bar) return;
-        const label = totalByMonth[i].toLocaleString('es-CL');
-        const tw = ctx.measureText(label).width + 10;
-        ctx.fillStyle = 'rgba(255,255,255,0.95)';
-        ctx.fillRect(bar.x - tw/2, bar.y - 22, tw, 18);
-        ctx.strokeStyle = '#1a1a18';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(bar.x - tw/2, bar.y - 22, tw, 18);
-        ctx.fillStyle = '#1a1a18';
-        ctx.fillText(label, bar.x, bar.y - 7);
-      });
-    }
-    ctx.restore();
   }
 };
 
-// Plugin: etiqueta valor sobre cada barra simple
-const simpleBarLabelsPlugin = {
-  id: 'simpleBarLabels',
+// White text inside bar with suffix (e.g. " MM"). For dual charts
+// where bar holds MM values and we don't want the black label above
+const insideBarLabelsPlugin = {
+  id: 'insideBarLabels',
   afterDatasetsDraw(chart) {
+    const opt = (chart.options.plugins || {}).insideBarLabels;
+    if (!opt || !opt.enabled) return;
+    const suffix = opt.suffix || '';
     const ctx = chart.ctx;
-    ctx.save();
-    ctx.font = '700 11px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    chart.data.datasets.forEach((ds, d) => {
-      const meta = chart.getDatasetMeta(d);
-      if (!meta || !chart.isDatasetVisible(d)) return;
-      ctx.fillStyle = '#1a1a18';
+    chart.data.datasets.forEach((ds, di) => {
+      const isBar = ds.type === 'bar' || (chart.config.type === 'bar' && !ds.type);
+      if (!isBar) return;
+      if (ds.stack && ds.stack !== '') return;
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
       meta.data.forEach((bar, i) => {
-        if (!bar) return;
         const v = ds.data[i];
-        if (v == null) return;
-        ctx.fillText(v.toLocaleString('es-CL'), bar.x, bar.y - 4);
+        if (v == null || v === 0) return;
+        const label = v.toLocaleString('es-CL') + suffix;
+        ctx.save();
+        ctx.font = 'bold 11px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const cy = (bar.y + bar.base) / 2;
+        // Solo dibujar si la barra es lo suficientemente alta
+        if (Math.abs(bar.base - bar.y) > 14) {
+          ctx.fillText(label, bar.x, cy);
+        }
+        ctx.restore();
       });
     });
-    ctx.restore();
   }
 };
 
-// Plugin: etiqueta Total leads sobre cada barra (para chart cVol)
-const volBarLabelsPlugin = {
-  id: 'volBarLabels',
-  afterDatasetsDraw(chart) {
-    const ctx = chart.ctx;
-    const barMeta = chart.getDatasetMeta(0);
-    if (!barMeta || !barMeta.data) return;
-    ctx.save();
-    ctx.font = '700 11px -apple-system, BlinkMacSystemFont, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'bottom';
-    ctx.fillStyle = '#1a1a18';
-    barMeta.data.forEach((bar, i) => {
-      if (!bar) return;
-      const v = chart.data.datasets[0].data[i];
-      if (v != null) ctx.fillText(v.toLocaleString('es-CL'), bar.x, bar.y - 4);
-    });
-    ctx.restore();
-  }
+if (typeof Chart !== 'undefined') {
+  Chart.register(lineLabelsPlugin, barLabelsPlugin, stackedLabelsPlugin, insideBarLabelsPlugin, stackedNumLabelsPlugin);
+}
+
+var MES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
+var YM = {'Oct 25':'2025','Nov 25':'2025','Dic 25':'2025','Ene 26':'2026','Feb 26':'2026','Mar 26':'2026'};
+
+var RL = {
+  total:     [15307,15554,14777,19810,15006,12389],
+  desc:      [12871,13273,10215,14922,13108, 7724],
+  entreg:    [  881,  849,  477, 1202, 1082, 1096],
+  cal:       [  216,  225,    0,  421,  923,  811],
+  gest:      [  178,  120, 1082,  214,  311,  453],
+  nuevo:     [ 1717, 4997,  681, 2421, 2119, 1613],
+  descC:     [79,88,61,73,76,67],
+  descT:     [26,80,49,42,31,25],
+  descF:     [66,65,64,59,67,61],
+  convC:     [3.9,3.1,1.8,6.6,6.5,5.5],
+  convT:     [3.8,4.7,1.3,3.9,5.3,12.3],
+  convF:     [5.1,4.3,5.2,5.7,2.5,5.2],
+  vppNoT:    [14761,14885,13402,18125,15935,11182],
+  vppNoD:    [ 9959, 1433,12992, 6871, 9720, 5323],
+  vppNoC:    [  521,  301,  238,  784,  481,  118],
+  vppSiT:    [ 2443, 2589, 2419, 3789, 3069, 2148],
+  vppSiD:    [ 1922, 2231, 1813, 2285,  923,  540],
+  vppSiC:    [  122,  177,   62,  229,  215,   81],
+  bronce:    [65,66,103,101,70,38],
+  oro:       [95,67,60,82,52,39],
+  plata:     [57,41,45,62,51,22],
+  vip:       [53,34,40,52,47,20],
+  financSi:  [95.2,96.7,95.5,95.7,94.2,92.4],
+  financNo:  [91.9,89.5,91.2,90.3,92.2,84.5],
+  conVPP:    [2443,2589,2419,3789,3069,2148],
+  sinVPP:    [14761,14885,13402,18125,15935,11182],
+  conFinanc: [9096,9054,8534,13049,8599,6430],
+  sinFinanc: [8106,8419,7285,8865,10405,6900],
+  sqlVppSi:  [229,177,162,285,235,224],
+  sqlVppNo:  [652,672,315,917,847,867],
+  sqlFiSi:   [291,243,244,419,374,274],
+  sqlFiNo:   [589,605,233,783,708,817],
+  noContesta:[3344,4820,3325,4503,3931,2441],
+  negFinanc: [982,1377,1220,724,619,407],
+  negDesiste:[1575,3601,2655,1927,1931,1329],
+  descMasivo:[972,1271,2673,843,2708,146],
+  negSinM:   [877,755,373,1887,1253,881],
+  dup:       [813,965,663,843,777,711],
+  negStock:  [315,371,305,372,363,244],
+  margenPct: [13.1,13.9,11.5,13.8,12.2,14.5]
 };
 
-// ─── UPDATE KPIs ────────────────────────────────────────────────────
-function updateKPIs() {
-  const idxs = getIdxs();
-  if(!idxs.length) {
-    ['kTotal','kDesc','kConv','kWorst','kNuevo','kFinanc','kVIP'].forEach(id=>{
-      var el = document.getElementById(id);
-      if (el) el.textContent='—';
-    });
-    return;
-  }
-  const totArr  = filter(RAW.total);
-  const descArr = filter(RAW.desc);
-  const convArr = filter(RAW.entreg);
-  const nuevoArr= filter(RAW.nuevo);
-  const labels  = filteredMonths();
+var RV = {
+  ventas:   [621,646,590,817,597,567],
+  vppSi:    [335,302,281,312,245,246],
+  vppNo:    [1548,1550,1401,1735,1273,1236],
+  financSi: [799,851,734,920,682,697],
+  financNo: [1072,993,938,1115,816,763]
+};
 
-  const totSum  = sum(totArr);
-  const descSum = sum(descArr);
-  const convSum = sum(convArr);
-  const nuevoSum= sum(nuevoArr);
+var ST = {leads:new Set([0,1,2,3,4,5]),oport:new Set([0,1,2,3,4,5])};
+var CH = {};
 
-  // peor mes conversión
-  const convRates = totArr.map((t,i)=>pct(convArr[i],t));
-  const worstIdx= convRates.indexOf(Math.min(...convRates));
-
-  // VIP+Oro filtrado
-  const vipOro = sum(filter(RAW.vip)) + sum(filter(RAW.oro));
-
-  // financiamiento promedio
-  const financAvg = (sum(filter(RAW.financSi))/filter(RAW.financSi).length).toFixed(1);
-
-  document.getElementById('kTotal').textContent = fmt(totSum);
-  document.getElementById('kTotalSub').textContent = idxs.length + ' mes' + (idxs.length>1?'es':'') + ' seleccionados';
-  document.getElementById('kDesc').textContent = pct(descSum,totSum)+'%';
-  document.getElementById('kDescSub').textContent = fmt(descSum)+' descartados';
-  document.getElementById('kConv').textContent = pct(convSum,totSum)+'%';
-  document.getElementById('kConvSub').textContent = fmt(convSum)+' entregados';
-  document.getElementById('kWorst').textContent = labels[worstIdx]||'—';
-  document.getElementById('kWorstSub').textContent = (convRates[worstIdx]||0)+'% conversión';
-  document.getElementById('kNuevo').textContent = fmt(nuevoSum);
-  document.getElementById('kFinanc').textContent = financAvg+'%';
-  document.getElementById('kVIP').textContent = fmt(vipOro);
+function idxs(pg) { return Array.from(ST[pg]).sort(function(a,b){return a-b;}); }
+function fl(pg,arr) { return idxs(pg).map(function(i){return arr[i];}); }
+function fm(pg) { return idxs(pg).map(function(i){return MES[i];}); }
+function sm(arr) { return arr.reduce(function(a,b){return a+b;},0); }
+function pc(n,d) { return d>0?+(n/d*100).toFixed(1):0; }
+function ft(n) { return Math.round(n).toLocaleString('es-CL'); }
+function se(id,v) { var e=document.getElementById(id); if(e) e.textContent=v; }
+function mk(id,cfg) {
+  if(CH[id]){CH[id].destroy();delete CH[id];}
+  var c=document.getElementById(id);
+  if(c) CH[id]=new Chart(c,cfg);
 }
 
-// ─── UPDATE CHARTS ──────────────────────────────────────────────────
-function updateCharts() {
-  const lbs = filteredMonths();
-  const totArr  = filter(RAW.total);
-  const descArr = filter(RAW.desc);
-  const convArr = filter(RAW.entreg);
-  const convRate = totArr.map((t,i)=>pct(convArr[i],t));
-  const descRate = totArr.map((t,i)=>pct(descArr[i],t));
+function tPct(v){return v+'%';}
+function tK(v){return (v/1000).toFixed(0)+'k';}
+function tMM(v){return v+' MM';}
 
-  // Vol + conv
-  makeChart('cVol',{type:'bar',data:{labels:lbs,datasets:[
-    {label:'Total leads',data:totArr,backgroundColor:'#B5D4F4',borderWidth:0,yAxisID:'y',order:2},
-    {label:'% conversión',data:convRate,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:3,pointRadius:6,pointBackgroundColor:'#1D9E75',pointBorderColor:'#ffffff',pointBorderWidth:2,tension:0.3,yAxisID:'y2',order:0,clip:false,_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.datasetIndex===0?'Total leads: '+ctx.parsed.y.toLocaleString('es-CL'):'% conversión: '+ctx.parsed.y.toFixed(1)+'%';}}}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'},grid:{color:'rgba(0,0,0,0.04)'}},
-      y2:{position:'right',beginAtZero:true,max:Math.ceil(Math.max(...convRate)*1.5+2),ticks:{stepSize:2,callback:v=>Math.round(v)+'%'},grid:{display:false}}}},
-    plugins:[volBarLabelsPlugin, linePctLabelsPlugin]});
-
-  // Etapas
-  makeChart('cEtapas',{type:'bar',data:{labels:lbs,datasets:[
-    {label:'Descartado',data:filter(RAW.desc),backgroundColor:'#E24B4A',borderWidth:0},
-    {label:'Entregado',data:filter(RAW.entreg),backgroundColor:'#1D9E75',borderWidth:0},
-    {label:'Calificado',data:filter(RAW.cal),backgroundColor:'#378ADD',borderWidth:0},
-    {label:'En gestión',data:filter(RAW.gest),backgroundColor:'#EF9F27',borderWidth:0},
-    {label:'Nuevo',data:filter(RAW.nuevo),backgroundColor:'#888780',borderWidth:0}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:28}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(items){if(!items.length)return '';var idx=items[0].dataIndex;var tot=filter(RAW.total)[idx]||0;return items[0].label+' · Total leads: '+tot.toLocaleString('es-CL');},label:function(ctx){var v=ctx.parsed.y||0;var tot=filter(RAW.total)[ctx.dataIndex]||0;var p=tot>0?(v/tot*100).toFixed(1):'0';return ctx.dataset.label+': '+v.toLocaleString('es-CL')+' ('+p+'%)';}}}},
-    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'}}}},plugins:[stackedLabelsPlugin]});
-
-  // Descarte global
-  makeChart('cDescGlobal',{type:'line',data:{labels:lbs,datasets:[
-    {label:'% descarte',data:descRate,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,
-      pointBackgroundColor:descRate.map(v=>v>74?'#E24B4A':v>68?'#EF9F27':'#1D9E75'),_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{min:Math.max(0,Math.min(...descRate)-5),max:Math.min(100,Math.max(...descRate)+5),ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
-
-  // Temperatura descarte
-  makeChart('cTempDesc',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Caliente',data:filter(RAW.descC),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2,pointRadius:4,fill:true,tension:0.3,_lblSuffix:'%'},
-    {label:'Tibio',data:filter(RAW.descT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],_lblSuffix:'%'},
-    {label:'Frío',data:filter(RAW.descF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
-
-  // Temperatura conversión
-  makeChart('cTempConv',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Caliente',data:filter(RAW.convC),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,_lblSuffix:'%'},
-    {label:'Tibio',data:filter(RAW.convT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],_lblSuffix:'%'},
-    {label:'Frío',data:filter(RAW.convF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
-
-  // VPP descarte
-  const vppNoD = filter(RAW.vppNoTotal).map((t,i)=>pct(filter(RAW.vppNoDesc)[i],t));
-  const vppSiD = filter(RAW.vppSiTotal).map((t,i)=>pct(filter(RAW.vppSiDesc)[i],t));
-  makeChart('cVPPDesc',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Con VPP',data:vppSiD,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,_lblSuffix:'%'},
-    {label:'Sin VPP',data:vppNoD,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
-
-  // VPP conversión
-  const vppNoC = filter(RAW.vppNoTotal).map((t,i)=>pct(filter(RAW.vppNoConv)[i],t));
-  const vppSiC = filter(RAW.vppSiTotal).map((t,i)=>pct(filter(RAW.vppSiConv)[i],t));
-  makeChart('cVPPConv',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Con VPP',data:vppSiC,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,_lblSuffix:'%'},
-    {label:'Sin VPP',data:vppNoC,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
-
-  // Segmento valor — colores asociados al metal del segmento
-  makeChart('cSegValor',{type:'bar',data:{labels:lbs,datasets:[
-    {label:'Bronce',data:filter(RAW.bronce),backgroundColor:'#B87333',borderWidth:0},
-    {label:'Oro',data:filter(RAW.oro),backgroundColor:'#D4A017',borderWidth:0},
-    {label:'Plata',data:filter(RAW.plata),backgroundColor:'#A8A9AD',borderWidth:0},
-    {label:'VIP',data:filter(RAW.vip),backgroundColor:'#5B3BA5',borderWidth:0}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:28}},interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(items){if(!items.length)return '';var idx=items[0].dataIndex;var tot=(filter(RAW.bronce)[idx]||0)+(filter(RAW.oro)[idx]||0)+(filter(RAW.plata)[idx]||0)+(filter(RAW.vip)[idx]||0);return items[0].label+' · Total: '+tot.toLocaleString('es-CL');},label:function(ctx){var v=ctx.parsed.y||0;var idx=ctx.dataIndex;var tot=(filter(RAW.bronce)[idx]||0)+(filter(RAW.oro)[idx]||0)+(filter(RAW.plata)[idx]||0)+(filter(RAW.vip)[idx]||0);var p=tot>0?(v/tot*100).toFixed(1):'0';return ctx.dataset.label+': '+v.toLocaleString('es-CL')+' ('+p+'%)';}}}},
-    scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true}}},plugins:[stackedLabelsPlugin]});
-
-  // Financiamiento
-  makeChart('cFinancChart',{type:'line',data:{labels:lbs,datasets:[
-    {label:'Con financiamiento',data:filter(RAW.financSi),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,_lblSuffix:'%'},
-    {label:'Sin financiamiento',data:filter(RAW.financNo),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],_lblSuffix:'%'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{min:75,max:100,ticks:{callback:v=>v+'%'}}}},plugins:[linePctLabelsPlugin]});
-
-  // Motivos acumulado
-  const nc  = sum(filter(RAW.noContesta));
-  const nd  = sum(filter(RAW.negDesiste));
-  const dm  = sum(filter(RAW.descMasivo));
-  const ns  = sum(filter(RAW.negSinMotivo));
-  const nf  = sum(filter(RAW.negFinanc));
-  const dup = sum(filter(RAW.duplicado));
-  const nst = sum(filter(RAW.negStock));
-  makeChart('cMotivos',{type:'bar',data:{
-    labels:['No contesta','Neg. desiste\ninfo','Desc.\nmasivo','Neg. sin\nmotivos','Neg.\nfinanc.','Duplicado','Neg. stock'],
-    datasets:[{data:[nc,nd,dm,ns,nf,dup,nst],
-      backgroundColor:['#3266ad','#73726c','#E24B4A','#888780','#E24B4A','#B5D4F4','#EF9F27'],borderWidth:0}]
-  },options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>(v/1000).toFixed(0)+'k'}},x:{ticks:{font:{size:10}}}}},plugins:[simpleBarLabelsPlugin]});
-
-  // Motivos tendencia
-  makeChart('cMotTend',{type:'line',data:{labels:lbs,datasets:[
-    {label:'No contesta',data:filter(RAW.noContesta),borderColor:'#3266ad',borderWidth:2,pointRadius:4,tension:0.3,backgroundColor:'transparent',_lblFormat:'num'},
-    {label:'Neg. financ.',data:filter(RAW.negFinanc),borderColor:'#E24B4A',borderWidth:2,pointRadius:4,tension:0.3,backgroundColor:'transparent',borderDash:[5,3],_lblFormat:'num'},
-    {label:'Desiste info',data:filter(RAW.negDesiste),borderColor:'#73726c',borderWidth:2,pointRadius:4,tension:0.3,backgroundColor:'transparent',borderDash:[2,2],_lblFormat:'num'}
-  ]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>v.toLocaleString('es-CL')}}}},plugins:[linePctLabelsPlugin]});
+function oBase() {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 22, right: 8, left: 4, bottom: 4 } },
+    plugins: { legend: { display: false } }
+  };
+}
+function oLine(mn,mx) {
+  var o = oBase();
+  var sy = { ticks: { callback: tPct } };
+  if(mn!==null){sy.min=mn;}else{sy.beginAtZero=true;}
+  if(mx!==null) sy.max = mx;
+  o.scales = { y: sy };
+  o.plugins.lineLabels = { enabled: true };
+  return o;
+}
+function oLineAuto() { return oLine(null,null); }
+function oLineNum() {
+  var o = oBase();
+  o.scales = { y: { beginAtZero: true, ticks: { callback: tK } } };
+  o.plugins.lineLabels = { enabled: true, format: 'num' };
+  return o;
+}
+function oBar() {
+  var o = oBase();
+  o.scales = {
+    x: { stacked: true },
+    y: { stacked: true, beginAtZero: true, ticks: { callback: tK } }
+  };
+  o.plugins.barLabels = { enabled: true };
+  o.plugins.stackedNumLabels = { enabled: true };
+  return o;
+}
+function oBar100() {
+  var o = oBase();
+  o.scales = {
+    x: { stacked: true },
+    y: { stacked: true, max: 100, ticks: { callback: tPct } }
+  };
+  o.plugins.stackedLabels = { enabled: true };
+  return o;
+}
+function oDual(mx2) {
+  var o = oBase();
+  o.scales = {
+    y: { beginAtZero: true, ticks: { callback: tMM }, grid: { color: 'rgba(0,0,0,.04)' } },
+    y2: { position: 'right', min: 0, max: mx2||20, ticks: { callback: tPct }, grid: { display: false } }
+  };
+  o.plugins.insideBarLabels = { enabled: true, suffix: ' MM' };
+  o.plugins.lineLabels = { enabled: true };
+  return o;
+}
+function oVolDual(convR) {
+  var o = oBase();
+  var maxConv = Math.max.apply(null, convR);
+  o.scales = {
+    y: { beginAtZero: true, ticks: { callback: tK }, grid: { color: 'rgba(0,0,0,.04)' } },
+    y2: { position: 'right', beginAtZero: true, max: maxConv * 1.7 + 2, ticks: { callback: tPct }, grid: { display: false } }
+  };
+  o.plugins.barLabels = { enabled: true };
+  o.plugins.lineLabels = { enabled: true };
+  return o;
 }
 
-// ─── FILTROS ────────────────────────────────────────────────────────
-function toggleMonth(m) {
-  if(activeMonths.has(m)) {
-    if(activeMonths.size===1) return;
-    activeMonths.delete(m);
-  } else {
-    activeMonths.add(m);
-  }
-  syncButtons();
-  refresh();
-}
-
-function toggleYear(y) {
-  const monthsOfYear = ALL_MONTHS.filter(m=>YEARS[m]===y);
-  const allActive = monthsOfYear.every(m=>activeMonths.has(m));
-  if(allActive) {
-    const remaining = [...activeMonths].filter(m=>YEARS[m]!==y);
-    if(!remaining.length) return;
-    monthsOfYear.forEach(m=>activeMonths.delete(m));
-  } else {
-    monthsOfYear.forEach(m=>activeMonths.add(m));
-  }
-  syncButtons();
-  refresh();
-}
-
-function selectAll() { ALL_MONTHS.forEach(m=>activeMonths.add(m)); activeYears=new Set(['2025','2026']); syncButtons(); refresh(); }
-function clearAll() {
-  activeMonths = new Set([ALL_MONTHS[0]]);
-  syncButtons(); refresh();
-}
-
-function syncButtons() {
-  document.querySelectorAll('#monthBtns .f-btn').forEach((btn,i)=>{
-    btn.classList.toggle('active', activeMonths.has(ALL_MONTHS[i]));
-  });
-  document.querySelectorAll('#yearBtns .f-btn').forEach(btn=>{
-    const y = btn.textContent;
-    const months = ALL_MONTHS.filter(m=>YEARS[m]===y);
-    btn.classList.toggle('active', months.some(m=>activeMonths.has(m)));
-  });
-  document.getElementById('filterCount').textContent = activeMonths.size;
-}
-
-function refresh() { updateKPIs(); updateCharts(); }
-
-function showTab(section, view, btn) {
-  document.querySelectorAll(`[id^="${section}-"]`).forEach(v=>v.classList.remove('active'));
-  document.getElementById(`${section}-${view}`).classList.add('active');
-  btn.closest('.tab-bar').querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+function showPage(id,btn) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
 }
+function showTab(sec,view,btn) {
+  document.querySelectorAll('[id^="'+sec+'-"]').forEach(function(v){v.classList.remove('active');});
+  document.getElementById(sec+'-'+view).classList.add('active');
+  btn.closest('.tab-bar').querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+}
+function toggleMonth(pg,i) {
+  if(ST[pg].has(i)){if(ST[pg].size===1)return;ST[pg].delete(i);}
+  else ST[pg].add(i);
+  syncB(pg);rp(pg);
+}
+function toggleYear(pg,y) {
+  var mi=MES.map(function(m,i){return {m:m,i:i};}).filter(function(o){return YM[o.m]===y;}).map(function(o){return o.i;});
+  var all=mi.every(function(i){return ST[pg].has(i);});
+  if(all){
+    var rest=Array.from(ST[pg]).filter(function(i){return mi.indexOf(i)===-1;});
+    if(!rest.length)return;
+    mi.forEach(function(i){ST[pg].delete(i);});
+  } else {
+    mi.forEach(function(i){ST[pg].add(i);});
+  }
+  syncB(pg);rp(pg);
+}
+function selectAll(pg){MES.forEach(function(_,i){ST[pg].add(i);});syncB(pg);rp(pg);}
+function clearAll(pg){ST[pg]=new Set([0]);syncB(pg);rp(pg);}
+function syncB(pg) {
+  var p=pg==='leads'?'l':'o';
+  document.querySelectorAll('#'+p+'monthBtns .f-btn').forEach(function(b,i){b.classList.toggle('active',ST[pg].has(i));});
+  document.querySelectorAll('#'+p+'yearBtns .f-btn').forEach(function(b){
+    var y=b.textContent;
+    var mi=MES.map(function(m,i){return {m:m,i:i};}).filter(function(o){return YM[o.m]===y;}).map(function(o){return o.i;});
+    b.classList.toggle('active',mi.some(function(i){return ST[pg].has(i);}));
+  });
+  document.getElementById(p+'filterCount').textContent=ST[pg].size;
+}
+function rp(pg){if(pg==='leads')rL();else rO();}
 
-// ─── INIT ────────────────────────────────────────────────────────────
-refresh();
+function rL() {
+  var pg='leads', lb=fm(pg);
+  var tA=fl(pg,RL.total), dA=fl(pg,RL.desc), eA=fl(pg,RL.entreg);
+  var cR=tA.map(function(t,i){return pc(eA[i],t);});
+  var dR=tA.map(function(t,i){return pc(dA[i],t);});
+  var tot=sm(tA), des=sm(dA), ent=sm(eA);
+  var bi=cR.indexOf(Math.max.apply(null,cR));
+  var wi=cR.indexOf(Math.min.apply(null,cR));
+  var tVPP=sm(fl(pg,RL.conVPP)), tFi=sm(fl(pg,RL.conFinanc));
+  var sVT=sm(fl(pg,RL.sqlVppSi)), sFT=sm(fl(pg,RL.sqlFiSi));
+
+  se('lkTotal',ft(tot)); se('lkTotalSub',idxs(pg).length+' meses');
+  se('lkDesc',pc(des,tot)+'%'); se('lkDescSub',ft(des)+' descartados');
+  se('lkConv',pc(ent,tot)+'%');
+  se('lkBest',lb[bi]||'-'); se('lkBestSub',(cR[bi]||0)+'% conv');
+  se('lkWorst',lb[wi]||'-'); se('lkWorstSub',(cR[wi]||0)+'% conv');
+  se('lkNuevo',ft(sm(fl(pg,RL.nuevo))));
+  se('lkVPPpct',pc(tVPP,tot)+'%'); se('lkVPPsub',ft(tVPP)+' con VPP');
+  se('lkFinancPct',pc(tFi,tot)+'%'); se('lkFinancSub',ft(tFi)+' con financ');
+  se('lkSQLvpp',pc(sVT,tVPP)+'%'); se('lkSQLvppSub',ft(sVT)+' de '+ft(tVPP));
+  se('lkSQLfinanc',pc(sFT,tFi)+'%'); se('lkSQLfinancSub',ft(sFT)+' de '+ft(tFi));
+
+  var sg=document.getElementById('sqlSimGrid');
+  if(sg){
+    sg.innerHTML='';
+    [1,2,3,4,5].forEach(function(d){
+      var ns=Math.round(tot*d/100), nv=Math.round(ns*0.68);
+      var c=document.createElement('div'); c.className='sim-card';
+      c.innerHTML='<div class="sim-value">+'+nv.toLocaleString('es-CL')+'</div>'
+        +'<div class="sim-label">ventas extra si SQL +'+d+'pp</div>'
+        +'<div class="sim-sub">+'+ns.toLocaleString('es-CL')+' SQL adicionales</div>';
+      sg.appendChild(c);
+    });
+  }
+
+  var mP=fl(pg,RL.margenPct);
+  var fD=fl(pg,RL.conFinanc).map(function(l,i){return Math.round(l*fl(pg,RL.financSi)[i]/100);});
+  var vP=fD.map(function(d){return Math.round(d*0.085);});
+  var mPM=vP.map(function(v,i){return Math.round(v*13500000*0.03*mP[i]/100/1000000);});
+  var tFD=sm(fD), tVP=sm(vP), tMP=sm(mPM), prM=Math.round(tMP/Math.max(1,idxs(pg).length));
+  var mk2=document.getElementById('margenKpis');
+  if(mk2){
+    var h='';
+    h+='<div class="kpi red"><div class="kpi-label">Leads financ. descartados</div><div class="kpi-value">'+ft(tFD)+'</div><div class="kpi-sub">período seleccionado</div></div>';
+    h+='<div class="kpi amber"><div class="kpi-label">Ventas potenciales perdidas</div><div class="kpi-value">'+ft(tVP)+'</div><div class="kpi-sub">a tasa conv 8,5%</div></div>';
+    h+='<div class="kpi red"><div class="kpi-label">Margen perdido total</div><div class="kpi-value">'+ft(tMP)+' MM</div><div class="kpi-sub">ticket 13,5MM x 3%</div></div>';
+    h+='<div class="kpi amber"><div class="kpi-label">Promedio mensual</div><div class="kpi-value">'+ft(prM)+' MM</div><div class="kpi-sub">por mes</div></div>';
+    mk2.innerHTML=h;
+  }
+
+  mk('lcMargenPerdido',{type:'bar',data:{labels:lb,datasets:[
+    {data:mPM,backgroundColor:'#E24B4A',borderWidth:0,yAxisID:'y',order:2},
+    {data:mP,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:2,pointRadius:5,pointBackgroundColor:'#1D9E75',tension:0.3,yAxisID:'y2',order:0,clip:false}
+  ]},options:oDual(20)});
+
+  mk('lcVol',{type:'bar',data:{labels:lb,datasets:[
+    {data:tA,backgroundColor:'#B5D4F4',borderWidth:0,yAxisID:'y',order:2},
+    {data:cR,type:'line',borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#1D9E75',tension:0.3,yAxisID:'y2',order:0,clip:false}
+  ]},options:oVolDual(cR)});
+
+  mk('lcEtapas',{type:'bar',data:{labels:lb,datasets:[
+    {data:dA,backgroundColor:'#E24B4A',borderWidth:0},
+    {data:eA,backgroundColor:'#1D9E75',borderWidth:0},
+    {data:fl(pg,RL.cal),backgroundColor:'#378ADD',borderWidth:0},
+    {data:fl(pg,RL.gest),backgroundColor:'#EF9F27',borderWidth:0},
+    {data:fl(pg,RL.nuevo),backgroundColor:'#888780',borderWidth:0}
+  ]},options:oBar()});
+
+  var dOpts=oLine(Math.max(0,Math.min.apply(null,dR)-5),Math.min(100,Math.max.apply(null,dR)+5));
+  mk('lcDescGlobal',{type:'line',data:{labels:lb,datasets:[{data:dR,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false,
+    pointBackgroundColor:dR.map(function(v){return v>74?'#E24B4A':v>68?'#EF9F27':'#1D9E75';})}]},options:dOpts});
+
+  var sqlG=tA.map(function(t,i){return pc(eA[i],t);});
+  var svSi=fl(pg,RL.sqlVppSi).map(function(v,i){return pc(v,fl(pg,RL.conVPP)[i]);});
+  var svNo=fl(pg,RL.sqlVppNo).map(function(v,i){return pc(v,fl(pg,RL.sinVPP)[i]);});
+  var sfSi=fl(pg,RL.sqlFiSi).map(function(v,i){return pc(v,fl(pg,RL.conFinanc)[i]);});
+  var sfNo=fl(pg,RL.sqlFiNo).map(function(v,i){return pc(v,fl(pg,RL.sinFinanc)[i]);});
+
+  mk('lcSQLvpp',{type:'line',data:{labels:lb,datasets:[
+    {data:svSi,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:svNo,borderColor:'#D3D1C7',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],clip:false},
+    {data:sqlG,borderColor:'#888780',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  mk('lcSQLfinancc',{type:'line',data:{labels:lb,datasets:[
+    {data:sfSi,borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:sfNo,borderColor:'#D3D1C7',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],clip:false},
+    {data:sqlG,borderColor:'#888780',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  mk('lcSQLambos',{type:'line',data:{labels:lb,datasets:[
+    {data:svSi,borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,tension:0.3,clip:false},
+    {data:sfSi,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,tension:0.3,clip:false},
+    {data:sqlG,borderColor:'#888780',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  mk('lcTempDesc',{type:'line',data:{labels:lb,datasets:[
+    {data:fl(pg,RL.descC),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.07)',borderWidth:2,pointRadius:4,fill:true,tension:0.3,clip:false},
+    {data:fl(pg,RL.descT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],clip:false},
+    {data:fl(pg,RL.descF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLine(0,100)});
+
+  mk('lcTempConv',{type:'line',data:{labels:lb,datasets:[
+    {data:fl(pg,RL.convC),borderColor:'#E24B4A',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,clip:false},
+    {data:fl(pg,RL.convT),borderColor:'#EF9F27',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],clip:false},
+    {data:fl(pg,RL.convF),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  var vND=fl(pg,RL.vppNoT).map(function(t,i){return pc(fl(pg,RL.vppNoD)[i],t);});
+  var vSD=fl(pg,RL.vppSiT).map(function(t,i){return pc(fl(pg,RL.vppSiD)[i],t);});
+  mk('lcVPPDesc',{type:'line',data:{labels:lb,datasets:[
+    {data:vSD,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:vND,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],clip:false}
+  ]},options:oLine(0,100)});
+
+  var vDP=fl(pg,RL.vppSiT).map(function(t,i){return pc(fl(pg,RL.vppSiD)[i],t);});
+  mk('lcVPPDescPct',{type:'line',data:{labels:lb,datasets:[
+    {data:vDP,borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:dR,borderColor:'#888780',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLine(0,100)});
+
+  var vNC=fl(pg,RL.vppNoT).map(function(t,i){return pc(fl(pg,RL.vppNoC)[i],t);});
+  var vSC=fl(pg,RL.vppSiT).map(function(t,i){return pc(fl(pg,RL.vppSiC)[i],t);});
+  mk('lcVPPConv',{type:'line',data:{labels:lb,datasets:[
+    {data:vSC,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:vNC,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],clip:false}
+  ]},options:oLineAuto()});
+
+  var segOpts = oBar();
+  segOpts.plugins.barLabels = { enabled: false };
+  mk('lcSegValor',{type:'bar',data:{labels:lb,datasets:[
+    {data:fl(pg,RL.bronce),backgroundColor:'#EF9F27',borderWidth:0},
+    {data:fl(pg,RL.oro),backgroundColor:'#F0997B',borderWidth:0},
+    {data:fl(pg,RL.plata),backgroundColor:'#888780',borderWidth:0},
+    {data:fl(pg,RL.vip),backgroundColor:'#534AB7',borderWidth:0}
+  ]},options:segOpts});
+
+  mk('lcFinanc',{type:'line',data:{labels:lb,datasets:[
+    {data:fl(pg,RL.financSi),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:fl(pg,RL.financNo),borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:5,tension:0.3,borderDash:[5,3],clip:false}
+  ]},options:oLine(75,100)});
+
+  mk('lcFinancDescPct',{type:'line',data:{labels:lb,datasets:[
+    {data:fl(pg,RL.financSi),borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,.08)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:dR,borderColor:'#888780',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLine(0,100)});
+
+  var nc=sm(fl(pg,RL.noContesta)), nd=sm(fl(pg,RL.negDesiste)), dm=sm(fl(pg,RL.descMasivo));
+  var ns=sm(fl(pg,RL.negSinM)), nf=sm(fl(pg,RL.negFinanc)), du=sm(fl(pg,RL.dup)), nst=sm(fl(pg,RL.negStock));
+  var motOpts = oBar();
+  motOpts.plugins.stackedNumLabels = { enabled: false };
+  mk('lcMotivos',{type:'bar',data:{
+    labels:['No contesta','Neg desiste','Desc masivo','Neg s motivo','Neg financ','Duplicado','Neg stock'],
+    datasets:[{data:[nc,nd,dm,ns,nf,du,nst],backgroundColor:['#3266ad','#73726c','#E24B4A','#888780','#E24B4A','#B5D4F4','#EF9F27'],borderWidth:0}]
+  },options:motOpts});
+
+  mk('lcMotTend',{type:'line',data:{labels:lb,datasets:[
+    {data:fl(pg,RL.noContesta),borderColor:'#3266ad',borderWidth:2,pointRadius:3,tension:0.3,backgroundColor:'transparent',clip:false},
+    {data:fl(pg,RL.negFinanc),borderColor:'#E24B4A',borderWidth:2,pointRadius:3,tension:0.3,backgroundColor:'transparent',borderDash:[5,3],clip:false},
+    {data:fl(pg,RL.negDesiste),borderColor:'#73726c',borderWidth:2,pointRadius:3,tension:0.3,backgroundColor:'transparent',borderDash:[2,2],clip:false}
+  ]},options:oLineNum()});
+}
+
+function rO() {
+  var pg='oport', lb=fm(pg);
+  var vA=fl(pg,RV.ventas), vSA=fl(pg,RV.vppSi), vNA=fl(pg,RV.vppNo);
+  var fSA=fl(pg,RV.financSi), fNA=fl(pg,RV.financNo);
+  var lA=fl(pg,RL.total), lVA=fl(pg,RL.conVPP), lFA=fl(pg,RL.conFinanc);
+  var lNVA=fl(pg,RL.sinVPP), lNFA=fl(pg,RL.sinFinanc);
+  var totV=sm(vA), totL=sm(lA);
+  var cR=vA.map(function(v,i){return pc(v,lA[i]);});
+  var cVpp=vSA.map(function(v,i){return pc(v,lVA[i]);});
+  var cFi=fSA.map(function(v,i){return pc(v,lFA[i]);});
+
+  se('okTotal',ft(totV)); se('okTotalSub',idxs(pg).length+' meses');
+  se('okConvGlobal',pc(totV,totL)+'%');
+  se('okVppSi',ft(sm(vSA))); se('okVppSiSub',pc(sm(vSA),totV)+'% de ventas');
+  se('okConvVpp',pc(sm(vSA),sm(lVA))+'%');
+  se('okFiSi',ft(sm(fSA))); se('okFiSiSub',pc(sm(fSA),totV)+'% de ventas');
+  se('okConvFi',pc(sm(fSA),sm(lFA))+'%');
+
+  var sqlT=sm(fl(pg,RL.entreg));
+  var steps=[
+    {label:'Leads totales',val:totL,col:'#378ADD'},
+    {label:'SQL entregados',val:sqlT,col:'#534AB7'},
+    {label:'Ventas cerradas',val:totV,col:'#1D9E75'}
+  ];
+  var wrap=document.getElementById('oFunnelViz');
+  if(wrap){
+    wrap.innerHTML='';
+    steps.forEach(function(s,i){
+      var w=Math.max(8,Math.round(s.val/totL*100));
+      var pp=i===0?'100%':pc(s.val,totL)+'%';
+      wrap.innerHTML+=(i>0?'<div class="arrow-down">v</div>':'')
+        +'<div class="funnel-step"><div class="funnel-label">'+s.label+'</div>'
+        +'<div class="funnel-bar-area"><div class="funnel-bar-bg">'
+        +'<div class="funnel-bar-fill" style="width:'+w+'%;background:'+s.col+';">'+ft(s.val)+'</div>'
+        +'</div></div><div class="funnel-val">'+ft(s.val)+'</div>'
+        +'<div class="funnel-pct">'+pp+'</div></div>';
+    });
+  }
+
+  mk('ocConvMes',{type:'line',data:{labels:lb,datasets:[
+    {data:cR,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:cVpp,borderColor:'#534AB7',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[5,3],clip:false},
+    {data:cFi,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  var tb=document.getElementById('oTablaBody');
+  if(tb){
+    tb.innerHTML='';
+    var tL=0,tV=0,tVp=0,tFi=0,tLVp=0,tLFi=0;
+    idxs(pg).forEach(function(i){
+      tL+=RL.total[i];tV+=RV.ventas[i];tVp+=RV.vppSi[i];tFi+=RV.financSi[i];
+      tLVp+=RL.conVPP[i];tLFi+=RL.conFinanc[i];
+      tb.innerHTML+='<tr><td>'+MES[i]+'</td><td>'+ft(RL.total[i])+'</td><td>'+ft(RV.ventas[i])+'</td>'
+        +'<td><span class="badge" style="background:#EAF3DE;color:#3B6D11;">'+pc(RV.ventas[i],RL.total[i])+'%</span></td>'
+        +'<td>'+ft(RV.vppSi[i])+'</td><td>'+ft(RL.conVPP[i])+'</td>'
+        +'<td><span class="badge" style="background:#EAF3DE;color:#3B6D11;">'+pc(RV.vppSi[i],RL.conVPP[i])+'%</span></td>'
+        +'<td>'+ft(RV.financSi[i])+'</td><td>'+ft(RL.conFinanc[i])+'</td>'
+        +'<td><span class="badge" style="background:#EAF3DE;color:#3B6D11;">'+pc(RV.financSi[i],RL.conFinanc[i])+'%</span></td></tr>';
+    });
+    tb.innerHTML+='<tr><td>Total</td><td>'+ft(tL)+'</td><td>'+ft(tV)+'</td>'
+      +'<td><span class="badge" style="background:#EAF3DE;color:#3B6D11;">'+pc(tV,tL)+'%</span></td>'
+      +'<td>'+ft(tVp)+'</td><td>'+ft(tLVp)+'</td>'
+      +'<td><span class="badge" style="background:#EAF3DE;color:#3B6D11;">'+pc(tVp,tLVp)+'%</span></td>'
+      +'<td>'+ft(tFi)+'</td><td>'+ft(tLFi)+'</td>'
+      +'<td><span class="badge" style="background:#EAF3DE;color:#3B6D11;">'+pc(tFi,tLFi)+'%</span></td></tr>';
+  }
+
+  var vSP=vSA.map(function(v,i){return pc(v,vSA[i]+vNA[i]);});
+  var vNP=vNA.map(function(v,i){return pc(v,vSA[i]+vNA[i]);});
+  mk('ocVppBar',{type:'bar',data:{labels:lb,datasets:[
+    {data:vSP,backgroundColor:'#1D9E75',borderWidth:0},
+    {data:vNP,backgroundColor:'#D3D1C7',borderWidth:0}
+  ]},options:oBar100()});
+
+  mk('ocVppConv',{type:'line',data:{labels:lb,datasets:[
+    {data:cVpp,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:cR,borderColor:'#888780',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  mk('ocFiBar',{type:'bar',data:{labels:lb,datasets:[
+    {data:fSA,backgroundColor:'#378ADD',borderWidth:0},
+    {data:fNA,backgroundColor:'#D3D1C7',borderWidth:0}
+  ]},options:oBar()});
+
+  mk('ocFiConv',{type:'line',data:{labels:lb,datasets:[
+    {data:cFi,borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
+    {data:cR,borderColor:'#888780',backgroundColor:'transparent',borderWidth:1.5,pointRadius:3,tension:0.3,borderDash:[2,2],clip:false}
+  ]},options:oLineAuto()});
+
+  mk('ocAmbos',{type:'line',data:{labels:lb,datasets:[
+    {data:cR,borderColor:'#1D9E75',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,tension:0.3,clip:false},
+    {data:cVpp,borderColor:'#534AB7',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,clip:false},
+    {data:cFi,borderColor:'#378ADD',backgroundColor:'transparent',borderWidth:2,pointRadius:4,tension:0.3,clip:false}
+  ]},options:oLineAuto()});
+}
+
+rL();
+rO();
 </script>
 </body>
 </html>
