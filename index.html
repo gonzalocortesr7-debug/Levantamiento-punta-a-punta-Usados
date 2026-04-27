@@ -419,7 +419,33 @@
   .alcance-num { width: 22px; height: 22px; background: var(--navy); color: var(--white); font-size: 11px; font-weight: 700; display: grid; place-items: center; border-radius: 50%; flex-shrink: 0; }
   .alcance-name { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.2; }
   .alcance-route { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
-  .alcance-count { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--gray-200); }
+  .alcance-count { font-size: 10px; color: var(--gray-500); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 8px; border-top: 1px solid var(--gray-200); }
+  .alcance-responsables { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px dashed var(--gray-200); margin-top: auto; }
+  .alcance-responsables-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .resp-list { display: flex; flex-direction: column; gap: 5px; }
+  .resp-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 8px 4px 4px; border-radius: 14px;
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    transition: border-color 0.12s, transform 0.12s;
+  }
+  .resp-row:hover { border-color: var(--navy); transform: translateX(2px); }
+  .resp-avatar {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800; color: var(--white);
+    flex-shrink: 0; letter-spacing: 0.02em;
+  }
+  .resp-row.resp-compra .resp-avatar { background: #0F6FC6; }
+  .resp-row.resp-preparación .resp-avatar { background: #EF9F27; }
+  .resp-row.resp-venta .resp-avatar { background: #1D9E75; }
+  .resp-row.resp-cliente .resp-avatar { background: linear-gradient(135deg, #F0D388 0%, #D9A227 100%); color: #5B3F00; }
+  .resp-row.resp-cliente { background: #FFF8EA; border-color: #F0D388; }
+  .resp-info { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; flex: 1 1 auto; }
+  .resp-nombre { font-size: 11px; font-weight: 700; color: var(--navy); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .resp-rol { font-size: 9.5px; color: var(--gray-700); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .resp-row.resp-cliente .resp-nombre { color: #5B3F00; }
+  .resp-row.resp-cliente .resp-rol { color: #8A5A00; }
   .alcance-connector { align-self: center; color: var(--gray-300); font-size: 20px; padding: 0 4px; user-select: none; font-weight: 700; }
   .alcance-note { font-size: 11px; color: var(--gray-500); margin-top: 12px; font-style: italic; }
   .macro-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
@@ -2839,6 +2865,32 @@ function renderResponsables(stageId) {
   return html;
 }
 
+function getInitials(nombre) {
+  var parts = (nombre || '').trim().split(/\s+/);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+}
+
+function renderResponsablesAvatars(stageId, macro) {
+  var list = (RESPONSABLES_POR_ETAPA[stageId] || []).slice();
+  if (REPRESENTANTE_CLIENTES) list.push({ nombre: REPRESENTANTE_CLIENTES.nombre, rol: REPRESENTANTE_CLIENTES.rol, cliente: true });
+  if (!list.length) return '';
+  var rows = '';
+  for (var i = 0; i < list.length; i++) {
+    var p = list[i];
+    var cls = 'resp-row resp-' + (macro || 'compra') + (p.cliente ? ' resp-cliente' : '');
+    rows += '<div class="' + cls + '" title="' + p.nombre + ' · ' + p.rol + '">' +
+      '<span class="resp-avatar">' + getInitials(p.nombre) + '</span>' +
+      '<span class="resp-info">' +
+        '<span class="resp-nombre">' + p.nombre + '</span>' +
+        '<span class="resp-rol">' + p.rol + '</span>' +
+      '</span>' +
+    '</div>';
+  }
+  return '<div class="alcance-responsables"><span class="alcance-responsables-label">Equipo</span><div class="resp-list">' + rows + '</div></div>';
+}
+
 // ============================================================
 // INSIGHTS CX por proceso (etapa) — fuente: Insights Clicar.xlsx
 // Cada entrada va por stage.id y se renderiza en el header del proceso
@@ -4683,9 +4735,10 @@ function renderOverviewSlide(i) {
   var flowHtml = '';
   for (var k = 0; k < activeStagesOv.length; k++) {
     var s = activeStagesOv[k];
-    flowHtml += '<div class="alcance-step" data-goto-stage="' + s.id + '">';
+    flowHtml += '<div class="alcance-step alcance-' + s.macro + '" data-goto-stage="' + s.id + '">';
     flowHtml += '<div class="alcance-step-header"><div class="alcance-num">' + (k + 1) + '</div><div class="alcance-name">' + s.fullName + '</div></div>';
     flowHtml += '<div class="alcance-route">' + s.route + '</div>';
+    flowHtml += renderResponsablesAvatars(s.id, s.macro);
     flowHtml += '<div class="alcance-count">' + s.substeps.length + ' subprocesos</div>';
     flowHtml += '</div>';
     if (k < activeStagesOv.length - 1) flowHtml += '<div class="alcance-connector">&rsaquo;</div>';
