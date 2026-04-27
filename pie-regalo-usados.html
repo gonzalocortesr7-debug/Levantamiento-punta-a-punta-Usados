@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIE DE REGALO · USADOS · Americar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root {
+    --bg: #F5F6F8;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --border-strong: #D1D5DB;
+    --text: #0F172A;
+    --text-soft: #475569;
+    --text-mute: #94A3B8;
+    --navy: #1F3864;
+    --navy-light: #3A5A8C;
+    --gold: #C9974A;
+    --gold-soft: #F4E4C2;
+    --green: #16A34A;
+    --green-soft: #DCFCE7;
+    --red: #DC2626;
+    --red-soft: #FEE2E2;
+    --amber: #D97706;
+    --amber-soft: #FEF3C7;
+    --hover: #F8FAFC;
+    --accent: #A8324A;
+    --accent-soft: #FCE7EC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-feature-settings: 'tnum'; }
+
+  .topbar { background: var(--card); border-bottom: 1px solid var(--border); padding: 16px 32px; position: sticky; top: 0; z-index: 50; }
+  .topbar-inner { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-logo { height: 32px; width: auto; display: block; }
+  .brand-text { display: flex; flex-direction: column; }
+  .brand-text strong { font-size: 14px; font-weight: 600; color: var(--text); }
+  .brand-text span { font-size: 11px; color: var(--text-soft); }
+  .topbar-meta { font-size: 12px; color: var(--text-soft); font-family: 'IBM Plex Mono', monospace; display: flex; gap: 24px; }
+  .topbar-meta span strong { color: var(--text); font-weight: 600; }
+
+  .hero { background: var(--card); border-bottom: 1px solid var(--border); padding: 32px; }
+  .hero-inner { max-width: 1440px; margin: 0 auto; }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+  .hero-eyebrow { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-weight: 600; }
+  .hero-title { font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: -0.02em; }
+  .hero-title .seg { color: var(--accent); font-weight: 700; }
+  .hero-subtitle { font-size: 14px; color: var(--text-soft); }
+  .hero-summary { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 8px; padding: 16px 20px; max-width: 480px; font-size: 13px; line-height: 1.55; color: var(--text); }
+  .hero-summary strong { color: var(--accent); font-weight: 700; }
+  .hero-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin: 32px -32px -32px; padding: 0 32px; overflow-x: auto; }
+  .hero-tab { background: transparent; border: none; padding: 12px 18px; font-size: 13px; font-weight: 500; color: var(--text-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; font-family: inherit; white-space: nowrap; }
+  .hero-tab:hover { color: var(--text); }
+  .hero-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  main { max-width: 1440px; margin: 0 auto; padding: 32px; }
+
+  .filters { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .filter-group { display: flex; align-items: center; gap: 8px; }
+  .filter-label { font-size: 11px; color: var(--text-soft); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-right: 4px; }
+  .chip { background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--text-soft); cursor: pointer; transition: all 0.15s; font-family: inherit; }
+  .chip:hover { background: var(--hover); border-color: var(--border-strong); color: var(--text); }
+  .chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .chip-link { background: transparent; border: none; color: var(--accent); font-size: 12px; cursor: pointer; padding: 6px 12px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; font-family: inherit; }
+  .filter-summary { margin-left: auto; font-size: 12px; color: var(--text-soft); }
+  .filter-summary strong { color: var(--text); font-weight: 600; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: all 0.15s; }
+  .kpi:hover { border-color: var(--border-strong); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .kpi-label { font-size: 11px; color: var(--text-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .kpi-value { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; line-height: 1.1; font-family: 'IBM Plex Mono', monospace; font-feature-settings: 'tnum'; }
+  .kpi-sub { font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+  .kpi-delta { font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; }
+  .delta-up { background: var(--green-soft); color: var(--green); }
+  .delta-down { background: var(--red-soft); color: var(--red); }
+
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 24px; overflow: hidden; }
+  .card-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  .card-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; letter-spacing: -0.01em; }
+  .card-subtitle { font-size: 12px; color: var(--text-soft); }
+  .card-body { padding: 24px; }
+  .subtabs { display: flex; gap: 2px; background: var(--bg); padding: 3px; border-radius: 6px; }
+  .subtab { background: transparent; border: none; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--text-soft); cursor: pointer; border-radius: 4px; font-family: inherit; transition: all 0.15s; }
+  .subtab:hover { color: var(--text); }
+  .subtab.active { background: var(--card); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  .card-footer { padding: 12px 24px; border-top: 1px solid var(--border); background: var(--bg); font-size: 12px; color: var(--text-soft); line-height: 1.5; }
+  .card-footer strong { color: var(--text); font-weight: 600; }
+
+  .insight { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 4px; padding: 12px 16px; margin-top: 16px; font-size: 13px; color: var(--text); line-height: 1.5; }
+  .insight strong { color: var(--accent); font-weight: 600; }
+
+  .chart-wrap { position: relative; height: 320px; }
+  .chart-wrap.tall { height: 400px; }
+  .chart-wrap.short { height: 240px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { text-align: left; font-size: 11px; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 12px; border-bottom: 1px solid var(--border); background: var(--bg); }
+  thead th.right { text-align: right; }
+  tbody td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tbody tr { transition: background 0.15s; }
+  tbody tr:hover { background: var(--hover); }
+  tbody tr:last-child td { border-bottom: none; }
+  td.right { text-align: right; }
+  td.mono { font-family: 'IBM Plex Mono', monospace; font-feature-settings: 'tnum'; font-weight: 500; }
+  td.rank { width: 32px; color: var(--text-mute); font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+  td.rank-1 { color: var(--accent); font-weight: 700; }
+  td.rank-2 { color: var(--accent); opacity: 0.85; font-weight: 700; }
+  td.rank-3 { color: var(--accent); opacity: 0.7; font-weight: 700; }
+  .bar-cell { width: 220px; }
+  .bar-track { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; border: 1px solid var(--border); }
+  .bar-fill { height: 100%; background: linear-gradient(to right, var(--accent), var(--accent)); opacity: 0.85; border-radius: 3px; transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1); }
+  .bar-cell-inner { display: flex; flex-direction: column; gap: 4px; }
+  .bar-cell-meta { font-size: 10px; color: var(--text-mute); font-family: 'IBM Plex Mono', monospace; }
+
+  tbody tr.row-problem { background: rgba(220, 38, 38, 0.04); }
+  tbody tr.row-problem:hover { background: rgba(220, 38, 38, 0.08); }
+  tbody tr.row-problem td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+  tbody tr.row-problem td.mono.right.metric-active { color: var(--red); font-weight: 700; }
+  tbody tr.row-problem td strong { color: var(--red); }
+  tbody tr.row-problem .bar-fill { background: var(--red); }
+  tbody tr.row-problem td.rank { color: var(--red) !important; }
+  thead th.metric-warning::after { content: ' ⚠'; color: var(--red); font-size: 10px; }
+  thead th.metric-sorting { background: var(--accent-soft); color: var(--accent); }
+
+  .warning-banner { background: rgba(220, 38, 38, 0.06); border-left: 3px solid var(--red); color: var(--text); padding: 10px 16px; font-size: 12px; border-radius: 0; display: none; margin-top: 0; }
+  .warning-banner.active { display: block; }
+  .warning-banner strong { color: var(--red); font-weight: 700; }
+  .warning-banner-dot { display: inline-block; width: 8px; height: 8px; background: var(--red); border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+  .table-controls { padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .search-input { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; color: var(--text); font-family: inherit; min-width: 200px; }
+  .search-input:focus { outline: none; border-color: var(--accent); }
+  .row-count { margin-left: auto; font-size: 11px; color: var(--text-soft); font-family: 'IBM Plex Mono', monospace; }
+
+  .heatmap { margin: 16px 0; }
+  .heatmap-header { display: grid; grid-template-columns: 100px repeat(31, 1fr); gap: 3px; margin-bottom: 4px; }
+  .heatmap-header > div { font-size: 9px; color: var(--text-mute); text-align: center; font-family: 'IBM Plex Mono', monospace; padding-top: 4px; }
+  .heatmap-row { display: grid; grid-template-columns: 100px repeat(31, 1fr); gap: 3px; margin-bottom: 3px; }
+  .heatmap-row-label { font-size: 12px; color: var(--text); font-weight: 500; display: flex; align-items: center; padding-right: 12px; }
+  .heat-cell { aspect-ratio: 1; background: var(--bg); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 500; color: var(--text-mute); cursor: pointer; transition: all 0.15s; position: relative; }
+  .heat-cell:hover { transform: scale(1.4); z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .heat-cell[data-i="0"] { background: var(--bg); }
+  .heat-cell[data-i="1"] { background: #F4E4C2; color: #8A6A2C; }
+  .heat-cell[data-i="2"] { background: #E5C683; color: #6B4F1A; }
+  .heat-cell[data-i="3"] { background: #D9AC5C; color: white; }
+  .heat-cell[data-i="4"] { background: var(--gold); color: white; }
+  .heat-cell[data-i="5"] { background: #A87A30; color: white; }
+  .heat-cell .tooltip { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: var(--text); color: white; padding: 6px 10px; border-radius: 4px; font-size: 11px; font-weight: 400; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s; z-index: 20; font-family: 'IBM Plex Mono', monospace; }
+  .heat-cell:hover .tooltip { opacity: 1; }
+  .heatmap-legend { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 11px; color: var(--text-soft); }
+  .legend-cells { display: flex; gap: 3px; }
+  .legend-cells .heat-cell { width: 14px; height: 14px; cursor: default; }
+  .legend-cells .heat-cell:hover { transform: none; box-shadow: none; }
+
+  .tercio-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .tercio { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
+  .tercio.featured { background: var(--accent-soft); border-color: var(--accent); }
+  .tercio-lbl { font-size: 11px; color: var(--text-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .tercio.featured .tercio-lbl { color: var(--accent); }
+  .tercio-val { font-size: 28px; font-weight: 700; color: var(--text); font-family: 'IBM Plex Mono', monospace; line-height: 1; }
+  .tercio.featured .tercio-val { color: var(--accent); }
+  .tercio-sub { font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+  .tercio-bar { height: 4px; background: var(--card); border-radius: 2px; margin-top: 12px; overflow: hidden; }
+  .tercio-bar-fill { height: 100%; background: var(--navy); border-radius: 2px; transition: width 0.8s ease; }
+  .tercio.featured .tercio-bar-fill { background: var(--accent); }
+
+  .conclusions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .conc { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; display: flex; gap: 16px; }
+  .conc-num { flex-shrink: 0; width: 36px; height: 36px; background: var(--accent); color: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; font-family: 'IBM Plex Mono', monospace; }
+  .conc-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .conc-content p { font-size: 13px; color: var(--text-soft); line-height: 1.55; }
+  .conc-content p strong { color: var(--text); font-weight: 600; }
+
+  .hidden { display: none !important; }
+
+  footer { border-top: 1px solid var(--border); background: var(--card); padding: 24px 32px; margin-top: 48px; font-size: 12px; color: var(--text-soft); text-align: center; }
+  footer strong { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 1100px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .topbar-meta { display: none; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .conclusions { grid-template-columns: 1fr; }
+    main { padding: 16px; }
+    .heatmap-row, .heatmap-header { grid-template-columns: 80px repeat(31, 1fr); }
+    .bar-cell { display: none; }
+    .tercio-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-text">
+        <strong>Productos Digitales · TIO</strong>
+        <span>Dashboard Pie de Regalo</span>
+      </div>
+    </div>
+    <div class="topbar-meta">
+      <span><strong>Q1 2026</strong> · Ene–Mar</span>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <div class="hero-eyebrow">USADOS · ANÁLISIS COMERCIAL</div>
+        <h1 class="hero-title">PIE DE REGALO · <span class="seg">USADOS</span></h1>
+        <div class="hero-subtitle">4.857 oportunidades · 193 con Regalo PIE · $202 MM entregados · Q1 2026 (Enero – Marzo)</div>
+      </div>
+      <div class="hero-summary">En el primer trimestre de 2026, de los <strong>4.857</strong> USADOS facturados, solo <strong>193</strong> (3,97%) usaron Regalo PIE — totalizando <strong>$202 MM</strong>. Penetración 4,8x menor que NUEVOS pero con peso 3,4x mayor cuando se aplica.</div>
+    </div>
+    <div class="hero-tabs">
+      <button class="hero-tab active" data-view="general">Visión general</button>
+      <button class="hero-tab" data-view="sucursal">Ranking por Sucursal</button>
+      <button class="hero-tab" data-view="responsable">Ranking por Responsable</button>
+      <button class="hero-tab" data-view="temporal">Concentración temporal</button>
+      <button class="hero-tab" data-view="conclusiones">Conclusiones</button>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <div class="filters">
+    <div class="filter-group">
+      <span class="filter-label">Mes</span>
+      <button class="chip active" data-month="all">Todos</button>
+      <button class="chip" data-month="0">Enero</button>
+      <button class="chip" data-month="1">Febrero</button>
+      <button class="chip" data-month="2">Marzo</button>
+    </div>
+    <button class="chip-link" id="resetFilters">Limpiar</button>
+    <div class="filter-summary">
+      Mostrando <strong id="summaryCount">4.857</strong> oportunidades ·
+      <strong id="summaryPie">193</strong> con Regalo PIE ·
+      Penetración <strong id="summaryPen">3,97%</strong>
+    </div>
+  </div>
+
+  <div class="view" data-view="general">
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Oportunidades</div><div class="kpi-value" id="k-opps">4.857</div><div class="kpi-sub">facturadas en el período</div></div>
+      <div class="kpi"><div class="kpi-label">Con Regalo PIE</div><div class="kpi-value" id="k-opps-pie">193</div><div class="kpi-sub" id="k-pen-sub">3,97% del total</div></div>
+      <div class="kpi"><div class="kpi-label">Monto PIE total</div><div class="kpi-value" id="k-monto-pie">$202 MM</div><div class="kpi-sub">bonificación entregada</div></div>
+      <div class="kpi"><div class="kpi-label">Monto facturado</div><div class="kpi-value" id="k-monto-fact">$63,34 B</div><div class="kpi-sub">facturación total</div></div>
+      <div class="kpi"><div class="kpi-label">PIE promedio</div><div class="kpi-value" id="k-pie-avg">$1 MM</div><div class="kpi-sub">por opp. con PIE</div></div>
+      <div class="kpi"><div class="kpi-label">Factura promedio</div><div class="kpi-value" id="k-fact-avg">$11 MM</div><div class="kpi-sub">en opp. con PIE</div></div>
+      <div class="kpi"><div class="kpi-label">% PIE / Factura (con PIE)</div><div class="kpi-value" id="k-pct-cp">9,19%</div><div class="kpi-sub">peso del PIE en opp. con PIE</div></div>
+      <div class="kpi"><div class="kpi-label">% PIE / Facturación total</div><div class="kpi-value" id="k-pct-tot">0,32%</div><div class="kpi-sub">sobre facturación del segmento</div></div>
+      <div class="kpi"><div class="kpi-label">Mejor mes (penetración)</div><div class="kpi-value" id="k-best">Marzo</div><div class="kpi-sub" id="k-best-sub">5,87% · 83 ops</div></div>
+      <div class="kpi"><div class="kpi-label">Concentración cierre</div><div class="kpi-value" id="k-cierre">36%</div><div class="kpi-delta delta-down">últimos 10 días del mes</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Volumen y conversión mensual</div>
+          <div class="card-subtitle">Evolutivo de oportunidades, transacciones con PIE y monto bonificado.</div>
+        </div>
+        <div class="subtabs" id="evolTabs">
+          <button class="subtab active" data-chart="volPen">Volumen y penetración</button>
+          <button class="subtab" data-chart="monto">Monto Regalo PIE</button>
+          <button class="subtab" data-chart="ratio">% PIE / Factura</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrap"><canvas id="chartEvol"></canvas></div>
+        <div class="insight"><strong>Crecimiento del segmento:</strong> la penetración pasa de <strong>3,27%</strong> en enero a <strong>5,87%</strong> en marzo (+2.6 pp). El monto entregado en marzo (<strong>$66 MM</strong>) es un -18% sobre enero.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Distribución del % PIE / Factura por oportunidad</div>
+          <div class="card-subtitle">¿Qué peso tiene el PIE en relación al monto factura del vehículo? — solo opp. con PIE.</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="chart-wrap short"><canvas id="chartRatioDist"></canvas></div>
+        <div class="insight">El rango más frecuente es <strong>&gt;10%</strong> con <strong>105</strong> oportunidades (54,4% de las opp. con PIE). El % PIE/Factura promedio (en opp. con PIE) es <strong>9,19%</strong>.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="view hidden" data-view="sucursal">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Ranking por sucursal</div>
+          <div class="card-subtitle">44 sucursales con muestra ≥ 10 oportunidades. <strong>En rojo</strong> aparecen las sucursales sobre la mediana del orden activo.</div>
+        </div>
+        <div class="subtabs" id="sucSortTabs">
+          <button class="subtab active" data-sort="montoPie">Por monto PIE</button>
+          <button class="subtab" data-sort="pctPenetracion">Por % penetración</button>
+          <button class="subtab" data-sort="pctPieFactura">Por % PIE / Factura</button>
+        </div>
+      </div>
+      <div class="table-controls">
+        <input type="text" class="search-input" id="sucSearch" placeholder="Buscar sucursal…">
+        <span class="row-count" id="sucRowCount"></span>
+      </div>
+      <div class="warning-banner" id="sucWarning">
+        <span class="warning-banner-dot"></span><strong>Las sucursales en rojo</strong> <span class="warning-banner-text"></span>
+      </div>
+      <div class="card-body" style="padding: 0; max-height: 700px; overflow-y: auto;">
+        <table>
+          <thead style="position: sticky; top: 0;">
+            <tr>
+              <th></th>
+              <th>Sucursal</th>
+              <th class="bar-cell">Distribución</th>
+              <th class="right">Monto PIE</th>
+              <th class="right">Opp. con PIE</th>
+              <th class="right" id="sucThPen">% Penetración</th>
+              <th class="right" id="sucThPie">% PIE / Factura</th>
+              <th class="right">PIE prom.</th>
+            </tr>
+          </thead>
+          <tbody id="sucTbody"></tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <strong>Mínimo de muestra:</strong> ≥ <span id="suc-threshold"></span> oportunidades. Al ordenar por <strong>% Penetración</strong> o <strong>% PIE / Factura</strong>, las sucursales más problemáticas (≥ 2x el promedio del segmento) se marcan en rojo.
+      </div>
+    </div>
+  </div>
+
+  <div class="view hidden" data-view="responsable">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Ranking por responsable</div>
+          <div class="card-subtitle">Responsables con uso efectivo de Regalo PIE. <strong>En rojo</strong> aparecen los responsables sobre la mediana del orden activo.</div>
+        </div>
+        <div class="subtabs" id="respSortTabs">
+          <button class="subtab active" data-sort="montoPie">Por monto PIE</button>
+          <button class="subtab" data-sort="pctPenetracion">Por % penetración</button>
+          <button class="subtab" data-sort="pctPieFactura">Por % PIE / Factura</button>
+        </div>
+      </div>
+      <div class="table-controls">
+        <input type="text" class="search-input" id="respSearch" placeholder="Buscar responsable…">
+        <span class="row-count" id="respRowCount"></span>
+      </div>
+      <div class="warning-banner" id="respWarning">
+        <span class="warning-banner-dot"></span><strong>Los responsables en rojo</strong> <span class="warning-banner-text"></span>
+      </div>
+      <div class="card-body" style="padding: 0; max-height: 700px; overflow-y: auto;">
+        <table>
+          <thead style="position: sticky; top: 0;">
+            <tr>
+              <th></th>
+              <th>Responsable</th>
+              <th class="bar-cell">Distribución</th>
+              <th class="right">Monto PIE</th>
+              <th class="right">Opp. con PIE</th>
+              <th class="right" id="respThPen">% Penetración</th>
+              <th class="right" id="respThPie">% PIE / Factura</th>
+              <th class="right">PIE prom.</th>
+            </tr>
+          </thead>
+          <tbody id="respTbody"></tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <strong>Mínimo de muestra:</strong> ≥ <span id="resp-threshold"></span> oportunidades. Use el buscador para filtrar por nombre. Al ordenar por <strong>% Penetración</strong> o <strong>% PIE / Factura</strong>, las filas más problemáticas (≥ 2x el promedio del segmento) se marcan en rojo.
+      </div>
+    </div>
+  </div>
+
+  <div class="view hidden" data-view="temporal">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Concentración temporal · ¿cuándo se crean los Regalos PIE?</div>
+          <div class="card-subtitle">Día del mes (creación) × mes de facturación. Color más oscuro = mayor concentración.</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="heatmap" id="heatmap"></div>
+        <div class="heatmap-legend">
+          <span>Menos transacciones</span>
+          <div class="legend-cells">
+            <div class="heat-cell" data-i="0"></div>
+            <div class="heat-cell" data-i="1"></div>
+            <div class="heat-cell" data-i="2"></div>
+            <div class="heat-cell" data-i="3"></div>
+            <div class="heat-cell" data-i="4"></div>
+            <div class="heat-cell" data-i="5"></div>
+          </div>
+          <span>Más transacciones</span>
+        </div>
+        <div class="tercio-grid" id="tercioGrid"></div>
+        <div class="insight"><strong>Distribución relativamente uniforme:</strong> 18,5% en inicio (1-10), 45,6% en medio (11-20) y 35,9% en cierre (21-31). A diferencia de NUEVOS, en este segmento el PIE no presenta concentración de cierre de mes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view hidden" data-view="conclusiones">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Conclusiones del segmento USADOS</div>
+          <div class="card-subtitle">Hallazgos más relevantes del análisis Q1 2026.</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="conclusions">
+          <div class="conc"><div class="conc-num">01</div><div class="conc-content"><h4>Penetración marginal del 3,97% — el PIE no es la herramienta principal</h4><p>Solo <strong>193</strong> de las 4.857 oportunidades USADOS usan Regalo PIE. La penetración es <strong>4,8x menor</strong> que en NUEVOS (3,97% vs 19,24%). El segmento prioriza otras herramientas comerciales (descuento directo, ajuste de tasación, financiamiento).</p></div></div>
+          <div class="conc"><div class="conc-num">02</div><div class="conc-content"><h4>Cuando se aplica, el PIE pesa 9,19% del valor del vehículo</h4><p>Aunque la penetración es baja, las operaciones que <em>sí</em> usan PIE en USADOS lo hacen con <strong>9,19%</strong> del monto factura — <strong>3,4x mayor</strong> que en NUEVOS (2,72%). Indica uso reservado para casos puntuales de mayor impacto comercial.</p></div></div>
+          <div class="conc"><div class="conc-num">03</div><div class="conc-content"><h4>PIE promedio de $1 MM — 1,8x el de NUEVOS</h4><p>El ticket promedio de PIE en USADOS es <strong>$1 MM</strong>, frente a $572 K en NUEVOS. Combinado con factura promedio menor (<strong>$11 MM</strong>), el impacto relativo por operación es muy alto.</p></div></div>
+          <div class="conc"><div class="conc-num">04</div><div class="conc-content"><h4>Usados Movicenter A. Vespucio 1155 concentra 47,6% del monto USADOS</h4><p><strong>Usados Movicenter A. Vespucio 1155</strong> aporta $96 MM en Regalo PIE — la sucursal con mayor monto del segmento. Las 3 sucursales top concentran <strong>$141 MM</strong> (69,7% del PIE USADOS).</p></div></div>
+          <div class="conc"><div class="conc-num">05</div><div class="conc-content"><h4>Mayor penetración: Usados Movicenter A. Vespucio 1155 con 13,3%</h4><p><strong>Usados Movicenter A. Vespucio 1155</strong> aplica PIE en 71 de sus 534 operaciones — <strong>3.3x</strong> el benchmark del segmento (3,97%). En USADOS esta tasa ya es notablemente alta y merece auditoría dedicada.</p></div></div>
+          <div class="conc"><div class="conc-num">06</div><div class="conc-content"><h4>Sin concentración de cierre de mes — patrón distinto a NUEVOS</h4><p>A diferencia de NUEVOS, en USADOS el Regalo PIE NO se concentra al cierre. La distribución temporal es: <strong>18,5%</strong> en inicio (días 1-10), <strong>45,6%</strong> en medio (11-20) y <strong>35,9%</strong> en cierre (21-31). El uso es relativamente uniforme con leve peak en mediados de mes — sugiere que en USADOS no se usa como herramienta de cumplimiento de meta.</p></div></div>
+          <div class="conc"><div class="conc-num">07</div><div class="conc-content"><h4>5 responsables con uso intensivo (&gt;30% penetración)</h4><p>En USADOS, la barra del 30% ya es relevante (vs benchmark de 3,97% del segmento). El líder es <strong>Leandro Antonio Alfonzo Marin</strong> con 55,0% (11 de 20 ops). Auditar si responde a estrategia comercial autorizada o sesgo individual.</p></div></div>
+          <div class="conc"><div class="conc-num">08</div><div class="conc-content"><h4>Recomendación: política diferenciada por segmento</h4><p>Dado que NUEVOS y USADOS muestran patrones tan distintos (penetración 4,8x, peso por operación 3,4x, sin concentración de cierre), conviene definir reglas y topes específicos para cada segmento. En USADOS conviene un análisis caso a caso dado el alto ticket promedio (<strong>$1 MM</strong>).</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>Dashboard Pie de Regalo · USADOS</strong> · Q1 2026 (Enero – Marzo) · Productos Digitales e Innovación, TIO Americar · Confidencial — uso interno
+</footer>
+
+<!-- Data is loaded from external file pie-regalo-usados-data.js for cleaner versioning -->
+<script src="./pie-regalo-usados-data.js"></script>
+<script>
+const SEG = 'usados';
+const ACCENT = '#A8324A';
+const ACCENT_LIGHT = 'rgba(168, 50, 74, 0.15)';
+
+const fmtMoney = (n) => {
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(2).replace('.', ',') + ' B';
+  if (n >= 1e6) return '$' + Math.round(n/1e6).toLocaleString('es-CL') + ' MM';
+  if (n >= 1e3) return '$' + Math.round(n/1e3).toLocaleString('es-CL') + ' K';
+  return '$' + n.toLocaleString('es-CL');
+};
+const fmtMoneyFull = (n) => '$' + n.toLocaleString('es-CL');
+const fmtNum = (n) => n.toLocaleString('es-CL');
+
+Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#475569';
+Chart.defaults.borderColor = '#E5E7EB';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.boxWidth = 8;
+Chart.defaults.plugins.legend.labels.boxHeight = 8;
+Chart.register(ChartDataLabels);
+Chart.defaults.set('plugins.datalabels', { display: false });
+
+const COLORS = {
+  navy: '#1F3864', navyLight: '#3A5A8C', gold: '#C9974A', goldLight: '#E5C683',
+  red: '#DC2626', green: '#16A34A', grey: '#94A3B8', greyLight: '#CBD5E1',
+  accent: ACCENT, accentLight: ACCENT_LIGHT
+};
+
+let activeMonth = 'all';
+
+document.querySelectorAll('.hero-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.view;
+    document.querySelectorAll('.hero-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.querySelector(`.view[data-view="${target}"]`).classList.remove('hidden');
+    setTimeout(() => {
+      Object.values(window.charts || {}).forEach(c => c && c.resize && c.resize());
+    }, 100);
+  });
+});
+
+function applyFilters() {
+  if (activeMonth === 'all') {
+    const g = DATA.globals;
+    document.getElementById('summaryCount').textContent = fmtNum(g.totalOpps);
+    document.getElementById('summaryPie').textContent = fmtNum(g.oppsConPie);
+    document.getElementById('summaryPen').textContent = g.pctPenetracion.toFixed(2).replace('.', ',') + '%';
+    document.getElementById('k-opps').textContent = fmtNum(g.totalOpps);
+    document.getElementById('k-opps-pie').textContent = fmtNum(g.oppsConPie);
+    document.getElementById('k-pen-sub').textContent = g.pctPenetracion.toFixed(2).replace('.', ',') + '% del total';
+    document.getElementById('k-monto-pie').textContent = fmtMoney(g.montoPie);
+    document.getElementById('k-monto-fact').textContent = fmtMoney(g.montoFactura);
+    document.getElementById('k-pie-avg').textContent = fmtMoney(g.pieAvg);
+    document.getElementById('k-fact-avg').textContent = fmtMoney(g.facturaAvgConPie);
+    document.getElementById('k-pct-cp').textContent = g.pctPieFacturaConPie.toFixed(2).replace('.', ',') + '%';
+    document.getElementById('k-pct-tot').textContent = g.pctPieFactura.toFixed(2).replace('.', ',') + '%';
+  } else {
+    const m = DATA.mensual[parseInt(activeMonth)];
+    document.getElementById('summaryCount').textContent = fmtNum(m.totalOpps);
+    document.getElementById('summaryPie').textContent = fmtNum(m.oppsConPie);
+    document.getElementById('summaryPen').textContent = m.pctPenetracion.toFixed(2).replace('.', ',') + '%';
+    document.getElementById('k-opps').textContent = fmtNum(m.totalOpps);
+    document.getElementById('k-opps-pie').textContent = fmtNum(m.oppsConPie);
+    document.getElementById('k-pen-sub').textContent = m.pctPenetracion.toFixed(2).replace('.', ',') + '% en ' + m.mes;
+    document.getElementById('k-monto-pie').textContent = fmtMoney(m.montoPie);
+    document.getElementById('k-monto-fact').textContent = fmtMoney(m.montoFactura);
+    document.getElementById('k-pie-avg').textContent = fmtMoney(m.pieAvg);
+    document.getElementById('k-fact-avg').textContent = fmtMoney(m.facturaAvgConPie);
+    document.getElementById('k-pct-cp').textContent = m.pctPieFacturaConPie.toFixed(2).replace('.', ',') + '%';
+    document.getElementById('k-pct-tot').textContent = m.pctPieFactura.toFixed(2).replace('.', ',') + '%';
+  }
+  rerenderSuc();
+  rerenderResp();
+  renderRatioDist();
+  renderHeatmap();
+  renderTercio();
+}
+
+document.querySelectorAll('.chip[data-month]').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.chip[data-month]').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeMonth = c.dataset.month;
+    applyFilters();
+  });
+});
+document.getElementById('resetFilters').addEventListener('click', () => {
+  document.querySelectorAll('.chip[data-month]').forEach(x => x.classList.remove('active'));
+  document.querySelector('.chip[data-month="all"]').classList.add('active');
+  activeMonth = 'all';
+  applyFilters();
+});
+
+window.charts = {};
+const monthNames = DATA.mensual.map(m => m.mes);
+
+function renderEvol(view = 'volPen') {
+  if (window.charts.evol) window.charts.evol.destroy();
+  const ctx = document.getElementById('chartEvol').getContext('2d');
+  let cfg;
+  if (view === 'volPen') {
+    cfg = {
+      type: 'bar',
+      data: {
+        labels: monthNames,
+        datasets: [
+          { type: 'bar', label: 'Opp. totales', data: DATA.mensual.map(m => m.totalOpps),
+            backgroundColor: COLORS.greyLight, borderRadius: 4, yAxisID: 'y',
+            datalabels: { display: true, anchor: 'end', align: 'end', offset: 2, color: '#475569', font: { size: 10, weight: 600 }, formatter: (v) => fmtNum(v) } },
+          { type: 'bar', label: 'Con Regalo PIE', data: DATA.mensual.map(m => m.oppsConPie),
+            backgroundColor: COLORS.accent, borderRadius: 4, yAxisID: 'y',
+            datalabels: { display: true, anchor: 'end', align: 'end', offset: 2, color: COLORS.accent, font: { size: 10, weight: 700 }, formatter: (v) => fmtNum(v) } },
+          { type: 'line', label: '% Penetración', data: DATA.mensual.map(m => m.pctPenetracion),
+            borderColor: COLORS.navy, backgroundColor: COLORS.navy, borderWidth: 2, tension: 0.3,
+            yAxisID: 'y1', pointRadius: 5, pointBackgroundColor: COLORS.navy,
+            datalabels: { display: true, anchor: 'end', align: 'top', offset: 6, color: 'white', backgroundColor: COLORS.navy, borderRadius: 3, padding: { top: 2, bottom: 2, left: 5, right: 5 }, font: { size: 10, weight: 700 }, formatter: (v) => v.toFixed(1).replace('.', ',') + '%' } }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 24 } },
+        scales: {
+          y: { position: 'left', title: { display: true, text: 'Oportunidades' }, beginAtZero: true },
+          y1: { position: 'right', title: { display: true, text: '% Penetración' }, beginAtZero: true, grid: { display: false }, ticks: { callback: v => v + '%' } }
+        },
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: { callbacks: { label: (ctx) => {
+            if (ctx.dataset.yAxisID === 'y1') return `${ctx.dataset.label}: ${ctx.raw.toFixed(2).replace('.', ',')}%`;
+            return `${ctx.dataset.label}: ${fmtNum(ctx.raw)}`;
+          } } }
+        }
+      }
+    };
+  } else if (view === 'monto') {
+    cfg = {
+      type: 'bar',
+      data: { labels: monthNames, datasets: [{ label: 'Monto Regalo PIE', data: DATA.mensual.map(m => m.montoPie), backgroundColor: COLORS.accent, borderRadius: 4 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 28 } },
+        scales: { y: { beginAtZero: true, ticks: { callback: v => fmtMoney(v) } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmtMoneyFull(ctx.raw)}` } },
+          datalabels: { display: true, anchor: 'end', align: 'end', offset: 4, color: COLORS.accent, font: { size: 11, weight: 700 }, formatter: (v) => fmtMoney(v) }
+        }
+      }
+    };
+  } else if (view === 'ratio') {
+    cfg = {
+      type: 'line',
+      data: { labels: monthNames, datasets: [{ label: '% PIE / Factura del segmento', data: DATA.mensual.map(m => m.pctPieFactura), borderColor: COLORS.accent, backgroundColor: COLORS.accentLight, borderWidth: 2, tension: 0.3, fill: true, pointRadius: 5, pointBackgroundColor: COLORS.accent }] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 28 } },
+        scales: { y: { beginAtZero: true, ticks: { callback: v => v.toFixed(2).replace('.', ',') + '%' } } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(3).replace('.', ',')}%` } },
+          datalabels: { display: true, anchor: 'end', align: 'top', offset: 8, color: 'white', backgroundColor: COLORS.accent, borderRadius: 3, padding: { top: 2, bottom: 2, left: 5, right: 5 }, font: { size: 10, weight: 700 }, formatter: (v) => v.toFixed(2).replace('.', ',') + '%' }
+        }
+      }
+    };
+  }
+  window.charts.evol = new Chart(ctx, cfg);
+}
+renderEvol();
+document.querySelectorAll('#evolTabs .subtab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('#evolTabs .subtab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    renderEvol(t.dataset.chart);
+  });
+});
+
+function renderRatioDist() {
+  const ctx = document.getElementById('chartRatioDist').getContext('2d');
+  if (window.charts.ratio) window.charts.ratio.destroy();
+  const monthIdx = activeMonth === 'all' ? null : parseInt(activeMonth);
+  const key = monthIdx === null ? 'all' : `m${monthIdx}`;
+  const buckets = DATA.ratioBucketsMonthly?.[key] || [];
+  const total = buckets.reduce((s, b) => s + b.count, 0);
+  window.charts.ratio = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: buckets.map(b => b.bucket),
+      datasets: [{ label: 'Cantidad de oportunidades', data: buckets.map(b => b.count),
+        backgroundColor: buckets.map((b, i) => i <= 1 ? COLORS.greyLight : i === 2 ? COLORS.accentLight : COLORS.accent),
+        borderRadius: 4 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 28 } },
+      scales: { y: { beginAtZero: true, title: { display: true, text: 'N° oportunidades' } },
+                x: { title: { display: true, text: '% PIE / Monto factura' } } },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: (ctx) => {
+          const pct = total ? (ctx.raw / total * 100).toFixed(1).replace('.', ',') : 0;
+          return `${ctx.label}: ${fmtNum(ctx.raw)} oportunidades (${pct}%)`;
+        } } },
+        datalabels: { display: (ctx) => ctx.dataset.data[ctx.dataIndex] > 0,
+          anchor: 'end', align: 'end', offset: 4, color: '#0F172A', font: { size: 11, weight: 700 },
+          formatter: (v) => {
+            const pct = total ? (v / total * 100).toFixed(1).replace('.', ',') : 0;
+            return `${fmtNum(v)}\n${pct}%`;
+          },
+          textAlign: 'center', lineHeight: 1.2 }
+      }
+    }
+  });
+}
+renderRatioDist();
+
+function projectEntity(entity, monthIdx) {
+  const data = monthIdx === null ? entity.total : entity.months[monthIdx];
+  return {
+    name: entity.name,
+    oppsTotal: data.oppsTotal,
+    oppsConPie: data.oppsConPie,
+    montoPie: data.montoPie,
+    montoFactura: data.montoFactura,
+    montoFacturaConPie: data.montoFacturaConPie,
+    pctPenetracion: data.oppsTotal > 0 ? data.oppsConPie / data.oppsTotal * 100 : 0,
+    pctPieFactura: data.montoFacturaConPie > 0 ? data.montoPie / data.montoFacturaConPie * 100 : 0,
+    pieAvg: data.oppsConPie > 0 ? Math.round(data.montoPie / data.oppsConPie) : 0,
+    _totalOpps: entity.total.oppsTotal,
+  };
+}
+
+function getBenchmark(metric) {
+  const monthIdx = activeMonth === 'all' ? null : parseInt(activeMonth);
+  const ref = monthIdx === null ? DATA.globals : DATA.mensual[monthIdx];
+  if (metric === 'pctPenetracion') return ref.pctPenetracion;
+  if (metric === 'pctPieFactura') return ref.pctPieFacturaConPie;
+  if (metric === 'montoPie') return ref.montoPie;
+  return null;
+}
+
+function computeMedian(values) {
+  if (!values.length) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
+}
+
+const PROBLEM_METRICS = ['montoPie', 'pctPenetracion', 'pctPieFactura'];
+
+function formatMetricValue(metric, value) {
+  if (metric === 'montoPie') return fmtMoney(value);
+  return value.toFixed(2).replace('.', ',') + '%';
+}
+
+function metricLabel(metric) {
+  if (metric === 'montoPie') return 'Monto PIE';
+  if (metric === 'pctPenetracion') return '% Penetración';
+  if (metric === 'pctPieFactura') return '% PIE / Factura';
+  return metric;
+}
+
+function renderRankingTable(tbodyId, entities, sortBy = 'montoPie', searchTerm = '', warningBannerId = null, headerIds = {}) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return 0;
+  const monthIdx = activeMonth === 'all' ? null : parseInt(activeMonth);
+  let projected = entities.map(e => projectEntity(e, monthIdx));
+  if (monthIdx !== null) projected = projected.filter(d => d.oppsTotal > 0);
+  if (sortBy === 'pctPieFactura') projected = projected.filter(d => d.oppsConPie > 0);
+  if (searchTerm) {
+    const q = searchTerm.toLowerCase();
+    projected = projected.filter(d => d.name.toLowerCase().includes(q));
+  }
+  projected.sort((a, b) => b[sortBy] - a[sortBy]);
+  const max = projected.length ? Math.max(...projected.map(d => d[sortBy])) : 0;
+  const isProblemMetric = PROBLEM_METRICS.includes(sortBy);
+  const median = isProblemMetric ? computeMedian(projected.map(d => d[sortBy])) : null;
+  const benchmark = isProblemMetric ? getBenchmark(sortBy) : null;
+  if (warningBannerId) {
+    const banner = document.getElementById(warningBannerId);
+    if (banner) {
+      if (isProblemMetric && projected.length > 0) {
+        banner.classList.add('active');
+        const txtSpan = banner.querySelector('.warning-banner-text');
+        if (txtSpan) {
+          const lbl = metricLabel(sortBy);
+          const medianStr = formatMetricValue(sortBy, median);
+          const benchStr = benchmark !== null ? formatMetricValue(sortBy, benchmark) : null;
+          const benchPart = benchStr ? ` Promedio del segmento: ${benchStr}.` : '';
+          txtSpan.textContent = `tienen ${lbl} sobre la mediana del ranking actual (${medianStr}) — requieren mayor revisión.${benchPart}`;
+        }
+      } else {
+        banner.classList.remove('active');
+      }
+    }
+  }
+  if (headerIds.pen) {
+    const thPen = document.getElementById(headerIds.pen);
+    const thPie = document.getElementById(headerIds.pie);
+    if (thPen) {
+      thPen.classList.toggle('metric-sorting', sortBy === 'pctPenetracion');
+      thPen.classList.toggle('metric-warning', sortBy === 'pctPenetracion');
+    }
+    if (thPie) {
+      thPie.classList.toggle('metric-sorting', sortBy === 'pctPieFactura');
+      thPie.classList.toggle('metric-warning', sortBy === 'pctPieFactura');
+    }
+  }
+  tbody.innerHTML = projected.map((d, i) => {
+    const w = max > 0 ? (d[sortBy] / max * 100).toFixed(1) : 0;
+    const rankCls = i < 3 ? `rank-${i+1}` : '';
+    const metaText = sortBy === 'pctPenetracion'
+      ? `${d.pctPenetracion.toFixed(1).replace('.', ',')}% de ${fmtNum(d.oppsTotal)} ops`
+      : sortBy === 'pctPieFactura'
+      ? `${d.pctPieFactura.toFixed(2).replace('.', ',')}% del valor factura`
+      : `${fmtMoney(d.montoPie)} en ${fmtNum(d.oppsConPie)} ops`;
+    const isProblem = isProblemMetric && d[sortBy] > median;
+    const rowClass = isProblem ? 'row-problem' : '';
+    const penActive = sortBy === 'pctPenetracion' ? 'metric-active' : '';
+    const pieActive = sortBy === 'pctPieFactura' ? 'metric-active' : '';
+    return `
+      <tr class="${rowClass}">
+        <td class="rank ${rankCls}">${(i+1).toString().padStart(2, '0')}</td>
+        <td><strong>${d.name}</strong></td>
+        <td class="bar-cell">
+          <div class="bar-cell-inner">
+            <div class="bar-track"><div class="bar-fill" style="width: ${w}%"></div></div>
+            <div class="bar-cell-meta">${metaText}</div>
+          </div>
+        </td>
+        <td class="right mono">${fmtMoney(d.montoPie)}</td>
+        <td class="right mono" style="color: var(--text-soft);">${fmtNum(d.oppsConPie)} / ${fmtNum(d.oppsTotal)}</td>
+        <td class="right mono ${penActive}">${d.pctPenetracion.toFixed(1).replace('.', ',')}%</td>
+        <td class="right mono ${pieActive}" style="${pieActive ? '' : 'color: var(--text-soft);'}">${d.pctPieFactura.toFixed(2).replace('.', ',')}%</td>
+        <td class="right mono">${fmtMoney(d.pieAvg)}</td>
+      </tr>
+    `;
+  }).join('');
+  return projected.length;
+}
+
+let sucSort = 'montoPie';
+let sucSearch = '';
+function rerenderSuc() {
+  const count = renderRankingTable('sucTbody', DATA.sucursales || [], sucSort, sucSearch, 'sucWarning', {pen: 'sucThPen', pie: 'sucThPie'});
+  document.getElementById('sucRowCount').textContent = `${count} de ${(DATA.sucursales || []).length} sucursales`;
+}
+rerenderSuc();
+document.querySelectorAll('#sucSortTabs .subtab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('#sucSortTabs .subtab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    sucSort = t.dataset.sort;
+    rerenderSuc();
+  });
+});
+document.getElementById('sucSearch').addEventListener('input', (e) => {
+  sucSearch = e.target.value;
+  rerenderSuc();
+});
+document.getElementById('suc-threshold').textContent = DATA.thresholds.sucursal;
+
+let respSort = 'montoPie';
+let respSearch = '';
+function rerenderResp() {
+  const count = renderRankingTable('respTbody', DATA.responsables || [], respSort, respSearch, 'respWarning', {pen: 'respThPen', pie: 'respThPie'});
+  document.getElementById('respRowCount').textContent = `${count} de ${(DATA.responsables || []).length} responsables`;
+}
+rerenderResp();
+document.querySelectorAll('#respSortTabs .subtab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('#respSortTabs .subtab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    respSort = t.dataset.sort;
+    rerenderResp();
+  });
+});
+document.getElementById('respSearch').addEventListener('input', (e) => {
+  respSearch = e.target.value;
+  rerenderResp();
+});
+document.getElementById('resp-threshold').textContent = DATA.thresholds.responsable;
+
+function renderHeatmap() {
+  const wrap = document.getElementById('heatmap');
+  const allMonths = [
+    { key: 'enero', label: 'Enero' },
+    { key: 'febrero', label: 'Febrero' },
+    { key: 'marzo', label: 'Marzo' }
+  ];
+  const monthIdx = activeMonth === 'all' ? null : parseInt(activeMonth);
+  const months = monthIdx !== null ? [allMonths[monthIdx]] : allMonths;
+  let allCounts = [];
+  months.forEach(m => (DATA.heatmap?.[m.key] || []).forEach(d => allCounts.push(d.trans)));
+  const maxCount = Math.max(...allCounts, 1);
+  function intensity(value) {
+    if (value === 0) return 0;
+    const r = value / maxCount;
+    if (r < 0.1) return 1;
+    if (r < 0.3) return 2;
+    if (r < 0.55) return 3;
+    if (r < 0.85) return 4;
+    return 5;
+  }
+  let html = '<div class="heatmap-header"><div></div>';
+  for (let d = 1; d <= 31; d++) {
+    const show = d === 1 || d === 31 || d % 5 === 0;
+    html += `<div style="opacity: ${show ? 0.8 : 0.3}">${d}</div>`;
+  }
+  html += '</div>';
+  months.forEach(m => {
+    html += '<div class="heatmap-row">';
+    html += `<div class="heatmap-row-label">${m.label}</div>`;
+    (DATA.heatmap?.[m.key] || []).forEach(d => {
+      const i = intensity(d.trans);
+      const showText = d.trans > 0;
+      html += `<div class="heat-cell" data-i="${i}">${showText ? d.trans : ''}<div class="tooltip">${m.label} ${d.day} · ${d.trans} trans · ${fmtMoney(d.monto)}</div></div>`;
+    });
+    html += '</div>';
+  });
+  wrap.innerHTML = html;
+}
+
+function renderTercio() {
+  const grid = document.getElementById('tercioGrid');
+  if (!grid || !DATA.tercioMonthly) return;
+  const monthIdx = activeMonth === 'all' ? null : parseInt(activeMonth);
+  const key = monthIdx === null ? 'all' : `m${monthIdx}`;
+  const t = DATA.tercioMonthly[key];
+  if (!t) { grid.innerHTML = ''; return; }
+  const total = t.total_trans;
+  const buckets = [
+    { key: 'inicio', lbl: 'Días 1 – 10 · Inicio', data: t.inicio },
+    { key: 'medio', lbl: 'Días 11 – 20 · Medio', data: t.medio },
+    { key: 'cierre', lbl: 'Días 21 – 31 · Cierre', data: t.cierre, featured: true }
+  ];
+  const max = Math.max(...buckets.map(b => b.data.trans));
+  grid.innerHTML = buckets.map(b => {
+    const pct = total ? (b.data.trans / total * 100).toFixed(1) : '0,0';
+    const featured = b.featured && b.data.trans === max && b.data.trans > 0;
+    return `
+      <div class="tercio${featured ? ' featured' : ''}">
+        <div class="tercio-lbl">${b.lbl}</div>
+        <div class="tercio-val">${pct.toString().replace('.', ',')}%</div>
+        <div class="tercio-sub">${fmtNum(b.data.trans)} transacciones · ${fmtMoney(b.data.monto)}</div>
+        <div class="tercio-bar"><div class="tercio-bar-fill" style="width: ${pct}%"></div></div>
+      </div>
+    `;
+  }).join('');
+}
+
+renderHeatmap();
+renderTercio();
+</script>
+
+</body>
+</html>
