@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard Compras Empresariales</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0ede8;min-height:100vh;}
+.top-bar{background:#111;color:#fff;padding:14px 28px;display:flex;justify-content:space-between;align-items:center;}
+.top-bar .brand{font-size:15px;font-weight:500;}
+.top-bar .sub{font-size:12px;color:#aaa;margin-top:2px;}
+.top-bar .badge{background:#1a7f5a;color:#fff;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;}
+.inner{padding:24px 28px;max-width:1400px;margin:0 auto;}
+.tabs-row{background:#fff;border-radius:12px;display:flex;margin-bottom:16px;overflow:hidden;border:0.5px solid #ddd;}
+.big-tab{flex:1;padding:14px;text-align:center;font-size:14px;font-weight:500;cursor:pointer;color:#888;transition:all .15s;}
+.big-tab.active{background:#111;color:#fff;}
+.big-tab:hover:not(.active){background:#f5f5f5;}
+.filter-card{background:#fff;border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px;border:0.5px solid #ddd;}
+.filter-label{font-size:11px;font-weight:500;color:#888;letter-spacing:.06em;text-transform:uppercase;}
+.pills{display:flex;gap:6px;flex-wrap:wrap;}
+.pill{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #ccc;color:#444;background:#fff;transition:all .15s;}
+.pill:hover{border-color:#888;}
+.pill.on{background:#111;color:#fff;border-color:#111;}
+.pill.disabled{opacity:.3;cursor:not-allowed;pointer-events:none;}
+.pill-limpiar{background:#fff;border:1.5px solid #e55;color:#e55;}
+.pill-limpiar:hover{background:#fff5f5;}
+.showing{font-size:12px;color:#888;margin-left:auto;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-bottom:16px;}
+.kpi{background:#fff;border-radius:12px;padding:14px 16px;border:0.5px solid #ddd;}
+.kpi-label{font-size:10px;font-weight:500;color:#aaa;letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px;}
+.kpi-val{font-size:28px;font-weight:500;line-height:1;}
+.kpi-val.neutral{color:#111;} .kpi-val.red{color:#c0392b;} .kpi-val.green{color:#1a7f5a;} .kpi-val.blue{color:#185FA5;}
+.kpi-sub{font-size:12px;color:#aaa;margin-top:4px;}
+.chart-card{background:#fff;border-radius:12px;padding:20px;border:0.5px solid #ddd;margin-bottom:16px;}
+.chart-title{font-size:14px;font-weight:500;color:#111;margin-bottom:2px;}
+.chart-sub{font-size:12px;color:#888;margin-bottom:12px;}
+.legend{display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#666;}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.table-card{background:#fff;border-radius:12px;padding:20px;border:0.5px solid #ddd;}
+.table-title{font-size:14px;font-weight:500;color:#111;margin-bottom:2px;}
+.table-sub{font-size:12px;color:#888;margin-bottom:14px;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{padding:8px 12px;text-align:left;font-weight:500;color:#aaa;border-bottom:1px solid #eee;white-space:nowrap;font-size:11px;text-transform:uppercase;letter-spacing:.06em;}
+td{padding:8px 12px;border-bottom:0.5px solid #f0f0f0;color:#222;white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+.tr-pct td{background:#f9f9f9;color:#888;font-size:11px;}
+.tr-leads td{background:#eef4fb;color:#185FA5;font-weight:500;}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <div class="brand">Compras empresariales</div>
+    <div class="sub">Oct 2025 – Mar 2026 · Compra: 6.078 registros · Vpp: 45.013 registros</div>
+  </div>
+  <div class="badge">Dashboard ejecutivo</div>
+</div>
+
+<div class="inner">
+  <div class="tabs-row">
+    <div class="big-tab active" onclick="setTab('compra',this)">Compra</div>
+    <div class="big-tab" onclick="setTab('vpp',this)">Vpp</div>
+    <div class="big-tab" onclick="setTab('all',this)">Todos</div>
+  </div>
+
+  <div class="filter-card">
+    <div class="filter-label">Año</div>
+    <div class="pills" id="yearPills"></div>
+    <div class="filter-label" style="margin-left:8px;">Mes</div>
+    <div class="pills" id="monthPills"></div>
+    <button class="pill on" onclick="toggleAll()">Todos</button>
+    <button class="pill pill-limpiar" onclick="clearFilters()">Limpiar</button>
+    <div class="showing" id="showingLine"></div>
+  </div>
+
+  <div class="kpi-grid" id="kpis"></div>
+
+  <div class="chart-card">
+    <div class="chart-title">Visión general</div>
+    <div class="chart-sub">Volumen y conversión mensual</div>
+    <div class="legend" id="chartLegend"></div>
+    <div style="position:relative;width:100%;height:260px;">
+      <canvas id="chart1" role="img" aria-label="Gráfico de volumen y conversión mensual"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-title">Detalle mensual</div>
+    <div class="table-sub">Desglose por mes</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr id="thead"><th>Métrica</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const MESES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+const COMPRA_DATA={
+  "2025-10":{"creadas":1037,"inspeccionadas":872,"compradas":385},
+  "2025-11":{"creadas":884,"inspeccionadas":770,"compradas":311},
+  "2025-12":{"creadas":784,"inspeccionadas":669,"compradas":364},
+  "2026-01":{"creadas":1030,"inspeccionadas":851,"compradas":448},
+  "2026-02":{"creadas":668,"inspeccionadas":583,"compradas":287},
+  "2026-03":{"creadas":1060,"inspeccionadas":800,"compradas":372}
+};
+const VPP_DATA={
+  "2025-10":{"creadas":7201,"inspeccionadas":1809,"compradas":989},
+  "2025-11":{"creadas":6715,"inspeccionadas":1750,"compradas":928},
+  "2025-12":{"creadas":5982,"inspeccionadas":1523,"compradas":841},
+  "2026-01":{"creadas":6820,"inspeccionadas":1714,"compradas":881},
+  "2026-02":{"creadas":5869,"inspeccionadas":1382,"compradas":675},
+  "2026-03":{"creadas":6963,"inspeccionadas":1751,"compradas":792}
+};
+const LEADS_DATA={
+  "2025-10":27256,"2025-11":31333,"2025-12":20554,
+  "2026-01":31768,"2026-02":21498,"2026-03":26447
+};
+
+function buildAll(){
+  const r={};
+  for(const k in COMPRA_DATA){if(!r[k])r[k]={creadas:0,inspeccionadas:0,compradas:0};r[k].creadas+=COMPRA_DATA[k].creadas;r[k].inspeccionadas+=COMPRA_DATA[k].inspeccionadas;r[k].compradas+=COMPRA_DATA[k].compradas;}
+  for(const k in VPP_DATA){if(!r[k])r[k]={creadas:0,inspeccionadas:0,compradas:0};r[k].creadas+=VPP_DATA[k].creadas;r[k].inspeccionadas+=VPP_DATA[k].inspeccionadas;r[k].compradas+=VPP_DATA[k].compradas;}
+  return r;
+}
+
+const ALL_DATA={compra:COMPRA_DATA,vpp:VPP_DATA,all:buildAll()};
+const BLOCKED_BY_TAB={compra:new Set(['04'])};
+
+let activeTab='compra',activeMonths=new Set(),activeYears=new Set();
+let barChart=null;
+
+function labelCreadas(){return activeTab==='vpp'?'Tasaciones':'Oportunidades creadas';}
+function pct(n,d){return d?Math.round(n/d*100):0;}
+function blocked(){return BLOCKED_BY_TAB[activeTab]||new Set();}
+function allKeys(){return[...new Set([...Object.keys(COMPRA_DATA),...Object.keys(VPP_DATA)])].sort();}
+
+function init(){
+  const months=new Set(),years=new Set();
+  allKeys().forEach(k=>{const[y,m]=k.split('-');years.add(y);months.add(m);});
+  activeMonths=new Set([...months]);activeYears=new Set([...years]);
+  renderPills(months,years);render();
+}
+
+function renderPills(months,years){
+  const mp=document.getElementById('monthPills');mp.innerHTML='';
+  const bl=blocked();
+  [...(months||new Set([...activeMonths]))].sort().forEach(m=>{
+    const isBlk=bl.has(m);
+    const btn=document.createElement('button');
+    btn.className='pill'+(isBlk?' disabled':activeMonths.has(m)?' on':'');
+    btn.textContent=MESES[+m-1];
+    if(!isBlk)btn.onclick=()=>{activeMonths.has(m)?activeMonths.delete(m):activeMonths.add(m);btn.classList.toggle('on',activeMonths.has(m));render();};
+    mp.appendChild(btn);
+  });
+  const yp=document.getElementById('yearPills');yp.innerHTML='';
+  [...(years||new Set([...activeYears]))].sort().forEach(y=>{
+    const btn=document.createElement('button');
+    btn.className='pill'+(activeYears.has(y)?' on':'');
+    btn.textContent=y;
+    btn.onclick=()=>{activeYears.has(y)?activeYears.delete(y):activeYears.add(y);btn.classList.toggle('on',activeYears.has(y));render();};
+    yp.appendChild(btn);
+  });
+}
+
+function toggleAll(){
+  const months=new Set(),years=new Set();
+  allKeys().forEach(k=>{const[y,m]=k.split('-');years.add(y);months.add(m);});
+  activeMonths=new Set([...months]);activeYears=new Set([...years]);
+  renderPills(months,years);render();
+}
+function clearFilters(){activeMonths=new Set();activeYears=new Set();renderPills();render();}
+
+function setTab(tab,el){
+  activeTab=tab;
+  document.querySelectorAll('.big-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const months=new Set(),years=new Set();
+  allKeys().forEach(k=>{const[y,m]=k.split('-');years.add(y);months.add(m);});
+  activeMonths=new Set([...months]);activeYears=new Set([...years]);
+  renderPills(months,years);render();
+}
+
+function getFiltered(){
+  const src=ALL_DATA[activeTab];
+  const bl=blocked();
+  const r={};
+  for(const k in src){const[y,m]=k.split('-');if(activeYears.has(y)&&activeMonths.has(m)&&!bl.has(m))r[k]=src[k];}
+  return r;
+}
+
+function render(){
+  const data=getFiltered();
+  const keys=Object.keys(data).sort();
+  const src=ALL_DATA[activeTab];
+  const bl=blocked();
+  const total=Object.keys(src).filter(k=>!bl.has(k.split('-')[1])).length;
+  document.getElementById('showingLine').textContent=`Mostrando ${keys.length} de ${total} meses`;
+
+  let tc=0,ti=0,tb=0;
+  keys.forEach(k=>{tc+=data[k].creadas;ti+=data[k].inspeccionadas;tb+=data[k].compradas;});
+
+  const leadsArr=activeTab==='compra'?keys.map(k=>LEADS_DATA[k]||0):null;
+  const totalLeads=leadsArr?leadsArr.reduce((a,b)=>a+b,0):null;
+
+  const sqlArr=keys.map(k=>({k,r:pct(data[k].compradas,data[k].inspeccionadas)}));
+  const mejor=sqlArr.length?sqlArr.reduce((b,x)=>x.r>b.r?x:b,sqlArr[0]):null;
+  const peor=sqlArr.length?sqlArr.reduce((b,x)=>x.r<b.r?x:b,sqlArr[0]):null;
+  function ml(k){if(!k)return'-';const[y,m]=k.split('-');return`${MESES[+m-1]} ${y.slice(2)}`;}
+  const lbl=labelCreadas();
+
+  document.getElementById('kpis').innerHTML=`
+    ${activeTab==='compra'&&totalLeads?`<div class="kpi"><div class="kpi-label">Leads compra</div><div class="kpi-val blue">${totalLeads.toLocaleString()}</div><div class="kpi-sub">${keys.length} meses</div></div>`:''}
+    <div class="kpi"><div class="kpi-label">${lbl}</div><div class="kpi-val neutral">${tc.toLocaleString()}</div><div class="kpi-sub">${keys.length} meses</div></div>
+    <div class="kpi"><div class="kpi-label">% Inspección</div><div class="kpi-val blue">${pct(ti,tc)}%</div><div class="kpi-sub">${ti.toLocaleString()} inspeccionadas</div></div>
+    <div class="kpi"><div class="kpi-label">Compradas</div><div class="kpi-val neutral">${tb.toLocaleString()}</div><div class="kpi-sub">${pct(tb,tc)}% de oport. creadas</div></div>
+    <div class="kpi"><div class="kpi-label">Mejor mes SQL</div><div class="kpi-val green">${mejor?mejor.r+'%':'-'}</div><div class="kpi-sub">${mejor?ml(mejor.k):'-'}</div></div>
+    <div class="kpi"><div class="kpi-label">Peor mes SQL</div><div class="kpi-val red">${peor?peor.r+'%':'-'}</div><div class="kpi-sub">${peor?ml(peor.k):'-'}</div></div>
+  `;
+
+  document.getElementById('chartLegend').innerHTML=`
+    ${activeTab==='compra'?'<div class="legend-item"><div class="legend-dot" style="background:#185FA5;"></div>Leads compra</div>':''}
+    <div class="legend-item"><div class="legend-dot" style="background:#93c5e8;"></div>${lbl}</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#5DCAA5;"></div>Inspeccionadas</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7F77DD;"></div>Compradas</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1a7f5a;border-radius:50%;"></div>% conversión</div>
+  `;
+
+  const barDL={anchor:'end',align:'end',offset:2,color:'#111',font:{size:10,weight:'500'},formatter:v=>v.toLocaleString()};
+  const lineDL={anchor:'end',align:'top',color:'#1a7f5a',font:{size:10,weight:'600'},backgroundColor:'#fff',borderRadius:4,padding:{top:2,bottom:2,left:4,right:4},formatter:v=>v+'%'};
+
+  const datasets=[
+    {label:lbl,data:keys.map(k=>data[k].creadas),backgroundColor:'#93c5e8',borderRadius:4,yAxisID:'y',order:2,datalabels:barDL},
+    {label:'Inspeccionadas',data:keys.map(k=>data[k].inspeccionadas),backgroundColor:'#5DCAA5',borderRadius:4,yAxisID:'y',order:2,datalabels:barDL},
+    {label:'Compradas',data:keys.map(k=>data[k].compradas),backgroundColor:'#7F77DD',borderRadius:4,yAxisID:'y',order:2,datalabels:barDL},
+    {label:'% conv.',data:keys.map(k=>pct(data[k].compradas,data[k].creadas)),type:'line',yAxisID:'y2',borderColor:'#1a7f5a',backgroundColor:'transparent',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#1a7f5a',tension:.3,order:1,datalabels:lineDL}
+  ];
+  if(activeTab==='compra'&&leadsArr){
+    datasets.unshift({label:'Leads compra',data:leadsArr,backgroundColor:'#185FA5',borderRadius:4,yAxisID:'y',order:2,datalabels:barDL});
+  }
+
+  if(barChart)barChart.destroy();
+  barChart=new Chart(document.getElementById('chart1').getContext('2d'),{
+    type:'bar',
+    data:{labels:keys.map(k=>{const[y,m]=k.split('-');return MESES[+m-1]+' '+y.slice(2);}),datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:28}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': '+(ctx.dataset.yAxisID==='y2'?ctx.raw+'%':ctx.raw.toLocaleString())}},
+        datalabels:{display:true}
+      },
+      scales:{
+        x:{ticks:{font:{size:11},color:'#888',autoSkip:false},grid:{display:false}},
+        y:{grid:{color:'rgba(0,0,0,.06)'},ticks:{font:{size:11},color:'#888'}},
+        y2:{position:'right',min:0,max:100,grid:{display:false},ticks:{callback:v=>v+'%',font:{size:11},color:'#1a7f5a'}}
+      }
+    },
+    plugins:[ChartDataLabels]
+  });
+
+  document.getElementById('thead').innerHTML=`<th>Métrica</th>${keys.map(k=>{const[y,m]=k.split('-');return`<th>${MESES[+m-1]}<br><span style="font-weight:400;color:#bbb;font-size:10px;">${y}</span></th>`;}).join('')}<th>Total</th>`;
+
+  const leadsRow=activeTab==='compra'&&leadsArr?`<tr class="tr-leads"><td>Leads compra</td>${leadsArr.map(v=>`<td>${v.toLocaleString()}</td>`).join('')}<td>${totalLeads.toLocaleString()}</td></tr>`:'';
+
+  document.getElementById('tbody').innerHTML=`
+    ${leadsRow}
+    <tr><td style="font-weight:500">${lbl}</td>${keys.map(k=>`<td>${data[k].creadas.toLocaleString()}</td>`).join('')}<td style="font-weight:500">${tc.toLocaleString()}</td></tr>
+    <tr><td style="font-weight:500">Inspeccionadas</td>${keys.map(k=>`<td>${data[k].inspeccionadas.toLocaleString()}</td>`).join('')}<td style="font-weight:500">${ti.toLocaleString()}</td></tr>
+    <tr><td style="font-weight:500">Compradas</td>${keys.map(k=>`<td>${data[k].compradas.toLocaleString()}</td>`).join('')}<td style="font-weight:500">${tb.toLocaleString()}</td></tr>
+    <tr class="tr-pct"><td>% Insp./oportunidades creadas</td>${keys.map(k=>`<td>${pct(data[k].inspeccionadas,data[k].creadas)}%</td>`).join('')}<td>${pct(ti,tc)}%</td></tr>
+    <tr class="tr-pct"><td>% Conv. compra</td>${keys.map(k=>`<td>${pct(data[k].compradas,data[k].creadas)}%</td>`).join('')}<td>${pct(tb,tc)}%</td></tr>
+  `;
+}
+
+init();
+</script>
+</body>
+</html>

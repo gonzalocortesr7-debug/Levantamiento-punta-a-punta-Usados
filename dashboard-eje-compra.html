@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eje Compra · Gestión de Leads — Llamadas · Contactabilidad · Colas</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f3ee;color:#1a1a18;}
+.topbar{background:#1a1a18;color:#fff;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.topbar-title{font-size:15px;font-weight:500;}
+.topbar-sub{font-size:12px;opacity:.5;margin-top:2px;}
+.topbar-badge{background:#0F6FC6;color:#fff;font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
+.container{max-width:1100px;margin:0 auto;padding:24px;}
+.intro{background:#fff;border-radius:14px;border:.5px solid #e0dfd8;padding:18px 22px;margin-bottom:18px;}
+.intro-title{font-size:13px;font-weight:600;color:#0F6FC6;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.intro-body{font-size:13px;color:#5f5e5a;line-height:1.6;}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px;margin-bottom:18px;}
+.kpi{background:#fff;border-radius:12px;padding:13px 15px;border:.5px solid #e0dfd8;}
+.kpi-label{font-size:10px;color:#888780;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em;}
+.kpi-value{font-size:21px;font-weight:700;line-height:1;}
+.kpi-sub{font-size:11px;color:#b4b2a9;margin-top:3px;}
+.kpi.red .kpi-value{color:#E24B4A;}
+.kpi.green .kpi-value{color:#1D9E75;}
+.kpi.amber .kpi-value{color:#BA7517;}
+.kpi.blue .kpi-value{color:#0F6FC6;}
+.section{background:#fff;border-radius:16px;border:.5px solid #e0dfd8;padding:22px;margin-bottom:18px;}
+.section-title{font-size:14px;font-weight:600;margin-bottom:2px;}
+.section-sub{font-size:12px;color:#888780;margin-bottom:14px;}
+.section-route{display:inline-block;background:#E8ECF5;color:#002060;font-size:11px;padding:4px 10px;border-radius:8px;margin-bottom:10px;font-family:'SFMono-Regular',Consolas,monospace;}
+.chart-wrap{position:relative;width:100%;}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;font-size:11px;color:#5f5e5a;}
+.leg{display:flex;align-items:center;gap:5px;}
+.leg-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.insight{border-radius:0 10px 10px 0;padding:9px 13px;margin:7px 0;font-size:12px;line-height:1.6;}
+.insight.r{border-left:3px solid #E24B4A;background:#fdf3f3;color:#4A1B0C;}
+.insight.w{border-left:3px solid #EF9F27;background:#fdf6ec;color:#412402;}
+.insight.g{border-left:3px solid #1D9E75;background:#f0faf6;color:#04342C;}
+.insight.b{border-left:3px solid #0F6FC6;background:#f0f6fd;color:#042C53;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.seg-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:.5px solid #f1efe8;font-size:12px;}
+.seg-row:last-child{border:none;}
+.seg-label{width:170px;color:#5f5e5a;flex-shrink:0;}
+.seg-bar-bg{flex:1;height:8px;background:#f1efe8;border-radius:4px;overflow:hidden;}
+.seg-bar{height:8px;border-radius:4px;}
+.seg-val{width:64px;text-align:right;font-weight:700;font-size:12px;}
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;}
+.rec-card{border:.5px solid #e0dfd8;border-radius:12px;padding:14px;background:#fafaf8;}
+.rec-num{font-size:24px;font-weight:700;margin-bottom:6px;}
+.rec-title{font-size:12px;font-weight:600;margin-bottom:5px;}
+.rec-desc{font-size:11px;color:#5f5e5a;line-height:1.6;}
+.divider{border:none;border-top:.5px solid #e0dfd8;margin:16px 0;}
+.footer{text-align:center;font-size:11px;color:#b4b2a9;padding:20px;}
+@media(max-width:640px){.grid2{grid-template-columns:1fr;}.topbar{padding:12px 16px;}.container{padding:12px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Eje COMPRA · Gestión de Leads</div>
+    <div class="topbar-sub">Contact Center · Llamadas · Contactabilidad · Colas — Oct 25 a Mar 26 · 158.753 leads</div>
+  </div>
+  <div class="topbar-badge">Dashboard Operacional</div>
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <div class="intro-title">Qué muestra este informe</div>
+    <p class="intro-body">
+      Vista operacional del <strong>Contact Center del eje Compra</strong>. Cubre el flujo desde el pool de
+      colas hasta el traspaso a sucursal: <strong>volumen entrante</strong>, <strong>contactabilidad</strong>,
+      <strong>tiempos de respuesta</strong>, <strong>cadencia de llamadas</strong> y
+      <strong>calificación / motivos de descarte</strong>. Datos del Levantamiento Punta a Punta — 6 meses, 158.753 leads.
+    </p>
+  </div>
+
+  <!-- KPIs ejecutivos -->
+  <div class="kpi-grid">
+    <div class="kpi blue"><div class="kpi-label">Total leads pool</div><div class="kpi-value">158.753</div><div class="kpi-sub">Oct 25 – Mar 26</div></div>
+    <div class="kpi blue"><div class="kpi-label">Promedio mensual</div><div class="kpi-value">26.459</div><div class="kpi-sub">leads/mes</div></div>
+    <div class="kpi amber"><div class="kpi-label">Pico mensual</div><div class="kpi-value">33.083</div><div class="kpi-sub">Ene 26 (+25%)</div></div>
+    <div class="kpi amber"><div class="kpi-label">Contactabilidad</div><div class="kpi-value">53%</div><div class="kpi-sub">global</div></div>
+    <div class="kpi red"><div class="kpi-label">Tiempo 1er contacto</div><div class="kpi-value">21h</div><div class="kpi-sub">horario CC L-V 9-19, Sáb 9-14</div></div>
+    <div class="kpi blue"><div class="kpi-label">Duración llamada</div><div class="kpi-value">47seg</div><div class="kpi-sub">promedio</div></div>
+    <div class="kpi amber"><div class="kpi-label">Tasa de agendamiento</div><div class="kpi-value">9,3%</div><div class="kpi-sub">leads → cita</div></div>
+    <div class="kpi red"><div class="kpi-label">Conv. → oportunidad</div><div class="kpi-value">1,2%</div><div class="kpi-sub">crítico</div></div>
+  </div>
+
+  <!-- Volumen + contactabilidad -->
+  <div class="section">
+    <div class="section-title">Distribución mensual de leads y contactabilidad</div>
+    <div class="section-sub">Volumen entrante al pool del CC y % contactado por mes</div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#0F6FC6"></div>Leads ingresados</div>
+      <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>% contactabilidad</div>
+    </div>
+    <div class="chart-wrap" style="height:280px;"><canvas id="cVol"></canvas></div>
+    <div class="insight b">Feb 26 fue el mejor mes: tiempo 1er contacto bajó a 13–16h (contacto mismo día) y la contactabilidad subió a 56%. Marzo se mantuvo cerca del promedio.</div>
+    <div class="insight w">Enero 26 concentró volumen récord (33.083 leads, +25% vs. promedio) — el equipo no escaló capacidad y la contactabilidad cayó.</div>
+  </div>
+
+  <!-- Pool de colas y asignación -->
+  <div class="section">
+    <div class="section-title">Pool de colas y asignación</div>
+    <div class="section-sub">Cómo se distribuye el trabajo entre los agentes del CC</div>
+    <div class="section-route">Pool de Nuevos Leads → Asignación a agente → Contacto</div>
+    <div class="kpi-grid" style="margin-top:14px;">
+      <div class="kpi blue"><div class="kpi-label">Método actual</div><div class="kpi-value">FIFO</div><div class="kpi-sub">orden de llegada</div></div>
+      <div class="kpi blue"><div class="kpi-label">Carga por agente</div><div class="kpi-value">6,2</div><div class="kpi-sub">leads / hora</div></div>
+      <div class="kpi amber"><div class="kpi-label">Reasignaciones</div><div class="kpi-value">15%</div><div class="kpi-sub">por indisponibilidad</div></div>
+      <div class="kpi red"><div class="kpi-label">Carga desbalanceada</div><div class="kpi-value">10+ vs 2</div><div class="kpi-sub">leads/agente en mismos turnos</div></div>
+    </div>
+    <div class="insight r">Priorización <strong>FIFO no considera valor del lead</strong> ni probabilidad de conversión: los leads de mayor valor pueden esperar igual que los menos calificados.</div>
+    <div class="insight w">15% de leads requiere reasignación por indisponibilidad del agente. Sin balanceo automático, algunos agentes operan con 10+ leads simultáneos mientras otros con 2.</div>
+  </div>
+
+  <!-- Llamadas y cadencia -->
+  <div class="section">
+    <div class="section-title">Llamadas, contactabilidad y cadencia</div>
+    <div class="section-sub">Cómo se ejecuta el contacto telefónico</div>
+    <div class="grid2">
+      <div>
+        <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Cadencia actual de intentos</p>
+        <div class="seg-row"><span class="seg-label">1 intento</span><div class="seg-bar-bg"><div class="seg-bar" style="width:40%;background:#E24B4A;"></div></div><span class="seg-val" style="color:#E24B4A;">~40%</span></div>
+        <div class="seg-row"><span class="seg-label">2 intentos</span><div class="seg-bar-bg"><div class="seg-bar" style="width:30%;background:#EF9F27;"></div></div><span class="seg-val" style="color:#BA7517;">~30%</span></div>
+        <div class="seg-row"><span class="seg-label">3+ intentos</span><div class="seg-bar-bg"><div class="seg-bar" style="width:30%;background:#1D9E75;"></div></div><span class="seg-val" style="color:#1D9E75;">~30%</span></div>
+        <div class="insight r" style="margin-top:10px;">~40% de los contactados recibe <strong>una sola llamada</strong>, sin reintentos. Es el principal driver del 47% no contactabilidad.</div>
+      </div>
+      <div>
+        <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Contactabilidad por temperatura del lead</p>
+        <div class="seg-row"><span class="seg-label">Frío</span><div class="seg-bar-bg"><div class="seg-bar" style="width:62%;background:#378ADD;"></div></div><span class="seg-val" style="color:#378ADD;">62%</span></div>
+        <div class="seg-row"><span class="seg-label">Tibio</span><div class="seg-bar-bg"><div class="seg-bar" style="width:54%;background:#EF9F27;"></div></div><span class="seg-val" style="color:#BA7517;">54%</span></div>
+        <div class="seg-row"><span class="seg-label">Alta</span><div class="seg-bar-bg"><div class="seg-bar" style="width:43%;background:#E24B4A;"></div></div><span class="seg-val" style="color:#E24B4A;">43%</span></div>
+        <div class="seg-row"><span class="seg-label">Muy Alta</span><div class="seg-bar-bg"><div class="seg-bar" style="width:33%;background:#C0392B;"></div></div><span class="seg-val" style="color:#C0392B;">33%</span></div>
+        <div class="insight r" style="margin-top:10px;">Alta y Muy Alta tienen la <strong>menor</strong> contactabilidad (33–43%). El criterio de temperatura no predice la conversión — debe reemplazarse por scoring real.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calificación y motivos de descarte -->
+  <div class="section">
+    <div class="section-title">Calificación y motivos de descarte</div>
+    <div class="section-sub">Por qué los leads no avanzan a oportunidad</div>
+    <p style="font-size:11px;color:#888780;text-transform:uppercase;margin-bottom:8px;">Top motivos de descarte (acumulado 6 meses)</p>
+    <div class="seg-row"><span class="seg-label">Cliente Falso</span><div class="seg-bar-bg"><div class="seg-bar" style="width:42%;background:#E24B4A;"></div></div><span class="seg-val" style="color:#E24B4A;">33–50%</span></div>
+    <div class="seg-row"><span class="seg-label">No contesta</span><div class="seg-bar-bg"><div class="seg-bar" style="width:31%;background:#3266ad;"></div></div><span class="seg-val" style="color:#3266ad;">31%</span></div>
+    <div class="seg-row"><span class="seg-label">Lista Negra (Mar 26)</span><div class="seg-bar-bg"><div class="seg-bar" style="width:20%;background:#888780;"></div></div><span class="seg-val" style="color:#888780;">5.220</span></div>
+    <div class="seg-row"><span class="seg-label">Desiste / quería info</span><div class="seg-bar-bg"><div class="seg-bar" style="width:12%;background:#73726c;"></div></div><span class="seg-val" style="color:#73726c;">~12%</span></div>
+    <div class="insight b" style="margin-top:14px;">Cliente Falso domina (33–50%). Su origen está en la falta de validación previa al CRM: si la patente / RUT se valida en la captación digital, el volumen de Cliente Falso debería caer drásticamente.</div>
+    <div class="insight w">Marzo 26 introdujo un nuevo criterio "Lista Negra" con 5.220 casos — anomalía a revisar antes de extrapolar.</div>
+  </div>
+
+  <!-- Hallazgos -->
+  <div class="section">
+    <div class="section-title">Hallazgos clave</div>
+    <div class="section-sub">Patrones que cruzan colas, llamadas y contactabilidad</div>
+    <div class="rec-grid">
+      <div class="rec-card" style="border-color:#E24B4A;background:#fdf3f3;">
+        <div class="rec-num" style="color:#E24B4A;">01</div>
+        <div class="rec-title" style="color:#4A1B0C;">Cadencia de un solo intento</div>
+        <div class="rec-desc">~40% de leads recibe una sola llamada. Sin SMS ni WhatsApp como fallback. Driver principal del 47% no contactado.</div>
+      </div>
+      <div class="rec-card" style="border-color:#E24B4A;background:#fdf3f3;">
+        <div class="rec-num" style="color:#E24B4A;">02</div>
+        <div class="rec-title" style="color:#4A1B0C;">Tiempo 1er contacto demasiado alto</div>
+        <div class="rec-desc">21h promedio en horario CC. Para Alta/Muy Alta el pico llegó a 70-115h en Ene 26. La intención del lead se enfría.</div>
+      </div>
+      <div class="rec-card" style="border-color:#EF9F27;background:#fdf6ec;">
+        <div class="rec-num" style="color:#EF9F27;">03</div>
+        <div class="rec-title">Temperatura no correlaciona con conversión</div>
+        <div class="rec-desc">Caliente se descarta más que Frío. El criterio actual está roto y debería reemplazarse por scoring basado en comportamiento.</div>
+      </div>
+      <div class="rec-card" style="border-color:#EF9F27;background:#fdf6ec;">
+        <div class="rec-num" style="color:#EF9F27;">04</div>
+        <div class="rec-title">Asignación FIFO sin valor</div>
+        <div class="rec-desc">Leads de alto valor esperan en cola igual que los de baja calificación. Sin priorización por scoring.</div>
+      </div>
+      <div class="rec-card" style="border-color:#0F6FC6;background:#f0f6fd;">
+        <div class="rec-num" style="color:#0F6FC6;">05</div>
+        <div class="rec-title">Cliente Falso es endémico</div>
+        <div class="rec-desc">33-50% de los descartes. Origen: falta de validación temprana. Validar patente + RUT en la captación digital antes de pasar al pool.</div>
+      </div>
+      <div class="rec-card" style="border-color:#0F6FC6;background:#f0f6fd;">
+        <div class="rec-num" style="color:#0F6FC6;">06</div>
+        <div class="rec-title">Capacity planning rígido</div>
+        <div class="rec-desc">El pico de Ene 26 (+25%) tumbó las métricas. No hay flexing automático del staffing por demanda.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recomendaciones -->
+  <div class="section">
+    <div class="section-title">Recomendaciones priorizadas</div>
+    <div class="section-sub">Acciones operacionales para el Contact Center</div>
+    <div class="rec-grid">
+      <div class="rec-card" style="border-color:#1D9E75;background:#f0faf6;">
+        <div class="rec-num" style="color:#1D9E75;">Foco</div>
+        <div class="rec-title" style="color:#04342C;">Subir contactabilidad de 53% a 70%</div>
+        <div class="rec-desc">North star del eje. +17pp = +4.500 leads contactados/mes adicionales sin sumar volumen entrante.</div>
+      </div>
+      <div class="rec-card"><div class="rec-num" style="color:#0F6FC6;">P0</div><div class="rec-title">Cadencia obligatoria de 3 intentos en 48h</div><div class="rec-desc">Llamada → SMS → WhatsApp. Bloquear cierre como "No Contactable" hasta cumplir cadencia.</div></div>
+      <div class="rec-card"><div class="rec-num" style="color:#0F6FC6;">P0</div><div class="rec-title">Scoring de leads en lugar de temperatura</div><div class="rec-desc">Basado en datos de la captación web (RUT, completitud, tiempo en flujo) y outcomes históricos.</div></div>
+      <div class="rec-card"><div class="rec-num" style="color:#0F6FC6;">P0</div><div class="rec-title">Priorización por valor y capacity flexing</div><div class="rec-desc">Reasignación automática de leads de alto valor a agentes con menor carga. Alertas cuando la cola supera 50 leads o 3 horas.</div></div>
+      <div class="rec-card"><div class="rec-num" style="color:#EF9F27;">P1</div><div class="rec-title">Validación de patente + RUT en captación</div><div class="rec-desc">Eliminar Cliente Falso antes del CRM. Reduce volumen de descartes 33-50%.</div></div>
+      <div class="rec-card"><div class="rec-num" style="color:#EF9F27;">P1</div><div class="rec-title">SLA tiempo 1er contacto &lt;6h para Alta/Muy Alta</div><div class="rec-desc">Replicar las condiciones de Feb 26. Si no se cumple, escalar a supervisor.</div></div>
+      <div class="rec-card"><div class="rec-num" style="color:#1D9E75;">P2</div><div class="rec-title">Ficha del lead en pantalla del agente</div><div class="rec-desc">Datos web + tasación + historial de contacto al recibir el lead. Acorta llamada y mejora cierre.</div></div>
+      <div class="rec-card"><div class="rec-num" style="color:#1D9E75;">P2</div><div class="rec-title">Motivo de no-cierre estructurado</div><div class="rec-desc">Campo obligatorio con taxonomía cerrada. Habilita análisis y retargeting post-descarte.</div></div>
+    </div>
+  </div>
+
+  <!-- Métricas guía -->
+  <div class="section">
+    <div class="section-title">Métricas guía (North Star)</div>
+    <div class="section-sub">Targets a 12 meses</div>
+    <div class="kpi-grid">
+      <div class="kpi green"><div class="kpi-label">Contactabilidad</div><div class="kpi-value">53% → 70%</div><div class="kpi-sub">+17pp</div></div>
+      <div class="kpi green"><div class="kpi-label">Tiempo 1er contacto</div><div class="kpi-value">21h → &lt;6h</div><div class="kpi-sub">horario CC</div></div>
+      <div class="kpi green"><div class="kpi-label">Conv. → oportunidad</div><div class="kpi-value">1,2% → 3%</div><div class="kpi-sub">x2,5</div></div>
+      <div class="kpi green"><div class="kpi-label">Tasa agendamiento</div><div class="kpi-value">9,3% → 15%</div><div class="kpi-sub">leads → cita</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Eje Compra · Gestión de Leads · Contact Center — datos del Levantamiento Punta a Punta · Oct 2025 a Mar 2026
+  </div>
+</div>
+
+<script>
+function renderCharts() {
+  Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = '#5f5e5a';
+  if (window.ChartDataLabels) Chart.register(window.ChartDataLabels);
+
+  // Volumen + contactabilidad mensual — la línea va por encima de las barras (order menor = arriba)
+  const ctxVol = document.getElementById('cVol');
+  if (ctxVol) {
+    new Chart(ctxVol, {
+      type: 'bar',
+      data: {
+        labels: ['Oct 25', 'Nov 25', 'Dic 25', 'Ene 26', 'Feb 26', 'Mar 26'],
+        datasets: [
+          {
+            type: 'bar', label: 'Leads ingresados',
+            data: [24800, 25600, 23200, 33083, 25500, 26570],
+            backgroundColor: '#B5D4F4', borderRadius: 4, yAxisID: 'y',
+            order: 2,
+            datalabels: {
+              anchor: 'end', align: 'start', offset: 4,
+              color: '#0B3B6F', font: { size: 10, weight: 700 },
+              formatter: v => v.toLocaleString('es-CL')
+            }
+          },
+          {
+            type: 'line', label: '% contactabilidad',
+            data: [50, 52, 49, 61, 56, 53],
+            borderColor: '#1D9E75', backgroundColor: '#1D9E75',
+            tension: 0.3, yAxisID: 'y1', pointRadius: 4, pointHoverRadius: 6,
+            borderWidth: 2.5, order: 1,
+            datalabels: {
+              anchor: 'end', align: 'top', offset: 6,
+              color: '#1D9E75', font: { size: 10, weight: 700 },
+              backgroundColor: '#fff', borderRadius: 4, padding: { top: 2, bottom: 2, left: 4, right: 4 },
+              borderColor: '#1D9E75', borderWidth: 1,
+              formatter: v => v + '%'
+            }
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 24 } },
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: v => v.toLocaleString('es-CL') } },
+          y1: { beginAtZero: true, max: 80, position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: v => v + '%' } }
+        }
+      }
+    });
+  }
+}
+document.addEventListener('DOMContentLoaded', renderCharts);
+</script>
+</body>
+</html>

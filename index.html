@@ -774,9 +774,343 @@
   .macro-pain-title { font-size: 14px; font-weight: 700; color: var(--navy); }
   .macro-pain-sub { font-size: 11px; color: var(--gray-500); }
   .pain-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
-  .pain-item { display: grid; grid-template-columns: 42px 1fr 160px; gap: 14px; padding: 10px 12px; background: var(--gray-50); border-radius: 4px; align-items: start; }
+  .pain-item { display: grid; grid-template-columns: 36px minmax(280px, 1.4fr) minmax(280px, 1.6fr) 150px; gap: 14px; padding: 10px 12px; background: var(--gray-50); border-radius: 4px; align-items: start; }
   .pain-rank { font-size: 22px; font-weight: 800; color: #B3261E; line-height: 1; text-align: center; }
   .pain-content { display: flex; flex-direction: column; gap: 4px; }
+  .pain-action { display: flex; flex-direction: column; gap: 8px; padding: 8px 10px; background: var(--white); border: 1px solid var(--gray-200); border-left: 3px solid var(--clicar-green); border-radius: 4px; }
+  .pain-action-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .pain-action-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+  .pain-action-list li { font-size: 11.5px; color: var(--navy); line-height: 1.4; padding-left: 12px; position: relative; font-weight: 500; }
+  .pain-action-list li::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--clicar-green); font-weight: 700; }
+  .pain-action-list li strong { color: var(--clicar-green); font-weight: 800; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 5px; background: #E7F5E7; border-radius: 2px; margin-right: 4px; }
+  .pain-action-owner { display: flex; flex-direction: column; gap: 2px; padding-top: 6px; border-top: 1px dashed var(--gray-200); }
+  .pain-action-owner-label { font-size: 8.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); }
+  .pain-action-owner-area { font-size: 11px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .pain-action-owner-names { font-size: 10px; font-weight: 500; color: var(--gray-700); line-height: 1.35; }
+  .pain-action-empty { background: transparent; border: none; }
+
+  /* ESTRATEGIA · vista unificada */
+  .estrategia-foto { background: linear-gradient(180deg, #FAFBFD 0%, var(--white) 100%); border: 1px solid var(--gray-200); border-radius: 6px; padding: 22px 24px; }
+  .ns-cards-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 12px 0 16px; }
+  .ns-card-3 { background: var(--white); border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); border-radius: 6px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+  .ns-card-3.ns-card-compra { border-top-color: #0F6FC6; }
+  .ns-card-3.ns-card-preparación { border-top-color: #EF9F27; }
+  .ns-card-3.ns-card-venta { border-top-color: #1D9E75; }
+  .ns-card-3-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .ns-card-3-metric { font-size: 14px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .ns-card-3-progress { display: flex; gap: 8px; align-items: baseline; font-family: monospace; }
+  .ns-card-3-baseline { font-size: 18px; color: #B3261E; font-weight: 700; }
+  .ns-card-3-arrow { color: var(--gray-400); font-size: 14px; }
+  .ns-card-3-target { font-size: 22px; color: #0B5C1F; font-weight: 800; }
+  .ns-card-3-impact { font-size: 11px; color: var(--gray-700); line-height: 1.45; padding-top: 8px; border-top: 1px dashed var(--gray-200); }
+  .proyeccion-anual { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%); color: var(--white); border-radius: 6px; }
+  .proyeccion-anual-label { font-size: 11px; opacity: 0.85; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600; }
+  .proyeccion-anual-value { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; margin-top: 4px; color: var(--clicar-green); }
+  .proyeccion-anual-sub { font-size: 11px; opacity: 0.8; line-height: 1.5; max-width: 540px; text-align: right; }
+
+  /* Apuestas transformacionales mini */
+  .trans-grid-mini { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .trans-card-mini { background: var(--white); border: 1px solid var(--gray-200); border-left: 3px solid var(--navy); border-radius: 4px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .trans-card-mini.macro-compra { border-left-color: #0F6FC6; }
+  .trans-card-mini.macro-preparación { border-left-color: #EF9F27; }
+  .trans-card-mini.macro-venta { border-left-color: #1D9E75; }
+  .trans-card-mini-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .trans-card-mini-title { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .trans-card-mini-kr { font-size: 11px; color: var(--gray-700); line-height: 1.45; padding: 6px 0; border-top: 1px dashed var(--gray-200); border-bottom: 1px dashed var(--gray-200); }
+  .trans-card-mini-savings { font-size: 11px; color: #0B5C1F; font-weight: 700; }
+  .trans-card-mini-owner { font-size: 10px; color: var(--gray-500); }
+
+  /* Eje deep dive */
+  .eje-deep { padding: 0; border: 1px solid var(--gray-200); border-radius: 6px; overflow: hidden; }
+  .eje-deep-head { display: flex; align-items: center; gap: 14px; padding: 16px 22px; color: var(--white); }
+  .eje-deep-num { width: 38px; height: 38px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; }
+  .eje-deep-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; }
+  .eje-deep-title { font-size: 18px; font-weight: 700; line-height: 1.2; margin-top: 2px; }
+  .eje-deep.eje-deep-compra .eje-deep-head { background: linear-gradient(135deg, #0F6FC6, #0B5290); }
+  .eje-deep.eje-deep-preparación .eje-deep-head { background: linear-gradient(135deg, #EF9F27, #B5781A); }
+  .eje-deep.eje-deep-venta .eje-deep-head { background: linear-gradient(135deg, #1D9E75, #0F6E56); }
+  .eje-deep-body { display: grid; grid-template-columns: 1fr 320px; gap: 18px; padding: 18px 22px; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); }
+  .eje-deep-headline { font-size: 14px; color: var(--gray-700); line-height: 1.55; max-width: 720px; }
+  .eje-deep-ns { padding: 14px 16px; border-radius: 6px; color: var(--white); }
+  .eje-deep-ns.eje-deep-ns-compra { background: linear-gradient(135deg, #0F6FC6, #0B5290); }
+  .eje-deep-ns.eje-deep-ns-preparación { background: linear-gradient(135deg, #B5781A, #8A5910); }
+  .eje-deep-ns.eje-deep-ns-venta { background: linear-gradient(135deg, #0F6E56, #0A4F3E); }
+  .eje-deep-ns-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85; }
+  .eje-deep-ns-metric { font-size: 13px; font-weight: 700; line-height: 1.3; margin: 4px 0 8px; }
+  .eje-deep-ns-progress { display: flex; gap: 8px; align-items: baseline; font-family: monospace; }
+  .eje-deep-ns-baseline { font-size: 14px; opacity: 0.7; }
+  .eje-deep-ns-arrow { opacity: 0.6; }
+  .eje-deep-ns-target { font-size: 22px; font-weight: 800; color: var(--clicar-green); }
+  .eje-deep-ns-impact { font-size: 11px; line-height: 1.4; opacity: 0.9; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.15); margin-top: 8px; }
+
+  /* Análisis embebidos por eje */
+  .estrategia-analyses { padding: 14px 22px; background: var(--white); border-bottom: 1px solid var(--gray-200); display: flex; flex-direction: column; gap: 8px; }
+  .estrategia-analyses-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .estrategia-analyses-list { display: flex; gap: 10px; flex-wrap: wrap; }
+  .estrategia-analysis-cta { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 12px; background: var(--clicar-green); color: var(--navy); border-radius: 4px; font-size: 11.5px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 6px rgba(157, 233, 95, 0.4); transition: transform 0.15s, box-shadow 0.15s; }
+  .estrategia-analysis-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(157, 233, 95, 0.55); background: #82EC42; }
+  .estrategia-analysis-cta-eye { width: 14px; height: 14px; background: var(--navy); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z'/%3E%3C/svg%3E") no-repeat center / contain; flex-shrink: 0; }
+  .estrategia-analysis-cta-label { font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; font-size: 10.5px; }
+  .estrategia-analysis-cta-sub { font-size: 11px; opacity: 0.85; font-weight: 500; }
+
+  /* Clusters */
+  .eje-clusters { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; padding: 18px 22px; background: var(--white); }
+  .cluster-card { background: var(--white); border: 1px solid var(--gray-200); border-top: 3px solid var(--navy); border-radius: 4px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .cluster-card.cluster-compra { border-top-color: #0F6FC6; }
+  .cluster-card.cluster-preparación { border-top-color: #EF9F27; }
+  .cluster-card.cluster-venta { border-top-color: #1D9E75; }
+  .cluster-head { display: flex; align-items: center; gap: 10px; }
+  .cluster-num { width: 24px; height: 24px; border-radius: 50%; background: var(--gray-100); color: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .cluster-card.cluster-compra .cluster-num { background: #E6F0FB; color: #0F6FC6; }
+  .cluster-card.cluster-preparación .cluster-num { background: #FFF4DC; color: #B5781A; }
+  .cluster-card.cluster-venta .cluster-num { background: #E6F5EF; color: #0F6E56; }
+  .cluster-title { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .cluster-sub { font-size: 10.5px; color: var(--gray-500); line-height: 1.35; margin-top: 2px; }
+  .cluster-block-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); margin-top: 4px; }
+  .cluster-pains-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .cluster-pain { background: #FDECEA; border-left: 3px solid #B3261E; padding: 6px 10px; border-radius: 3px; }
+  .cluster-pain-text { font-size: 11.5px; color: var(--navy); font-weight: 600; line-height: 1.35; }
+  .cluster-pain-impact { font-size: 10px; color: #B3261E; font-weight: 700; margin-top: 2px; }
+  .cluster-ini-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .cluster-ini { background: #F0FAF6; border-left: 3px solid var(--clicar-green); padding: 7px 10px; border-radius: 3px; }
+  .cluster-ini-text { font-size: 11.5px; color: var(--navy); font-weight: 600; line-height: 1.4; }
+  .cluster-ini-text strong { color: #0B5C1F; font-weight: 800; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 5px; background: #DCF1D9; border-radius: 2px; margin-right: 4px; }
+  .cluster-ini-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+  .cluster-ini-owner { font-size: 9.5px; color: var(--gray-700); font-weight: 500; }
+  .cluster-ini-plazo { font-size: 9px; font-weight: 800; padding: 1px 6px; background: var(--navy); color: var(--white); border-radius: 8px; letter-spacing: 0.04em; }
+
+  /* KRs por eje */
+  .eje-krs-wrap { padding: 18px 22px; background: var(--gray-50); border-top: 1px solid var(--gray-200); }
+  .eje-krs-title { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); margin-bottom: 10px; }
+  .eje-krs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .eje-kr { background: var(--white); border: 1px solid var(--gray-200); border-radius: 4px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .eje-kr-desc { font-size: 11.5px; color: var(--navy); font-weight: 600; line-height: 1.35; min-height: 32px; }
+  .eje-kr-progress { display: flex; gap: 6px; align-items: baseline; font-family: monospace; }
+  .eje-kr-baseline { font-size: 13px; color: #B3261E; font-weight: 700; }
+  .eje-kr-arrow { color: var(--gray-400); font-size: 12px; }
+  .eje-kr-target { font-size: 16px; color: #0B5C1F; font-weight: 800; }
+
+  /* Drill-down OKRs */
+  .drill-down-okrs { background: linear-gradient(135deg, #FAFBFD 0%, var(--white) 100%); border: 1px solid var(--gray-200); border-radius: 6px; padding: 22px 24px; }
+  .drill-down-okrs-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .drill-down-okrs-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .drill-down-okrs-desc { font-size: 12px; color: var(--gray-700); line-height: 1.55; max-width: 640px; }
+  .drill-down-okrs-cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--navy); color: var(--white); border: none; border-radius: 4px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.15s; flex-shrink: 0; }
+  .drill-down-okrs-cta:hover { background: var(--navy-2); }
+
+  /* MEMO EJECUTIVO · estilo presentación clásica */
+  .memo-exec { padding: 0 !important; }
+  .slide.active.memo-exec { flex-direction: column; align-items: stretch; overflow-y: auto; }
+  .memo-exec > .memo-section { padding: 56px 80px; max-width: 1280px; margin: 0 auto; width: 100%; }
+  .memo-exec > .memo-section + .memo-section { border-top: 1px solid var(--gray-200); }
+  .memo-exec .memo-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 14px; }
+  .memo-exec .memo-title { font-size: 38px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 28px; }
+  .memo-exec .memo-headline { font-size: 20px; line-height: 1.45; color: var(--navy); font-weight: 400; max-width: 920px; padding: 18px 0; border-top: 2px solid var(--navy); border-bottom: 2px solid var(--navy); margin-bottom: 24px; }
+  .memo-exec .memo-headline strong { font-weight: 700; color: var(--navy); }
+  .memo-exec .memo-summary-list { list-style: none; padding: 0; margin: 0; max-width: 920px; }
+  .memo-exec .memo-summary-list li { padding: 10px 0; border-bottom: 1px solid var(--gray-200); font-size: 14.5px; line-height: 1.55; color: var(--gray-700); display: flex; justify-content: space-between; align-items: baseline; gap: 18px; }
+  .memo-exec .memo-summary-list li:last-child { border-bottom: none; }
+  .memo-exec .memo-summary-list strong { color: var(--navy); font-weight: 700; flex-shrink: 0; }
+  .memo-exec .memo-num { font-family: monospace; font-size: 14px; font-weight: 700; color: #0B5C1F; white-space: nowrap; }
+
+  .memo-exec .memo-h2 { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; margin: 0 0 8px; padding-bottom: 10px; border-bottom: 2px solid var(--navy); }
+  .memo-exec .memo-lead { font-size: 14px; color: var(--gray-700); line-height: 1.6; max-width: 880px; margin: 12px 0 22px; }
+  .memo-exec .memo-footnote { font-size: 12px; color: var(--gray-500); font-style: italic; margin-top: 16px; line-height: 1.5; }
+
+  .memo-table-wrap { width: 100%; overflow-x: auto; }
+  .memo-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--white); }
+  .memo-table thead th { text-align: left; padding: 14px 16px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: var(--navy); border-bottom: 2px solid var(--navy); }
+  .memo-table tbody td { padding: 16px; border-bottom: 1px solid var(--gray-200); vertical-align: top; line-height: 1.5; }
+  .memo-table tbody tr:nth-child(even) td { background: #FAFBFC; }
+  .memo-table tbody tr:last-child td { border-bottom: 2px solid var(--navy); }
+
+  /* Tabla de diagnóstico */
+  .memo-cell-eje { width: 200px; }
+  .memo-cell-eje { display: table-cell; vertical-align: top; }
+  .memo-cell-eje > span.memo-eje-num { display: inline-block; vertical-align: top; margin-right: 8px; }
+  .memo-eje-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 12.5px; font-weight: 700; flex-shrink: 0; vertical-align: middle; line-height: 1; padding: 0; margin: 0; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  .memo-eje-num::before, .memo-eje-num::after { content: none; }
+  .memo-eje-num-compra { background: #0F6FC6; }
+  .memo-eje-num-preparación { background: #EF9F27; }
+  .memo-eje-num-venta { background: #1D9E75; }
+  .memo-eje-name { font-weight: 700; color: var(--navy); font-size: 14px; line-height: 1.3; display: inline-block; vertical-align: middle; }
+  .memo-eje-sub { font-size: 11px; color: var(--gray-500); margin-top: 4px; line-height: 1.4; }
+  .memo-cell-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+  .memo-ind-row { padding: 12px 0; display: flex; flex-direction: column; gap: 6px; border-bottom: 1px dashed var(--gray-200); }
+  .memo-ind-row:first-child { padding-top: 4px; }
+  .memo-ind-row:last-child { border-bottom: none; padding-bottom: 4px; }
+  .memo-ind-name { font-size: 12.5px; color: var(--navy); font-weight: 600; line-height: 1.4; }
+  .memo-ind-progress { display: inline-flex; align-items: baseline; gap: 6px; font-family: monospace; }
+  .memo-ind-baseline { color: #B3261E; font-weight: 700; font-size: 13px; }
+  .memo-ind-arrow { color: var(--gray-400); }
+  .memo-ind-target { color: #0B5C1F; font-weight: 800; font-size: 15px; }
+  .memo-impact-text { font-size: 12.5px; color: var(--navy); font-weight: 500; line-height: 1.5; }
+  .memo-analysis-link { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px 6px 9px; background: var(--clicar-green); color: var(--navy); font-size: 11px; font-weight: 700; border-radius: 3px; text-decoration: none; margin-bottom: 6px; transition: background 0.15s; }
+  .memo-analysis-link:hover { background: #82EC42; }
+  .memo-analysis-link:not(:last-child) { margin-right: 6px; }
+  .memo-analysis-link-eye { width: 12px; height: 12px; flex-shrink: 0; background: var(--navy); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z'/%3E%3C/svg%3E") no-repeat center / contain; }
+  .memo-analysis-empty { font-size: 11px; color: var(--gray-500); font-style: italic; }
+
+  /* Problemas críticos · listas numeradas */
+  .memo-problem-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  .memo-problem-block { background: var(--white); }
+  .memo-problem-eje { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; color: var(--navy); padding-bottom: 10px; border-bottom: 1px solid var(--gray-300); margin-bottom: 14px; }
+  .memo-problem-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .memo-problem { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: start; }
+  .memo-problem-num { font-family: monospace; font-size: 13px; color: var(--navy); font-weight: 700; padding-top: 2px; }
+  .memo-problem-title { font-size: 13px; color: var(--navy); font-weight: 600; line-height: 1.4; }
+  .memo-problem-detail { font-size: 11.5px; color: var(--gray-700); line-height: 1.5; margin-top: 4px; }
+
+  /* Iniciativas · tabla */
+  .memo-init-table .memo-init-num { width: 38px; font-family: monospace; font-weight: 700; color: var(--navy); }
+  .memo-init-table .memo-init-name strong { font-size: 14px; color: var(--navy); display: block; line-height: 1.35; margin-bottom: 4px; }
+  .memo-init-table .memo-init-impact { font-size: 11.5px; color: var(--gray-700); line-height: 1.5; }
+  .memo-init-table .memo-init-eje { font-size: 12.5px; color: var(--navy); font-weight: 600; white-space: nowrap; }
+  .memo-init-table .memo-init-owner { font-size: 12px; color: var(--gray-700); line-height: 1.4; }
+  .memo-init-table .memo-init-savings { font-size: 12px; color: #0B5C1F; font-weight: 700; line-height: 1.4; }
+  .memo-tag-strategic { display: inline-block; padding: 3px 10px; background: var(--navy); color: var(--white); font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 2px; white-space: nowrap; }
+
+  /* Indicadores de seguimiento · barras */
+  .memo-ind-table .memo-ind-eje-cell { width: 180px; font-size: 12.5px; color: var(--navy); font-weight: 600; white-space: nowrap; }
+  .memo-ind-table .memo-ind-name-cell { width: 320px; font-size: 13px; color: var(--navy); line-height: 1.4; }
+  .memo-ind-table .memo-ind-bar-cell { padding-top: 18px; }
+  .memo-bar-track { position: relative; height: 8px; background: var(--gray-100); border-radius: 1px; }
+  .memo-bar-baseline { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, #B3261E, #B3261E); border-radius: 1px; }
+  .memo-bar-target-marker { position: absolute; top: -3px; bottom: -3px; width: 3px; background: #0B5C1F; border-radius: 1px; }
+  .memo-bar-labels { display: flex; justify-content: space-between; margin-top: 6px; font-family: monospace; font-size: 11px; }
+  .memo-bar-baseline-label { color: #B3261E; font-weight: 700; }
+  .memo-bar-target-label { color: #0B5C1F; font-weight: 700; }
+
+  /* Equipo y gobernanza · estilo memo */
+  .memo-team-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 14px; }
+  .memo-team-grid .team-area-card.cross { grid-column: 2 / span 2; }
+  .memo-section .gov-grid { gap: 14px; }
+  .memo-section .gov-card { padding: 16px 18px; }
+
+  /* Drill-down */
+  .memo-drill { background: var(--gray-50); }
+  .memo-drill-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 28px; background: var(--white); border-left: 4px solid var(--navy); flex-wrap: wrap; }
+  .memo-drill-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .memo-drill-desc { font-size: 13px; color: var(--gray-700); line-height: 1.55; max-width: 720px; }
+  .memo-drill-cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; background: var(--navy); color: var(--white); border: none; border-radius: 2px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; font-family: inherit; transition: background 0.15s; flex-shrink: 0; }
+  .memo-drill-cta:hover { background: var(--navy-2); }
+
+  @media (max-width: 1100px) {
+    .memo-exec > .memo-section { padding: 36px 28px; }
+    .memo-exec .memo-title { font-size: 28px; }
+    .memo-exec .memo-headline { font-size: 16px; }
+    .memo-problem-grid { grid-template-columns: 1fr; }
+    .memo-cell-eje { width: auto; }
+  }
+  .board-hero { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: stretch; }
+  .board-hero-side { padding: 6px 0; }
+  .board-hero-side h1 { font-size: 26px; margin: 6px 0 4px; color: var(--navy); letter-spacing: -0.015em; line-height: 1.15; }
+  .board-hero-sub { font-size: 12.5px; color: var(--gray-700); line-height: 1.55; max-width: 720px; }
+  .board-hero-projection { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%); color: var(--white); border-radius: 6px; padding: 14px 18px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 4px 14px rgba(11, 31, 101, 0.15); }
+  .board-projection-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin-bottom: 4px; }
+  .board-projection-row { display: flex; gap: 8px; align-items: baseline; }
+  .board-projection-num { font-size: 22px; font-weight: 800; color: var(--clicar-green); letter-spacing: -0.01em; }
+  .board-projection-text { font-size: 11px; opacity: 0.85; }
+
+  /* Apuestas chips */
+  .board-apuestas { background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .board-apuestas-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); }
+  .board-apuestas-list { display: flex; gap: 8px; flex-wrap: wrap; }
+  .apuesta-chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-left-width: 3px; border-radius: 14px; font-size: 11.5px; cursor: help; transition: background 0.12s; }
+  .apuesta-chip:hover { background: var(--white); }
+  .apuesta-chip.macro-compra { border-left-color: #0F6FC6; }
+  .apuesta-chip.macro-preparación { border-left-color: #EF9F27; }
+  .apuesta-chip.macro-venta { border-left-color: #1D9E75; }
+  .apuesta-chip-eje { font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .apuesta-chip-text { color: var(--navy); font-weight: 600; line-height: 1.3; }
+
+  /* Grid 3 columnas */
+  .board-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .eje-col { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(11, 31, 101, 0.04); }
+  .eje-col-compra .ec-head { background: linear-gradient(135deg, #0F6FC6, #0B5290); }
+  .eje-col-preparación .ec-head { background: linear-gradient(135deg, #EF9F27, #B5781A); }
+  .eje-col-venta .ec-head { background: linear-gradient(135deg, #1D9E75, #0F6E56); }
+  .ec-head { padding: 14px 18px; color: var(--white); }
+  .ec-head-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+  .ec-head-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; margin-top: 2px; }
+  .ec-head-sub { font-size: 11px; opacity: 0.9; line-height: 1.4; margin-top: 4px; }
+
+  .ec-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .ec-headline { font-size: 12px; color: var(--gray-700); line-height: 1.5; padding: 10px 12px; background: var(--gray-50); border-left: 3px solid var(--gray-300); border-radius: 0 4px 4px 0; }
+  .ec-block-label { font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); margin-top: 2px; }
+
+  /* North Stars en columna */
+  .ec-ns-list { display: flex; flex-direction: column; gap: 8px; }
+  .ec-ns { background: linear-gradient(135deg, #FAFBFD 0%, var(--white) 100%); border: 1px solid var(--gray-200); border-left: 3px solid var(--navy); border-radius: 4px; padding: 10px 12px; }
+  .eje-col-compra .ec-ns { border-left-color: #0F6FC6; }
+  .eje-col-preparación .ec-ns { border-left-color: #EF9F27; }
+  .eje-col-venta .ec-ns { border-left-color: #1D9E75; }
+  .ec-ns-metric { font-size: 11.5px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 6px; }
+  .ec-ns-progress { display: flex; gap: 6px; align-items: baseline; font-family: monospace; }
+  .ec-ns-baseline { font-size: 13px; color: #B3261E; font-weight: 700; }
+  .ec-ns-arrow { color: var(--gray-400); font-size: 11px; }
+  .ec-ns-target { font-size: 17px; color: #0B5C1F; font-weight: 800; }
+
+  .ec-impact { font-size: 11px; color: var(--navy); font-weight: 600; padding: 8px 12px; background: #E7F5E7; border-radius: 4px; line-height: 1.4; }
+
+  /* Análisis embebidos por columna */
+  .ec-analyses-block { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; background: linear-gradient(180deg, #F5FFE9 0%, var(--white) 100%); border: 1px solid #C9E89B; border-radius: 4px; }
+  .ec-analyses-block.ec-analyses-empty { background: var(--gray-50); border-color: var(--gray-200); }
+  .ec-analyses-list { display: flex; flex-direction: column; gap: 6px; }
+  .ec-analysis { display: flex; align-items: center; gap: 9px; padding: 9px 12px; background: var(--clicar-green); color: var(--navy); border-radius: 4px; text-decoration: none; transition: transform 0.12s, box-shadow 0.12s; }
+  .ec-analysis:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(157, 233, 95, 0.5); background: #82EC42; }
+  .ec-analysis-eye { width: 13px; height: 13px; flex-shrink: 0; background: var(--navy); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 4.5C7 4.5 2.7 7.6 1 12c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5c-1.7-4.4-6-7.5-11-7.5zm0 12.5c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5zm0-8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z'/%3E%3C/svg%3E") no-repeat center / contain; }
+  .ec-analysis-text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+  .ec-analysis-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ec-analysis-sub { font-size: 10.5px; font-weight: 500; opacity: 0.85; line-height: 1.3; margin-top: 2px; }
+  .ec-analyses-empty-text { font-size: 11px; color: var(--gray-500); font-style: italic; line-height: 1.4; }
+
+  /* Top dolores */
+  .ec-pains-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .ec-pain { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; background: #FDECEA; border-left: 3px solid #B3261E; border-radius: 0 3px 3px 0; }
+  .ec-pain-bullet { width: 18px; height: 18px; background: #B3261E; color: var(--white); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+  .ec-pain-text { font-size: 11.5px; color: var(--navy); font-weight: 600; line-height: 1.4; flex: 1; }
+  .ec-pain-impact { display: block; font-size: 10px; color: #B3261E; font-weight: 700; margin-top: 2px; }
+
+  /* Top iniciativas */
+  .ec-inis-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .ec-ini { padding: 8px 10px; background: #F0FAF6; border-left: 3px solid var(--clicar-green); border-radius: 0 3px 3px 0; display: flex; flex-direction: column; gap: 6px; }
+  .ec-ini-text { font-size: 11.5px; color: var(--navy); font-weight: 600; line-height: 1.4; }
+  .ec-ini-text strong { color: #0B5C1F; font-weight: 800; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 5px; background: #DCF1D9; border-radius: 2px; margin-right: 4px; }
+  .ec-ini-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding-top: 4px; border-top: 1px dashed rgba(0,0,0,0.08); }
+  .ec-ini-owner { font-size: 9.5px; color: var(--gray-700); font-weight: 500; flex: 1; }
+  .ec-ini-plazo { font-size: 9px; font-weight: 800; padding: 2px 7px; background: var(--navy); color: var(--white); border-radius: 8px; letter-spacing: 0.04em; flex-shrink: 0; }
+
+  /* KRs estrella */
+  .ec-krs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ec-kr { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 4px; padding: 10px 11px; }
+  .ec-kr-desc { font-size: 10.5px; color: var(--navy); font-weight: 600; line-height: 1.3; min-height: 28px; }
+  .ec-kr-progress { display: flex; gap: 5px; align-items: baseline; margin-top: 6px; font-family: monospace; }
+  .ec-kr-baseline { font-size: 12px; color: #B3261E; font-weight: 700; }
+  .ec-kr-arrow { color: var(--gray-400); font-size: 11px; }
+  .ec-kr-target { font-size: 14px; color: #0B5C1F; font-weight: 800; }
+
+  /* Footer compacto */
+  .board-footer { display: grid; grid-template-columns: 2fr 3fr; gap: 16px; }
+  .board-footer-block { background: var(--white); border: 1px solid var(--gray-200); border-radius: 6px; padding: 14px 16px; }
+  .board-footer-title { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--navy); margin-bottom: 10px; }
+  .team-grid-compact { gap: 6px !important; }
+  .team-grid-compact .team-area-card { padding: 8px 10px !important; }
+  .team-grid-compact .team-area-title { font-size: 11.5px; }
+  .gov-grid-compact { gap: 8px !important; }
+  .gov-grid-compact .gov-card { padding: 10px 12px !important; }
+  .gov-grid-compact .gov-title { font-size: 11.5px !important; margin-bottom: 6px !important; }
+  .gov-grid-compact .gov-meta, .gov-grid-compact .gov-outputs { font-size: 10px !important; }
+
+  .board-drill-cta { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 20px; background: linear-gradient(135deg, #FAFBFD 0%, var(--white) 100%); border: 1px solid var(--gray-200); border-radius: 6px; flex-wrap: wrap; }
+  .board-drill-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .board-drill-desc { font-size: 11.5px; color: var(--gray-700); line-height: 1.5; max-width: 640px; }
+
+  @media (max-width: 1200px) {
+    .board-grid { grid-template-columns: 1fr; }
+    .board-hero { grid-template-columns: 1fr; }
+    .board-footer { grid-template-columns: 1fr; }
+  }
   .pain-title { font-size: 13px; font-weight: 700; color: var(--navy); }
   .pain-desc { font-size: 11.5px; color: var(--gray-700); line-height: 1.45; }
   .pain-impact { font-size: 11px; color: #B3261E; font-weight: 700; background: #FDECEA; padding: 8px 10px; border-radius: 4px; border: 1px solid #F5B5B0; text-align: center; align-self: center; line-height: 1.3; }
@@ -809,7 +1143,12 @@
     .struct-level.l3 { width: 80%; }
     .struct-level.l4 { width: 70%; }
     .pain-item { grid-template-columns: 36px 1fr; }
+    .pain-action { grid-column: 1 / -1; }
     .pain-impact { grid-column: 1 / -1; }
+    .ns-cards-3 { grid-template-columns: 1fr !important; }
+    .trans-grid-mini { grid-template-columns: 1fr !important; }
+    .eje-clusters { grid-template-columns: 1fr !important; }
+    .eje-krs { grid-template-columns: repeat(2, 1fr) !important; }
     .okr-framework { grid-template-columns: 1fr 1fr; }
     .okr-layer::after { display: none; }
     .gov-grid { grid-template-columns: 1fr; }
@@ -1304,6 +1643,7 @@ var journey = {
     {
       id: 2, macro: "compra", name: "Gestión de Leads", fullName: "Gestión de Leads",
       video: { url: null, title: "Video del proceso - Gestión de Leads" },
+      resources: [{ href: "./dashboard-eje-compra.html", label: "Dashboard Operacional · Llamadas · Contactabilidad · Colas — 158.753 leads" }],
       route: "Nuevos Leads -> Leads tomados (CC) -> Leads con cita - CRM Llaima",
       description: "Los leads generados desde web ingresan al pool del Contact Center, se asignan a agentes, se realizan contactos telefónicos de seguimiento y se califican para traspaso a sucursal. El foco está en contactabilidad, velocidad de primer contacto, tasa de agendamiento y conversión a oportunidad real. Esta etapa analiza 158.753 leads entre Oct 25 y Mar 26 segmentados en 8 categorías de calificación.",
       substeps: [
@@ -1375,6 +1715,7 @@ var journey = {
     {
       id: 4, macro: "compra", name: "Inspección y Cierre", fullName: "Inspección y Cierre Comercial",
       video: { url: null, title: "Video del proceso - Inspección y Cierre" },
+      resources: [{ href: "./dashboard-compras-empresariales.html", label: "Dashboard Compras Empresariales · Compra directa vs VPP · 51k registros" }],
       route: "Inspección -> Validación Comercial - Oferta definitiva",
       description: "Evaluación técnica y documental del vehículo, registro fotográfico estandarizado, cálculo de la oferta final considerando costos de re-acondicionamiento, validación comercial por jefatura cuando excede la autonomía del asesor y negociación/cierre con el cliente. Cierra la compra del vehículo o lo registra como no-cierre con razones estructuradas para activar flujos de seguimiento posteriores.",
       substeps: [
@@ -2495,6 +2836,279 @@ function renderOKRsSlide(i) {
   '</div>';
 }
 
+// ============================================================
+// ESTRATEGIA · clusters temáticos por eje + análisis embebidos
+// ============================================================
+var EJE_ANALYSES = {
+  compra: [
+    { href: 'dashboard-eje-compra.html', label: 'Dashboard Gestión de Leads · Llamadas · Contactabilidad · Colas — 158.753 leads' },
+    { href: 'dashboard-compras-empresariales.html', label: 'Dashboard Compras Empresariales · Compra directa vs VPP · 51k registros' }
+  ],
+  preparación: [
+    { href: 'analisis-preparacion-foto-impel.html', label: 'Análisis Preparación · 21 slides (foto Impel + tiers)' }
+  ],
+  venta: [
+    { href: 'auditoria-flujo-ventas.html', label: 'Auditoría Flujo Ventas Digital · 11 slides (Clarity + Mercado)' },
+    { href: 'dashboard-leads-ventas.html', label: 'Dashboard Ejecutivo · 92.843 leads · 3.838 ventas' }
+  ]
+};
+
+var EJE_CLUSTERS = {
+  compra: {
+    northStars: [
+      { metric: 'Contactabilidad global del pool de leads', baseline: '53%', target: '70%' },
+      { metric: 'Conversión End-to-End Lead → Compra', baseline: '2,0%', target: '3,5%' }
+    ],
+    nsImpact: '+294 compras / mes · +3.528 / año · ~$353M margen estimado / mes',
+    headline: 'El vendedor llega con intención y el funnel le hace dar vueltas en datos personales, tasación y Contact Center antes de cerrar la compra.',
+    clusters: [
+      { title: 'Funnel digital de captación', sub: 'Datos personales · brecha de precio · agendamiento',
+        pains: [
+          { t: 'Drop-off 24% en Datos Personales', impact: '20.758 leads perdidos / mes' },
+          { t: 'Brecha 15% precio online vs. oferta final', impact: 'Vaivén + frustración' },
+          { t: '41,5% drop-off post-Resultado Tasación', impact: '2da mayor pérdida del funnel' }
+        ],
+        iniciativas: [
+          { t: 'Validación WhatsApp bloqueante (reemplaza modal OTP)', owner: 'Canales Digitales · UX/UI', plazo: '60d' },
+          { t: 'Integración Autofact para autocompletar marca/modelo/año', owner: 'Productos Digitales · TI', plazo: '90d' },
+          { t: 'Calibración de algoritmo de tasación con transacciones Q1 2026', owner: 'Pricing Usados', plazo: '90d' },
+          { t: 'CTA "Agendar inspección" fijo en mobile + retargeting WhatsApp 48h', owner: 'Canales Digitales', plazo: '30d' }
+        ]
+      },
+      { title: 'Contact Center · Lead Management', sub: 'Cadencia · scoring · tiempo al primer contacto',
+        pains: [
+          { t: 'Contactabilidad 53% con 21h al 1er contacto', impact: '~75k leads / 6m sin contactar' }
+        ],
+        iniciativas: [
+          { t: 'Cadencia automática llamada → WhatsApp con journey en Creatio', owner: 'Lead Mgmt · TI', plazo: '90d' },
+          { t: 'Scoring de leads para priorización (no FIFO)', owner: 'Lead Mgmt · BI', plazo: '60d' },
+          { t: 'Ficha web completa visible al agente al tomar el lead', owner: 'Productos Digitales', plazo: '30d' }
+        ]
+      },
+      { title: 'Operación presencial: cita y cierre', sub: 'No-show · check-in · inspección',
+        pains: [
+          { t: '28% de no-show a la cita agendada', impact: 'Capacidad ociosa del inspector' }
+        ],
+        iniciativas: [
+          { t: 'Paula (agente WhatsApp): confirmación + recordatorios 24h y 2h', owner: 'Canales Digitales · Lead Mgmt', plazo: '60d' },
+          { t: 'Botones interactivos Confirmar/Reagendar/Cancelar en WhatsApp', owner: 'Canales Digitales', plazo: '60d' },
+          { t: 'Flujo automático de re-agendamiento post no-show', owner: 'Lead Mgmt · TI', plazo: '90d' }
+        ]
+      }
+    ],
+    krs: [
+      { desc: 'Drop-off Datos Personales', baseline: '24%', target: '12%' },
+      { desc: 'Tasa de no-show a la cita', baseline: '28%', target: '15%' }
+    ]
+  },
+  preparación: {
+    northStars: [
+      { metric: '% stock con foto Tier 1/2 (Impel)', baseline: '67,7%', target: '95%' },
+      { metric: '% inventario total publicado en vitrina', baseline: '69,5%', target: '90%' }
+    ],
+    nsImpact: '+527 uds visibles · vitrina premium · ahorro $4,2M / mes Impel',
+    headline: 'El inventario existe y la mayoría del stock está disponible, pero la vitrina solo muestra el 69,5% y las fotos no escalan al ritmo del catálogo.',
+    clusters: [
+      { title: 'Pipeline visual', sub: 'Foto Impel · cabina virtual · Tier 4 sin foto',
+        pains: [
+          { t: '32,3% del stock publicado sin foto Impel', impact: '$4,2M / mes · $50,4M / año' }
+        ],
+        iniciativas: [
+          { t: '<strong>[TRANSFORMACIONAL]</strong> Foto in-house en la inspección mecánica (deprecar Impel)', owner: 'Vitrina Digital · Productos Digitales · Canales', plazo: 'Q3' },
+          { t: 'SLA transitorio foto tomada → Impel <24h con auditoría diaria', owner: 'Vitrina Digital', plazo: '30d' },
+          { t: 'Auditoría diaria del subset 204 sin foto con owner por sucursal', owner: 'Vitrina Digital · Operaciones', plazo: '30d' }
+        ]
+      },
+      { title: 'Inventario inmovilizado', sub: 'Reservas fantasma · "En acopio" · gate de precio',
+        pains: [
+          { t: '22,5% del inventario inmovilizado', impact: '1 de cada 4 unidades bloqueadas' },
+          { t: '166 uds "En acopio" sin definición operacional', impact: '83% del stock retenido' },
+          { t: '17 uds bloqueadas hoy por falta de precio', impact: '8,5% del retenido' }
+        ],
+        iniciativas: [
+          { t: 'Liberación automática de reservas a 48h sin avance', owner: 'Vitrina Digital · Productos Digitales', plazo: '60d' },
+          { t: 'Subcategorías accionables de "En acopio" (recién llegado · limpieza · docs)', owner: 'Vitrina Digital · Logística', plazo: '60d' },
+          { t: 'SLA <24h Quiter → precio cargado + alerta automática', owner: 'Pricing Usados', plazo: '30d' }
+        ]
+      },
+      { title: 'Vitrina y catálogo', sub: 'Cobertura por zona · sucursales críticas',
+        pains: [
+          { t: 'Solo 69,5% del inventario en vitrina', impact: '784 uds fuera del catálogo' }
+        ],
+        iniciativas: [
+          { t: 'Reporte diario de brecha disponibles vs. publicadas', owner: 'Vitrina Digital · BI', plazo: '30d' },
+          { t: 'Bloqueo de publicación sin campos mínimos completos', owner: 'Productos Digitales', plazo: '60d' },
+          { t: 'Intervención focalizada en top 5 peores sucursales', owner: 'Vitrina Digital · Operaciones', plazo: '60d' }
+        ]
+      }
+    ],
+    krs: [
+      { desc: 'Unidades "En acopio"', baseline: '166', target: '<50' },
+      { desc: 'Reservas fantasma liberadas auto.', baseline: '0%', target: '100%' }
+    ]
+  },
+  venta: {
+    northStars: [
+      { metric: 'Cotizaciones web iniciadas / mes', baseline: '862', target: '2.000' },
+      { metric: 'Tasa de descarte del pool de leads', baseline: '77,7%', target: '60%' }
+    ],
+    nsImpact: '+134 ventas / mes · +1.608 / año · ~$161M margen estimado / mes',
+    headline: 'El comprador tiene tráfico abundante en el sitio, pero el funnel web pierde el 96% antes de la cotización y la gestión de leads premium quema oportunidades de mayor valor.',
+    clusters: [
+      { title: 'Captación digital · funnel web', sub: 'Ficha · cotización · catálogo',
+        pains: [
+          { t: '3,9% conv. ficha → cotización (salto crítico)', impact: '862 → ~1.700 cotizaciones / mes' },
+          { t: '74.943 dead clicks / mes por swipe/zoom mobile', impact: '3.792 sesiones con dead click' },
+          { t: '273K dead clicks / mes en catálogo', impact: 'Fricción silenciosa masiva' }
+        ],
+        iniciativas: [
+          { t: 'Eliminar foto del header del buy-process + indicador de progreso no clicable', owner: 'Canales Digitales · UX/UI', plazo: '30d' },
+          { t: 'Habilitar swipe + zoom en carrusel mobile + indicador "Desliza"', owner: 'Canales Digitales · UX/UI', plazo: '60d' },
+          { t: 'Optimizar Hero del catálogo (primera pantalla mobile + visibilidad buscador)', owner: 'Canales · UX · Marketing', plazo: '60d' }
+        ]
+      },
+      { title: 'Gestión de leads premium', sub: 'Oro/VIP con VPP · Financiamiento · Descarte masivo',
+        pains: [
+          { t: '641 clientes Oro+VIP con VPP descartados', impact: 'Enero 26: 280 perdidos' },
+          { t: '95,3% descarte con financiamiento', impact: 'Segmento premium con peor gestión' }
+        ],
+        iniciativas: [
+          { t: '<strong>[TRANSFORMACIONAL]</strong> Bloqueo de descarte automático Oro/VIP+VPP sin revisión de supervisor', owner: 'Lead Mgmt Usados', plazo: '60d' },
+          { t: 'Pre-evaluación crediticia ANTES del ingreso al CRM', owner: 'Lead Mgmt · Pricing · TI', plazo: '90d' },
+          { t: 'Eliminar "Descarte masivo" como motivo válido + validación de tel/email al ingreso', owner: 'Lead Mgmt · TI', plazo: '30d' }
+        ]
+      },
+      { title: 'Reserva · Firma · Entrega', sub: 'Trazabilidad · digitalización · transferencia',
+        pains: [
+          { t: 'Firma en plataforma externa sin trazabilidad', impact: '1.700-1.800 transferencias / mes manuales' },
+          { t: '100-150 uds / mes por alto DPS sin flujo diferenciado', impact: 'Riesgo operativo · revisión manual diaria' }
+        ],
+        iniciativas: [
+          { t: '<strong>[TRANSFORMACIONAL]</strong> Integrar plataforma de firma al ecosistema (Quiter + Autofact)', owner: 'TI · Productos Digitales', plazo: 'Q3' },
+          { t: 'Reconciliación automática Quiter ↔ Autofact para autorizar transferencia', owner: 'TI · Trámites', plazo: 'Q3' },
+          { t: 'Flujo diferenciado para alto DPS con SLA propio', owner: 'Trámites · Productos Digitales', plazo: '90d' }
+        ]
+      }
+    ],
+    krs: [
+      { desc: 'Conversión ficha → cotización', baseline: '3,9%', target: '8%' },
+      { desc: 'Oro+VIP con VPP descartados (6m)', baseline: '641', target: '0' }
+    ]
+  }
+};
+
+function renderEjeAnalysesCtas(macroKey) {
+  var arr = EJE_ANALYSES[macroKey] || [];
+  if (!arr.length) return '';
+  var ctas = '';
+  for (var i = 0; i < arr.length; i++) {
+    var a = arr[i];
+    ctas += '<a class="estrategia-analysis-cta sh-resource" href="' + a.href + '" target="_blank" rel="noopener" title="Abrir análisis embebido">' +
+      '<span class="estrategia-analysis-cta-eye"></span>' +
+      '<span class="estrategia-analysis-cta-label">Ver análisis</span>' +
+      '<span class="estrategia-analysis-cta-sub">· ' + a.label + '</span>' +
+    '</a>';
+  }
+  return '<div class="estrategia-analyses">' +
+    '<span class="estrategia-analyses-label">Análisis disponible para este eje</span>' +
+    '<div class="estrategia-analyses-list">' + ctas + '</div>' +
+  '</div>';
+}
+
+function renderEjeColumn(macroKey) {
+  var data = EJE_CLUSTERS[macroKey];
+  if (!data) return '';
+  var meta = MACRO_META[macroKey] || {};
+  // 2 North Stars
+  var nsHtml = '';
+  for (var n = 0; n < data.northStars.length; n++) {
+    var ns = data.northStars[n];
+    nsHtml += '<div class="ec-ns">' +
+      '<div class="ec-ns-metric">' + ns.metric + '</div>' +
+      '<div class="ec-ns-progress"><span class="ec-ns-baseline">' + ns.baseline + '</span><span class="ec-ns-arrow">→</span><span class="ec-ns-target">' + ns.target + '</span></div>' +
+    '</div>';
+  }
+  // Análisis del eje · CTAs concentrados
+  var analyses = EJE_ANALYSES[macroKey] || [];
+  var analysesHtml = '';
+  if (analyses.length) {
+    var ctas = '';
+    for (var a = 0; a < analyses.length; a++) {
+      ctas += '<a class="ec-analysis sh-resource" href="' + analyses[a].href + '" target="_blank" rel="noopener">' +
+        '<span class="ec-analysis-eye"></span>' +
+        '<span class="ec-analysis-text">' +
+          '<span class="ec-analysis-label">Ver análisis</span>' +
+          '<span class="ec-analysis-sub">' + analyses[a].label + '</span>' +
+        '</span>' +
+      '</a>';
+    }
+    analysesHtml = '<div class="ec-analyses-block">' +
+      '<div class="ec-block-label">📊 Análisis del eje</div>' +
+      '<div class="ec-analyses-list">' + ctas + '</div>' +
+    '</div>';
+  } else {
+    analysesHtml = '<div class="ec-analyses-block ec-analyses-empty">' +
+      '<div class="ec-block-label">📊 Análisis del eje</div>' +
+      '<div class="ec-analyses-empty-text">Data interna en CRM Llaima · sin reporte HTML embebido propio</div>' +
+    '</div>';
+  }
+  // Top 3 dolores · agregados de los clusters
+  var topPains = [];
+  for (var ci = 0; ci < data.clusters.length && topPains.length < 3; ci++) {
+    var cl = data.clusters[ci];
+    if (cl.pains && cl.pains.length) topPains.push(cl.pains[0]);
+  }
+  var painsHtml = '';
+  for (var pi = 0; pi < topPains.length; pi++) {
+    painsHtml += '<li class="ec-pain"><span class="ec-pain-bullet">!</span>' +
+      '<span class="ec-pain-text">' + topPains[pi].t + '<span class="ec-pain-impact">' + topPains[pi].impact + '</span></span>' +
+    '</li>';
+  }
+  // Top 3 iniciativas · agregadas de los clusters
+  var topInis = [];
+  for (var ci2 = 0; ci2 < data.clusters.length && topInis.length < 3; ci2++) {
+    var cl2 = data.clusters[ci2];
+    if (cl2.iniciativas && cl2.iniciativas.length) topInis.push(cl2.iniciativas[0]);
+  }
+  var inisHtml = '';
+  for (var ii2 = 0; ii2 < topInis.length; ii2++) {
+    var ini = topInis[ii2];
+    inisHtml += '<li class="ec-ini">' +
+      '<span class="ec-ini-text">' + ini.t + '</span>' +
+      '<span class="ec-ini-meta"><span class="ec-ini-owner">' + ini.owner + '</span><span class="ec-ini-plazo">' + ini.plazo + '</span></span>' +
+    '</li>';
+  }
+  // 2 KRs estrella
+  var krsHtml = '';
+  for (var k = 0; k < data.krs.length; k++) {
+    var kr = data.krs[k];
+    krsHtml += '<div class="ec-kr">' +
+      '<div class="ec-kr-desc">' + kr.desc + '</div>' +
+      '<div class="ec-kr-progress"><span class="ec-kr-baseline">' + kr.baseline + '</span><span class="ec-kr-arrow">→</span><span class="ec-kr-target">' + kr.target + '</span></div>' +
+    '</div>';
+  }
+  return '<div class="eje-col eje-col-' + macroKey + '">' +
+    '<div class="ec-head">' +
+      '<div class="ec-head-eyebrow">Eje</div>' +
+      '<div class="ec-head-title">' + (meta.title || macroKey) + '</div>' +
+      '<div class="ec-head-sub">' + (meta.shortDescription || '') + '</div>' +
+    '</div>' +
+    '<div class="ec-body">' +
+      '<div class="ec-headline">' + data.headline + '</div>' +
+      '<div class="ec-block-label">🎯 North Stars</div>' +
+      '<div class="ec-ns-list">' + nsHtml + '</div>' +
+      '<div class="ec-impact">' + data.nsImpact + '</div>' +
+      analysesHtml +
+      '<div class="ec-block-label">⚠️ Top 3 dolores</div>' +
+      '<ul class="ec-pains-list">' + painsHtml + '</ul>' +
+      '<div class="ec-block-label">✅ Top 3 iniciativas que los resuelven</div>' +
+      '<ul class="ec-inis-list">' + inisHtml + '</ul>' +
+      '<div class="ec-block-label">📈 KRs estrella</div>' +
+      '<div class="ec-krs">' + krsHtml + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
 function renderExecSummarySlide(i) {
   // ----------- 1. Equipo -----------
   var teamGroups = [
@@ -2596,33 +3210,78 @@ function renderExecSummarySlide(i) {
       title: 'Eje Compra',
       sub: 'El vendedor llega con intención y el funnel lo pierde en datos personales, tasación y Contact Center',
       items: [
-        { rank: 1, t: 'Drop-off 24% en Datos Personales', d: 'De 86.312 usuarios que ingresan datos del vehículo, solo 65.554 completan sus datos personales. Es la mayor pérdida del funnel web. El modal OTP solo convierte el 17% (43.249 → 7.446).', i: '20.758 leads<br/>perdidos / mes' },
-        { rank: 2, t: 'Contactabilidad 53% con 21h al 1er contacto', d: 'Las categorías Alta y Muy Alta — las de mayor valor comercial — tienen la PEOR contactabilidad (33–43%). El CC opera en FIFO sin scoring, y ~40% de contactados reciben una sola llamada.', i: '~75k leads / 6m<br/>sin contactar' },
-        { rank: 3, t: 'Brecha 15% precio online vs. oferta final', d: 'El vendedor ve un precio en el sitio que luego no se confirma en sucursal, obligando a apelar para mejorar la oferta. 38% abandona al ver la tasación.', i: 'Vaivén de<br/>apelaciones + frustración' },
-        { rank: 4, t: '41,5% drop-off post-Resultado Tasación', d: 'De los 7.446 que completan el resultado verificado, 4.358 agendan — 3.088 desaparecen. El CTA "Agendar inspección" se pierde en el scroll con 963 sesiones de dead click.', i: '2da mayor pérdida<br/>del funnel' },
-        { rank: 5, t: '28% de no-show a la cita agendada', d: 'Solo 8% se re-agenda post no-show. Sin flujo automático de recuperación ni análisis de causas raíz por sucursal.', i: 'Capacidad ociosa<br/>del inspector' }
+        { rank: 1, t: 'Drop-off 24% en Datos Personales', d: 'De 86.312 usuarios que ingresan datos del vehículo, solo 65.554 completan sus datos personales. Es la mayor pérdida del funnel web. El modal OTP solo convierte el 17% (43.249 → 7.446).',
+          iniciativas: ['Validación WhatsApp bloqueante (reemplaza modal OTP)', 'Rediseño del modal OTP + tiempo de reenvío', 'Autocompletar desde RUT vía Autofact (~$1,2M/mes)'],
+          owner: 'Canales Digitales · UX/UI', ownerNames: 'Martin Flores · Constanza Araya',
+          i: '20.758 leads<br/>perdidos / mes' },
+        { rank: 2, t: 'Contactabilidad 53% con 21h al 1er contacto', d: 'Las categorías Alta y Muy Alta — las de mayor valor comercial — tienen la PEOR contactabilidad (33–43%). El CC opera en FIFO sin scoring, y ~40% de contactados reciben una sola llamada.',
+          iniciativas: ['Cadencia automática llamada → WhatsApp con journey en Creatio', 'Scoring de leads para priorización (no FIFO)', 'Ficha web completa visible al agente'],
+          owner: 'Lead Mgmt + TI', ownerNames: 'Maryorin Vivas · Jose Tomas Figueroa',
+          i: '~75k leads / 6m<br/>sin contactar' },
+        { rank: 3, t: 'Brecha 15% precio online vs. oferta final', d: 'El vendedor ve un precio en el sitio que luego no se confirma en sucursal, obligando a apelar para mejorar la oferta. 38% abandona al ver la tasación.',
+          iniciativas: ['Calibrar algoritmo con transacciones reales Q1 2026', 'Incluir condición mecánica declarada en flujo', 'Comunicar "sujeto a revisión" estilo Bruno Fritsch'],
+          owner: 'Pricing Usados · Productos Digitales', ownerNames: 'Raul Olivares · Barbara Colle',
+          i: 'Vaivén de<br/>apelaciones + frustración' },
+        { rank: 4, t: '41,5% drop-off post-Resultado Tasación', d: 'De los 7.446 que completan el resultado verificado, 4.358 agendan — 3.088 desaparecen. El CTA "Agendar inspección" se pierde en el scroll con 963 sesiones de dead click.',
+          iniciativas: ['CTA Agendar visible y fijo en mobile', 'Retargeting WhatsApp a 48h post-resultado', 'Calendario visual con días disponibles'],
+          owner: 'Canales Digitales · UX/UI', ownerNames: 'Martin Flores · Constanza Araya',
+          i: '2da mayor pérdida<br/>del funnel' },
+        { rank: 5, t: '28% de no-show a la cita agendada', d: 'Solo 8% se re-agenda post no-show. Sin flujo automático de recuperación ni análisis de causas raíz por sucursal.',
+          iniciativas: ['Paula (agente WhatsApp): confirmación + recordatorios 24h y 2h', 'Botones interactivos Confirmar/Reagendar/Cancelar', 'Flujo automático de re-agendamiento post no-show'],
+          owner: 'Canales Digitales + Lead Mgmt', ownerNames: 'Martin Flores · Maryorin Vivas',
+          i: 'Capacidad ociosa<br/>del inspector' }
       ]
     },
     preparación: {
       title: 'Eje Preparación',
       sub: 'El inventario existe pero no llega limpio a la vitrina: foto, precio y reservas inmovilizan stock',
       items: [
-        { rank: 1, t: '32,3% del stock publicado sin foto Impel', d: '579 uds publicadas con foto de inspección o placeholder. El servicio Impel externo cuesta $4,2M/mes y no escala. Zona RM concentra 114 de 204 uds sin foto (55,9%).', i: '$4,2M / mes<br/>$50,4M / año' },
-        { rank: 2, t: '22,5% del inventario inmovilizado', d: '580 uds no elegibles para publicar: 403 reservadas, 166 con problemas legales, 9 UFM/falla mecánica, 2 no disponibles. Sin distinguir reserva comercial activa vs. fantasma.', i: '1 de cada 4<br/>unidades bloqueadas' },
-        { rank: 3, t: '166 uds "En acopio" sin definición operacional', d: 'Es el 83% de las 200 retenciones con stock disponible. "En acopio" opera como cajón de sastre: sin SLA, sin subcategoría, sin owner por motivo.', i: '83% del stock<br/>retenido' },
-        { rank: 4, t: 'Solo 69,5% del inventario en vitrina', d: '1.790 de 2.574 uds publicadas. Peor ejecución: Concepción J. Alessandri R. 1885 (51,5% sin foto) y Vitacura Padre Hurtado 1246 (48,4%).', i: '784 uds fuera<br/>del catálogo' },
-        { rank: 5, t: '17 uds bloqueadas hoy por falta de precio', d: 'Gate operacional concreto. Sin SLA Quiter → precio, sin alerta cuando una unidad lleva > X horas sin valor asignado.', i: '8,5% del stock<br/>retenido' }
+        { rank: 1, t: '32,3% del stock publicado sin foto Impel', d: '579 uds publicadas con foto de inspección o placeholder. El servicio Impel externo cuesta $4,2M/mes y no escala. Zona RM concentra 114 de 204 uds sin foto (55,9%).',
+          iniciativas: ['<strong>[TRANSFORMACIONAL]</strong> Foto in-house en la inspección mecánica (deprecar Impel)', 'SLA transitorio foto tomada → Impel <24h', 'Auditoría diaria del subset 204 sin foto con owner por sucursal'],
+          owner: 'Vitrina Digital · Productos Digitales · Canales Digitales', ownerNames: 'Javiera Jerez · Barbara Colle · Martin Flores',
+          i: '$4,2M / mes<br/>$50,4M / año' },
+        { rank: 2, t: '22,5% del inventario inmovilizado', d: '580 uds no elegibles para publicar: 403 reservadas, 166 con problemas legales, 9 UFM/falla mecánica, 2 no disponibles. Sin distinguir reserva comercial activa vs. fantasma.',
+          iniciativas: ['Liberación automática de reservas a 48h sin avance', 'Alerta al asesor antes del vencimiento', 'Diferenciar reserva comercial vs. fantasma (>30d)'],
+          owner: 'Vitrina Digital · Productos Digitales', ownerNames: 'Javiera Jerez · Barbara Colle',
+          i: '1 de cada 4<br/>unidades bloqueadas' },
+        { rank: 3, t: '166 uds "En acopio" sin definición operacional', d: 'Es el 83% de las 200 retenciones con stock disponible. "En acopio" opera como cajón de sastre: sin SLA, sin subcategoría, sin owner por motivo.',
+          iniciativas: ['Subcategorías accionables (recién llegado · limpieza · docs)', 'Owner y SLA <48h por subcategoría', 'Dashboard diario con alerta de aging'],
+          owner: 'Vitrina Digital + Logística', ownerNames: 'Javiera Jerez · Natalia Reyes',
+          i: '83% del stock<br/>retenido' },
+        { rank: 4, t: 'Solo 69,5% del inventario en vitrina', d: '1.790 de 2.574 uds publicadas. Peor ejecución: Concepción J. Alessandri R. 1885 (51,5% sin foto) y Vitacura Padre Hurtado 1246 (48,4%).',
+          iniciativas: ['Reporte diario de brecha disponibles vs. publicadas', 'Bloqueo de publicación sin campos mínimos', 'Intervención focalizada top 5 peores sucursales'],
+          owner: 'Vitrina Digital · Productos Digitales', ownerNames: 'Javiera Jerez · Barbara Colle',
+          i: '784 uds fuera<br/>del catálogo' },
+        { rank: 5, t: '17 uds bloqueadas hoy por falta de precio', d: 'Gate operacional concreto. Sin SLA Quiter → precio, sin alerta cuando una unidad lleva > X horas sin valor asignado.',
+          iniciativas: ['SLA <24h Quiter → precio cargado', 'Alerta automática por unidad sin precio', 'Reglas paramétricas modelo + antigüedad + condición'],
+          owner: 'Pricing Usados · Productos Digitales', ownerNames: 'Raul Olivares · Barbara Colle',
+          i: '8,5% del stock<br/>retenido' }
       ]
     },
     venta: {
       title: 'Eje Venta',
       sub: 'El comprador llega al sitio pero el funnel web y la gestión de leads queman oportunidades de alto valor',
       items: [
-        { rank: 1, t: '3,9% conv. ficha → cotización (salto crítico)', d: 'De 21.872 sesiones en ficha solo 862 inician cotización. Es la mayor oportunidad de mejora del funnel del sitio. Exceso de preguntas y dead clicks en los steps del header generan fricción y abandono.', i: '862 → ~1.700<br/>cotizaciones / mes' },
-        { rank: 2, t: '74.943 dead clicks / mes por swipe/zoom mobile', d: 'Carrusel de la ficha sin interacción táctil cuando el auto no tiene 360°. Los usuarios intentan desliizar y ampliar sin respuesta. Afecta prácticamente todos los autos sin vista 360°.', i: '3.792 sesiones<br/>con dead click' },
-        { rank: 3, t: '641 clientes Oro+VIP con VPP descartados', d: 'Salazar-Israel en 6 meses. El VPP no protege de descarte: con VPP se descarta +7pp más que sin VPP. Cuando avanzan, convierten mejor (4,0% vs. 3,3%) — potencial premium desperdiciado.', i: 'Enero 26:<br/>280 perdidos' },
-        { rank: 4, t: '95,3% descarte con financiamiento', d: 'Segmento de mayor margen: 10pp más de descarte que sin financiamiento. "No contesta" (22.364 casos · 31%) y "Descarte masivo" (8.613 · 12%) dominan el motivo. Sin pre-evaluación crediticia previa al CRM.', i: 'Segmento premium<br/>con peor gestión' },
-        { rank: 5, t: '273K dead clicks / mes en catálogo', d: 'Banners de campaña y bloques corporativos no clicables. Solo 4,4% de las sesiones usa el botón de filtros (2.749 clics / mes) — intención oculta por baja visibilidad.', i: 'Fricción silenciosa<br/>masiva' }
+        { rank: 1, t: '3,9% conv. ficha → cotización (salto crítico)', d: 'De 21.872 sesiones en ficha solo 862 inician cotización. Es la mayor oportunidad de mejora del funnel del sitio. Exceso de preguntas y dead clicks en los steps del header generan fricción y abandono.',
+          iniciativas: ['Eliminar foto del header del buy-process', 'Reemplazar steps clicables por indicador de progreso', 'Reducir preguntas a las esenciales (single-page)'],
+          owner: 'Canales Digitales · UX/UI', ownerNames: 'Martin Flores · Constanza Araya',
+          i: '862 → ~1.700<br/>cotizaciones / mes' },
+        { rank: 2, t: '74.943 dead clicks / mes por swipe/zoom mobile', d: 'Carrusel de la ficha sin interacción táctil cuando el auto no tiene 360°. Los usuarios intentan deslizar y ampliar sin respuesta. Afecta prácticamente todos los autos sin vista 360°.',
+          iniciativas: ['Habilitar swipe + zoom en carrusel mobile', 'Indicador "Desliza para ver más fotos"', 'Marca de agua "Foto en proceso" para autos sin Impel'],
+          owner: 'Canales Digitales · UX/UI', ownerNames: 'Martin Flores · Constanza Araya',
+          i: '3.792 sesiones<br/>con dead click' },
+        { rank: 3, t: '641 clientes Oro+VIP con VPP descartados', d: 'Salazar-Israel en 6 meses. El VPP no protege de descarte: con VPP se descarta +7pp más que sin VPP. Cuando avanzan, convierten mejor (4,0% vs. 3,3%) — potencial premium desperdiciado.',
+          iniciativas: ['Bloqueo de descarte automático sin revisión de supervisor', 'SLA de contacto agresivo + tag "Premium con VPP"', 'Reporte semanal por sucursal del % Premium descartados'],
+          owner: 'Lead Mgmt Usados', ownerNames: 'Jose Tomas Figueroa · Maryorin Vivas',
+          i: 'Enero 26:<br/>280 perdidos' },
+        { rank: 4, t: '95,3% descarte con financiamiento', d: 'Segmento de mayor margen: 10pp más de descarte que sin financiamiento. "No contesta" (22.364 casos · 31%) y "Descarte masivo" (8.613 · 12%) dominan el motivo. Sin pre-evaluación crediticia previa al CRM.',
+          iniciativas: ['Pre-evaluación crediticia ANTES del ingreso al CRM', 'Eliminar "Descarte masivo" como motivo válido', 'Validación de teléfono/email al ingreso'],
+          owner: 'Lead Mgmt + Pricing + TI', ownerNames: 'Jose Tomas Figueroa · Raul Olivares',
+          i: 'Segmento premium<br/>con peor gestión' },
+        { rank: 5, t: '273K dead clicks / mes en catálogo', d: 'Banners de campaña y bloques corporativos no clicables. Solo 4,4% de las sesiones usa el botón de filtros (2.749 clics / mes) — intención oculta por baja visibilidad.',
+          iniciativas: ['Optimizar Hero del catálogo (primera pantalla mobile)', 'Mayor visibilidad del buscador de texto + botón filtros', 'Sugerencia de alternativas cuando filtro = 0 resultados'],
+          owner: 'Canales Digitales · UX/UI · Marketing', ownerNames: 'Martin Flores · Constanza Araya · Trinidad Madrigal',
+          i: 'Fricción silenciosa<br/>masiva' }
       ]
     }
   };
@@ -2631,12 +3290,29 @@ function renderExecSummarySlide(i) {
     var itemsHtml = '';
     for (var pi = 0; pi < p.items.length; pi++) {
       var it = p.items[pi];
+      var iniciativasHtml = '';
+      if (it.iniciativas && it.iniciativas.length) {
+        for (var ii = 0; ii < it.iniciativas.length; ii++) {
+          iniciativasHtml += '<li>' + it.iniciativas[ii] + '</li>';
+        }
+      }
+      var actionHtml = (it.iniciativas && it.iniciativas.length)
+        ? '<div class="pain-action">' +
+            '<span class="pain-action-label">Iniciativas que mueven el indicador</span>' +
+            '<ul class="pain-action-list">' + iniciativasHtml + '</ul>' +
+            (it.owner ? '<div class="pain-action-owner"><span class="pain-action-owner-label">Articula</span>' +
+              '<span class="pain-action-owner-area">' + it.owner + '</span>' +
+              (it.ownerNames ? '<span class="pain-action-owner-names">' + it.ownerNames + '</span>' : '') +
+            '</div>' : '') +
+          '</div>'
+        : '<div class="pain-action pain-action-empty"></div>';
       itemsHtml += '<div class="pain-item">' +
         '<div class="pain-rank">' + it.rank + '</div>' +
         '<div class="pain-content">' +
           '<div class="pain-title">' + it.t + '</div>' +
           '<div class="pain-desc">' + it.d + '</div>' +
         '</div>' +
+        actionHtml +
         '<div class="pain-impact"><span class="pain-impact-label">Impacto</span>' + it.i + '</div>' +
       '</div>';
     }
@@ -2724,65 +3400,244 @@ function renderExecSummarySlide(i) {
       '</div>' +
     '</div>';
 
-  // ----------- Slide completa -----------
-  return '<div class="slide exec-summary" data-slide="' + i + '">' +
-    '<div class="exec-hero">' +
-      '<div class="eyebrow">Resumen ejecutivo · lectura para directorio</div>' +
-      '<h1>📋 Journey del Cliente · Vehículos Usados Clicar</h1>' +
-      '<p>Cómo se levantó el análisis, qué se estudió, qué duele más en cada eje y cómo gobernamos el avance. Esta vista es la primera diapositiva al presentar: de lo general a lo particular, con foco en decisiones accionables.</p>' +
-    '</div>' +
-    '<div class="exec-kpi-row three">' +
-      '<div class="exec-kpi compound">' +
-        '<div class="exec-kpi-label">Alcance del análisis</div>' +
-        '<div class="exec-kpi-compound-line"><span class="exec-kpi-compound-value">3</span><span class="exec-kpi-compound-label">ejes</span></div>' +
-        '<div class="exec-kpi-compound-line"><span class="exec-kpi-compound-value">16</span><span class="exec-kpi-compound-label">procesos analizados</span></div>' +
-        '<div class="exec-kpi-phrase">Mapeo end-to-end del recorrido del cliente y la unidad usada: Compra · Preparación · Venta.</div>' +
+  // ----------- North Stars + impacto (consolidado del eje) -----------
+  var nsConsHtml = '';
+  var ejeOrder = ['compra','preparación','venta'];
+  for (var nsi = 0; nsi < ejeOrder.length; nsi++) {
+    var ek = ejeOrder[nsi];
+    var ed = EJE_CLUSTERS[ek];
+    var em = MACRO_META[ek] || {};
+    nsConsHtml += '<div class="ns-card-3 ns-card-' + ek + '">' +
+      '<div class="ns-card-3-eyebrow">Eje ' + (em.title || ek) + '</div>' +
+      '<div class="ns-card-3-metric">' + ed.nsTitle + '</div>' +
+      '<div class="ns-card-3-progress"><span class="ns-card-3-baseline">' + ed.nsBaseline + '</span><span class="ns-card-3-arrow">→</span><span class="ns-card-3-target">' + ed.nsTarget + '</span></div>' +
+      '<div class="ns-card-3-impact">' + ed.nsImpact + '</div>' +
+    '</div>';
+  }
+
+  // ----------- Apuestas transformacionales -----------
+  var transHtml = '';
+  for (var tt = 0; tt < OKRS.transformacionales.length; tt++) {
+    var trIt = OKRS.transformacionales[tt];
+    var trMacro = (MACRO_META[trIt.macro] && MACRO_META[trIt.macro].title) || trIt.macro;
+    transHtml += '<div class="trans-card-mini macro-' + trIt.macro + '">' +
+      '<div class="trans-card-mini-label">Apuesta · ' + trMacro + '</div>' +
+      '<div class="trans-card-mini-title">' + trIt.title + '</div>' +
+      '<div class="trans-card-mini-kr">' + trIt.kr + '</div>' +
+      '<div class="trans-card-mini-savings">💰 ' + trIt.savings + '</div>' +
+      '<div class="trans-card-mini-owner">Owner: ' + trIt.owner + '</div>' +
+    '</div>';
+  }
+
+  // Diagnóstico por eje · tabla
+  var diagRows = '';
+  var ejes = ['compra','preparación','venta'];
+  for (var dx = 0; dx < ejes.length; dx++) {
+    var dk = ejes[dx];
+    var dd = EJE_CLUSTERS[dk];
+    var dm = MACRO_META[dk] || {};
+    var nsLines = '';
+    for (var nx = 0; nx < dd.northStars.length; nx++) {
+      var nss = dd.northStars[nx];
+      nsLines += '<div class="memo-ind-row">' +
+        '<span class="memo-ind-name">' + nss.metric + '</span>' +
+        '<span class="memo-ind-progress"><span class="memo-ind-baseline">' + nss.baseline + '</span><span class="memo-ind-arrow">→</span><span class="memo-ind-target">' + nss.target + '</span></span>' +
+      '</div>';
+    }
+    var analyses = EJE_ANALYSES[dk] || [];
+    var anaLinks = '';
+    if (analyses.length) {
+      for (var aa = 0; aa < analyses.length; aa++) {
+        anaLinks += '<a class="memo-analysis-link sh-resource" href="' + analyses[aa].href + '" target="_blank" rel="noopener">' +
+          '<span class="memo-analysis-link-eye"></span>' +
+          'Ver análisis · ' + analyses[aa].label.split('·')[0].trim() +
+        '</a>';
+      }
+    } else {
+      anaLinks = '<span class="memo-analysis-empty">Sin reporte adjunto · data en CRM Llaima</span>';
+    }
+    diagRows += '<tr class="memo-row memo-row-' + dk + '">' +
+      '<td class="memo-cell-eje"><span class="memo-eje-num">' + (dm.num || (dx+1)) + '</span><div><div class="memo-eje-name">Eje ' + (dm.title || dk) + '</div><div class="memo-eje-sub">' + (dm.shortDescription || '') + '</div></div></td>' +
+      '<td class="memo-cell-ind"><div class="memo-cell-label">Indicadores estratégicos</div>' + nsLines + '</td>' +
+      '<td class="memo-cell-impact"><div class="memo-cell-label">Impacto estimado</div><div class="memo-impact-text">' + dd.nsImpact + '</div></td>' +
+      '<td class="memo-cell-analysis"><div class="memo-cell-label">Análisis de respaldo</div>' + anaLinks + '</td>' +
+    '</tr>';
+  }
+
+  // Problemas críticos · 3 por eje (formato lista numerada)
+  var problemSections = '';
+  for (var px = 0; px < ejes.length; px++) {
+    var pk = ejes[px];
+    var pd = EJE_CLUSTERS[pk];
+    var pmeta = MACRO_META[pk] || {};
+    var probLis = '';
+    var counter = 0;
+    for (var ci = 0; ci < pd.clusters.length && counter < 3; ci++) {
+      var clx = pd.clusters[ci];
+      if (clx.pains && clx.pains.length) {
+        counter++;
+        var painP = clx.pains[0];
+        probLis += '<li class="memo-problem">' +
+          '<span class="memo-problem-num">' + (pmeta.num || (px+1)) + '.' + counter + '</span>' +
+          '<div class="memo-problem-body">' +
+            '<div class="memo-problem-title">' + painP.t + '</div>' +
+            '<div class="memo-problem-detail">' + painP.impact + ' · enfoque ' + clx.title.toLowerCase() + '</div>' +
+          '</div>' +
+        '</li>';
+      }
+    }
+    problemSections += '<div class="memo-problem-block">' +
+      '<div class="memo-problem-eje">' +
+        '<span class="memo-eje-num memo-eje-num-' + pk + '">' + (pmeta.num || (px+1)) + '</span>' +
+        '<span>Eje ' + (pmeta.title || pk) + '</span>' +
       '</div>' +
-      '<div class="exec-kpi compound">' +
-        '<div class="exec-kpi-label">Profundidad del análisis</div>' +
-        '<div class="exec-kpi-compound-line"><span class="exec-kpi-compound-value">56</span><span class="exec-kpi-compound-label">subprocesos</span></div>' +
-        '<div class="exec-kpi-phrase">Cada subproceso documentado con data real, observación UX y perspectiva del cliente.</div>' +
-        '<div class="exec-kpi-tags">' +
-          '<span class="exec-kpi-tag">KPIs</span>' +
-          '<span class="exec-kpi-tag">Hallazgos</span>' +
-          '<span class="exec-kpi-tag">Mejoras</span>' +
-          '<span class="exec-kpi-tag">Benchmark</span>' +
-        '</div>' +
+      '<ol class="memo-problem-list">' + probLis + '</ol>' +
+    '</div>';
+  }
+
+  // Iniciativas estratégicas · tabla con las apuestas + iniciativa principal por eje
+  var initRows = '';
+  var initIdx = 0;
+  for (var ti = 0; ti < OKRS.transformacionales.length; ti++) {
+    initIdx++;
+    var trbi = OKRS.transformacionales[ti];
+    var trMeta = MACRO_META[trbi.macro] || {};
+    initRows += '<tr>' +
+      '<td class="memo-init-num">' + initIdx + '</td>' +
+      '<td class="memo-init-name"><strong>' + trbi.title + '</strong><div class="memo-init-impact">' + (trbi.kr || '').replace(/<[^>]+>/g,'') + '</div></td>' +
+      '<td class="memo-init-eje"><span class="memo-eje-num memo-eje-num-' + trbi.macro + '">' + (trMeta.num || '') + '</span>' + (trMeta.title || trbi.macro) + '</td>' +
+      '<td class="memo-init-owner">' + trbi.owner + '</td>' +
+      '<td class="memo-init-savings">' + trbi.savings + '</td>' +
+      '<td class="memo-init-tag"><span class="memo-tag-strategic">Iniciativa estratégica</span></td>' +
+    '</tr>';
+  }
+
+  // Indicadores de seguimiento · tabla con barras
+  var indRows = '';
+  for (var ix = 0; ix < ejes.length; ix++) {
+    var ik = ejes[ix];
+    var idata = EJE_CLUSTERS[ik];
+    var imeta = MACRO_META[ik] || {};
+    for (var ii = 0; ii < idata.northStars.length; ii++) {
+      var indi = idata.northStars[ii];
+      var indNum = (parseFloat(String(indi.baseline).replace(',','.').replace('%','').replace(/[^\d.-]/g,'')) || 0);
+      var tgtNum = (parseFloat(String(indi.target).replace(',','.').replace('%','').replace(/[^\d.-]/g,'')) || 0);
+      var maxV = Math.max(indNum, tgtNum, 1);
+      var basePct = Math.min(100, (indNum / maxV) * 100);
+      var tgtPct = Math.min(100, (tgtNum / maxV) * 100);
+      indRows += '<tr>' +
+        '<td class="memo-ind-eje-cell"><span class="memo-eje-num memo-eje-num-' + ik + '">' + (imeta.num || '') + '</span>' + (imeta.title || ik) + '</td>' +
+        '<td class="memo-ind-name-cell">' + indi.metric + '</td>' +
+        '<td class="memo-ind-bar-cell">' +
+          '<div class="memo-bar-track">' +
+            '<div class="memo-bar-baseline" style="width:' + basePct + '%"></div>' +
+            '<div class="memo-bar-target-marker" style="left:' + tgtPct + '%"></div>' +
+          '</div>' +
+          '<div class="memo-bar-labels"><span class="memo-bar-baseline-label">Hoy: ' + indi.baseline + '</span><span class="memo-bar-target-label">Meta: ' + indi.target + '</span></div>' +
+        '</td>' +
+      '</tr>';
+    }
+  }
+
+  // Slide · MEMO EJECUTIVO clásico
+  return '<div class="slide exec-summary memo-exec" data-slide="' + i + '">' +
+
+    // SECCIÓN 1 · Mensaje a la Dirección
+    '<section class="memo-section memo-message">' +
+      '<div class="memo-eyebrow">Resumen Ejecutivo · Vista Dirección</div>' +
+      '<h1 class="memo-title">Journey del Cliente · Vehículos Usados</h1>' +
+      '<div class="memo-headline">Movilizando 6 indicadores estratégicos generamos un margen mensual estimado de <strong>~$514 millones</strong>.</div>' +
+      '<ul class="memo-summary-list">' +
+        '<li><strong>Eje Compra:</strong> convertir más leads en compras concretadas — <span class="memo-num">+294 compras / mes</span></li>' +
+        '<li><strong>Eje Preparación:</strong> tener la vitrina lista, limpia y completa — <span class="memo-num">+527 unidades visibles</span></li>' +
+        '<li><strong>Eje Venta:</strong> cerrar más oportunidades digitales — <span class="memo-num">+134 ventas / mes</span></li>' +
+      '</ul>' +
+    '</section>' +
+
+    // SECCIÓN 2 · Diagnóstico por eje
+    '<section class="memo-section">' +
+      '<h2 class="memo-h2">1. Diagnóstico por eje</h2>' +
+      '<p class="memo-lead">Estado actual de cada eje del recorrido del cliente, las metas comprometidas a 6 meses y el reporte de respaldo correspondiente.</p>' +
+      '<div class="memo-table-wrap">' +
+        '<table class="memo-table">' +
+          '<thead><tr>' +
+            '<th class="memo-th-eje">Eje</th>' +
+            '<th>Indicadores estratégicos · Hoy → Meta</th>' +
+            '<th>Impacto estimado a 6 meses</th>' +
+            '<th>Análisis de respaldo</th>' +
+          '</tr></thead>' +
+          '<tbody>' + diagRows + '</tbody>' +
+        '</table>' +
       '</div>' +
-      '<div class="exec-kpi compound">' +
-        '<div class="exec-kpi-label">Tiempo de análisis por eje</div>' +
-        '<div class="exec-kpi-times">' +
-          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro compra">Compra</span><div><div class="exec-kpi-time-value">6 meses · 158.753 leads</div><div class="exec-kpi-time-source">CRM Llaima · Oct 2025 – Mar 2026</div></div></div>' +
-          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro preparación">Preparación</span><div><div class="exec-kpi-time-value">Snapshot · 2.574 uds</div><div class="exec-kpi-time-source">Reporte BI 2026-04-17</div></div></div>' +
-          '<div class="exec-kpi-time-row"><span class="exec-kpi-time-macro venta">Venta</span><div><div class="exec-kpi-time-value">30 días Clarity + 6 meses Salazar</div><div class="exec-kpi-time-source">Microsoft Clarity (abr 26) + Salazar-Israel (92.843 leads)</div></div></div>' +
-        '</div>' +
+    '</section>' +
+
+    // SECCIÓN 3 · Problemas críticos
+    '<section class="memo-section">' +
+      '<h2 class="memo-h2">2. Problemas críticos identificados</h2>' +
+      '<p class="memo-lead">Los 3 problemas más relevantes de cada eje, ordenados por su impacto en la conversión y el margen. La numeración (1.1, 2.3, etc.) permite referenciarlos en discusión.</p>' +
+      '<div class="memo-problem-grid">' + problemSections + '</div>' +
+    '</section>' +
+
+    // SECCIÓN 4 · Iniciativas estratégicas
+    '<section class="memo-section">' +
+      '<h2 class="memo-h2">3. Iniciativas estratégicas (Plan de Ejecución)</h2>' +
+      '<p class="memo-lead">Las acciones prioritarias que mueven varios indicadores a la vez y/o tienen impacto financiero cuantificado. Son las prioridades del Comité de Dirección.</p>' +
+      '<div class="memo-table-wrap">' +
+        '<table class="memo-table memo-init-table">' +
+          '<thead><tr>' +
+            '<th class="memo-th-num">N°</th>' +
+            '<th>Iniciativa</th>' +
+            '<th>Eje</th>' +
+            '<th>Responsable</th>' +
+            '<th>Impacto</th>' +
+            '<th>Tipo</th>' +
+          '</tr></thead>' +
+          '<tbody>' + initRows + '</tbody>' +
+        '</table>' +
       '</div>' +
-    '</div>' +
-    '<div class="exec-section">' +
-      '<div class="exec-section-title">01 · Equipo de levantamiento</div>' +
-      '<div class="exec-section-sub">El análisis se construyó con data, grabaciones y entrevistas aportadas por los siguientes equipos. Cada etapa tiene responsables nombrados (ver chips en cada slide) y Felipe Arroyo acompaña todas las etapas como representante de la voz del cliente.</div>' +
-      '<div class="team-grid">' + teamHtml + '</div>' +
-    '</div>' +
-    '<div class="exec-section">' +
-      '<div class="exec-section-title">02 · Cómo se compone el análisis (de lo general a lo particular)</div>' +
-      '<div class="exec-section-sub">Una pirámide de 4 niveles que permite navegar desde la vista global hasta los detalles operacionales sin perder contexto.</div>' +
-      structHtml +
-    '</div>' +
-    '<div class="exec-section">' +
-      '<div class="exec-section-title">03 · Hallazgos más relevantes por eje</div>' +
-      '<div class="exec-section-sub">Las 5 fricciones más dolorosas de cada eje — las que mueven la aguja al resolverse. Ordenadas por impacto potencial, no por frecuencia.</div>' +
-      '<div class="macro-pain-grid">' + painsHtml + '</div>' +
-    '</div>' +
-    '<div class="exec-section">' +
-      '<div class="exec-section-title">04 · Estructura OKR del journey</div>' +
-      '<div class="exec-section-sub">Cómo conectamos cada iniciativa del Roadmap con un impacto medible. Los detalles (métricas, baselines y metas) viven en la vista 🎯 <strong>OKRs & Impacto</strong>.</div>' +
-      okrFwHtml +
-    '</div>' +
-    '<div class="exec-section">' +
-      '<div class="exec-section-title">05 · Gobernanza — sesiones, cadencia y participantes</div>' +
-      '<div class="exec-section-sub">Modelo recomendado para presentar avances y mantener momentum. 4 instancias con cadencia distinta, audiencias distintas y outputs distintos — cada una usa una vista específica de esta misma presentación.</div>' +
+    '</section>' +
+
+    // SECCIÓN 5 · Indicadores de seguimiento
+    '<section class="memo-section">' +
+      '<h2 class="memo-h2">4. Indicadores de seguimiento</h2>' +
+      '<p class="memo-lead">Los 6 indicadores estratégicos que el Comité de Dirección revisa mensualmente. Cada barra muestra el estado actual y el punto de meta a 6 meses.</p>' +
+      '<div class="memo-table-wrap">' +
+        '<table class="memo-table memo-ind-table">' +
+          '<thead><tr>' +
+            '<th class="memo-th-eje">Eje</th>' +
+            '<th>Indicador</th>' +
+            '<th>Hoy → Meta</th>' +
+          '</tr></thead>' +
+          '<tbody>' + indRows + '</tbody>' +
+        '</table>' +
+      '</div>' +
+      '<p class="memo-footnote">Los indicadores se revisan mensualmente en el Comité de Dirección. La cadencia operativa de seguimiento se detalla en la sección 6.</p>' +
+    '</section>' +
+
+    // SECCIÓN 6 · Equipo
+    '<section class="memo-section">' +
+      '<h2 class="memo-h2">5. Equipo de trabajo</h2>' +
+      '<p class="memo-lead">Equipos que aportaron data, grabaciones y entrevistas para construir este análisis. Felipe Arroyo (Experiencia de Clientes) acompaña todas las etapas como representante de la voz del cliente.</p>' +
+      '<div class="team-grid memo-team-grid">' + teamHtml + '</div>' +
+    '</section>' +
+
+    // SECCIÓN 7 · Gobernanza
+    '<section class="memo-section">' +
+      '<h2 class="memo-h2">6. Reuniones de seguimiento</h2>' +
+      '<p class="memo-lead">Cuatro instancias con cadencia, audiencia y propósito definidos. Cada una utiliza una vista específica de esta misma presentación.</p>' +
       govHtml +
-    '</div>' +
+    '</section>' +
+
+    // SECCIÓN 8 · Detalle
+    '<section class="memo-section memo-drill">' +
+      '<div class="memo-drill-card">' +
+        '<div>' +
+          '<div class="memo-drill-title">Detalle de indicadores por etapa</div>' +
+          '<div class="memo-drill-desc">Para profundizar en cada uno de los 45 indicadores secundarios distribuidos por etapa, con sus baselines, metas e iniciativas asociadas, abrir la vista de Detalle.</div>' +
+        '</div>' +
+        '<button type="button" class="memo-drill-cta" onclick="goToOKRs()">Ver Detalle por Etapa →</button>' +
+      '</div>' +
+    '</section>' +
   '</div>';
 }
 
