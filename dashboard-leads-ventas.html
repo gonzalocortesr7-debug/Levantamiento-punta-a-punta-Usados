@@ -1057,7 +1057,7 @@ function rO() {
   mk('ocFiBar',{type:'bar',data:{labels:lb,datasets:[
     {data:fSA,backgroundColor:'#378ADD',borderWidth:0},
     {data:fNA,backgroundColor:'#D3D1C7',borderWidth:0}
-  ]},options:oBar()});
+  ]},options:(function(){ var o=oBar(); o.plugins.barLabels={enabled:false}; return o; })()});
 
   mk('ocFiConv',{type:'line',data:{labels:lb,datasets:[
     {data:cFi,borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,.07)',borderWidth:2.5,pointRadius:5,fill:true,tension:0.3,clip:false},
