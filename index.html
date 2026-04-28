@@ -4172,31 +4172,29 @@ var prepFunnelLabelsPlugin = {
   id: 'prepFunnelLabels',
   afterDraw: function(chart) {
     var ctx = chart.ctx;
-    var total = 2574;
     var segments = [
-      { val: PREP_FUNNEL.publicadas,       pct: '69,5%' },
-      { val: PREP_FUNNEL.no_publicadas_disp, pct: null  },
-      { val: PREP_FUNNEL.no_disponibles,   pct: '22,5%' }
+      { val: PREP_FUNNEL.publicadas,         pct: '69,5%' },
+      { val: PREP_FUNNEL.no_publicadas_disp, pct: null    },
+      { val: PREP_FUNNEL.no_disponibles,     pct: '22,5%' }
     ];
+    var cy = (chart.chartArea.top + chart.chartArea.bottom) / 2;
     chart.data.datasets.forEach(function(ds, di) {
       var meta = chart.getDatasetMeta(di);
       if (!meta.visible) return;
       meta.data.forEach(function(bar, bi) {
         var seg = segments[di];
         if (!seg) return;
-        var props = bar.getProps(['x','y','base','width','height'], true);
-        var barW = Math.abs(props.x - props.base);
-        var minW = seg.pct ? 80 : 44;
-        if (barW < minW) return;
-        var cx = props.base + barW / 2;
-        var cy = props.y + props.height / 2;
+        var x1 = Math.min(bar.x, bar.base);
+        var x2 = Math.max(bar.x, bar.base);
+        var barW = x2 - x1;
+        if (barW < (seg.pct ? 80 : 44)) return;
         var text = seg.val.toLocaleString('es-CL') + (seg.pct ? ' · ' + seg.pct : '');
         ctx.save();
         ctx.font = '600 11px -apple-system, sans-serif';
         ctx.fillStyle = '#fff';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(text, cx, cy);
+        ctx.fillText(text, (x1 + x2) / 2, cy);
         ctx.restore();
       });
     });
