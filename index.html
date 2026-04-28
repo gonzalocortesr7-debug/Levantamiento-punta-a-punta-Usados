@@ -6,6 +6,7 @@
 <title>Journey del Cliente - Clicar Usados</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>try { if (window.ChartDataLabels) Chart.unregister(ChartDataLabels); } catch(e) {}</script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
   :root {
@@ -4188,7 +4189,7 @@ function buildPrepFunnelCfg() {
             formatter: function(v){ return v.toLocaleString('es-CL') + ' · 22,5%'; } } }
       ]
     },
-    plugins: [window.ChartDataLabels],
+    plugins: window.ChartDataLabels ? [window.ChartDataLabels] : [],
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false,
       plugins: {
