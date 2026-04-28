@@ -1085,6 +1085,35 @@
   .deck-okr-layer-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
   .deck-okr-layer-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
   .deck-okr-layer-example { font-size: 11px; color: var(--gray-400); margin-top: 10px; font-style: italic; line-height: 1.4; border-top: 1px dashed var(--gray-200); padding-top: 8px; }
+  /* S6 · Estructura de cadencias */
+  .deck-gov-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+  .deck-gov-card { border: 1px solid var(--gray-200); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; }
+  .deck-gov-card-head { padding: 14px 16px 12px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .deck-gov-card.nivel-1 .deck-gov-card-head { background: #F3F4F6; border-bottom: 1px solid #E5E7EB; }
+  .deck-gov-card.nivel-2 .deck-gov-card-head { background: #EBF4FF; border-bottom: 1px solid #C8DDF7; }
+  .deck-gov-card.nivel-3 .deck-gov-card-head { background: #FFF8EC; border-bottom: 1px solid #F5DDA0; }
+  .deck-gov-card.nivel-4 .deck-gov-card-head { background: #EEE8FF; border-bottom: 1px solid #C9B8F5; }
+  .deck-gov-nivel { width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  .deck-gov-card.nivel-1 .deck-gov-nivel { background: #6B7280; color: #fff; }
+  .deck-gov-card.nivel-2 .deck-gov-nivel { background: #0F6FC6; color: #fff; }
+  .deck-gov-card.nivel-3 .deck-gov-nivel { background: #EF9F27; color: var(--navy); }
+  .deck-gov-card.nivel-4 .deck-gov-nivel { background: #7C3AED; color: #fff; }
+  .deck-gov-head-text { flex: 1; }
+  .deck-gov-title { font-size: 13px; font-weight: 800; color: var(--navy); }
+  .deck-gov-freq { display: inline-block; margin-top: 4px; padding: 2px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .deck-gov-card.nivel-1 .deck-gov-freq { background: #6B7280; color: #fff; }
+  .deck-gov-card.nivel-2 .deck-gov-freq { background: #0F6FC6; color: #fff; }
+  .deck-gov-card.nivel-3 .deck-gov-freq { background: #EF9F27; color: var(--navy); }
+  .deck-gov-card.nivel-4 .deck-gov-freq { background: #7C3AED; color: #fff; }
+  .deck-gov-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .deck-gov-section { display: flex; flex-direction: column; gap: 4px; }
+  .deck-gov-section-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-500); }
+  .deck-gov-participants { display: flex; flex-wrap: wrap; gap: 4px; }
+  .deck-gov-participant { font-size: 10.5px; color: var(--navy); background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 3px; padding: 2px 7px; }
+  .deck-gov-items { display: flex; flex-direction: column; gap: 4px; }
+  .deck-gov-item { font-size: 11.5px; color: var(--gray-700); line-height: 1.4; display: flex; gap: 6px; }
+  .deck-gov-item::before { content: '→'; color: var(--gray-400); font-size: 10px; flex-shrink: 0; margin-top: 2px; }
+  .deck-gov-output { font-size: 11.5px; color: var(--navy); font-weight: 600; background: var(--gray-50); border-left: 3px solid var(--gray-300); padding: 6px 10px; border-radius: 0 3px 3px 0; margin-top: auto; }
   /* OKRs · NS per eje header */
   .okr-ns-eje-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; padding: 16px 20px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
   .okr-ns-eje-strip.compra { border-top: 3px solid #0F6FC6; }
@@ -3741,7 +3770,7 @@ function renderExecSummarySlide(i) {
     '<section class="deck-section">' +
       '<div class="deck-eyebrow">Resumen Ejecutivo · Vista Dirección</div>' +
       '<h1 class="deck-title">Journey del Cliente<br/>Vehículos Usados</h1>' +
-      '<p class="deck-subtitle">Levantamiento end-to-end del proceso de compra y venta de vehículos usados en Clicar / Americar. El análisis cubre los tres ejes del recorrido del cliente, identifica los oportunidades más críticos por etapa y propone las iniciativas con mayor impacto en conversión y margen.</p>' +
+      '<p class="deck-subtitle">Levantamiento end-to-end del proceso de compra y venta de vehículos usados en Clicar / Americar. El análisis cubre los tres ejes del recorrido del cliente, identifica las oportunidades más críticas por etapa y propone las iniciativas con mayor impacto en conversión y margen.</p>' +
       '<div class="deck-lev-scope">' +
         '<div class="deck-scope-card"><div class="deck-scope-num">3</div><div class="deck-scope-label">Ejes del journey</div></div>' +
         '<div class="deck-scope-card"><div class="deck-scope-num">14</div><div class="deck-scope-label">Procesos analizados</div></div>' +
@@ -3864,6 +3893,129 @@ function renderExecSummarySlide(i) {
       '</div>' +
       '<div style="margin-top:32px;text-align:center">' +
         '<button type="button" class="memo-drill-cta" onclick="goToOKRs()">Ver objetivos y metas por etapa →</button>' +
+      '</div>' +
+    '</section>' +
+
+    // DECK 6 · Modelo de gobierno · Estructura de cadencias
+    '<section class="deck-section">' +
+      '<div class="deck-eyebrow">Modelo de Gobierno</div>' +
+      '<h2 class="deck-section-h2">Estructura de cadencias</h2>' +
+      '<p class="deck-subtitle">Tres niveles de revisión que mantienen el foco en los indicadores. Cada nivel tiene participantes, agenda y output definidos — los equipos llegan con su métrica actualizada, no con decks de avance.</p>' +
+      '<div class="deck-gov-grid">' +
+
+        '<div class="deck-gov-card nivel-1">' +
+          '<div class="deck-gov-card-head">' +
+            '<span class="deck-gov-nivel">1</span>' +
+            '<div class="deck-gov-head-text">' +
+              '<div class="deck-gov-title">Standup de Squad</div>' +
+              '<span class="deck-gov-freq">Diario</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-body">' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Participantes</div>' +
+              '<div class="deck-gov-participants">' +
+                '<span class="deck-gov-participant">Cada squad por separado</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Agenda · 3 preguntas</div>' +
+              '<div class="deck-gov-items">' +
+                '<div class="deck-gov-item">¿Dónde está mi indicador hoy?</div>' +
+                '<div class="deck-gov-item">¿Qué hice ayer para moverlo?</div>' +
+                '<div class="deck-gov-item">¿Qué me bloquea hoy?</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-output">Output: bloqueos visibles · tareas del día alineadas al KR</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="deck-gov-card nivel-2">' +
+          '<div class="deck-gov-card-head">' +
+            '<span class="deck-gov-nivel">2</span>' +
+            '<div class="deck-gov-head-text">' +
+              '<div class="deck-gov-title">Review de Indicadores</div>' +
+              '<span class="deck-gov-freq">Semanal</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-body">' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Participantes</div>' +
+              '<div class="deck-gov-participants">' +
+                '<span class="deck-gov-participant">Todos los squads</span>' +
+                
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Agenda</div>' +
+              '<div class="deck-gov-items">' +
+                '<div class="deck-gov-item">Cada squad presenta: KR actual → delta semana → iniciativa que lo movió</div>' +
+                '<div class="deck-gov-item">Identificar KRs sin movimiento y revisar iniciativas asociadas</div>' +
+                '<div class="deck-gov-item">Sincronizar dependencias entre squads</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-output">Output: prioridades de la semana siguiente · bloqueos cross-squad resueltos</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="deck-gov-card nivel-3">' +
+          '<div class="deck-gov-card-head">' +
+            '<span class="deck-gov-nivel">3</span>' +
+            '<div class="deck-gov-head-text">' +
+              '<div class="deck-gov-title">Review de Gestión</div>' +
+              '<span class="deck-gov-freq">Quincenal</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-body">' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Participantes</div>' +
+              '<div class="deck-gov-participants">' +
+                
+                '<span class="deck-gov-participant">Gerencias</span>' +
+                '<span class="deck-gov-participant">Producto</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Agenda</div>' +
+              '<div class="deck-gov-items">' +
+                '<div class="deck-gov-item">Estado de KRs por eje: tendencia de las últimas 2 semanas</div>' +
+                '<div class="deck-gov-item">Decisiones de priorización y asignación de recursos</div>' +
+                '<div class="deck-gov-item">KR sin movimiento por 2 reviews → escala al Comité Ejecutivo</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-output">Output: decisiones de prioridad · recursos desbloqueados · escalaciones</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="deck-gov-card nivel-4">' +
+          '<div class="deck-gov-card-head">' +
+            '<span class="deck-gov-nivel">4</span>' +
+            '<div class="deck-gov-head-text">' +
+              '<div class="deck-gov-title">Comité Ejecutivo</div>' +
+              '<span class="deck-gov-freq">Mensual</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-body">' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Participantes</div>' +
+              '<div class="deck-gov-participants">' +
+                '<span class="deck-gov-participant">C-suite</span>' +
+                '<span class="deck-gov-participant">Directorio</span>' +
+                
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-section">' +
+              '<div class="deck-gov-section-label">Agenda</div>' +
+              '<div class="deck-gov-items">' +
+                '<div class="deck-gov-item">Revisión de los indicadores guía: ¿se movieron? ¿por qué no?</div>' +
+                '<div class="deck-gov-item">Tamaño de oportunidad capturada vs. identificada</div>' +
+                '<div class="deck-gov-item">Decisiones estratégicas y ajuste de metas si corresponde</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="deck-gov-output">Output: decisiones estratégicas · validación de metas · ajuste de roadmap</div>' +
+          '</div>' +
+        '</div>' +
+
       '</div>' +
     '</section>' +
 
