@@ -2089,10 +2089,24 @@ var journey = {
           mejoras: ["Liberación automática de reservas a 48h sin avance","Panel del cliente con estado de la reserva y vencimiento","Alerta al asesor antes del vencimiento"]
         },
         { num: 2, title: "Elección del medio de pago",
-          description: "El comprador elige entre efectivo, transferencia, crédito automotriz o parte de pago.",
-          kpis: [{value:"—",suffix:"%",label:"Mix por medio de pago"},{value:"—",suffix:"%",label:"% con crédito automotriz"},{value:"—",suffix:"%",label:"% con parte de pago"}],
-          hallazgos: ["Sin mix publicado de medios de pago","Sin integración directa con entidades financieras","Parte de pago requiere tasación del vehículo del comprador -> loop con macro Compra"],
-          mejoras: ["Integración con bancos / financieras partner","Workflow específico para parte de pago (tasación express)","Simulador de cuota en la ficha del vehículo"]
+          description: "El comprador elige entre efectivo, transferencia, crédito automotriz o parte de pago. Dentro de los mecanismos comerciales también se aplica el <strong>Regalo PIE</strong> (bonificación al pie del cliente). Análisis Q1 2026 sobre 4.857 oportunidades USADOS facturadas: 193 con Regalo PIE (3,97% penetración) · $202 MM entregados.",
+          kpis: [{value:"3,97",suffix:"%",label:"Penetración Regalo PIE (USADOS Q1 2026)"},{value:"$202",suffix:" MM",label:"Monto Regalo PIE entregado"},{value:"9,19",suffix:"%",label:"Peso PIE / Factura (en opp. con PIE)"},{value:"$1",suffix:" MM",label:"PIE promedio por operación"}],
+          hallazgos: [
+            "<strong>[CRÍTICO] Sin trazabilidad de modificaciones de precio en Quiter:</strong> hoy no existe mecanismo para detectar si se cambió el precio de venta de la unidad en Quiter ni saber si esa modificación afectó el margen real. Sin esta trazabilidad, el Regalo PIE se vuelve un <strong>mecanismo riesgoso y de difícil control</strong> — no hay forma de auditar si la bonificación entregada se compensó con un alza de precio, si erosionó margen o si responde a una autorización válida.",
+            "<strong>Concentración del PIE en pocas sucursales:</strong> Usados Movicenter A. Vespucio 1155 concentra <strong>47,6%</strong> del monto PIE USADOS ($96 MM en 71 ops · 13,3% de penetración, 3,3x el benchmark del segmento). Las 3 sucursales top suman 69,7% del PIE — sin trazabilidad de precio en Quiter, esta concentración es difícil de validar como práctica autorizada vs. sesgo local.",
+            "<strong>Responsables con uso intensivo sobre el benchmark:</strong> Leandro Antonio Alfonzo Marin aplica PIE en 55,0% de sus operaciones (11 de 20) — 14x el benchmark del segmento (3,97%). Hay 5 responsables sobre 30% de penetración. Sin auditoría de margen post-PIE no es posible distinguir estrategia comercial autorizada de uso discrecional.",
+            "<strong>Peso elevado del PIE cuando se aplica:</strong> en USADOS el PIE pesa 9,19% del valor factura promedio (3,4x mayor que en NUEVOS, 2,72%) y el ticket promedio es $1 MM. El impacto unitario es alto: un ajuste no trazable de precio en Quiter de la misma magnitud puede compensar (o sobrepasar) el costo de la bonificación sin que el área financiera lo detecte.",
+            "<strong>Sin política diferenciada por segmento:</strong> NUEVOS y USADOS muestran patrones distintos (penetración 4,8x menor, peso por operación 3,4x mayor, sin concentración de cierre de mes). Hoy no hay reglas ni topes específicos por segmento que limiten el uso del Regalo PIE.",
+            "Sin mix publicado de medios de pago, sin integración directa con entidades financieras y parte de pago requiere tasación del vehículo del comprador (loop con macro Compra)."
+          ],
+          mejoras: [
+            "<strong>[TRANSFORMACIONAL] Audit trail de precio en Quiter:</strong> registrar cada modificación del precio de venta de la unidad (timestamp, usuario, valor anterior/nuevo, motivo) y vincularla a la oportunidad y al Regalo PIE asociado. Sin esta capa, el Regalo PIE no es auditable.",
+            "<strong>Cálculo y visibilidad del margen real post-PIE:</strong> dashboard que cruce precio original vs. precio de cierre vs. monto PIE entregado, calculando el margen real por operación, sucursal y responsable. Alertar cuando margen real cae bajo umbrales definidos.",
+            "<strong>Política y topes diferenciados por segmento:</strong> definir % máximo PIE/Factura permitido por operación en USADOS (hoy 9,19% promedio · casos sobre 10%), con autorización jerárquica obligatoria sobre el tope.",
+            "<strong>Auditoría dirigida a outliers:</strong> revisión caso a caso de sucursales y responsables ≥ 2x el benchmark de penetración (Movicenter, Carshopping, Autopark Departamental; responsables sobre 30%) — confirmar si responde a estrategia autorizada o requiere corrección.",
+            "Reporte mensual de Regalo PIE por sucursal/responsable con trazabilidad completa: precio original, precio final, PIE entregado, margen real y aprobador.",
+            "Integración con bancos/financieras partner · Workflow específico para parte de pago (tasación express) · Simulador de cuota en la ficha del vehículo."
+          ]
         },
         { num: 3, title: "Registro de señal o anticipo",
           description: "Ingreso del pago inicial y formalización en el sistema.",
