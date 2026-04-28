@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Journey del Cliente - Clicar Usados</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-<script>try { if (window.ChartDataLabels) Chart.unregister(ChartDataLabels); } catch(e) {}</script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
   :root {
@@ -4170,6 +4168,41 @@ var PREP_FOTOS_SUCURSAL = [
 // Chart.js helpers (preparación)
 function pctBar(v, total){ return total ? Math.round(v/total*1000)/10 : 0; }
 
+var prepFunnelLabelsPlugin = {
+  id: 'prepFunnelLabels',
+  afterDraw: function(chart) {
+    var ctx = chart.ctx;
+    var total = 2574;
+    var segments = [
+      { val: PREP_FUNNEL.publicadas,       pct: '69,5%' },
+      { val: PREP_FUNNEL.no_publicadas_disp, pct: null  },
+      { val: PREP_FUNNEL.no_disponibles,   pct: '22,5%' }
+    ];
+    chart.data.datasets.forEach(function(ds, di) {
+      var meta = chart.getDatasetMeta(di);
+      if (!meta.visible) return;
+      meta.data.forEach(function(bar, bi) {
+        var seg = segments[di];
+        if (!seg) return;
+        var props = bar.getProps(['x','y','base','width','height'], true);
+        var barW = Math.abs(props.x - props.base);
+        var minW = seg.pct ? 80 : 44;
+        if (barW < minW) return;
+        var cx = props.base + barW / 2;
+        var cy = props.y + props.height / 2;
+        var text = seg.val.toLocaleString('es-CL') + (seg.pct ? ' · ' + seg.pct : '');
+        ctx.save();
+        ctx.font = '600 11px -apple-system, sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, cx, cy);
+        ctx.restore();
+      });
+    });
+  }
+};
+
 function buildPrepFunnelCfg() {
   var f = PREP_FUNNEL;
   return {
@@ -4177,19 +4210,12 @@ function buildPrepFunnelCfg() {
     data: {
       labels: ['Inventario total (2.574 uds)'],
       datasets: [
-        { label: 'Publicadas (1.790 - 69,5%)', data: [f.publicadas], backgroundColor: '#0B5C1F', borderWidth: 0,
-          datalabels: { color: '#fff', anchor: 'center', align: 'center', font: { size: 11, weight: '600' },
-            formatter: function(v){ return v.toLocaleString('es-CL') + ' · 69,5%'; } } },
-        { label: 'Disponibles no publicadas (200 - 7,8%)', data: [f.no_publicadas_disp], backgroundColor: '#F0A830', borderWidth: 0,
-          datalabels: { color: '#fff', anchor: 'center', align: 'center', font: { size: 11, weight: '600' },
-            formatter: function(v){ return v.toLocaleString('es-CL'); },
-            display: function(ctx){ return ctx.chart.width * (ctx.parsed.x / 2574) > 60; } } },
-        { label: 'No disponibles (580 - 22,5%)', data: [f.no_disponibles], backgroundColor: '#C00000', borderWidth: 0,
-          datalabels: { color: '#fff', anchor: 'center', align: 'center', font: { size: 11, weight: '600' },
-            formatter: function(v){ return v.toLocaleString('es-CL') + ' · 22,5%'; } } }
+        { label: 'Publicadas (1.790 - 69,5%)',               data: [f.publicadas],         backgroundColor: '#0B5C1F', borderWidth: 0 },
+        { label: 'Disponibles no publicadas (200 - 7,8%)',   data: [f.no_publicadas_disp], backgroundColor: '#F0A830', borderWidth: 0 },
+        { label: 'No disponibles (580 - 22,5%)',             data: [f.no_disponibles],     backgroundColor: '#C00000', borderWidth: 0 }
       ]
     },
-    plugins: window.ChartDataLabels ? [window.ChartDataLabels] : [],
+    plugins: [prepFunnelLabelsPlugin],
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false,
       plugins: {
@@ -4197,8 +4223,7 @@ function buildPrepFunnelCfg() {
         tooltip: {
           backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding:10,
           callbacks: { label: function(ctx){ var v = ctx.parsed.x; var pct = pctBar(v, 2574); return ctx.dataset.label + ': ' + v + ' uds (' + pct + '%)'; } }
-        },
-        datalabels: { display: true }
+        }
       },
       scales: {
         x: { stacked: true, ticks: { color: '#7F7F7F' }, grid: { color: 'rgba(0,0,0,0.05)' } },
