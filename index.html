@@ -206,7 +206,7 @@
   .col-block { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--gray-200); border-top: none; }
   .col-header { padding: 10px 18px; color: var(--white); font-size: 14px; font-weight: 700; text-align: center; }
   .col-header.kpis { background: var(--blue); }
-  .col-header.hallazgos { background: var(--red); }
+  .col-header.oportunidades { background: var(--red); }
   .col-header.mejoras { background: var(--green); }
   .col-body { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
   .kpi-card { background: var(--gray-50); border-left: 4px solid var(--blue); padding: 12px 16px 12px 14px; display: flex; flex-direction: column; gap: 4px; }
@@ -216,7 +216,7 @@
   .bullet-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .bullet-list li { font-size: 13px; line-height: 1.5; color: var(--gray-900); padding-left: 16px; position: relative; }
   .bullet-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--gray-500); }
-  .hallazgos-block .bullet-list li::before { background: var(--red); }
+  .oportunidades-block .bullet-list li::before { background: var(--red); }
   .mejoras-block .bullet-list li::before { background: var(--green); }
   .data-section { margin-top: 28px; background: var(--white); border: 1px solid var(--gray-200); }
   .data-section-header {
@@ -295,7 +295,7 @@
   }
   .data-insight strong { color: var(--navy); }
   .data-note { font-size: 10px; color: var(--gray-500); font-style: italic; margin-top: 8px; }
-  /* Firma de Contrato · hallazgos visual */
+  /* Firma de Contrato · oportunidades visual */
   .firma-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 18px; }
   @media (max-width: 1100px) { .firma-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); } }
   .firma-card {
@@ -760,7 +760,7 @@
     .eje-cards-grid { grid-template-columns: 1fr; }
     .okr-closing-flow { grid-template-columns: 1fr 1fr; }
   }
-  /* Hallazgos por macro */
+  /* Oportunidades por macro */
   .macro-pain-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .macro-pain-block { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); padding: 16px 18px; }
   .macro-pain-block.compra { border-left-color: #0F6FC6; }
@@ -1010,6 +1010,93 @@
   .memo-dolor-fix::before { content: "→ "; color: var(--gray-400); font-weight: 700; }
   .memo-dolor-tag { display: inline-block; margin-top: 8px; padding: 2px 8px; background: #FEF2C7; color: #8C5A00; font-size: 9.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 3px; }
 
+  /* ===== DECK EJECUTIVO · PPT-slide sections ===== */
+  .deck-section { padding: 28px 60px; display: flex; flex-direction: column; justify-content: flex-start; box-sizing: border-box; border-top: 1px solid var(--gray-200); }
+  .deck-section:first-child { border-top: none; }
+  .deck-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+  .deck-title { font-size: 30px; font-weight: 800; color: var(--navy); line-height: 1.15; margin: 0 0 12px; }
+  .deck-section-h2 { font-size: 22px; font-weight: 800; color: var(--navy); margin: 0 0 10px; }
+  .deck-subtitle { font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: 28px; max-width: 860px; }
+  /* S1 levantamiento */
+  .deck-lev-scope { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }
+  .deck-scope-card { padding: 16px 18px; border: 1px solid var(--gray-200); border-radius: 4px; }
+  .deck-scope-num { font-size: 32px; font-weight: 800; color: var(--navy); font-family: monospace; line-height: 1; }
+  .deck-scope-label { font-size: 11px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .deck-timing-cards { display: flex; flex-direction: row; gap: 14px; margin-top: 20px; }
+  .deck-timing-card { flex: 1; padding: 14px 16px; border-radius: 4px; background: var(--gray-50); border-left: 4px solid var(--gray-200); }
+  .deck-timing-card.compra { border-left-color: #0F6FC6; }
+  .deck-timing-card.preparación { border-left-color: #EF9F27; }
+  .deck-timing-card.venta { border-left-color: #1D9E75; }
+  .deck-timing-eje { font-size: 12px; font-weight: 700; color: var(--navy); }
+  .deck-timing-data { font-size: 12.5px; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+  .deck-timing-badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
+  .deck-timing-badge.real { background: #E8F5E9; color: #1D6B3F; }
+  .deck-timing-badge.curso { background: #FFF3E0; color: #BF6000; }
+  /* S2 composición */
+  .deck-comp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .deck-comp-eje { border: 1px solid var(--gray-200); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; }
+  .deck-comp-head { padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .deck-comp-head.compra { background: #EBF4FF; }
+  .deck-comp-head.preparación { background: #FFF8EC; }
+  .deck-comp-head.venta { background: #EDFAF4; }
+  .deck-comp-eje-name { font-weight: 700; color: var(--navy); font-size: 14px; }
+  .deck-comp-eje-sub { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+  .deck-comp-stages { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--gray-100); flex: 1; }
+  .deck-comp-stage { font-size: 12.5px; color: var(--navy); display: flex; align-items: baseline; gap: 6px; }
+  .deck-comp-stage::before { content: '→'; color: var(--gray-400); font-size: 11px; flex-shrink: 0; }
+  .deck-comp-stage-num { font-size: 10.5px; color: var(--gray-400); font-family: monospace; }
+  .deck-comp-stats { padding: 12px 16px; display: flex; gap: 20px; margin-top: auto; border-top: 1px solid var(--gray-100); }
+  .deck-comp-stat-val { font-size: 22px; font-weight: 800; color: var(--navy); font-family: monospace; line-height: 1; }
+  .deck-comp-stat-label { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  /* S4 oportunidades filterable */
+  .deck-oportunidades-wrap { display: flex; flex-direction: column; }
+  .deck-filter-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+  .deck-filter-btn { padding: 7px 18px; border: 2px solid var(--gray-200); background: var(--white); color: var(--navy); font-size: 13px; font-weight: 600; border-radius: 4px; cursor: pointer; transition: all 0.15s; }
+  .deck-filter-btn:hover { border-color: var(--navy); }
+  .deck-filter-btn.active.compra { background: #0F6FC6; border-color: #0F6FC6; color: var(--white); }
+  .deck-filter-btn.active.preparación { background: #EF9F27; border-color: #EF9F27; color: var(--navy); }
+  .deck-filter-btn.active.venta { background: #1D9E75; border-color: #1D9E75; color: var(--white); }
+  .deck-pain-block { display: none; }
+  .deck-pain-block.visible { display: block; }
+  .deck-pain-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .deck-pain-table th { font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); padding: 6px 10px; border-bottom: 2px solid var(--gray-200); text-align: left; background: var(--gray-50); }
+  .deck-pain-table td { padding: 9px 10px; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  .deck-pain-table tr:last-child td { border-bottom: none; }
+  .deck-pain-rank { width: 34px; }
+  .deck-pain-rank-circle { width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  .deck-pain-table.compra .deck-pain-rank-circle { background: #0F6FC6; }
+  .deck-pain-table.preparación .deck-pain-rank-circle { background: #EF9F27; color: var(--navy); }
+  .deck-pain-table.venta .deck-pain-rank-circle { background: #1D9E75; }
+  .deck-pain-title { font-size: 12.5px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .deck-pain-desc { font-size: 11px; color: var(--gray-600); line-height: 1.4; margin-top: 3px; }
+  .deck-pain-init-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 3px; }
+  .deck-pain-init-list li { font-size: 11px; color: var(--gray-700); line-height: 1.4; padding-left: 14px; position: relative; }
+  .deck-pain-init-list li::before { content: '→'; position: absolute; left: 0; color: var(--gray-400); font-weight: 700; }
+  .deck-pain-owner-area { font-size: 11.5px; font-weight: 600; color: var(--navy); }
+  .deck-pain-owner-names { font-size: 10.5px; color: var(--gray-500); margin-top: 2px; }
+  .deck-pain-impact { font-size: 10.5px; color: var(--gray-400); margin-top: 4px; font-style: italic; }
+  .deck-analyses-bar { display: none; gap: 8px; padding-top: 12px; margin-top: 10px; border-top: 1px solid var(--gray-200); align-items: center; flex-wrap: wrap; }
+  .deck-analyses-bar.visible { display: flex; }
+  .deck-analyses-label { font-size: 10px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; }
+  /* S5 OKR framework español */
+  .deck-okr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+  .deck-okr-layer { padding: 20px 18px; border: 1px solid var(--gray-200); border-radius: 6px; position: relative; }
+  .deck-okr-layer-num { width: 26px; height: 26px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+  .deck-okr-layer-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .deck-okr-layer-desc { font-size: 12px; color: var(--gray-600); line-height: 1.5; }
+  .deck-okr-layer-example { font-size: 11px; color: var(--gray-400); margin-top: 10px; font-style: italic; line-height: 1.4; border-top: 1px dashed var(--gray-200); padding-top: 8px; }
+  /* OKRs · NS per eje header */
+  .okr-ns-eje-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; padding: 16px 20px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .okr-ns-eje-strip.compra { border-top: 3px solid #0F6FC6; }
+  .okr-ns-eje-strip.preparación { border-top: 3px solid #EF9F27; }
+  .okr-ns-eje-strip.venta { border-top: 3px solid #1D9E75; }
+  .okr-ns-eje-eyebrow { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-500); grid-column: 1 / -1; margin-bottom: 8px; }
+  .okr-ns-eje-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 14px; background: var(--gray-50); border-radius: 6px; border: 1px solid var(--gray-100); }
+  .okr-ns-eje-metric { font-size: 13.5px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .okr-ns-eje-progress { font-family: monospace; font-size: 15px; margin-top: 2px; }
+  .okr-ns-eje-baseline { color: #B3261E; font-weight: 700; }
+  .okr-ns-eje-target { color: #0B5C1F; font-weight: 800; }
+
   /* Drill-down */
   .memo-drill { background: var(--gray-50); }
   .memo-drill-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 28px; background: var(--white); border-left: 4px solid var(--navy); flex-wrap: wrap; }
@@ -1232,24 +1319,40 @@
   .trans-card-kr { font-size: 11.5px; color: var(--gray-700); }
   .trans-card-kr strong { color: var(--navy); }
   .trans-card-savings { font-size: 13px; font-weight: 700; color: #0F6E56; }
-  .stage-okrs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  .stage-okr-card { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); padding: 14px 16px; }
+  .stage-okrs-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .stage-okr-card { background: var(--white); border: 1px solid var(--gray-200); border-left: 4px solid var(--navy); border-radius: 4px; overflow: hidden; }
   .stage-okr-card.macro-compra { border-left-color: #0F6FC6; }
   .stage-okr-card.macro-preparación { border-left-color: #EF9F27; }
   .stage-okr-card.macro-venta { border-left-color: #1D9E75; }
-  .stage-okr-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
-  .stage-okr-title { font-size: 13px; font-weight: 700; color: var(--navy); }
-  .stage-okr-objective { font-size: 11.5px; color: var(--gray-700); font-style: italic; }
-  .kr-row { display: grid; grid-template-columns: 1.6fr 0.7fr 0.7fr 1fr; gap: 12px; padding: 8px 0; border-top: 1px solid var(--gray-100); align-items: center; font-size: 12px; }
-  .kr-row:first-of-type { border-top: 1px solid var(--gray-200); }
+  /* Stage header band */
+  .stage-okr-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px 9px; margin: 0; flex-wrap: wrap; border-bottom: 1px solid var(--gray-100); }
+  .stage-okr-card.macro-compra .stage-okr-head { background: rgba(15,111,198,0.06); }
+  .stage-okr-card.macro-preparación .stage-okr-head { background: rgba(239,159,39,0.08); }
+  .stage-okr-card.macro-venta .stage-okr-head { background: rgba(29,158,117,0.07); }
+  .stage-okr-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .stage-okr-objective { font-size: 11.5px; color: var(--gray-600); font-style: italic; }
+  /* KR rows inside card */
+  .stage-okr-card .kr-rows-body { padding: 0 14px 8px; }
+  .kr-row { display: grid; grid-template-columns: 1.6fr 0.7fr 0.7fr 1fr; gap: 12px; padding: 6px 0; border-top: 1px solid var(--gray-100); align-items: start; font-size: 12px; }
+  .kr-row:first-of-type { border-top: 1px solid var(--gray-200); margin-top: 4px; }
   .kr-desc { color: var(--gray-900); line-height: 1.4; }
-  .kr-desc-title { font-weight: 700; color: var(--navy); font-size: 12.5px; margin-bottom: 2px; }
-  .kr-detail { font-size: 11px; color: var(--gray-700); font-style: italic; line-height: 1.45; margin-top: 3px; padding-top: 3px; border-top: 1px dashed var(--gray-200); }
+  /* KR title tinted by eje */
+  .stage-okr-card.macro-compra .kr-desc-title { font-weight: 700; color: #0A4D8C; font-size: 12.5px; margin-bottom: 2px; }
+  .stage-okr-card.macro-preparación .kr-desc-title { font-weight: 700; color: #8B5600; font-size: 12.5px; margin-bottom: 2px; }
+  .stage-okr-card.macro-venta .kr-desc-title { font-weight: 700; color: #0A5E42; font-size: 12.5px; margin-bottom: 2px; }
+  .kr-detail { font-size: 11px; color: var(--gray-500); font-style: normal; line-height: 1.4; margin-top: 3px; }
   .kr-cell-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); display: block; margin-bottom: 2px; }
   .kr-baseline { color: #B3261E; font-weight: 700; font-variant-numeric: tabular-nums; }
   .kr-target { color: #1D9E75; font-weight: 700; font-variant-numeric: tabular-nums; }
   .kr-impacts { font-size: 11px; color: var(--gray-700); line-height: 1.4; }
   .kr-impacts strong { color: var(--navy); }
+  .kr-wrap { }
+  .kr-impacts-col { display: flex; flex-direction: column; gap: 4px; }
+  .kr-expand-btn { background: none; border: 1px solid var(--gray-300); border-radius: 3px; color: var(--navy); font-size: 10px; font-weight: 600; cursor: pointer; padding: 2px 8px; display: inline-block; margin-top: 4px; font-family: inherit; transition: background 0.1s; }
+  .kr-expand-btn:hover { background: var(--gray-50); }
+  .kr-detail-panel { display: none; padding: 8px 12px; background: var(--gray-50); border-left: 3px solid var(--gray-200); font-size: 11px; color: var(--gray-700); line-height: 1.5; margin: 2px 0 4px; }
+  .kr-detail-panel.open { display: block; }
+  .okrs-mindset-box { background: #EBF4FF; border-left: 4px solid #0F6FC6; padding: 12px 16px; font-size: 12.5px; color: var(--navy); line-height: 1.55; margin-bottom: 16px; border-radius: 0 4px 4px 0; }
   .okrs-macro-block { margin-bottom: 22px; }
   .okrs-macro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-200); }
   .okr-eje-switcher { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; padding: 10px 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; }
@@ -1352,7 +1455,7 @@
       <div class="separator"></div>
       <div class="title-block">
         <span class="section">Journey del Cliente - Vehículos Usados</span>
-        <span class="title">Flujo punta a punta - KPIs - Hallazgos - Mejoras</span>
+        <span class="title">Flujo punta a punta - KPIs - Oportunidades - Mejoras</span>
       </div>
     </div>
     <div class="topbar-actions">
@@ -1565,7 +1668,7 @@ var journey = {
         { num: 1, title: "Ingreso Datos del Vehículo",
           description: "El cliente ingresa la patente, año, marca, modelo, versión y kilometraje del vehículo que desea vender, además de responder tres preguntas de elegibilidad.",
           kpis: [{value:"9.718",suffix:"/mes",label:"Formularios completados"},{value:"82",suffix:"%",label:"Tasa de completitud de campos"},{value:"18",suffix:"%",label:"Tasa de error en datos de patente"},{value:"8,6",suffix:"%",label:"Dead clicks en selectores (mobile)"}],
-          hallazgos: [
+          oportunidades: [
             "18% de registros tienen errores en datos de patente ingresados manualmente [Clarity].",
             "Campo de kilometraje sin validación de rango permite valores absurdos (ej: 1 km, 999.999 km) [Análisis UX-UI].",
             "Los selectores de año, marca y modelo presentan fallas de interacción en mobile: no responden al primer toque (8,6% dead clicks) y, al modificar un campo, el sistema queda en un estado inconsistente que obliga a reiniciar parcialmente el formulario [Análisis UX-UI + Clarity].",
@@ -1585,7 +1688,7 @@ var journey = {
         { num: 2, title: "Validación de Datos Personales",
           description: "Se capturan y validan nombre, apellido, email, región e intención de venta. Luego, mediante un modal, se solicita y valida el teléfono a través de un mensaje por WhatsApp para asegurar la contactabilidad.",
           kpis: [{value:"84,3",suffix:"%",label:"Tasa de verificación de teléfono"},{value:"1.815",suffix:"/mes",label:"Leads no verificados"},{value:"67",suffix:"%",label:"Emails válidos ingresados"},{value:"24",suffix:"%",label:"Drop-off datos personales (mayor del funnel)"},{value:"50",suffix:"%",label:"Abandono en modal OTP"}],
-          hallazgos: [
+          oportunidades: [
             "Teléfonos inválidos y emails incorrectos reducen la contactabilidad posterior del Contact Center [Análisis UX-UI].",
             "El teléfono está ausente del formulario principal y aparece en un modal posterior, sumando un paso innecesario y generando una 'falsa conclusión' al usuario que cree haber terminado [Análisis UX-UI].",
             "Sin RUT en el formulario, no es posible cruzar con bases internas para detectar clientes recurrentes ni personalizar la experiencia para clientes VIP [Análisis UX-UI].",
@@ -1606,7 +1709,7 @@ var journey = {
         { num: 3, title: "Resultado Tasación",
           description: "Es el momento clave del flujo: el usuario recibe la tasación de su vehículo y decide si avanzar a la inspección.",
           kpis: [{value:"7.446",suffix:"/mes",label:"Completan el resultado verificado"},{value:"41,5",suffix:"%",label:"Drop-off post-resultado (no agendan)"},{value:"38",suffix:"%",label:"Abandono al ver el rango"},{value:"963",suffix:"",label:"Sesiones con dead click en CTA 'Agendar'"}],
-          hallazgos: [
+          oportunidades: [
             "El precio se muestra con un asterisco sin explicación visible. La frase 'esta tasación considera un auto en buenas condiciones' genera desconfianza sin definir qué significa 'buenas condiciones' [Análisis UX-UI].",
             "No existe una explicación de los factores considerados en la tasación (año, kilometraje, versión), lo que reduce la percepción de transparencia y credibilidad del precio mostrado [Análisis UX-UI].",
             "En algunos casos ambas opciones (Intercambio e Inmediata) muestran el mismo valor, lo que elimina el precio como criterio de decisión entre modalidades [Análisis UX-UI].",
@@ -1630,7 +1733,7 @@ var journey = {
         { num: 4, title: "Agendar Inspección",
           description: "El usuario selecciona sucursal, fecha y hora para la inspección presencial.",
           kpis: [{value:"4.358",suffix:"/mes",label:"Llegan a agendar inspección"},{value:"58,5",suffix:"%",label:"Conversión resultado -> agenda"},{value:"34",suffix:"%",label:"Interés declarado en financiamiento"}],
-          hallazgos: [
+          oportunidades: [
             "El título 'Formulario de contacto' no refleja la acción que el usuario está realizando — genera desconexión con la intención de agendar [Análisis UX-UI].",
             "Los datos de contacto se repiten como formulario editable, cuando el usuario ya los ingresó — genera fatiga y transmite que el sistema no confía en sus propios datos [Análisis UX-UI].",
             "El campo Región aparece vacío por un bug de persistencia, pese a haber sido ingresado previamente [Análisis UX-UI].",
@@ -1649,7 +1752,7 @@ var journey = {
         { num: 5, title: "Cierre Flujo Web",
           description: "El usuario recibe la confirmación de su inspección agendada. Es el momento de mayor compromiso e intención en todo el flujo.",
           kpis: [{value:"62",suffix:"%",label:"Conversión flujo web -> agenda"},{value:"4,2",suffix:"min",label:"Tiempo total del flujo web"},{value:"16",suffix:"%",label:"Tasa de abandono del flujo"}],
-          hallazgos: [
+          oportunidades: [
             "No se comunica con suficiente fuerza el valor de haber agendado la inspección ni los próximos pasos que vive el usuario.",
             "Sin call-to-action alternativo para quienes no agendan (retargeting, WhatsApp).",
             "No se ofrece la compra directa del auto al finalizar el flujo de tasación online para vehículos de alta demanda."
@@ -1674,7 +1777,7 @@ var journey = {
           num: 1, title: "Pool de Colas (Nuevos Leads)",
           description: "Leads nuevos ingresan al pool y esperan ser tomados por un agente. Volumen total: 158.753 leads en 6 meses.",
           kpis: [{value:"26.459",suffix:"/mes",label:"Leads promedio ingresados"},{value:"33.083",suffix:"",label:"Pico Ene 26 (+25% vs prom.)"},{value:"53",suffix:"%",label:"Contactabilidad global"}],
-          hallazgos: ["Enero 2026 concentró volumen récord con 61% contactabilidad","Muy Baja pasó de 234 a 2.463 leads (+952%) - revisar reclasificación","Alta cae (6.221 -> 2.740, -56%) mientras Muy Alta crece (+55%)"],
+          oportunidades: ["Enero 2026 concentró volumen récord con 61% contactabilidad","Muy Baja pasó de 234 a 2.463 leads (+952%) - revisar reclasificación","Alta cae (6.221 -> 2.740, -56%) mientras Muy Alta crece (+55%)"],
           mejoras: ["Panel de seguimiento de colas en tiempo real","Alerta automática cuando cola supera 50 leads o 3 horas","Redistribución automática a agentes con menor carga"],
           chartType: 'volume'
         },
@@ -1682,14 +1785,14 @@ var journey = {
           num: 2, title: "Asignación al Contact Center",
           description: "Leads se asignan a agentes del CC según reglas de prioridad.",
           kpis: [{value:"FIFO",suffix:"",label:"Método de asignación actual"},{value:"6,2",suffix:"",label:"Leads por agente / hora"},{value:"15",suffix:"%",label:"Reasignaciones por indisponibilidad"}],
-          hallazgos: ["Priorización FIFO no considera valor ni probabilidad de conversión","15% de leads requiere reasignación por indisponibilidad","Sin balanceo: algunos agentes con 10+ leads, otros con 2"],
+          oportunidades: ["Priorización FIFO no considera valor ni probabilidad de conversión","15% de leads requiere reasignación por indisponibilidad","Sin balanceo: algunos agentes con 10+ leads, otros con 2"],
           mejoras: ["Scoring de leads para priorización inteligente","Asignación automática con balanceo de carga","Reasignación automática tras 15 min sin contacto"]
         },
         {
           num: 3, title: "Contacto Telefónico",
           description: "Agente CC contacta al lead. 3 métricas clave: contactabilidad, tiempo 1er contacto (horario CC: L-V 9-19h, Sáb 9-14h) y duración.",
           kpis: [{value:"53",suffix:"%",label:"Contactabilidad promedio"},{value:"21",suffix:"hrs",label:"Tiempo 1er contacto (horario CC)"},{value:"47",suffix:"seg",label:"Duración promedio llamada"}],
-          hallazgos: ["Alta/Muy Alta tienen la MENOR contactabilidad (33-43% Oct-Dic)","Tiempo pico Ene 26: Oferta en vivo 115 hrs CC, Muy Alta 70 hrs","Feb 26 mejor mes: 13-16 hrs CC (contacto mismo día)","Duración estable 42-55 seg - conversaciones breves"],
+          oportunidades: ["Alta/Muy Alta tienen la MENOR contactabilidad (33-43% Oct-Dic)","Tiempo pico Ene 26: Oferta en vivo 115 hrs CC, Muy Alta 70 hrs","Feb 26 mejor mes: 13-16 hrs CC (contacto mismo día)","Duración estable 42-55 seg - conversaciones breves"],
           mejoras: ["Cadencia automática 3 intentos en 48h (llamada -> SMS -> WhatsApp)","Priorizar Alta/Muy Alta en las 4 horas siguientes","Ficha del lead en pantalla con datos web y tasación","Script guiado con campos obligatorios"],
           chartType: 'contact'
         },
@@ -1697,7 +1800,7 @@ var journey = {
           num: 4, title: "Calificación y Traspaso",
           description: "Análisis de conversión, tasa de agendamiento, motivos de descarte e intensidad de llamadas.",
           kpis: [{value:"9,3",suffix:"%",label:"Tasa de agendamiento"},{value:"1,2",suffix:"%",label:"Conversión -> oportunidad"},{value:"13",suffix:"%",label:"Asistencia inspección"}],
-          hallazgos: ["Conversión crítica: solo 1-2% global","Cliente Falso principal motivo de descarte (33-50%)","Marzo 26 anomalia: 5.220 leads 'Lista Negra' (nuevo criterio)","~40% de contactados reciben solo 1 llamada - sin reintentos"],
+          oportunidades: ["Conversión crítica: solo 1-2% global","Cliente Falso principal motivo de descarte (33-50%)","Marzo 26 anomalia: 5.220 leads 'Lista Negra' (nuevo criterio)","~40% de contactados reciben solo 1 llamada - sin reintentos"],
           mejoras: ["Campo obligatorio de motivo de no-cierre estructurado","Checklist de calificación estandarizado en CRM","Validación anti-duplicados por RUT + patente","Cadencia mínima de 3 intentos antes de 'No Contactable'"],
           chartType: 'conversión'
         }
@@ -1712,25 +1815,25 @@ var journey = {
         { num: 1, title: "Creación de Oportunidad",
           description: "Se crea la oportunidad en CRM Llaima al confirmar cita.",
           kpis: [{value:"2.840",suffix:"/mes",label:"Oportunidades creadas"},{value:"5",suffix:"%",label:"Oportunidades duplicadas"},{value:"88",suffix:"%",label:"Con datos completos"}],
-          hallazgos: ["Oportunidad se crea manualmente en algunos casos","12% sin vincular correctamente el lead web original","Sin trazabilidad automática del origen del lead"],
+          oportunidades: ["Oportunidad se crea manualmente en algunos casos","12% sin vincular correctamente el lead web original","Sin trazabilidad automática del origen del lead"],
           mejoras: ["Creación 100% automática al confirmar cita","Merge automático de duplicados por RUT + patente","Tag automático de origen y campaña"]
         },
         { num: 2, title: "Check-In en Sucursal",
           description: "Registro de la llegada del vendedor a la sucursal.",
           kpis: [{value:"18",suffix:"min",label:"Tiempo espera promedio"},{value:"34",suffix:"%",label:"Esperan >25 min en peak"},{value:"67",suffix:"",label:"NPS experiencia check-in"}],
-          hallazgos: ["Check-in manual genera colas en horarios peak","Sin registro digital del momento de llegada","Recepcionista sin visibilidad de la cita del cliente"],
+          oportunidades: ["Check-in manual genera colas en horarios peak","Sin registro digital del momento de llegada","Recepcionista sin visibilidad de la cita del cliente"],
           mejoras: ["Check-in digital vía código QR + tótem de autoatención","Registro automático de timestamp de llegada","Pantalla de recepción con agenda del día"]
         },
         { num: 3, title: "Verificación Documental",
           description: "Se verifican documentos del vehículo y vendedor.",
           kpis: [{value:"85",suffix:"%",label:"Vendedores con docs completos"},{value:"15",suffix:"%",label:"Requieren docs adicionales"},{value:"22",suffix:"min",label:"Tiempo verificación promedio"}],
-          hallazgos: ["15% de vendedores con documentación incompleta","Checklist no se envía previamente","Verificación manual sin apoyo digital"],
+          oportunidades: ["15% de vendedores con documentación incompleta","Checklist no se envía previamente","Verificación manual sin apoyo digital"],
           mejoras: ["Enviar checklist 48h antes vía WhatsApp con ejemplos","Pre-carga digital de documentos antes de la cita","Verificación asistida con OCR para validación automática"]
         },
         { num: 4, title: "Asignación de Asesor",
           description: "Se asigna asesor comercial según disponibilidad.",
           kpis: [{value:"72",suffix:"%",label:"Tasa de asistencia efectiva"},{value:"8",suffix:"min",label:"Tiempo asignación -> contacto"},{value:"4,2",suffix:"",label:"Clientes simultáneos / asesor"}],
-          hallazgos: ["Asignación no considera carga actual del asesor","Sin notificación automática cuando el cliente hace check-in","Asesor no recibe ficha del lead con historial web"],
+          oportunidades: ["Asignación no considera carga actual del asesor","Sin notificación automática cuando el cliente hace check-in","Asesor no recibe ficha del lead con historial web"],
           mejoras: ["Dashboard de carga de asesores en tiempo real","Notificación push al asesor al check-in del cliente","Ficha automática del lead en el móvil del asesor"]
         }
       ]
@@ -1745,32 +1848,32 @@ var journey = {
         { num: 1, title: "Inspección Técnica",
           description: "Evaluación mecánica, carrocería e interior del vehículo. Incluye el funnel mensual comparativo de oportunidades creadas -> inspeccionadas -> compradas separado por tipo de vínculo (Compra directa vs VPP). Nota: el total 7.515 compras (Oct 25 - Abr 26) incluye VPP; el baseline de ~376 compras/mes del Eje Compra corresponde solo a Compra directa (data Ene - Abr 26).",
           kpis: [{value:"45.628",suffix:"",label:"Oportunidades creadas (Oct 25 - Abr 26)"},{value:"14.940",suffix:"",label:"Inspecciones realizadas"},{value:"7.515",suffix:"",label:"Compras concretadas (incluye VPP)"}],
-          hallazgos: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es más eficiente end-to-end: 40% conversión vs 13% VPP","La brecha está en la pre-calificación: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspección es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caída en Marzo 26 en Compra: 75% insp vs. 83-87% histórico - alerta a revisar","Autofact caduca a los 7 días y no vuelve a actualizarse, obligando a renovar la consulta cuando la oportunidad avanza pasado ese plazo","<strong>Nota:</strong> las 7.515 compras totales incluyen VPP (2.409) + Compra directa (5.106). El baseline del Eje Compra (~376/mes) es solo Compra directa"],
-          mejoras: ["Análisis de leads VPP no inspeccionados (75% del pipeline VPP) para identificar patrones de descarte y filtros mejorables","Revisar caída de inspecciones en Marzo 26 en Compra directa","Tiempo variable (30-90 min) según experiencia del inspector","Checklist digital con tiempos objetivo por item","Categorización obligatoria de hallazgos por severidad","Actualizar Autofact automáticamente al actualizar la oportunidad si el reporte está vencido"],
+          oportunidades: ["VPP concentra 87% del volumen de creadas (39.550 de 45.628) pero solo el 68% de las compras (5.106 de 7.515)","Compra directa es más eficiente end-to-end: 40% conversión vs 13% VPP","La brecha está en la pre-calificación: Compra inspecciona 82% vs VPP 25%","Tasa de cierre post-inspección es comparable (~48% Compra / 51% VPP), indicando que el inspector no es el cuello de botella","Caída en Marzo 26 en Compra: 75% insp vs. 83-87% histórico - alerta a revisar","Autofact caduca a los 7 días y no vuelve a actualizarse, obligando a renovar la consulta cuando la oportunidad avanza pasado ese plazo","<strong>Nota:</strong> las 7.515 compras totales incluyen VPP (2.409) + Compra directa (5.106). El baseline del Eje Compra (~376/mes) es solo Compra directa"],
+          mejoras: ["Análisis de leads VPP no inspeccionados (75% del pipeline VPP) para identificar patrones de descarte y filtros mejorables","Revisar caída de inspecciones en Marzo 26 en Compra directa","Tiempo variable (30-90 min) según experiencia del inspector","Checklist digital con tiempos objetivo por item","Categorización obligatoria de oportunidades por severidad","Actualizar Autofact automáticamente al actualizar la oportunidad si el reporte está vencido"],
           chartType: 'insp-vínculo'
         },
         { num: 2, title: "Registro Fotográfico",
           description: "Captura estandarizada de fotografías del vehículo.",
           kpis: [{value:"2.145",suffix:"/mes",label:"Inspecciones con fotos"},{value:"18",suffix:"",label:"Fotos promedio por vehículo"},{value:"60",suffix:"%",label:"Sucursales con proceso digital"}],
-          hallazgos: ["Informe en papel en 40% de sucursales","Calidad de fotos inconsistente","Fotos no se vinculan automáticamente a la oportunidad"],
+          oportunidades: ["Informe en papel en 40% de sucursales","Calidad de fotos inconsistente","Fotos no se vinculan automáticamente a la oportunidad"],
           mejoras: ["App móvil con captura guiada y carga directa a CRM","Validación automática de calidad de imagen","Reutilización de fotos para publicación directa"]
         },
         { num: 3, title: "Cálculo Oferta Final",
           description: "Se calcula precio de compra final.",
           kpis: [{value:"48",suffix:"%",label:"Conversión inspección -> compra"},{value:"15",suffix:"%",label:"Brecha online vs final"},{value:"8,2",suffix:"%",label:"Margen promedio usados"}],
-          hallazgos: ["Diferencia >15% entre tasación online y oferta final","Costo de re-acondicionamiento se estima subjetivamente","Sin visibilidad de demanda actual del modelo","Tasadores estudian el precio de publicación en portales en el 50% de los autos que se compran y la información no se registra en la oportunidad"],
+          oportunidades: ["Diferencia >15% entre tasación online y oferta final","Costo de re-acondicionamiento se estima subjetivamente","Sin visibilidad de demanda actual del modelo","Tasadores estudian el precio de publicación en portales en el 50% de los autos que se compran y la información no se registra en la oportunidad"],
           mejoras: ["Dashboard de brecha tasación vs oferta por sucursal","Tabla estandarizada de costos de re-acondicionamiento","Integrar datos de demanda al algoritmo","Crear un campo en la Opp de compra para registrar el precio de publicación visto por el tasador (trazabilidad y feedback al algoritmo de pricing)"]
         },
         { num: 4, title: "Validación Comercial",
           description: "Aprobación por jefatura cuando excede autonomía del asesor.",
           kpis: [{value:"60",suffix:"%",label:"Ofertas que requieren aprobación"},{value:"35",suffix:"min",label:"Tiempo promedio aprobación"},{value:"92",suffix:"%",label:"Tasa de aprobación jefatura"}],
-          hallazgos: ["Validación manual de jefatura en >60% de casos","Tiempo de aprobación genera espera frustrante","92% se aprueba - umbrales demasiado bajos"],
+          oportunidades: ["Validación manual de jefatura en >60% de casos","Tiempo de aprobación genera espera frustrante","92% se aprueba - umbrales demasiado bajos"],
           mejoras: ["Pre-aprobación automática para ofertas dentro de rango","Aprobación digital vía app para jefatura","Revisión de umbrales de autonomía del asesor"]
         },
         { num: 5, title: "Negociación y Cierre",
           description: "Presentación de oferta y formalización o no-cierre.",
           kpis: [{value:"48",suffix:"%",label:"Tasa de cierre final"},{value:"52",suffix:"%",label:"No-cierre (precio insuficiente)"},{value:"$0",suffix:"",label:"Registro estructurado no-cierre"}],
-          hallazgos: ["Sin registro estructurado de razones de no-cierre","Vendedor no recibe oferta por escrito","Sin flujo de seguimiento post no-cierre"],
+          oportunidades: ["Sin registro estructurado de razones de no-cierre","Vendedor no recibe oferta por escrito","Sin flujo de seguimiento post no-cierre"],
           mejoras: ["Campo obligatorio de motivo de no-compra","Envío automático de oferta por WhatsApp con vigencia 72h","Flujo post no-cierre: contacto CC a las 48h"]
         }
       ]
@@ -1784,13 +1887,13 @@ var journey = {
         { num: 1, title: "Carga del precio",
           description: "Asignación del valor comercial de la unidad. Gate obligatorio antes de publicar: 17 unidades de las 200 no publicadas hoy (8,5%) están bloqueadas específicamente por falta de precio.",
           kpis: [{value:"17",suffix:"uds",label:"Bloqueadas sin precio (hoy)"},{value:"8,5",suffix:"%",label:"De las 200 no publicadas"},{value:"—",suffix:"hrs",label:"Tiempo Quiter -> precio cargado"}],
-          hallazgos: ["17 unidades disponibles hoy no están publicadas por falta de precio - gate operacional concreto","Sin SLA formal publicado entre registro en Quiter y carga de precio","Posibles inconsistencias entre tasación web y precio final publicado","Reglas de pricing no trazables por modelo/antigüedad"],
+          oportunidades: ["17 unidades disponibles hoy no están publicadas por falta de precio - gate operacional concreto","Sin SLA formal publicado entre registro en Quiter y carga de precio","Posibles inconsistencias entre tasación web y precio final publicado","Reglas de pricing no trazables por modelo/antigüedad"],
           mejoras: ["Alerta automática cuando una unidad lleva > X horas sin precio","Definir y publicar SLA de carga de precio (ej. <24h desde Quiter)","Reporte de dispersión tasación web vs. precio publicado","Reglas paramétricas de pricing por modelo + antigüedad + condición"]
         },
         { num: 2, title: "Ajustes post-publicación",
           description: "Monitoreo de ajustes de precio dentro de los primeros días en stock.",
           kpis: [{value:"—",suffix:"%",label:"Unidades ajustadas en primeros 30 días"},{value:"—",suffix:"%",label:"Ajuste promedio (magnitud)"},{value:"—",suffix:"días",label:"Tiempo promedio hasta primer ajuste"}],
-          hallazgos: ["Sin seguimiento sistemático de precio inicial vs. ajustes","Falta de estructura en solicitud de ajustes de precio","Decisiones de ajuste sin registro estructurado"],
+          oportunidades: ["Sin seguimiento sistemático de precio inicial vs. ajustes","Falta de estructura en solicitud de ajustes de precio","Decisiones de ajuste sin registro estructurado"],
           mejoras: ["Dashboard de movimientos de precio por unidad","Workflow estructurado para ajustes de precio con motivo","Umbrales automáticos que alerten sobre ajustes excesivos"]
         }
       ]
@@ -1804,20 +1907,20 @@ var journey = {
         { num: 1, title: "Publicación efectiva",
           description: "La unidad aparece en el catálogo web con su ficha. Snapshot actual: 1.790 unidades publicadas sobre un inventario total de 2.574.",
           kpis: [{value:"1.790",suffix:"uds",label:"Publicadas hoy"},{value:"69,5",suffix:"%",label:"Publicadas vs. inventario total"},{value:"89,9",suffix:"%",label:"Publicadas vs. disponibles"}],
-          hallazgos: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","580 unidades (22,5% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
+          oportunidades: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","580 unidades (22,5% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
           mejoras: ["Reporte diario de brecha disponibles vs. publicadas (meta: >95%)","Monitoreo del mix de motivos de no-publicación para atacar el más frecuente","Definir campos mínimos obligatorios para publicar (con bloqueo)","SLA máximo Quiter -> publicación (ej. 24-48h)"],
           chartType: 'prep-funnel'
         },
         { num: 2, title: "No publicadas del stock disponible",
           description: "200 unidades disponibles para publicar pero retenidas hoy (10,1% del stock disponible). Desglose por motivo: En acopio 166 (83%), Sin precio 17 (8,5%), Otras razones 15 (7,5%), Concesionario VN 2 (1%).",
           kpis: [{value:"200",suffix:"uds",label:"Retenidas hoy (disponibles)"},{value:"83",suffix:"%",label:"En acopio (166 uds) - causa dominante"},{value:"10,1",suffix:"%",label:"% del stock disponible"}],
-          hallazgos: ["El 83% de las retenciones (166 uds) están 'En acopio' - categoría que requiere definir operacionalmente qué significa y cuánto tiempo es aceptable","17 uds bloqueadas por falta de precio - gate operacional concreto gestionable","15 uds 'USADOS CENTRO DE ACOPIO FERRY TRUCK' sin categorización clara: debilita la accionabilidad","2 uds en Concesionario VN - volumen marginal pero habla de stock que no debería estar en el pool","Sin categorización estandarizada del motivo en el sistema"],
+          oportunidades: ["El 83% de las retenciones (166 uds) están 'En acopio' - categoría que requiere definir operacionalmente qué significa y cuánto tiempo es aceptable","17 uds bloqueadas por falta de precio - gate operacional concreto gestionable","15 uds 'USADOS CENTRO DE ACOPIO FERRY TRUCK' sin categorización clara: debilita la accionabilidad","2 uds en Concesionario VN - volumen marginal pero habla de stock que no debería estar en el pool","Sin categorización estandarizada del motivo en el sistema"],
           mejoras: ["Desagregar 'En acopio' en subcategorias accionables (recién llegado, pendiente limpieza, pendiente documentación, etc.)","Migrar 'Otras razones' a lista cerrada con 3-5 categorías","SLA máximo por categoría: acopio (ej. 48h), sin precio (ej. 24h)","Dashboard diario de retenciones con alerta cuando una categoría crece"]
         },
         { num: 3, title: "No disponibles para publicar (inventario)",
           description: "580 unidades del inventario total no son elegibles para publicar por motivos estructurales (22,5% del inventario). Desglose: Reservadas 403 (Uds reservadas 345, Ferry Truck 57, Acopio 1), Problemas legales 166, UFM/Falla mecánica 9, No disponible 2.",
           kpis: [{value:"580",suffix:"uds",label:"No disponibles"},{value:"22,5",suffix:"%",label:"Del inventario total"},{value:"403",suffix:"uds",label:"Reservadas (69% de no disp.)"}],
-          hallazgos: ["22,5% del inventario inmovilizado: 1 de cada 4 unidades NO está disponible para la vitrina","Las reservadas (403) dominan con 69%: 345 uds reservadas + 57 Ferry Truck + 1 Acopio - requiere entender si la reserva es comercial legítima o inmovilizado","166 unidades con problemas legales: volumen significativo que hay que destrabar - cruce con legal","9 unidades en UFM (SAIS/Falla mecánica) - bajo volumen pero flag de calidad de compra en origen","Categorías heterogéneas: mezcla compromisos comerciales (reservadas), bloqueos legales, y fallas - cada una con owner y tiempo de resolución distinto"],
+          oportunidades: ["22,5% del inventario inmovilizado: 1 de cada 4 unidades NO está disponible para la vitrina","Las reservadas (403) dominan con 69%: 345 uds reservadas + 57 Ferry Truck + 1 Acopio - requiere entender si la reserva es comercial legítima o inmovilizado","166 unidades con problemas legales: volumen significativo que hay que destrabar - cruce con legal","9 unidades en UFM (SAIS/Falla mecánica) - bajo volumen pero flag de calidad de compra en origen","Categorías heterogéneas: mezcla compromisos comerciales (reservadas), bloqueos legales, y fallas - cada una con owner y tiempo de resolución distinto"],
           mejoras: ["Reporte mensual de aging por categoría de no-disponible","Owner claro por categoría: Reservadas (Comercial), Legales (Legal), UFM (Calidad/Compras), No disponible (Operaciones)","Alerta cuando una unidad lleva >X días en categoría no-disponible","Revisar criterio de aceptación en compra para reducir UFM en origen","Diferenciar 'reserva comercial activa' vs. 'reserva fantasma' (>30 días sin avance)"]
         }
       ]
@@ -1834,26 +1937,26 @@ var journey = {
         { num: 1, title: "Captura de foto de producto",
           description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspección). 204 uds (11,4%) están publicadas SIN ninguna foto.",
           kpis: [{value:"1.586",suffix:"uds",label:"Publicadas con foto capturada (88,6%)"},{value:"204",suffix:"uds",label:"Publicadas sin foto (11,4%)"},{value:"10,1",suffix:"días",label:"Sucursal disponible -> foto Impel (promedio)"}],
-          hallazgos: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","<strong>Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel</strong> — ver tabla de tiempos por origen","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
+          oportunidades: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","<strong>Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel</strong> — ver tabla de tiempos por origen","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '204 sin foto' con owner por sucursal","SLA transitorio <72h para los orígenes más lentos (VPP Nuevos, Carflex, B2B)","Priorización de stock premium y alta rotación durante la transición"],
           chartType: 'foto-impel-tiempos'
         },
         { num: 2, title: "Post-procesado Impel (fondo limpio)",
           description: "Salida estándar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad. Data real BI 2026-04-17: 1.211 unidades con foto Impel terminada (67,7% del stock publicado). Nota: el BI agrupa Tier 1 + Tier 2 como IMPEL - la adopción específica de cabina virtual 360 requiere reporte Impel detallado.",
           kpis: [{value:"1.211",suffix:"uds",label:"Con foto Impel (Tier 1 + Tier 2)"},{value:"67,7",suffix:"%",label:"Del stock publicado"},{value:"579",suffix:"uds",label:"Publicadas sin foto Impel lista (32,3%)"}],
-          hallazgos: ["Solo 67,7% del stock publicado tiene foto Impel terminada; 32,3% (579 uds) están en vitrina con foto de inspección o placeholder","El BI no separa Tier 1 de Tier 2, por lo que no podemos cuantificar la adopción específica de cabina virtual 360","Cobertura Impel por zona: Sur lidera con 74,8%, RM es peor con 65,3%","Tier 2 ha sido la salida estándar hasta abril 2026","Sin SLA definido entre 'foto capturada' y 'Impel terminada'"],
+          oportunidades: ["Solo 67,7% del stock publicado tiene foto Impel terminada; 32,3% (579 uds) están en vitrina con foto de inspección o placeholder","El BI no separa Tier 1 de Tier 2, por lo que no podemos cuantificar la adopción específica de cabina virtual 360","Cobertura Impel por zona: Sur lidera con 74,8%, RM es peor con 65,3%","Tier 2 ha sido la salida estándar hasta abril 2026","Sin SLA definido entre 'foto capturada' y 'Impel terminada'"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Migrar la generación de fotos finales in-house al momento de la inspección mecánica — deprecar el servicio Impel externo y ahorrar $4,2M/mes ($50,4M/año)","Durante la transición: definir SLA foto tomada → Impel lista (ej. <24h) y medir calidad objetiva","Target mínimo 85% foto Impel por zona hasta completar el roll-out del desarrollo interno"]
         },
         { num: 3, title: "Cabina virtual 360 (Tier 1)",
           description: "Capacidad incorporada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopción marginal aún - el BI actual no separa Tier 1 del Tier 2 (ambos se cuentan como 'IMPEL' = 1.211 uds, 67,7%), así que la cuantificación específica requiere reporte Impel detallado.",
           kpis: [{value:"—",suffix:"%",label:"Subset Impel con cabina virtual 360"},{value:"1.211",suffix:"uds",label:"Techo teórico (Impel total)"},{value:"—",suffix:"",label:"Objetivo 30/60/90 días"}],
-          hallazgos: ["El reporte BI vigente no permite medir adopción de Tier 1 aisladamente - bloquea el seguimiento gerencial","Capacidad reciente (2026-04-13): todavía poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorización explícita de segmentos (ej. lujo primero)","Techo teórico de conversión hoy: las 1.211 uds Impel podrían migrarse a Tier 1 sin esfuerzo incremental en captura"],
+          oportunidades: ["El reporte BI vigente no permite medir adopción de Tier 1 aisladamente - bloquea el seguimiento gerencial","Capacidad reciente (2026-04-13): todavía poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorización explícita de segmentos (ej. lujo primero)","Techo teórico de conversión hoy: las 1.211 uds Impel podrían migrarse a Tier 1 sin esfuerzo incremental en captura"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Desarrollar la capa cabina virtual 360 in-house aplicada al momento de la inspección mecánica — deprecar Impel y ahorrar $4,2M/mes","Hasta el corte: priorizar lujo / alto ticket con cabina virtual 360 vía Impel","Reporte semanal de % stock en Tier 1 con tendencia"]
         },
         { num: 4, title: "Backlog y no-procesamiento",
           description: "Unidades publicadas esperando foto Impel lista, o que nunca la reciben. Data real BI 2026-04-17: 579 uds en 'backlog visible' = publicadas sin foto Impel (375 con foto de inspección 'Tier 3' + 204 sin foto 'Tier 4').",
           kpis: [{value:"579",suffix:"uds",label:"Backlog visible (32,3% publicado)"},{value:"375",suffix:"uds",label:"Con foto inspección (Tier 3)"},{value:"204",suffix:"uds",label:"Sin foto alguna (Tier 4)"}],
-          hallazgos: ["1 de cada 3 unidades publicadas (32,3%) NO tiene foto Impel - vitrina degradada de forma masiva","RM concentra 114 de las 204 unidades Tier 4 (55,9%) - vitrina más afectada","El backlog hoy es invisible al negocio: sin reporte ni alerta ni owner","Sin data de antigüedad del backlog - requiere cruce con fecha de publicación por unidad","No se distingue 'esperando Impel' de 'nunca tendra Impel' (abandono)"],
+          oportunidades: ["1 de cada 3 unidades publicadas (32,3%) NO tiene foto Impel - vitrina degradada de forma masiva","RM concentra 114 de las 204 unidades Tier 4 (55,9%) - vitrina más afectada","El backlog hoy es invisible al negocio: sin reporte ni alerta ni owner","Sin data de antigüedad del backlog - requiere cruce con fecha de publicación por unidad","No se distingue 'esperando Impel' de 'nunca tendra Impel' (abandono)"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Eliminar el backlog de origen: foto final generada durante la inspección mecánica (in-house) — no hay pipeline externo que se atrase","Mientras tanto: reporte diario de backlog por zona y sucursal + alerta cuando backlog > 20% del publicado","Política transitoria: toda unidad Tier 4 debe tener resolución (Impel o despublicación) en 72h"]
         }
       ]
@@ -1870,27 +1973,27 @@ var journey = {
         { num: 1, title: "Distribución de stock por tier",
           description: "Métrica maestra: que proporción del stock publicado (1.790 uds) está en cada tipo de foto. Data real BI 2026-04-17: Impel 1.211 (67,7%), Inspección 375 (20,9%), Sin foto 204 (11,4%).",
           kpis: [{value:"67,7",suffix:"%",label:"Con foto Impel (1.211 uds)"},{value:"20,9",suffix:"%",label:"Con foto inspección (375 uds)"},{value:"11,4",suffix:"%",label:"Sin foto (204 uds)"}],
-          hallazgos: ["32,3% del stock publicado NO tiene foto Impel: 375 con inspección + 204 sin foto = 579 uds degradadas","Zona Metropolitana concentra el problema: 114 de 204 sin-foto (55,9%) están en RM","Tier 1 (cabina virtual 360) con adopción marginal - aún no cuantificable como subset del 67,7% Impel","Sin target oficial de distribución por tier","Zona Sur muestra mejor ejecución: solo 8,9% sin foto"],
+          oportunidades: ["32,3% del stock publicado NO tiene foto Impel: 375 con inspección + 204 sin foto = 579 uds degradadas","Zona Metropolitana concentra el problema: 114 de 204 sin-foto (55,9%) están en RM","Tier 1 (cabina virtual 360) con adopción marginal - aún no cuantificable como subset del 67,7% Impel","Sin target oficial de distribución por tier","Zona Sur muestra mejor ejecución: solo 8,9% sin foto"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Con foto final generada durante la inspección (in-house), el mix converge a 100% Tier 1 sin necesidad de targets por zona — se elimina la existencia de Tier 3 y Tier 4","Durante la transición: reporte semanal de mix por zona y alerta cuando una zona supera 15% sin-foto"],
           chartType: 'prep-foto-zona'
         },
         { num: 2, title: "Impacto comercial por tier",
           description: "Cruce de tier de foto con resultados comerciales (tiempo en stock, visitas, conversión).",
           kpis: [{value:"—",suffix:"días",label:"Días en stock Tier 1 vs Tier 4"},{value:"—",suffix:"%",label:"Conversión relativa por tier"},{value:"—",suffix:"%",label:"CTR de ficha por tier"}],
-          hallazgos: ["No hay cruce publicado entre tier de foto y performance comercial","Intuición de negocio: Tier 4 'mata' la visibilidad pero falta evidencia cuantitativa","Justificación para inversión en cabina virtual 360 requiere este dato"],
+          oportunidades: ["No hay cruce publicado entre tier de foto y performance comercial","Intuición de negocio: Tier 4 'mata' la visibilidad pero falta evidencia cuantitativa","Justificación para inversión en cabina virtual 360 requiere este dato"],
           mejoras: ["Análisis A/B tier de foto vs. días en stock y conversión","Dashboard de performance comercial segmentado por tier","Business case cuantitativo para inversión en Tier 1"]
         },
         { num: 3, title: "Auditoría de calidad visible",
           description: "Revisión operativa del catálogo público para detectar degradación de vitrina. El ranking de sucursales por % sin-foto identifica los puntos de intervención prioritarios (ver gráfico).",
           kpis: [{value:"51,5",suffix:"%",label:"Peor sucursal (Concepción J. Alessandri R. 1885)"},{value:"48,4",suffix:"%",label:"2da peor (Vitacura Padre Hurtado 1246)"},{value:"43",suffix:"uds",label:"Sin foto en top 3 peores sucursales"}],
-          hallazgos: ["3 sucursales concentran 43 de las 204 unidades sin foto (21%): J. Alessandri 1885, Vitacura Padre Hurtado 1246, José Miguel Carrera 6197","Carshopping A. Vespucio 2451 es la sucursal con MÁS unidades sin foto en absoluto (33 uds) aunque %relativo es 19,4%","Auditoría actual de fotos de inspección es diaria pero sin métrica agregada por sucursal","Sin auditoría sistemática de placeholders Tier 4","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
+          oportunidades: ["3 sucursales concentran 43 de las 204 unidades sin foto (21%): J. Alessandri 1885, Vitacura Padre Hurtado 1246, José Miguel Carrera 6197","Carshopping A. Vespucio 2451 es la sucursal con MÁS unidades sin foto en absoluto (33 uds) aunque %relativo es 19,4%","Auditoría actual de fotos de inspección es diaria pero sin métrica agregada por sucursal","Sin auditoría sistemática de placeholders Tier 4","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] La auditoría por sucursal deja de ser necesaria cuando la foto se genera durante la inspección (in-house): todas las sucursales entregan unidades con foto lista el mismo día","Mientras se desarrolla: intervención focalizada en top 5 peores sucursales + ranking interno","SLA transitorio por sucursal: no más de 10% sin-foto"],
           chartType: 'prep-foto-sucursal'
         },
         { num: 4, title: "SLA de upgrade de tier",
           description: "Tiempo máximo aceptable en Tier 3 o Tier 4 antes de escalar.",
           kpis: [{value:"—",suffix:"días",label:"Permanencia promedio en Tier 3"},{value:"—",suffix:"días",label:"Permanencia promedio en Tier 4"},{value:"—",suffix:"%",label:"Unidades que hacen upgrade de tier"}],
-          hallazgos: ["No hay SLA explícito para sacar unidades de Tier 3 / Tier 4","Unidades pueden quedar 'olvidadas' en tiers bajos por meses","Sin owner claro del upgrade de tier"],
+          oportunidades: ["No hay SLA explícito para sacar unidades de Tier 3 / Tier 4","Unidades pueden quedar 'olvidadas' en tiers bajos por meses","Sin owner claro del upgrade de tier"],
           mejoras: ["Definir SLA máximo por tier (ej. Tier 4: max 72h)","Asignar owner operacional del pipeline visual","Cola priorizada de upgrades con edad máxima visible"]
         }
       ]
@@ -1906,7 +2009,7 @@ var journey = {
           description: "Punto de entrada del sitio. Data Microsoft Clarity · 22 mar – 22 abr 2026. 136.334 sesiones totales, 85,7% mobile, bounce rate 58,4%, duración promedio 3:07 min.",
           chartType: 'vta-mercado',
           kpis: [{value:"136.334",suffix:"",label:"Sesiones totales (30 días)"},{value:"85,7",suffix:"%",label:"Tráfico mobile (106.867 ses.)"},{value:"58,4",suffix:"%",label:"Bounce rate promedio sitio"}],
-          hallazgos: [
+          oportunidades: [
             "Tráfico muy concentrado en mobile: 85,7% (106.867 sesiones). Desktop 12,1% (15.888) y Tablet 1,6% (2.022).",
             "Bounce rate de 58,4% — más de la mitad de los usuarios abandona sin interactuar, con una duración promedio de apenas 3:07 min por sesión.",
             "Principales fuentes de tráfico: Ads Meta (Facebook/Instagram) 36%, Google Paid Search 20%, Directo 18%, Google Orgánico 8%, Instagram orgánico 6%, otros 12% — alta dependencia de paid.",
@@ -1922,7 +2025,7 @@ var journey = {
         { num: 2, title: "Catálogo — /vehiculos/usado",
           description: "Listado general del stock publicado. Data Microsoft Clarity: 62.955 sesiones (46,2% del total del sitio), 87,5% mobile, 56% rebota en página 1 sin ver ningún auto, 41% llegan a una ficha.",
           kpis: [{value:"62.955",suffix:"",label:"Sesiones (30 días)"},{value:"56",suffix:"%",label:"Rebotan en pág. 1 (sin ver autos)"},{value:"41",suffix:"%",label:"Llegan a ficha desde catálogo"}],
-          hallazgos: [
+          oportunidades: [
             "Autos sin foto ya van al final del listado (implementado) y se aplica orden random cada 24h a los 100 autos más antiguos para visibilidad equitativa.",
             "Botón de filtros con bajo uso: 2.749 clics en 30 días = solo 4,4% de las sesiones del catálogo usan los filtros.",
             "Buscador de texto: 30% del uso del buscador de texto del sitio se origina desde el catálogo — el usuario lo usa para refinar dentro del listado.",
@@ -1940,7 +2043,7 @@ var journey = {
         { num: 3, title: "Ficha de auto — /marcas/",
           description: "Detalle del vehículo. Data Microsoft Clarity: 21.872 sesiones (34,7% del catálogo), tiempo promedio 4:30 min, 17,3% de las sesiones con dead click (3.792), quickback rate 56,1%.",
           kpis: [{value:"21.872",suffix:"",label:"Sesiones (30 días)"},{value:"17,3",suffix:"%",label:"Sesiones con dead click (3.792)"},{value:"56,1",suffix:"%",label:"Quickback rate (abandono rápido)"}],
-          hallazgos: [
+          oportunidades: [
             "<strong>Carrusel de fotos sin interacción táctil en mobile</strong> cuando el auto tiene foto de inspección pero no vista 360°: el contenedor no registra swipe ni zoom. Afecta prácticamente a todos los autos sin 360° y concentra la fricción de la ficha.",
             "<strong>74.943 dead clicks mensuales</strong> atribuibles a intentos de swipe/zoom sin respuesta — mayor pérdida de interacción del sitio.",
             "56,1% de quickback rate: más de la mitad de los usuarios entra a la ficha y vuelve atrás sin profundizar.",
@@ -1957,7 +2060,7 @@ var journey = {
           description: "Flujo de datos de contacto y financiamiento para generar el lead. Data Microsoft Clarity · 22 mar – 22 abr 2026: 862 sesiones inician cotización desde ficha (3,9% de conversión ficha → cotización), 19,4% con dead click (167 de 862).",
           chartType: 'vta-funnel',
           kpis: [{value:"862",suffix:"",label:"Inician cotización / 30 días"},{value:"3,9",suffix:"%",label:"Conv. ficha -> cotización"},{value:"19,4",suffix:"%",label:"Sesiones con dead click (167 de 862)"}],
-          hallazgos: [
+          oportunidades: [
             "<strong>Salto crítico del funnel</strong>: de 21.872 fichas a solo 862 cotizaciones = 3,9% de conversión. Es la mayor oportunidad de mejora del funnel del sitio.",
             "Dead clicks en la foto del auto del header del buy-process y en los indicadores numéricos de paso (1·2·3·4·5): el usuario intenta interactuar esperando navegar entre pasos o ampliar la foto.",
             "Demasiadas preguntas en el flujo generan fricción y abandono, a pesar de que los datos ya se capturan a partir del paso 1."
@@ -1981,7 +2084,7 @@ var journey = {
           description: "Tendencia del período Oct 2025 – Mar 2026: 92.843 leads totales, 72.113 descartados (77,7%), 5.587 SQL entregados (6,0%), 3.838 ventas cerradas (4,1%). Mejor mes: Marzo 2026 con 8,8% de conversión SQL. 13.548 leads quedan en etapa 'Nuevo' sin gestionar.",
           chartType: 'vta-leads-vol',
           kpis: [{value:"92.843",suffix:"",label:"Total leads (6 meses)"},{value:"77,7",suffix:"%",label:"Tasa de descarte global"},{value:"6,0",suffix:"%",label:"Conversión SQL (entregados)"},{value:"3.838",suffix:"",label:"Ventas cerradas (4,1% conv. final)"}],
-          hallazgos: [
+          oportunidades: [
             "Tasa de descarte del 77,7% sostenida en el período — el pipeline se quiebra antes de la entrega.",
             "Marzo 2026 es el único mes donde todas las métricas mejoran simultáneamente (8,8% conversión SQL, menor descarte y más entregados).",
             "13.548 leads (15% del total) quedan en etapa 'Nuevo' sin haberse gestionado — volumen crítico sin dueño.",
@@ -1998,7 +2101,7 @@ var journey = {
           description: "Análisis cruzado de la temperatura del lead (Caliente / Tibio / Frío) contra su tasa real de descarte y conversión. El criterio actual de temperatura no predice el resultado comercial.",
           chartType: 'vta-leads-temp',
           kpis: [{value:"+13",suffix:"pp",label:"Descarte Caliente vs. Frío (promedio)"},{value:"3,9",suffix:"%",label:"Conversión Caliente (promedio)"},{value:"4,6",suffix:"%",label:"Conversión Frío (promedio)"}],
-          hallazgos: [
+          oportunidades: [
             "Los leads calientes se descartan MÁS que los fríos en todos los meses (+13pp promedio).",
             "La temperatura NO predice conversión: frío iguala o supera a caliente en varios meses (Oct 25, Ene 26, Mar 26).",
             "Febrero 2026 el Tibio convirtió al 12,3% (el mejor resultado) — ni los criterios ni la asignación aprovechan esa señal.",
@@ -2015,7 +2118,7 @@ var journey = {
           description: "Clientes con auto en parte de pago (VPP) e historial de compra (segmentos Bronce / Plata / Oro / VIP). Con VPP se descarta +7pp más, pero cuando el lead avanza, convierte mejor (4,0% vs. 3,3%) — potencial desaprovechado.",
           chartType: 'vta-leads-vpp',
           kpis: [{value:"+7",suffix:"pp",label:"Descarte con VPP vs. sin VPP"},{value:"4,0",suffix:"%",label:"Conversión con VPP (cuando avanza)"},{value:"641",suffix:"",label:"Oro + VIP con VPP descartados"}],
-          hallazgos: [
+          oportunidades: [
             "Con VPP se descarta MÁS en todos los meses (+7pp) — el VPP no protege de ser descartado.",
             "Cuando avanzan, los leads con VPP convierten mejor: 4,0% vs. 3,3% sin VPP — potencial desaprovechado.",
             "641 clientes Oro + VIP con VPP fueron descartados en 6 meses. Enero 2026 es el peor mes con 280 perdidos.",
@@ -2032,12 +2135,12 @@ var journey = {
           description: "El segmento de mayor margen (con financiamiento) es justamente el peor gestionado: 95,3% de descarte promedio. Los motivos dominantes son 'No contesta' (31%) y 'Descarte masivo' (12%, distorsiona métricas).",
           chartType: 'vta-leads-financ',
           kpis: [{value:"95,3",suffix:"%",label:"Descarte con financiamiento (promedio)"},{value:"-10",suffix:"pp",label:"Brecha vs. sin financiamiento"},{value:"22.364",suffix:"",label:"Descartes por 'No contesta' (31%)"},{value:"8.613",suffix:"",label:"Descartes por 'Desc. masivo' (12%)"}],
-          hallazgos: [
+          oportunidades: [
             "El segmento de mayor margen (con financiamiento) tiene la peor tasa de gestión: 95,3% de descarte — 10pp más que sin financiamiento.",
             "Descarte por segmento con financiamiento: Sin segmento 96% · VIP 93% · Oro 91% · Plata 89% · Bronce 87%.",
             "'No contesta' domina con 22.364 casos (31% del total) — atacable con validación de datos al ingreso al CRM.",
             "'Descarte masivo' acumula 8.613 casos en 6 meses (12%) — oculta leads recuperables al no registrar motivo específico.",
-            "'Neg. financ.' suma 5.329 casos (7%) — alineado con el hallazgo de mala gestión del segmento con crédito."
+            "'Neg. financ.' suma 5.329 casos (7%) — alineado con el oportunidad de mala gestión del segmento con crédito."
           ],
           mejoras: [
             "<strong>Flujo diferenciado para financiamiento</strong> — pre-evaluación crediticia antes del ingreso al CRM. El segmento de mayor margen no puede seguir con 95,3% de descarte.",
@@ -2059,13 +2162,13 @@ var journey = {
         { num: 1, title: "Reserva de la unidad",
           description: "Registro de la reserva en Llaima / sistema con monto y vigencia.",
           kpis: [{value:"—",suffix:"%",label:"% reservas que terminan en venta"},{value:"—",suffix:"días",label:"Duración promedio de la reserva"},{value:"—",suffix:"%",label:"% reservas liberadas por vencimiento"}],
-          hallazgos: ["Reservas 'fantasma' que inmovilizan stock (403 uds reservadas hoy)","Sin regla automática de liberación por vencimiento","Sin visibilidad del cliente respecto a su propia reserva"],
+          oportunidades: ["Reservas 'fantasma' que inmovilizan stock (403 uds reservadas hoy)","Sin regla automática de liberación por vencimiento","Sin visibilidad del cliente respecto a su propia reserva"],
           mejoras: ["Liberación automática de reservas a 48h sin avance","Panel del cliente con estado de la reserva y vencimiento","Alerta al asesor antes del vencimiento"]
         },
         { num: 2, title: "Elección del medio de pago",
           description: "El comprador elige entre efectivo, transferencia, crédito automotriz o parte de pago. Dentro de los mecanismos comerciales también se aplica el <strong>Regalo PIE</strong> (bonificación al pie del cliente). Análisis Q1 2026 sobre 4.857 oportunidades USADOS facturadas: 193 con Regalo PIE (3,97% penetración) · $202 MM entregados.",
           kpis: [{value:"3,97",suffix:"%",label:"Penetración Regalo PIE (USADOS Q1 2026)"},{value:"$202",suffix:" MM",label:"Monto Regalo PIE entregado"},{value:"9,19",suffix:"%",label:"Peso PIE / Factura (en opp. con PIE)"},{value:"$1",suffix:" MM",label:"PIE promedio por operación"}],
-          hallazgos: [
+          oportunidades: [
             "<strong>[CRÍTICO] Sin trazabilidad de modificaciones de precio en Quiter:</strong> hoy no existe mecanismo para detectar si se cambió el precio de venta de la unidad en Quiter ni saber si esa modificación afectó el margen real. Sin esta trazabilidad, el Regalo PIE se vuelve un <strong>mecanismo riesgoso y de difícil control</strong> — no hay forma de auditar si la bonificación entregada se compensó con un alza de precio, si erosionó margen o si responde a una autorización válida.",
             "<strong>Concentración del PIE en pocas sucursales:</strong> Usados Movicenter A. Vespucio 1155 concentra <strong>47,6%</strong> del monto PIE USADOS ($96 MM en 71 ops · 13,3% de penetración, 3,3x el benchmark del segmento). Las 3 sucursales top suman 69,7% del PIE — sin trazabilidad de precio en Quiter, esta concentración es difícil de validar como práctica autorizada vs. sesgo local.",
             "<strong>Responsables con uso intensivo sobre el benchmark:</strong> Leandro Antonio Alfonzo Marin aplica PIE en 55,0% de sus operaciones (11 de 20) — 14x el benchmark del segmento (3,97%). Hay 5 responsables sobre 30% de penetración. Sin auditoría de margen post-PIE no es posible distinguir estrategia comercial autorizada de uso discrecional.",
@@ -2085,7 +2188,7 @@ var journey = {
         { num: 3, title: "Registro de señal o anticipo",
           description: "Ingreso del pago inicial y formalización en el sistema.",
           kpis: [{value:"—",suffix:"min",label:"Tiempo del proceso de pago"},{value:"—",suffix:"%",label:"% pagos digitales vs. presenciales"},{value:"—",suffix:"%",label:"% con comprobante entregado al cliente"}],
-          hallazgos: ["Sin link de pago digital estándar","Comprobante manual por email / papel","Sin conciliación automática entre pago y reserva"],
+          oportunidades: ["Sin link de pago digital estándar","Comprobante manual por email / papel","Sin conciliación automática entre pago y reserva"],
           mejoras: ["Link de pago digital con comprobante automático","Conciliación automática entre reserva y pago","Dashboard de pagos pendientes por asesor"]
         }
       ]
@@ -2099,20 +2202,20 @@ var journey = {
         { num: 1, title: "Firma del contrato en plataforma externa",
           description: "El contrato se celebra y almacena en una plataforma fuera del ecosistema de usados, sin integración nativa con Quiter ni con el historial del proceso. El cliente firma, pero la evidencia queda desconectada del ciclo de venta interno.",
           kpis: [{value:"100",suffix:"%",label:"Firmas en plataforma externa"},{value:"0",suffix:"%",label:"Integración nativa con Quiter"},{value:"—",suffix:"min",label:"Tiempo acuerdo -> contrato firmado"}],
-          hallazgos: ["<strong>Firma en plataforma externa:</strong> el contrato se celebra y almacena fuera del ecosistema de usados, sin integración nativa con Quiter ni Autofact","<strong>Pérdida de trazabilidad:</strong> no hay registro unificado del ciclo de venta; el contrato queda desconectado del historial del proceso en Quiter","Sin audit trail consolidado entre contrato firmado, oportunidad comercial y transferencia ejecutada","El cliente recibe evidencia por la plataforma externa, no por un canal oficial de Clicar"],
+          oportunidades: ["<strong>Firma en plataforma externa:</strong> el contrato se celebra y almacena fuera del ecosistema de usados, sin integración nativa con Quiter ni Autofact","<strong>Pérdida de trazabilidad:</strong> no hay registro unificado del ciclo de venta; el contrato queda desconectado del historial del proceso en Quiter","Sin audit trail consolidado entre contrato firmado, oportunidad comercial y transferencia ejecutada","El cliente recibe evidencia por la plataforma externa, no por un canal oficial de Clicar"],
           mejoras: ["<strong>[TRANSFORMACIONAL]</strong> Integración de la plataforma de firma al ecosistema de usados (Quiter + Autofact) con webhook bidireccional","Unificar el contrato firmado + oportunidad + transferencia en un único registro consultable desde Quiter","Audit trail end-to-end con timestamp de cada evento (generado, enviado, firmado, archivado, transferido)","Entregar copia firmada automáticamente desde Clicar al cliente con branding oficial"],
-          chartType: 'firma-hallazgos'
+          chartType: 'firma-oportunidades'
         },
         { num: 2, title: "Verificación Quiter vs Autofact",
           description: "Antes de autorizar cada transferencia, el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas. Es un control crítico pero 100% manual que escala linealmente con el volumen.",
           kpis: [{value:"100",suffix:"%",label:"Verificación manual diaria"},{value:"1",suffix:"equipo",label:"Trámites concentra el cotejo"},{value:"—",suffix:"min",label:"Tiempo promedio por verificación"}],
-          hallazgos: ["<strong>Verificación manual diaria Quiter vs. Autofact:</strong> el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas antes de autorizar cada transferencia","Cuello de botella humano: la capacidad del equipo de Trámites define el throughput diario de transferencias","Riesgo de error humano en cotejos manuales a alto volumen (>55 transferencias/día hábil)","Sin alertas automáticas de discrepancia entre sistemas; se detectan solo cuando alguien las revisa"],
+          oportunidades: ["<strong>Verificación manual diaria Quiter vs. Autofact:</strong> el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas antes de autorizar cada transferencia","Cuello de botella humano: la capacidad del equipo de Trámites define el throughput diario de transferencias","Riesgo de error humano en cotejos manuales a alto volumen (>55 transferencias/día hábil)","Sin alertas automáticas de discrepancia entre sistemas; se detectan solo cuando alguien las revisa"],
           mejoras: ["Reconciliación automática Quiter ↔ Autofact con motor de reglas (coincidencia RUT + patente + montos)","Workflow con semáforo: verde = autoriza automáticamente · amarillo = revisa Trámites · rojo = bloquea con alerta","Dashboard diario con SLA de cotejo por operador y por discrepancia detectada","Historial estructurado de motivos de discrepancia para retroalimentar el origen del error"]
         },
         { num: 3, title: "Transferencia y riesgo operacional",
           description: "El volumen mensual de transferencias es alto (1.700-1.800 uds/mes) y opera en un proceso manual. Un subconjunto de 100-150 unidades por mes corre por alto DPS y requiere revisión manual diaria diferenciada, sin trazabilidad propia dentro del ecosistema.",
           kpis: [{value:"1.700-1.800",suffix:"/mes",label:"Transferencias mensuales"},{value:"100-150",suffix:"/mes",label:"Subset por alto DPS"},{value:"100",suffix:"%",label:"Proceso manual"}],
-          hallazgos: ["<strong>Alto volumen mensual de transferencias:</strong> 1.700-1.800 unidades/mes se transfieren mediante un proceso manual, lo que representa un riesgo operativo significativo","<strong>100-150 unidades/mes por alto DPS:</strong> subconjunto mensual con riesgo diferenciado que requiere revisión manual diaria, sin trazabilidad propia dentro del ecosistema","No hay segmentación sistémica de casos por riesgo: alto DPS comparte cola con transferencias estándar","Impacto en tiempo de cierre: el cliente espera más cuando cae en el subset de alto DPS sin saberlo"],
+          oportunidades: ["<strong>Alto volumen mensual de transferencias:</strong> 1.700-1.800 unidades/mes se transfieren mediante un proceso manual, lo que representa un riesgo operativo significativo","<strong>100-150 unidades/mes por alto DPS:</strong> subconjunto mensual con riesgo diferenciado que requiere revisión manual diaria, sin trazabilidad propia dentro del ecosistema","No hay segmentación sistémica de casos por riesgo: alto DPS comparte cola con transferencias estándar","Impacto en tiempo de cierre: el cliente espera más cuando cae en el subset de alto DPS sin saberlo"],
           mejoras: ["Flujo diferenciado sistémico para alto DPS con tagging automático en Quiter y SLA propio","Automatizar el 80% del volumen estándar (reglas claras) y liberar al equipo humano para el 20% con riesgo","Dashboard ejecutivo semanal: volumen total · tasa de auto-autorización · alto DPS · discrepancias detectadas","Panel del cliente con estado de la transferencia (tracking visible estilo courier)"]
         }
       ]
@@ -2126,19 +2229,19 @@ var journey = {
         { num: 1, title: "Facturación",
           description: "Emisión de factura y documentos tributarios.",
           kpis: [{value:"—",suffix:"hrs",label:"Tiempo aprobaciones -> factura emitida"},{value:"—",suffix:"%",label:"% facturas sin error al primer intento"},{value:"—",suffix:"%",label:"% facturas con envío digital"}],
-          hallazgos: ["Errores frecuentes por datos del cliente digitados manualmente","Envío de factura en papel en algunas sucursales","Sin SLA publicado de emisión"],
+          oportunidades: ["Errores frecuentes por datos del cliente digitados manualmente","Envío de factura en papel en algunas sucursales","Sin SLA publicado de emisión"],
           mejoras: ["Prellenado de datos del cliente desde CRM","Envío digital por defecto con copia al correo","SLA formal: factura <2h después de aprobación"]
         },
         { num: 2, title: "Documentación legal y cambio de propiedad",
           description: "Trámite de transferencia en el registro civil y entrega de documentos al comprador.",
           kpis: [{value:"—",suffix:"días",label:"Tiempo factura -> transferencia lista"},{value:"—",suffix:"%",label:"% trámites sin observaciones"},{value:"—",suffix:"%",label:"% clientes que esperan >7 días"}],
-          hallazgos: ["Trámite presencial con gestor, sujeto a cuellos del Registro Civil","Sin tracking del trámite para el cliente","Documentos físicos que se entregan en una segunda visita"],
+          oportunidades: ["Trámite presencial con gestor, sujeto a cuellos del Registro Civil","Sin tracking del trámite para el cliente","Documentos físicos que se entregan en una segunda visita"],
           mejoras: ["Uso de canales digitales del Registro Civil cuando aplique","Portal de seguimiento del trámite para el cliente","Courier para entrega de documentos finales"]
         },
         { num: 3, title: "Preparación final y entrega del vehículo",
           description: "Lavado, detailing, revisión final y ceremonia de entrega al comprador.",
           kpis: [{value:"—",suffix:"%",label:"% entregas en fecha comprometida"},{value:"—",suffix:"min",label:"Duración ceremonia de entrega"},{value:"—",suffix:"",label:"NPS de entrega"}],
-          hallazgos: ["Sin protocolo unificado de ceremonia de entrega entre sucursales","Vehículo a veces entregado con detalles menores no resueltos","Sin medición de NPS post-entrega"],
+          oportunidades: ["Sin protocolo unificado de ceremonia de entrega entre sucursales","Vehículo a veces entregado con detalles menores no resueltos","Sin medición de NPS post-entrega"],
           mejoras: ["Playbook de entrega premium con checklist","Encuesta NPS automática 24h post-entrega","Seguimiento post-venta a 30 / 60 / 90 días"]
         }
       ]
@@ -2525,7 +2628,7 @@ var OKRS = {
         { desc: 'Inspecciones con tiempo objetivo (≤60 min)',
           detail: 'Tiempo de inspección varía entre 30-90 min según experiencia del inspector. Tiempo objetivo estándar de 60 min con checklist digital asegura consistencia y mejora experiencia del cliente.',
           baseline: '50%', target: '85%',
-          impacts: 'Checklist digital con tiempos objetivo por ítem · Categorización automática de hallazgos por severidad · Invitar al cliente a observar la inspección · Fotos estructuradas reutilizables en publicación · Benchmark entre inspectores' }
+          impacts: 'Checklist digital con tiempos objetivo por ítem · Categorización automática de oportunidades por severidad · Invitar al cliente a observar la inspección · Fotos estructuradas reutilizables en publicación · Benchmark entre inspectores' }
       ] },
     7: { macro: 'preparación', title: 'Etapa 7 · Asignación de Precio de Venta',
       objective: 'Cero unidades bloqueadas por falta de precio',
@@ -2674,6 +2777,12 @@ var OKRS = {
   }
 };
 
+function toggleKrDetail(btn) {
+  var panel = btn.closest('.kr-wrap').querySelector('.kr-detail-panel');
+  var open = panel.classList.toggle('open');
+  btn.textContent = open ? '− ocultar' : '+ contexto';
+}
+
 function renderOKRsSlide(i) {
   var meta = OKRS;
   // North stars
@@ -2756,37 +2865,49 @@ function renderOKRsSlide(i) {
     if (!stageIds.length) continue;
     availableEjes.push({ key: mkey, title: mTitle, count: stageIds.length });
     var isFirstEje = (availableEjes.length === 1);
+    var ejeNS = EJE_CLUSTERS[mkey] ? EJE_CLUSTERS[mkey].northStars : [];
+    var nsStripItems = '';
+    for (var nsi2 = 0; nsi2 < ejeNS.length; nsi2++) {
+      nsStripItems += '<div class="okr-ns-eje-item">' +
+        '<div class="okr-ns-eje-metric">' + ejeNS[nsi2].metric + '</div>' +
+        '<div class="okr-ns-eje-progress"><span class="okr-ns-eje-baseline">' + ejeNS[nsi2].baseline + '</span> → <span class="okr-ns-eje-target">' + ejeNS[nsi2].target + '</span></div>' +
+      '</div>';
+    }
+    var nsStrip = ejeNS.length
+      ? '<div class="okr-ns-eje-strip ' + mkey + '"><div class="okr-ns-eje-eyebrow">Indicadores guía que mueven este eje</div>' + nsStripItems + '</div>'
+      : '';
     var paneHtml = '<div class="okrs-macro-block">' +
+      nsStrip +
       '<div class="okrs-macro-head">' +
         '<span class="okrs-macro-dot ' + mkey + '"></span>' +
         '<span class="okrs-macro-title">Eje ' + mTitle + '</span>' +
-        '<span class="okrs-macro-sub">' + stageIds.length + ' etapas · ' + (stageIds.length * 3) + ' KRs</span>' +
+        '<span class="okrs-macro-sub">' + stageIds.length + ' procesos · ' + (stageIds.length * 3) + ' metas</span>' +
       '</div>' +
       '<div class="stage-okrs-grid">';
     for (var si = 0; si < stageIds.length; si++) {
       var st = meta.byStage[stageIds[si]];
       var krsHtml = '';
       krsHtml += '<div class="kr-row" style="font-weight:700; color:var(--gray-500); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;">' +
-        '<div>Key Result</div><div>Baseline</div><div>Meta</div><div>Iniciativas que lo mueven</div>' +
+        '<div>Meta medible</div><div>Hoy</div><div>Meta 6m</div><div>Iniciativas que la mueven</div>' +
       '</div>';
       for (var kr = 0; kr < st.krs.length; kr++) {
         var k = st.krs[kr];
         var detailHtml = k.detail ? '<div class="kr-detail">' + k.detail + '</div>' : '';
-        krsHtml += '<div class="kr-row">' +
+        krsHtml += '<div class="kr-wrap"><div class="kr-row">' +
           '<div class="kr-desc"><div class="kr-desc-title">' + k.desc + '</div>' + detailHtml + '</div>' +
           '<div class="kr-baseline">' + k.baseline + '</div>' +
           '<div class="kr-target">' + k.target + '</div>' +
-          '<div class="kr-impacts">' + k.impacts + '</div>' +
-        '</div>';
+          '<div class="kr-impacts-col"><div class="kr-impacts">' + k.impacts + '</div></div>' +
+        '</div></div>';
       }
       paneHtml += '<div class="stage-okr-card macro-' + st.macro + '">' +
         '<div class="stage-okr-head">' +
           '<div>' +
             '<div class="stage-okr-title">' + st.title + '</div>' +
-            '<div class="stage-okr-objective">Objetivo: ' + st.objective + '</div>' +
+            '<div class="stage-okr-objective">' + st.objective + '</div>' +
           '</div>' +
         '</div>' +
-        krsHtml +
+        '<div class="kr-rows-body">' + krsHtml + '</div>' +
       '</div>';
     }
     paneHtml += '</div></div>';
@@ -2811,23 +2932,23 @@ function renderOKRsSlide(i) {
     '<div class="okr-eje-panes">' + panesHtml + '</div>';
   return '<div class="slide exec-summary" data-slide="' + i + '">' +
     '<div class="okrs-hero">' +
-      '<div class="eyebrow">Vista directorio · OKRs & Impacto</div>' +
-      '<h1>🎯 OKRs & Impacto — Journey Usados</h1>' +
-      '<p>Resumen ejecutivo del impacto que mueven las iniciativas del roadmap. 3 North Stars (una por macro), 4 apuestas transformacionales y KRs distribuidos en las etapas del journey. Los baselines provienen de data real (CRM Llaima, BI, Clarity, Salazar-Israel) y las metas son propuestas calibradas a 6 meses — ajustables con los dueños de cada área.</p>' +
+      '<div class="eyebrow">Vista directorio · Objetivos, Metas e Impacto</div>' +
+      '<h1>Objetivos y Metas — Journey Vehículos Usados</h1>' +
+      '<p>Seguimiento de los indicadores estratégicos por eje. Los baselines vienen de data real (CRM Llaima, BI, Clarity, Salazar-Israel) y las metas son propuestas a 6 meses — ajustables con los dueños de cada área.</p>' +
     '</div>' +
-    '<div class="okrs-section-title">North Stars</div>' +
-    '<div class="okrs-section-sub">La métrica que el directorio debe ver primero por cada macro. Si sube, todo lo demás está funcionando.</div>' +
+    '<div class="okrs-section-title">Indicadores guía</div>' +
+    '<div class="okrs-section-sub">La métrica principal de cada eje. Si sube, todo lo demás está funcionando.</div>' +
     '<div class="north-star-grid">' + nsHtml + '</div>' +
-    '<div class="okrs-section-title">💰 Impacto estimado en el negocio</div>' +
-    '<div class="okrs-section-sub">Qué significan los 6 North Stars traducidos a compras y ventas adicionales. Todos los números están construidos sobre supuestos conservadores (tráfico y leads constantes, ticket y margen promedio del mercado usados CL) — reemplazables con la data real de Pricing y Operaciones.</div>' +
-    impactHtml +
     '<div class="okrs-section-title">Apuestas transformacionales</div>' +
-    '<div class="okrs-section-sub">Iniciativas que mueven múltiples KRs a la vez y/o tienen impacto financiero cuantificado.</div>' +
+    '<div class="okrs-section-sub">Iniciativas que mueven varios indicadores al mismo tiempo y tienen impacto financiero cuantificado.</div>' +
     '<div class="trans-grid">' + transHtml + '</div>' +
-    '<div class="okrs-section-title">OKRs por etapa</div>' +
-    '<div class="okrs-section-sub">Cada etapa tiene un Objective y 3 Key Results. Cada KR está linkeado a las iniciativas del Roadmap que lo mueven.</div>' +
+    '<div class="okrs-section-title">Objetivos y metas por etapa</div>' +
+    '<div class="okrs-section-sub">Cada etapa tiene un objetivo cualitativo y tres metas medibles con valor actual y meta a 6 meses. Las metas con baseline <strong>—</strong> están en levantamiento de data.</div>' +
+    '<div class="okrs-mindset-box"><strong>El foco está en los indicadores, no en las iniciativas.</strong> Los equipos presentan sus métricas actuales y las iniciativas concretas que están ejecutando para moverlas. Las iniciativas son el medio — el indicador es el resultado que importa.</div>' +
     stageHtml +
-    '<div class="okrs-legend"><strong>Cómo leer:</strong> Rojo = baseline actual · Verde = meta a 6 meses. La tercera columna nombra las iniciativas del Roadmap que impactan ese KR. KRs con baseline <strong>—</strong> están en levantamiento de data.</div>' +
+    '<div class="okrs-section-title">💰 Impacto estimado en el negocio</div>' +
+    '<div class="okrs-section-sub">Qué significan los indicadores guía traducidos a compras y ventas adicionales. Números construidos sobre supuestos conservadores — reemplazables con data real de Pricing y Operaciones.</div>' +
+    impactHtml +
   '</div>';
 }
 
@@ -3104,6 +3225,17 @@ function renderEjeColumn(macroKey) {
   '</div>';
 }
 
+function filterOportunidadesEje(eje, btnEl) {
+  var wrap = btnEl.closest('.deck-oportunidades-wrap');
+  var btns = wrap.querySelectorAll('.deck-filter-btn');
+  for (var bi = 0; bi < btns.length; bi++) btns[bi].className = 'deck-filter-btn';
+  btnEl.className = 'deck-filter-btn active ' + eje;
+  var blocks = wrap.querySelectorAll('.deck-pain-block');
+  for (var bi2 = 0; bi2 < blocks.length; bi2++) blocks[bi2].classList.toggle('visible', blocks[bi2].dataset.eje === eje);
+  var bars = wrap.querySelectorAll('.deck-analyses-bar');
+  for (var bi3 = 0; bi3 < bars.length; bi3++) bars[bi3].classList.toggle('visible', bars[bi3].dataset.eje === eje);
+}
+
 function renderExecSummarySlide(i) {
   // ----------- 1. Equipo -----------
   var teamGroups = [
@@ -3129,8 +3261,7 @@ function renderExecSummarySlide(i) {
     ] },
     { macro: 'cross', title: 'Cross · Voz del cliente + BI', members: [
       { n: 'Felipe Arroyo', r: 'Experiencia de Clientes' },
-      { n: 'Equipo BI', r: 'Reportes de inventario y fotografías' },
-      { n: 'Operaciones Sucursales', r: 'Fuente de data operacional' }
+      { n: 'Equipo BI', r: 'Reportes de inventario y fotografías' }
     ] }
   ];
   var teamHtml = '';
@@ -3199,7 +3330,7 @@ function renderExecSummarySlide(i) {
       '<button type="button" class="okr-closing-cta" onclick="goToOKRs()">Ver vista OKRs & Impacto →</button>' +
     '</div>';
 
-  // ----------- 3. Hallazgos más relevantes por macro -----------
+  // ----------- 3. Oportunidades más relevantes por macro -----------
   var pains = {
     compra: {
       title: 'Eje Compra',
@@ -3534,162 +3665,184 @@ function renderExecSummarySlide(i) {
     }
   }
 
-  // Slide · MEMO EJECUTIVO clásico
+  // ----------- Deck · helper de oportunidades filterable -----------
+  function deckPainBlockHtml(macroKey) {
+    var p = pains[macroKey];
+    if (!p) return '';
+    var rows = '';
+    for (var pi = 0; pi < p.items.length; pi++) {
+      var it = p.items[pi];
+      var inits = '';
+      if (it.iniciativas && it.iniciativas.length) {
+        for (var ii = 0; ii < it.iniciativas.length; ii++) {
+          inits += '<li>' + it.iniciativas[ii] + '</li>';
+        }
+      }
+      rows += '<tr>' +
+        '<td class="deck-pain-rank"><span class="deck-pain-rank-circle">' + it.rank + '</span></td>' +
+        '<td><div class="deck-pain-title">' + it.t + '</div><div class="deck-pain-desc">' + it.d + '</div></td>' +
+        '<td><ul class="deck-pain-init-list">' + inits + '</ul></td>' +
+        '<td><div class="deck-pain-owner-area">' + (it.owner || '—') + '</div>' +
+          (it.ownerNames ? '<div class="deck-pain-owner-names">' + it.ownerNames + '</div>' : '') +
+          '<div class="deck-pain-impact">' + it.i.replace('<br/>', ' ') + '</div></td>' +
+      '</tr>';
+    }
+    var analyses = EJE_ANALYSES[macroKey] || [];
+    var anaHtml = '';
+    for (var aa = 0; aa < analyses.length; aa++) {
+      anaHtml += '<a class="memo-analysis-link sh-resource" href="' + analyses[aa].href + '" target="_blank" rel="noopener"><span class="memo-analysis-link-eye"></span>Ver análisis · ' + analyses[aa].label.split('·')[0].trim() + '</a>';
+    }
+    if (!anaHtml) anaHtml = '<span style="font-size:11px;color:var(--gray-500)">Sin reporte adjunto · data en CRM Llaima</span>';
+    return '<div class="deck-pain-block' + (macroKey === 'compra' ? ' visible' : '') + '" data-eje="' + macroKey + '">' +
+      '<table class="deck-pain-table ' + macroKey + '">' +
+      '<colgroup><col style="width:34px"><col style="width:27%"><col style="width:40%"><col style="width:20%"></colgroup>' +
+      '<thead><tr><th>#</th><th>Oportunidad</th><th>Iniciativas que lo abordan</th><th>Equipo responsable</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>' +
+      '<div class="deck-analyses-bar' + (macroKey === 'compra' ? ' visible' : '') + '" data-eje="' + macroKey + '">' +
+        '<span class="deck-analyses-label">Análisis de respaldo:</span>' + anaHtml +
+      '</div>' +
+    '</div>';
+  }
+
+  // Slide · DECK EJECUTIVO
   return '<div class="slide exec-summary memo-exec" data-slide="' + i + '">' +
 
-    // SECCIÓN 1 · Mensaje a la Dirección
-    '<section class="memo-section memo-message">' +
-      '<div class="memo-eyebrow">Resumen Ejecutivo · Vista Dirección</div>' +
-      '<h1 class="memo-title">Journey del Cliente · Vehículos Usados</h1>' +
-      '<div class="memo-headline">Movilizando 6 indicadores estratégicos generamos un margen mensual estimado de <strong>~$514 millones</strong>.</div>' +
-      '<ul class="memo-summary-list">' +
-        '<li><strong>Eje Compra:</strong> convertir más leads en compras concretadas — <span class="memo-num">+294 compras / mes</span></li>' +
-        '<li><strong>Eje Preparación:</strong> tener la vitrina lista, limpia y completa — <span class="memo-num">+527 unidades visibles</span></li>' +
-        '<li><strong>Eje Venta:</strong> cerrar más oportunidades digitales — <span class="memo-num">+134 ventas / mes</span></li>' +
-      '</ul>' +
-    '</section>' +
-
-    // SECCIÓN 2 · Dolores y Soluciones por Eje
-    '<section class="memo-section">' +
-      '<h2 class="memo-h2">1. Hallazgos y Soluciones por Eje</h2>' +
-      '<p class="memo-lead">Los hallazgos más relevantes detectados en cada eje y las soluciones que los abordan. Las marcadas como <span class="memo-dolor-tag" style="vertical-align: middle;">Transformacional</span> son apuestas que rediseñan el journey, no mejoras incrementales.</p>' +
-      '<div class="memo-dolor-grid">' +
-        // ----------- COMPRA -----------
-        '<div class="memo-dolor-col compra">' +
-          '<div class="memo-dolor-head">' +
-            '<span class="memo-eje-num memo-eje-num-compra">1</span>' +
-            '<div><div class="memo-dolor-eje">Compra</div><div class="memo-dolor-eje-sub">Captación y contactabilidad</div></div>' +
-          '</div>' +
-          '<ol class="memo-dolor-list">' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Baja contactabilidad <strong>(51%)</strong></div>' +
-              '<div class="memo-dolor-fix">Multicanal: <strong>WhatsApp</strong> 1° contacto → llamada (3 intentos) a quienes no respondan → journey de correo automático. Si no reacciona a ninguno, se descarta como no contactado.</div>' +
-              '<span class="memo-dolor-tag">Transformacional</span>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Sin visibilidad del rendimiento de colas</div>' +
-              '<div class="memo-dolor-fix">Reporte operativo de rendimiento de colas por categoría.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Sin seguimiento de la gestión del contact center</div>' +
-              '<div class="memo-dolor-fix">Dashboard con indicadores telefónicos, tiempo de contacto y otros KPIs operativos.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Citas sin confirmación ni recordatorio</div>' +
-              '<div class="memo-dolor-fix">Confirmación y recordatorio automático vía sistema (lugar, fecha, hora y documentos a llevar).</div>' +
-            '</li>' +
-          '</ol>' +
+    // DECK 1 · Portada y descripción del levantamiento
+    '<section class="deck-section">' +
+      '<div class="deck-eyebrow">Resumen Ejecutivo · Vista Dirección</div>' +
+      '<h1 class="deck-title">Journey del Cliente<br/>Vehículos Usados</h1>' +
+      '<p class="deck-subtitle">Levantamiento end-to-end del proceso de compra y venta de vehículos usados en Clicar / Americar. El análisis cubre los tres ejes del recorrido del cliente, identifica los oportunidades más críticos por etapa y propone las iniciativas con mayor impacto en conversión y margen.</p>' +
+      '<div class="deck-lev-scope">' +
+        '<div class="deck-scope-card"><div class="deck-scope-num">3</div><div class="deck-scope-label">Ejes del journey</div></div>' +
+        '<div class="deck-scope-card"><div class="deck-scope-num">14</div><div class="deck-scope-label">Procesos analizados</div></div>' +
+        '<div class="deck-scope-card"><div class="deck-scope-num">40+</div><div class="deck-scope-label">Subprocesos documentados</div></div>' +
+      '</div>' +
+      '<div class="deck-timing-cards">' +
+        '<div class="deck-timing-card compra">' +
+          '<div class="deck-timing-eje">Eje Compra</div>' +
+          '<div class="deck-timing-data">Data real · CRM Llaima<br/>158.753 leads · Oct 2025 – Mar 2026</div>' +
+          '<span class="deck-timing-badge real">Análisis completado</span>' +
         '</div>' +
-        // ----------- PREPARACIÓN -----------
-        '<div class="memo-dolor-col preparación">' +
-          '<div class="memo-dolor-head">' +
-            '<span class="memo-eje-num memo-eje-num-preparación">2</span>' +
-            '<div><div class="memo-dolor-eje">Preparación</div><div class="memo-dolor-eje-sub">Inventario y vitrina digital</div></div>' +
-          '</div>' +
-          '<ol class="memo-dolor-list">' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Precios se fijan después del traslado a Quiter</div>' +
-              '<div class="memo-dolor-fix">Crear cola para fijar precios <strong>antes</strong> del traslado a Quiter.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Fotos incompletas en publicaciones</div>' +
-              '<div class="memo-dolor-fix">Foto de publicación con <strong>IA</strong> para asegurar que se publican todas las fotos de cada vehículo comprado.</div>' +
-              '<span class="memo-dolor-tag">Transformacional</span>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Tier 2 y Tier 3 redundantes con la foto IA</div>' +
-              '<div class="memo-dolor-fix">Eliminar Tier 2 y Tier 3: si la foto IA cumple, no se requieren reglas adicionales de publicación ni orden de catálogo.</div>' +
-            '</li>' +
-          '</ol>' +
+        '<div class="deck-timing-card preparación">' +
+          '<div class="deck-timing-eje">Eje Preparación</div>' +
+          '<div class="deck-timing-data">Snapshot BI · 2.574 unidades<br/>Fotografías e inventario · Abr 2026</div>' +
+          '<span class="deck-timing-badge curso">En levantamiento</span>' +
         '</div>' +
-        // ----------- VENTA -----------
-        '<div class="memo-dolor-col venta">' +
-          '<div class="memo-dolor-head">' +
-            '<span class="memo-eje-num memo-eje-num-venta">3</span>' +
-            '<div><div class="memo-dolor-eje">Venta</div><div class="memo-dolor-eje-sub">Lead management y cierre comercial</div></div>' +
-          '</div>' +
-          '<ol class="memo-dolor-list">' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Primer contacto sin automatización</div>' +
-              '<div class="memo-dolor-fix">Primer contacto automatizado y operado por agentes.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Cita de venta limitada a algunas sucursales</div>' +
-              '<div class="memo-dolor-fix">Habilitar cita de venta para todas las sucursales de Chile.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Parámetros de temperatura desactualizados</div>' +
-              '<div class="memo-dolor-fix">Redefinir los parámetros de temperatura del lead.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">VPP — solo <strong>8%</strong> se tasa realmente</div>' +
-              '<div class="memo-dolor-fix">Redefinir el proceso de atención para clientes con VPP.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Segmentos de valor sin atención prioritaria — perdemos <strong>+200 clientes/mes</strong></div>' +
-              '<div class="memo-dolor-fix">Atención prioritaria sin fricción para clientes de segmento valor.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Negocios con financiamiento — <strong>95,3% se descarta</strong> (mayor margen)</div>' +
-              '<div class="memo-dolor-fix">Atención prioritaria para leads con financiamiento, segmento que aporta más margen unitario.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Canalidad limitada para reactivar leads</div>' +
-              '<div class="memo-dolor-fix">Combinación de canales (WhatsApp + llamada + correo) para maximizar contactabilidad.</div>' +
-            '</li>' +
-            '<li>' +
-              '<div class="memo-dolor-pain">Crédito simple sin trazabilidad de impacto en margen</div>' +
-              '<div class="memo-dolor-fix">Regular el uso del crédito simple: registrar si afecta al margen y normalizar criterio de aplicación al precio de venta.</div>' +
-            '</li>' +
-          '</ol>' +
+        '<div class="deck-timing-card venta">' +
+          '<div class="deck-timing-eje">Eje Venta</div>' +
+          '<div class="deck-timing-data">Salazar-Israel · 92.843 leads<br/>Oct 2025 – Mar 2026</div>' +
+          '<span class="deck-timing-badge curso">En levantamiento</span>' +
         '</div>' +
       '</div>' +
     '</section>' +
 
-    // SECCIÓN 5 · Indicadores de seguimiento
-    '<section class="memo-section">' +
-      '<h2 class="memo-h2">2. Indicadores de seguimiento</h2>' +
-      '<p class="memo-lead">Los 6 indicadores estratégicos que el Comité de Dirección revisa mensualmente. Cada barra muestra el estado actual y el punto de meta a 6 meses.</p>' +
-      '<div class="memo-table-wrap">' +
-        '<table class="memo-table memo-ind-table">' +
-          '<thead><tr>' +
-            '<th class="memo-th-eje">Eje</th>' +
-            '<th>Indicador</th>' +
-            '<th>Hoy → Meta</th>' +
-          '</tr></thead>' +
-          '<tbody>' + indRows + '</tbody>' +
-        '</table>' +
+    // DECK 2 · Composición del análisis
+    '<section class="deck-section">' +
+      '<div class="deck-eyebrow">Composición del análisis</div>' +
+      '<h2 class="deck-section-h2">Cómo está estructurado el levantamiento</h2>' +
+      '<p class="deck-subtitle">Cada eje se divide en procesos y cada proceso en subprocesos. Por cada subproceso se levantaron KPIs actuales, oportunidades y mejoras propuestas.</p>' +
+      '<div class="deck-comp-grid">' +
+        '<div class="deck-comp-eje">' +
+          '<div class="deck-comp-head compra"><span class="memo-eje-num memo-eje-num-compra">1</span><div><div class="deck-comp-eje-name">Compra</div><div class="deck-comp-eje-sub">Del cliente vendedor al cierre</div></div></div>' +
+          '<div class="deck-comp-stages">' +
+            '<div class="deck-comp-stage">Captación Digital <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Gestión de Leads <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Oportunidad y Check-In <span class="deck-comp-stage-num">· 2 sub</span></div>' +
+            '<div class="deck-comp-stage">Inspección Técnica y Oferta <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Inspección y Cierre <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+          '</div>' +
+          '<div class="deck-comp-stats"><div class="deck-comp-stat"><div class="deck-comp-stat-val">5</div><div class="deck-comp-stat-label">Procesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">14</div><div class="deck-comp-stat-label">Subprocesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">158K</div><div class="deck-comp-stat-label">Leads</div></div></div>' +
+        '</div>' +
+        '<div class="deck-comp-eje">' +
+          '<div class="deck-comp-head preparación"><span class="memo-eje-num memo-eje-num-preparación">2</span><div><div class="deck-comp-eje-name">Preparación</div><div class="deck-comp-eje-sub">De la unidad a la vitrina digital</div></div></div>' +
+          '<div class="deck-comp-stages">' +
+            '<div class="deck-comp-stage">Precio de Venta <span class="deck-comp-stage-num">· 2 sub</span></div>' +
+            '<div class="deck-comp-stage">Publicación en Sitio Web <span class="deck-comp-stage-num">· 2 sub</span></div>' +
+            '<div class="deck-comp-stage">Foto Impel <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Clasificación en Catálogo <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+          '</div>' +
+          '<div class="deck-comp-stats"><div class="deck-comp-stat"><div class="deck-comp-stat-val">4</div><div class="deck-comp-stat-label">Procesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">10</div><div class="deck-comp-stat-label">Subprocesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">2.574</div><div class="deck-comp-stat-label">Unidades</div></div></div>' +
+        '</div>' +
+        '<div class="deck-comp-eje">' +
+          '<div class="deck-comp-head venta"><span class="memo-eje-num memo-eje-num-venta">3</span><div><div class="deck-comp-eje-name">Venta</div><div class="deck-comp-eje-sub">Del comprador al auto entregado</div></div></div>' +
+          '<div class="deck-comp-stages">' +
+            '<div class="deck-comp-stage">Captación Digital <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Gestión de Leads <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Reserva y Medios de Pago <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Firma de Contrato <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+            '<div class="deck-comp-stage">Facturación y Entrega <span class="deck-comp-stage-num">· 3 sub</span></div>' +
+          '</div>' +
+          '<div class="deck-comp-stats"><div class="deck-comp-stat"><div class="deck-comp-stat-val">5</div><div class="deck-comp-stat-label">Procesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">15</div><div class="deck-comp-stat-label">Subprocesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">92K</div><div class="deck-comp-stat-label">Leads</div></div></div>' +
+        '</div>' +
       '</div>' +
-      '<p class="memo-footnote">Los indicadores se revisan mensualmente en el Comité de Dirección. La cadencia operativa de seguimiento se detalla en la sección 6.</p>' +
     '</section>' +
 
-    // SECCIÓN 6 · Equipo
-    '<section class="memo-section">' +
-      '<h2 class="memo-h2">3. Equipo de trabajo</h2>' +
-      '<p class="memo-lead">Equipos que aportaron data, grabaciones y entrevistas para construir este análisis. Felipe Arroyo (Experiencia de Clientes) acompaña todas las etapas como representante de la voz del cliente.</p>' +
+    // DECK 3 · Equipo
+    '<section class="deck-section">' +
+      '<div class="deck-eyebrow">Equipo de levantamiento</div>' +
+      '<h2 class="deck-section-h2">Quiénes participaron en el análisis</h2>' +
+      '<p class="deck-subtitle">Equipos que aportaron data, grabaciones y entrevistas para construir este levantamiento. Felipe Arroyo acompaña todas las etapas como representante de la voz del cliente.</p>' +
       '<div class="team-grid memo-team-grid">' + teamHtml + '</div>' +
     '</section>' +
 
-    // SECCIÓN 7 · Gobernanza
-    '<section class="memo-section">' +
-      '<h2 class="memo-h2">4. Reuniones de seguimiento</h2>' +
-      '<p class="memo-lead">Cuatro instancias con cadencia, audiencia y propósito definidos. Cada una utiliza una vista específica de esta misma presentación.</p>' +
-      govHtml +
-    '</section>' +
-
-    // SECCIÓN 8 · Detalle
-    '<section class="memo-section memo-drill">' +
-      '<div class="memo-drill-card">' +
-        '<div>' +
-          '<div class="memo-drill-title">Detalle de indicadores por etapa</div>' +
-          '<div class="memo-drill-desc">Para profundizar en cada uno de los 45 indicadores secundarios distribuidos por etapa, con sus baselines, metas e iniciativas asociadas, abrir la vista de Detalle.</div>' +
+    // DECK 4 · Oportunidades por eje (filterable)
+    '<section class="deck-section">' +
+      '<div class="deck-eyebrow">Oportunidades del levantamiento</div>' +
+      '<h2 class="deck-section-h2">Los principales oportunidades por eje</h2>' +
+      '<div class="deck-oportunidades-wrap">' +
+        '<div class="deck-filter-bar">' +
+          '<button class="deck-filter-btn active compra" onclick="filterOportunidadesEje(\'compra\', this)">Eje Compra</button>' +
+          '<button class="deck-filter-btn" onclick="filterOportunidadesEje(\'preparación\', this)">Eje Preparación</button>' +
+          '<button class="deck-filter-btn" onclick="filterOportunidadesEje(\'venta\', this)">Eje Venta</button>' +
         '</div>' +
-        '<button type="button" class="memo-drill-cta" onclick="goToOKRs()">Ver Detalle por Etapa →</button>' +
+        deckPainBlockHtml('compra') +
+        deckPainBlockHtml('preparación') +
+        deckPainBlockHtml('venta') +
       '</div>' +
     '</section>' +
+
+    // DECK 5 · Estructura del plan de mejora (OKR en español)
+    '<section class="deck-section">' +
+      '<div class="deck-eyebrow">Marco de trabajo</div>' +
+      '<h2 class="deck-section-h2">Cómo está estructurado el plan de mejora</h2>' +
+      '<p class="deck-subtitle">Cada oportunidad se traduce en un objetivo claro con metas medibles. El plan se organiza en cuatro niveles que van de lo estratégico a lo operativo.</p>' +
+      '<div class="deck-okr-grid">' +
+        '<div class="deck-okr-layer">' +
+          '<div class="deck-okr-layer-num">1</div>' +
+          '<div class="deck-okr-layer-title">Indicador guía del eje</div>' +
+          '<div class="deck-okr-layer-desc">La métrica principal de cada eje. Si sube, el conjunto de mejoras está funcionando.</div>' +
+          '<div class="deck-okr-layer-example">Ej: Tasa de contacto con el cliente sube de 53% a 70%</div>' +
+        '</div>' +
+        '<div class="deck-okr-layer">' +
+          '<div class="deck-okr-layer-num">2</div>' +
+          '<div class="deck-okr-layer-title">Objetivo por proceso</div>' +
+          '<div class="deck-okr-layer-desc">Lo que queremos lograr en esa etapa del journey. Orientado al cliente, sin tecnicismos.</div>' +
+          '<div class="deck-okr-layer-example">Ej: Convertir más visitas en cotizaciones completadas</div>' +
+        '</div>' +
+        '<div class="deck-okr-layer">' +
+          '<div class="deck-okr-layer-num">3</div>' +
+          '<div class="deck-okr-layer-title">Metas medibles</div>' +
+          '<div class="deck-okr-layer-desc">Tres indicadores numéricos por proceso, con valor actual y meta a 6 meses.</div>' +
+          '<div class="deck-okr-layer-example">Ej: Abandono en ingreso de datos baja de 24% a 12%</div>' +
+        '</div>' +
+        '<div class="deck-okr-layer">' +
+          '<div class="deck-okr-layer-num">4</div>' +
+          '<div class="deck-okr-layer-title">Iniciativas del plan</div>' +
+          '<div class="deck-okr-layer-desc">Las acciones concretas que mueven cada meta. Cada meta puede tener de 1 a N iniciativas asociadas.</div>' +
+          '<div class="deck-okr-layer-example">Ej: Validación por WhatsApp · Autocompletar desde RUT · Rediseño del formulario</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-top:32px;text-align:center">' +
+        '<button type="button" class="memo-drill-cta" onclick="goToOKRs()">Ver objetivos y metas por etapa →</button>' +
+      '</div>' +
+    '</section>' +
+
   '</div>';
 }
 
+// ============================================================
+// RESPONSABLES POR ETAPA
+// ============================================================
 // ============================================================
 // RESPONSABLES POR ETAPA
 // ============================================================
@@ -3860,7 +4013,7 @@ function renderInsightsCx(stageId) {
         '<div class="cx-tt-head-icon">💡</div>' +
         '<div>' +
           '<div class="cx-tt-head-title">Insights de Cliente · Área CX</div>' +
-          '<div class="cx-tt-head-sub">Hallazgos y acciones priorizadas para este proceso</div>' +
+          '<div class="cx-tt-head-sub">Oportunidades y acciones priorizadas para este proceso</div>' +
         '</div>' +
       '</div>' +
       '<div class="cx-tt-body">' + cards + '</div>' +
@@ -3885,7 +4038,7 @@ var CLIENTE_POR_SUBSTEP = {
   "3.2": { kpis: ["18 min tiempo de espera promedio","34% espera >25 min en horario peak","NPS check-in: 67"], lineamientos: ["Mantener al cliente informado si hay demora","Habilitar check-in digital vía QR","Anunciar en pantalla cuando el asesor esté listo"] },
   "3.3": { kpis: ["85% vendedores con documentos completos","22 min tiempo de verificación","15% requiere documentación adicional"], lineamientos: ["Enviar checklist 48h antes vía WhatsApp","No repetir verificaciones ya hechas en web","Aceptar documentos digitales cuando sea posible"] },
   "3.4": { kpis: ["72% tasa de asistencia efectiva","8 min tiempo asignación → contacto","4,2 clientes simultáneos por asesor"], lineamientos: ["Presentar el asesor antes de que el cliente pregunte","Entregar la ficha del lead al asesor con historial web completo"] },
-  "4.1": { kpis: ["45 min tiempo promedio de inspección","% clientes que presencian la inspección","Transparencia percibida"], lineamientos: ["Invitar al cliente a observar la inspección","Explicar cada hallazgo en lenguaje no técnico","No sorprender con hallazgos al final"] },
+  "4.1": { kpis: ["45 min tiempo promedio de inspección","% clientes que presencian la inspección","Transparencia percibida"], lineamientos: ["Invitar al cliente a observar la inspección","Explicar cada oportunidad en lenguaje no técnico","No sorprender con oportunidades al final"] },
   "4.2": { kpis: ["18 fotos promedio por vehículo","% clientes que reciben el set de fotos","Calidad percibida"], lineamientos: ["Compartir las fotos con el cliente al cierre","Mostrar cómo se usan las fotos en la inspección"] },
   "4.3": { kpis: ["15% brecha promedio online vs. oferta final","% clientes que aceptan la brecha","Razones desglosadas al cliente"], lineamientos: ["Desglosar cada ajuste con evidencia visual","No sorprender con el número final","Ofrecer argumentos comparativos de mercado"] },
   "4.4": { kpis: ["35 min tiempo promedio de aprobación","60% de ofertas requieren validación de jefatura","92% tasa de aprobación final"], lineamientos: ["Informar al cliente si la espera será >15 min","Ofrecer café o agua durante la espera","Pre-aprobar dentro de rangos sin hacer esperar al cliente"] },
@@ -3946,7 +4099,7 @@ function renderClienteChip(stageId, subNum) {
 var BENCHMARK_POR_SUBSTEP = {
   "1.1": {
     referentes: "Kavak · TrueCar · Bruno Fritsch · Salfa · DFSK · Gildemeister",
-    hallazgos: [
+    oportunidades: [
       "<strong>5 de 6 referentes</strong> del benchmark reducen el formulario a 1-2 campos editables gracias al autocompletado por patente; Clicar es el único flujo chileno analizado sin esta integración.",
       "Los referentes más maduros del benchmark integran las preguntas de elegibilidad directamente en los campos de entrada, evitando el rechazo tardío al final del formulario."
     ],
@@ -3957,7 +4110,7 @@ var BENCHMARK_POR_SUBSTEP = {
   },
   "1.3": {
     referentes: "Bruno Fritsch · TrueCar · Kavak · Salfa · DFSK · Gildemeister",
-    hallazgos: [
+    oportunidades: [
       "Los referentes gestionan la expectativa de precio mostrando <strong>rangos</strong> o aclarando que es una <strong>estimación sujeta a revisión</strong>, y diferencian claramente las modalidades con beneficios reales.",
       "<strong>Ningún referente</strong> entrega el valor antes de pedir datos del usuario — Clicar está alineado con el patrón de mercado en ese punto.",
       "<strong>Bruno Fritsch</strong> muestra rango de precio en lugar de valor exacto para gestionar expectativas de forma más honesta.",
@@ -3972,7 +4125,7 @@ var BENCHMARK_POR_SUBSTEP = {
   },
   "1.4": {
     referentes: "Bruno Fritsch · Kavak · Gildemeister · Salfa · TrueCar · DFSK",
-    hallazgos: [
+    oportunidades: [
       "Los referentes resuelven la cascada de selección (Región → Sucursal) con un <strong>filtrado en cascada más eficiente</strong> en lugar de tres campos separados como en Clicar.",
       "<strong>Ningún referente chileno</strong> confirma visualmente la selección antes de enviar. <strong>Bruno Fritsch</strong> es el único que muestra resumen en tiempo real antes del envío.",
       "<strong>Kavak</strong> destaca horarios menos concurridos, reduciendo la ansiedad del usuario y optimizando la distribución de la demanda."
@@ -3985,7 +4138,7 @@ var BENCHMARK_POR_SUBSTEP = {
   },
   "1.2": {
     referentes: "Kavak · Bruno Fritsch · TrueCar · Salfa · DFSK · Gildemeister",
-    hallazgos: [
+    oportunidades: [
       "<strong>Clicar es el único referente</strong> del benchmark que ofrece verificación por WhatsApp.",
       "Competidores usan solo SMS o no cuentan con verificación del teléfono."
     ],
@@ -3996,7 +4149,7 @@ var BENCHMARK_POR_SUBSTEP = {
   },
   "11.2": {
     referentes: "Salazar-Israel (SAIS) · benchmark interno Americar · GTM",
-    hallazgos: [
+    oportunidades: [
       "El <strong>patrón de mayor visibilidad del buscador dentro del catálogo</strong> ya fue validado en Salazar-Israel (SAIS) vía Google Tag Manager — subió el refinamiento de búsqueda sin campañas adicionales.",
       "En Clicar hoy solo 4,4% de las sesiones del catálogo usan el botón de filtros (2.749 clics / mes), pero el 30% del uso del buscador de texto del sitio se origina dentro del catálogo: existe intención de refinar que no se traduce en uso porque el control no está visible.",
       "SAIS no publica autos sin foto formal ni deja combinaciones de filtro en cero resultados — ambas prácticas todavía ocurren en Clicar."
@@ -4014,7 +4167,7 @@ function renderBenchmarkChip(stageId, subNum) {
   var b = BENCHMARK_POR_SUBSTEP[key];
   if (!b) return '';
   var hHtml = '';
-  for (var i = 0; i < b.hallazgos.length; i++) hHtml += '<li>' + b.hallazgos[i] + '</li>';
+  for (var i = 0; i < b.oportunidades.length; i++) hHtml += '<li>' + b.oportunidades[i] + '</li>';
   var oHtml = '';
   for (var j = 0; j < b.oportunidades.length; j++) oHtml += '<li>' + b.oportunidades[j] + '</li>';
   return '<div class="benchmark-chip-wrap">' +
@@ -4023,7 +4176,7 @@ function renderBenchmarkChip(stageId, subNum) {
       '<div class="benchmark-tooltip-title">Benchmark de la industria</div>' +
       '<div class="benchmark-tooltip-heading">Referentes analizados</div>' +
       '<ul><li>' + b.referentes + '</li></ul>' +
-      '<div class="benchmark-tooltip-heading">Hallazgos vs. referentes</div><ul>' + hHtml + '</ul>' +
+      '<div class="benchmark-tooltip-heading">Oportunidades vs. referentes</div><ul>' + hHtml + '</ul>' +
       '<div class="benchmark-tooltip-heading">Oportunidades a capturar</div><ul>' + oHtml + '</ul>' +
     '</div>' +
   '</div>';
@@ -5642,7 +5795,7 @@ function renderHomeSlide(i) {
     '<div class="overview-kpis">' +
       '<div class="overview-kpi"><div class="ov-label">Ejes</div><div class="ov-value">3</div><div class="ov-sublabel">Mapeados: ' + mappedMacros + ' de 3</div></div>' +
       '<div class="overview-kpi"><div class="ov-label">Sub-etapas mapeadas</div><div class="ov-value">' + mappedStages + '</div><div class="ov-sublabel">End-to-end en ' + mappedMacros + ' macros</div></div>' +
-      '<div class="overview-kpi"><div class="ov-label">Subprocesos mapeados</div><div class="ov-value">' + mappedSubs + '</div><div class="ov-sublabel">Con KPIs, hallazgos y mejoras</div></div>' +
+      '<div class="overview-kpi"><div class="ov-label">Subprocesos mapeados</div><div class="ov-value">' + mappedSubs + '</div><div class="ov-sublabel">Con KPIs, oportunidades y mejoras</div></div>' +
       '<div class="overview-kpi"><div class="ov-label">Data real</div><div class="ov-value">1<span class="suffix"> / 3</span></div><div class="ov-sublabel">Solo Compra - CRM Llaima</div></div>' +
     '</div>' +
     '<div class="journey-map">' +
@@ -5705,7 +5858,7 @@ function renderSubstepSlide(i, stage, sub) {
     kpisHtml += '</div>';
   }
   var hHtml = '';
-  for (var h = 0; h < sub.hallazgos.length; h++) hHtml += '<li>' + sub.hallazgos[h] + '</li>';
+  for (var h = 0; h < sub.oportunidades.length; h++) hHtml += '<li>' + sub.oportunidades[h] + '</li>';
   var mHtml = '';
   for (var m = 0; m < sub.mejoras.length; m++) mHtml += '<li>' + sub.mejoras[m] + '</li>';
   var chartHtml = '';
@@ -5715,7 +5868,7 @@ function renderSubstepSlide(i, stage, sub) {
     else if (sub.chartType === 'vta-mercado') chartHtml = renderVtaMercadoSection(i);
     else if (sub.chartType === 'vta-funnel') chartHtml = renderVtaFunnelSection(i);
     else if (sub.chartType && sub.chartType.indexOf('vta-leads-') === 0) chartHtml = renderVtaLeadsSection(i, sub.chartType);
-    else if (sub.chartType === 'firma-hallazgos') chartHtml = renderFirmaHallazgosSection(i);
+    else if (sub.chartType === 'firma-oportunidades') chartHtml = renderFirmaOportunidadesSection(i);
     else if (sub.chartType === 'foto-impel-tiempos') chartHtml = renderFotoImpelTiemposSection(i);
     else chartHtml = renderChartSection(i, sub.chartType);
   }
@@ -5729,7 +5882,7 @@ function renderSubstepSlide(i, stage, sub) {
     chartHtml +
     '<div class="content-grid">' +
       '<div class="col-block kpis-block"><div class="col-header kpis">KPIs</div><div class="col-body">' + kpisHtml + '</div></div>' +
-      '<div class="col-block hallazgos-block"><div class="col-header hallazgos">Hallazgos</div><div class="col-body"><ul class="bullet-list">' + hHtml + '</ul></div></div>' +
+      '<div class="col-block oportunidades-block"><div class="col-header oportunidades">Oportunidades</div><div class="col-body"><ul class="bullet-list">' + hHtml + '</ul></div></div>' +
       '<div class="col-block mejoras-block"><div class="col-header mejoras">Mejoras propuestas</div><div class="col-body"><ul class="bullet-list">' + mHtml + '</ul></div></div>' +
     '</div>' +
   '</div>';
@@ -5787,7 +5940,7 @@ function renderFotoImpelTiemposSection(slideIdx) {
   '</div>';
 }
 
-function renderFirmaHallazgosSection(slideIdx) {
+function renderFirmaOportunidadesSection(slideIdx) {
   var findings = [
     { cat: 'eco', tag: 'Ecosistema', title: 'Firma en plataforma externa',
       desc: 'El contrato se celebra y almacena fuera del ecosistema de usados, sin integración nativa con Quiter ni Autofact.' },
@@ -5812,7 +5965,7 @@ function renderFirmaHallazgosSection(slideIdx) {
   }
   return '<div class="firma-section">' +
     '<div class="firma-section-header">' +
-      '<div><div class="firma-section-title">Hallazgos clave del proceso de firma</div>' +
+      '<div><div class="firma-section-title">Oportunidades clave del proceso de firma</div>' +
       '<div class="firma-section-sub">5 puntos críticos agrupados por categoría · base para el roadmap de mejoras</div></div>' +
     '</div>' +
     '<div class="firma-grid">' + cards + '</div>' +
