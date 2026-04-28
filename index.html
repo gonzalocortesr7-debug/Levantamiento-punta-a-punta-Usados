@@ -1776,32 +1776,6 @@ var journey = {
       ]
     },
     {
-      id: 6, macro: "preparación", name: "Ingreso Quiter + Recepción", fullName: "Ingreso a Quiter + Recepción",
-      video: { url: null, title: "Video del proceso - Ingreso a Quiter + Recepción" },
-      route: "6 orígenes de ingreso -> Registro en Quiter -> Llegada física -> Ubicación",
-      description: "Toda unidad adquirida ingresa al sistema operativo Quiter con asignación de ubicación física y, posteriormente, llega físicamente a la sucursal donde se verifica y se le asigna su posición definitiva (vitrina o taller). Los 6 orígenes posibles (VPP, VPP's, Compras B2B empresa, Compras B2B no empresa, Consignados, Test Car) convergen en un pipeline único aguas abajo.",
-      substeps: [
-        { num: 1, title: "Registro en Quiter por origen",
-          description: "Registro de la unidad según su origen y asignación inicial de ubicación en el sistema. Inventario total actual: 2.574 unidades provenientes de 5 orígenes.",
-          kpis: [{value:"2.574",suffix:"uds",label:"Inventario total (snapshot)"},{value:"5",suffix:"",label:"Orígenes de ingreso activos"},{value:"—",suffix:"%",label:"Mix % por origen"}],
-          hallazgos: ["Inventario actual de 2.574 unidades desde 5 orígenes (VPP, Compras B2B empresa, Compras B2B no empresa, Test Car, Consignados)","La distribución % por origen no está cuantificada: se requiere para identificar orígenes críticos","Los 6 orígenes de ingreso podrían tener flujos operacionales distintos aguas abajo (sin confirmar)","Dependencia de carga manual: sin integración automática desde orígenes de compra"],
-          mejoras: ["Reporte de mix por origen para detectar orígenes dominantes y residuales","Unificar SLA de registro independiente del origen","Integración automática desde sistemas de compras y tasación","Campo obligatorio de origen con lista controlada"]
-        },
-        { num: 2, title: "Llegada y verificación del vehículo",
-          description: "El vehículo llega a la sucursal y se verifica documentación, patente y estado declarado vs. recibido.",
-          kpis: [{value:"—",suffix:"hrs",label:"Tiempo registro → llegada física"},{value:"—",suffix:"%",label:"Verificación correcta al primer intento"},{value:"—",suffix:"%",label:"Discrepancias estado declarado vs. recibido"}],
-          hallazgos: ["Sin métrica publicada del tiempo entre registro en Quiter y llegada física del vehículo","Verificación manual expuesta a discrepancias entre lo declarado y lo recibido","Sin protocolo unificado por sucursal para registrar hallazgos de recepción"],
-          mejoras: ["Definir y publicar SLA registro → llegada física","Checklist digital de recepción con foto por hallazgo","Registro estructurado de discrepancias para feedback al origen (VPP/B2B/Consignados)"]
-        },
-        { num: 3, title: "Asignación de ubicación física",
-          description: "El vehículo recibido se asigna a zona de exposición o taller según su condición y se actualiza la ubicación en el sistema para permitir logística y fotografía.",
-          kpis: [{value:"—",suffix:"%",label:"Unidades con ubicación correcta"},{value:"—",suffix:"%",label:"Unidades que pasan por taller antes de vitrina"},{value:"—",suffix:"hrs",label:"Tiempo llegada → ubicación final"}],
-          hallazgos: ["Ubicación en sistema vs. física puede divergir por movimientos no registrados","Criterios taller vs. vitrina no están unificados entre sucursales","Sin trazabilidad del movimiento físico de la unidad dentro de la sucursal","Sin auditoría periódica sistemática de ubicación"],
-          mejoras: ["App móvil para registrar ubicación al momento del movimiento","QR físico por unidad para escanear y validar ubicación en terreno","Reglas claras taller vs. vitrina con criterios de decisión objetivos","Auditoría semanal de ubicación por sucursal"]
-        }
-      ]
-    },
-    {
       id: 7, macro: "preparación", name: "Precio de Venta", fullName: "Asignación de Precio de Venta",
       video: { url: null, title: "Video del proceso - Asignación de Precio de Venta" },
       route: "Quiter -> Precio comercial asignado",
@@ -1816,7 +1790,7 @@ var journey = {
         { num: 2, title: "Ajustes post-publicación",
           description: "Monitoreo de ajustes de precio dentro de los primeros días en stock.",
           kpis: [{value:"—",suffix:"%",label:"Unidades ajustadas en primeros 30 días"},{value:"—",suffix:"%",label:"Ajuste promedio (magnitud)"},{value:"—",suffix:"días",label:"Tiempo promedio hasta primer ajuste"}],
-          hallazgos: ["Sin seguimiento sistemático de precio inicial vs. ajustes","Falta de feedback loop entre ventas y pricing","Decisiones de ajuste sin registro estructurado"],
+          hallazgos: ["Sin seguimiento sistemático de precio inicial vs. ajustes","Falta de estructura en solicitud de ajustes de precio","Decisiones de ajuste sin registro estructurado"],
           mejoras: ["Dashboard de movimientos de precio por unidad","Workflow estructurado para ajustes de precio con motivo","Umbrales automáticos que alerten sobre ajustes excesivos"]
         }
       ]
@@ -2553,22 +2527,6 @@ var OKRS = {
           baseline: '50%', target: '85%',
           impacts: 'Checklist digital con tiempos objetivo por ítem · Categorización automática de hallazgos por severidad · Invitar al cliente a observar la inspección · Fotos estructuradas reutilizables en publicación · Benchmark entre inspectores' }
       ] },
-    6: { macro: 'preparación', title: 'Etapa 6 · Ingreso Quiter + Recepción',
-      objective: 'Acortar el tramo compra → recepción → ubicación',
-      krs: [
-        { desc: 'Tiempo registro Quiter → llegada física',
-          detail: 'Sin métrica publicada hoy. Tramo operacional que define cuándo puede arrancar la preparación efectiva — un SLA formal desbloquea el pipeline aguas abajo.',
-          baseline: '—', target: '<48h',
-          impacts: 'SLA publicado y medido · Checklist digital de recepción con foto · Integración automática desde sistemas de compras y tasación · Alerta cuando una unidad supera el SLA · Reporte de discrepancias por origen (VPP/B2B/Consignados)' },
-        { desc: '% unidades con ubicación correcta en sistema',
-          detail: 'Ubicación sistema vs. física puede divergir por movimientos no registrados. Sin auditoría periódica sistemática, se pierde tiempo buscando unidades para fotografía e inspección.',
-          baseline: '—', target: '100%',
-          impacts: 'QR físico por unidad · App móvil para actualizar ubicación en terreno · Auditoría semanal por sucursal · Reglas claras taller vs. vitrina con criterios objetivos · Owner operacional por sucursal' },
-        { desc: 'Tiempo llegada → ubicación final (vitrina/taller)',
-          detail: 'Entre que llega físicamente el auto y queda ubicado definitivamente pasan horas/días sin trazabilidad. Bloquea fotografía, publicación y disponibilidad real.',
-          baseline: '—', target: '<24h',
-          impacts: 'Reglas claras taller vs. vitrina · Auditoría semanal · Dashboard de aging por unidad · Trazabilidad del movimiento físico dentro de la sucursal' }
-      ] },
     7: { macro: 'preparación', title: 'Etapa 7 · Asignación de Precio de Venta',
       objective: 'Cero unidades bloqueadas por falta de precio',
       krs: [
@@ -3213,7 +3171,7 @@ function renderExecSummarySlide(i) {
           '<div class="eje-card-stat"><div class="eje-card-stat-value">6</div><div class="eje-card-stat-label">Procesos</div></div>' +
           '<div class="eje-card-stat"><div class="eje-card-stat-value">17</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
         '</div>' +
-        '<div class="eje-card-scope">Ingreso Quiter + Recepción · Asignación de Precio · Publicación Web · Foto Impel · Clasificación en Catálogo</div>' +
+        '<div class="eje-card-scope">Asignación de Precio · Publicación Web · Foto Impel · Clasificación en Catálogo</div>' +
         '<div class="eje-card-source">Snapshot BI 2026-04-17 · 2.574 uds inventario · 1.790 publicadas</div>' +
       '</div>' +
       '<div class="eje-card venta">' +
@@ -3753,11 +3711,6 @@ var RESPONSABLES_POR_ETAPA = {
     { nombre: "Barbara Colle", rol: "Productos Digitales" },
     { nombre: "Raul Olivares", rol: "Pricing Usados" }
   ],
-  6: [
-    { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
-    { nombre: "Barbara Colle", rol: "Productos Digitales" },
-    { nombre: "Natalia Reyes", rol: "Logística" }
-  ],
   7: [
     { nombre: "Javiera Jerez", rol: "Vitrina Digital" },
     { nombre: "Barbara Colle", rol: "Productos Digitales" }
@@ -3855,10 +3808,7 @@ var INSIGHTS_POR_ETAPA = {
   4: [
     { insight: 'Atributos de confianza y transparencia en el proceso de tasación e inspección, junto con la asesoría del ejecutivo, son los más sensibles en clientes neutros y detractores.', kpi: 'NPS Compra · CSAT Atributos', accion: 'Modelo de Atención · Compra' }
   ],
-  // PREPARACIÓN · Ingreso Quiter + Publicación Web (id=6 y 8)
-  6: [
-    { insight: 'El 11% de los clientes detractores o neutros señala problemas con plazos de entrega, y el 30% manifiesta temas asociados a la preparación del vehículo.', kpi: 'NPS VU', accion: '' }
-  ],
+  // PREPARACIÓN · Publicación Web (id=8)
   8: [
     { insight: 'El 11% de los clientes detractores o neutros señala problemas con plazos de entrega, y el 30% manifiesta temas asociados a la preparación del vehículo.', kpi: 'NPS VU', accion: '' }
   ],
@@ -3940,9 +3890,6 @@ var CLIENTE_POR_SUBSTEP = {
   "4.3": { kpis: ["15% brecha promedio online vs. oferta final","% clientes que aceptan la brecha","Razones desglosadas al cliente"], lineamientos: ["Desglosar cada ajuste con evidencia visual","No sorprender con el número final","Ofrecer argumentos comparativos de mercado"] },
   "4.4": { kpis: ["35 min tiempo promedio de aprobación","60% de ofertas requieren validación de jefatura","92% tasa de aprobación final"], lineamientos: ["Informar al cliente si la espera será >15 min","Ofrecer café o agua durante la espera","Pre-aprobar dentro de rangos sin hacer esperar al cliente"] },
   "4.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
-  "6.1": { kpis: ["Tiempo adquisición → sistema","% unidades con origen trazable al cliente"], lineamientos: ["El origen del auto debe ser consultable por el comprador si pregunta","Trazabilidad completa en la ficha pública cuando aplique"] },
-  "6.2": { kpis: ["Tiempo compra → auto físicamente recibido","% vendedores informados de la recepción del auto"], lineamientos: ["Notificar al vendedor cuando el auto es recibido (transparencia post-venta)","Registrar discrepancias con evidencia para retroalimentar al origen"] },
-  "6.3": { kpis: ["% ubicación correcta cuando el comprador pregunta","Tiempo recepción → disponibilidad para visita"], lineamientos: ["Mantener la ubicación actualizada en tiempo real","Evitar unidades 'fantasma' entre recepción y publicación"] },
   "7.1": { kpis: ["17 uds bloqueadas hoy por falta de precio (8,5% de no publicadas)","Tiempo sin precio en vitrina"], lineamientos: ["No publicar con placeholder 'precio a consultar'","Si hay rango, explicarlo con argumentos"] },
   "7.2": { kpis: ["% unidades con ajuste de precio en primeros 30 días","% clientes que vieron precio distinto al reservar"], lineamientos: ["Respetar el precio cuando hay reserva activa","Comunicar proactivamente cualquier cambio al cliente afectado"] },
   "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación","% fichas con todos los campos completos"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
