@@ -1096,6 +1096,7 @@
   .okr-ns-eje-progress { font-family: monospace; font-size: 15px; margin-top: 2px; }
   .okr-ns-eje-baseline { color: #B3261E; font-weight: 700; }
   .okr-ns-eje-target { color: #0B5C1F; font-weight: 800; }
+  .okr-ns-eje-sub { font-size: 10px; color: var(--gray-500); line-height: 1.4; margin-top: 4px; }
 
   /* Drill-down */
   .memo-drill { background: var(--gray-50); }
@@ -1304,6 +1305,10 @@
   .impact-money { font-size: 13px; font-weight: 700; background: #E8F5EE; color: #0F6E56; padding: 6px 10px; border-radius: 4px; border: 1px solid #B7DEC8; display: inline-flex; align-items: center; gap: 6px; width: fit-content; }
   .impact-money::before { content: "💰"; font-size: 13px; }
   .impact-assumptions { font-size: 10.5px; color: var(--gray-500); font-style: italic; line-height: 1.45; border-top: 1px dashed var(--gray-200); padding-top: 8px; margin-top: auto; }
+  .impact-assumptions-base { background: var(--gray-50); border: 1px solid var(--gray-200); border-left: 4px solid var(--gray-400); border-radius: 4px; padding: 12px 16px; margin-bottom: 16px; }
+  .impact-assumptions-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray-500); margin-bottom: 8px; }
+  .impact-assumptions-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .impact-assumptions-list span { font-size: 11px; color: var(--gray-700); background: var(--white); border: 1px solid var(--gray-200); border-radius: 3px; padding: 3px 9px; }
   .impact-totalizer { margin-top: 14px; background: #0B3B6F; color: var(--white); padding: 14px 18px; border-radius: 4px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
   .impact-totalizer-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85; }
   .impact-totalizer-value { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
@@ -1353,6 +1358,10 @@
   .kr-detail-panel { display: none; padding: 8px 12px; background: var(--gray-50); border-left: 3px solid var(--gray-200); font-size: 11px; color: var(--gray-700); line-height: 1.5; margin: 2px 0 4px; }
   .kr-detail-panel.open { display: block; }
   .okrs-mindset-box { background: #EBF4FF; border-left: 4px solid #0F6FC6; padding: 12px 16px; font-size: 12.5px; color: var(--navy); line-height: 1.55; margin-bottom: 16px; border-radius: 0 4px 4px 0; }
+  .okr-resp-list { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; justify-content: flex-end; }
+  .okr-resp-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; background: rgba(255,255,255,0.75); border: 1px solid rgba(0,0,0,0.1); border-radius: 20px; font-size: 10.5px; white-space: nowrap; }
+  .okr-resp-nombre { font-weight: 700; color: var(--navy); }
+  .okr-resp-rol { color: var(--gray-500); font-size: 9.5px; }
   .okrs-macro-block { margin-bottom: 22px; }
   .okrs-macro-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-200); }
   .okr-eje-switcher { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; padding: 10px 12px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 6px; }
@@ -2802,42 +2811,52 @@ function renderOKRsSlide(i) {
       '<div class="north-star-source">' + ns.source + '</div>' +
     '</div>';
   }
-  // Impacto estimado en el negocio
+  // Tamaño de la oportunidad
   var impactHtml =
+    '<div class="impact-assumptions-base">' +
+      '<div class="impact-assumptions-title">Supuestos base del ejercicio</div>' +
+      '<div class="impact-assumptions-list">' +
+        '<span>Sin aumentar inversión digital ni volumen de tráfico</span>' +
+        '<span>Mismo inventario base (2.574 uds)</span>' +
+        '<span>Mejoras solo en conversión y gestión — no en captación nueva</span>' +
+        '<span>Margen promedio por auto $1.200.000 (validar con Pricing)</span>' +
+        '<span>Referencia: 19.150 leads/mes compra · 136.334 visitas/mes venta · 6m Salazar-Israel</span>' +
+      '</div>' +
+    '</div>' +
     '<div class="impact-grid">' +
       '<div class="impact-card compra">' +
         '<div class="impact-eje">Eje Compra</div>' +
         '<div class="impact-big"><span class="impact-big-number">+294</span><span class="impact-big-unit">compras / mes</span></div>' +
-        '<div class="impact-headline">Compramos 294 autos más al mes</div>' +
-        '<div class="impact-detail">De <strong>376 → 670 compras/mes</strong> · <strong>+3.528 autos/año</strong>. La palanca son los 2 North Stars del eje: más contactabilidad alimenta más conversión.</div>' +
-        '<div class="impact-money">~$353M / mes de margen estimado al revender</div>' +
-        '<div class="impact-assumptions">Supuestos: 19.150 leads/mes promedio Ene-Abr 2026 · conversión Lead→Compra 2,0% → 3,5% · margen promedio por auto $1.200.000 (rango $1M–$1,5M).</div>' +
+        '<div class="impact-headline">Lo que el funnel de compra deja sin capturar hoy</div>' +
+        '<div class="impact-detail">Con los mismos <strong>19.150 leads/mes</strong>, subir la conversión Lead→Compra de <strong>2,0% a 3,5%</strong> libera 294 compras adicionales al mes — <em>sin un solo lead nuevo</em>. La palanca es contactabilidad (53% → 70%) + gestión del funnel.</div>' +
+        '<div class="impact-money">Techo: ~$353M / mes de margen potencial</div>' +
+        '<div class="impact-assumptions">Palancas: contactabilidad del pool · tiempo al primer contacto · scoring de leads · reducir descarte masivo.</div>' +
       '</div>' +
       '<div class="impact-card preparación">' +
         '<div class="impact-eje">Eje Preparación</div>' +
         '<div class="impact-big"><span class="impact-big-number">+527</span><span class="impact-big-unit">uds visibles</span></div>' +
-        '<div class="impact-headline">Vitrina con 527 autos más listos para vender</div>' +
-        '<div class="impact-detail">Stock publicado sube de <strong>1.790 → 2.317 uds</strong> (del 69,5% al 90% del inventario). Foto Tier 1/2 del <strong>67,7% → 95%</strong> — vitrina premium, sin Tier 4.</div>' +
-        '<div class="impact-money">Habilitador del eje Venta · ahorro $4,2M/mes en Impel</div>' +
-        '<div class="impact-assumptions">Supuestos: inventario base 2.574 uds constante · meta de publicación 90% · foto final in-house al momento de la inspección (deprecar Impel externo).</div>' +
+        '<div class="impact-headline">El inventario que existe pero la vitrina no muestra</div>' +
+        '<div class="impact-detail">El mismo stock, mejor publicado: de <strong>1.790 → 2.317 uds</strong> en vitrina (69,5% → 90%). Foto Tier 1/2 de <strong>67,7% → 95%</strong>. <em>No hay unidades nuevas — hay unidades ocultas.</em></div>' +
+        '<div class="impact-money">Multiplicador del eje Venta · ahorro $4,2M/mes en Impel</div>' +
+        '<div class="impact-assumptions">Palancas: pipeline de publicación · SLA de foto · eliminación de reservas fantasma · gate de precio.</div>' +
       '</div>' +
       '<div class="impact-card venta">' +
         '<div class="impact-eje">Eje Venta</div>' +
         '<div class="impact-big"><span class="impact-big-number">+134</span><span class="impact-big-unit">ventas / mes</span></div>' +
-        '<div class="impact-headline">Vendemos 134 autos más al mes</div>' +
-        '<div class="impact-detail">De <strong>46 → 180 ventas/mes</strong> · <strong>+1.608 autos/año</strong>. Combina 3× el pipeline web (862 → 2.000 cotizaciones/mes) + recuperación de segmentos premium (Oro/VIP+VPP) y flujo diferenciado para financiamiento.</div>' +
-        '<div class="impact-money">~$161M / mes de margen estimado adicional</div>' +
-        '<div class="impact-assumptions">Supuestos: 136.334 visitas/mes constantes · conv. cotización→venta 5,3% → 9% (up vs. 8% por recuperación de segmentos de alto valor) · margen promedio por auto $1.200.000 (rango $1M–$1,5M).</div>' +
+        '<div class="impact-headline">Lo que el funnel digital y la gestión de leads no convierten</div>' +
+        '<div class="impact-detail">Con las mismas <strong>136.334 visitas/mes</strong>, pasar de 862 a 2.000 cotizaciones + subir conversión cotización→venta de 5,3% a 9% — recuperando además los <strong>641 leads Oro/VIP con VPP descartados.</strong></div>' +
+        '<div class="impact-money">Techo: ~$161M / mes de margen potencial</div>' +
+        '<div class="impact-assumptions">Palancas: conversión web (ficha → cotización) · gestión de leads premium · eliminación de descarte masivo.</div>' +
       '</div>' +
     '</div>' +
     '<div class="impact-totalizer">' +
       '<div>' +
-        '<div class="impact-totalizer-label">Proyección anualizada al mover los 6 North Stars</div>' +
-        '<div class="impact-totalizer-sub">Compras y ventas no se suman 1:1 (cada compra alimenta una venta futura). El margen se materializa al completar el ciclo compra → preparación → venta.</div>' +
+        '<div class="impact-totalizer-label">Oportunidad total identificada en el journey</div>' +
+        '<div class="impact-totalizer-sub">No es proyección de resultados: es el tamaño de lo que el sistema actual no captura. Cada indicador que se mueve convierte en ventas lo que hoy se pierde en fricción operacional.</div>' +
       '</div>' +
       '<div style="text-align:right;">' +
-        '<div class="impact-totalizer-value">+3.528 compras · +1.608 ventas · año</div>' +
-        '<div class="impact-totalizer-sub">Preparación habilita el flujo · sin 90% publicado + foto premium el margen se pierde en inventario</div>' +
+        '<div class="impact-totalizer-value">+3.528 compras · +1.608 ventas / año identificadas</div>' +
+        '<div class="impact-totalizer-sub">Preparación actúa como multiplicador — sin vitrina completa el upside de Compra y Venta se frena en inventario inmovilizado</div>' +
       '</div>' +
     '</div>';
 
@@ -2868,9 +2887,11 @@ function renderOKRsSlide(i) {
     var ejeNS = EJE_CLUSTERS[mkey] ? EJE_CLUSTERS[mkey].northStars : [];
     var nsStripItems = '';
     for (var nsi2 = 0; nsi2 < ejeNS.length; nsi2++) {
+      var nsSub = ejeNS[nsi2].sub ? '<div class="okr-ns-eje-sub">' + ejeNS[nsi2].sub + '</div>' : '';
       nsStripItems += '<div class="okr-ns-eje-item">' +
         '<div class="okr-ns-eje-metric">' + ejeNS[nsi2].metric + '</div>' +
         '<div class="okr-ns-eje-progress"><span class="okr-ns-eje-baseline">' + ejeNS[nsi2].baseline + '</span> → <span class="okr-ns-eje-target">' + ejeNS[nsi2].target + '</span></div>' +
+        nsSub +
       '</div>';
     }
     var nsStrip = ejeNS.length
@@ -2900,12 +2921,19 @@ function renderOKRsSlide(i) {
           '<div class="kr-impacts-col"><div class="kr-impacts">' + k.impacts + '</div></div>' +
         '</div></div>';
       }
+      var stageResps = RESPONSABLES_POR_ETAPA[parseInt(stageIds[si])] || [];
+      var respChips = '';
+      for (var ri = 0; ri < stageResps.length; ri++) {
+        respChips += '<span class="okr-resp-chip"><span class="okr-resp-nombre">' + stageResps[ri].nombre + '</span><span class="okr-resp-rol">' + stageResps[ri].rol + '</span></span>';
+      }
+      var respHtml = respChips ? '<div class="okr-resp-list">' + respChips + '</div>' : '';
       paneHtml += '<div class="stage-okr-card macro-' + st.macro + '">' +
         '<div class="stage-okr-head">' +
           '<div>' +
             '<div class="stage-okr-title">' + st.title + '</div>' +
             '<div class="stage-okr-objective">' + st.objective + '</div>' +
           '</div>' +
+          respHtml +
         '</div>' +
         '<div class="kr-rows-body">' + krsHtml + '</div>' +
       '</div>';
@@ -2946,8 +2974,8 @@ function renderOKRsSlide(i) {
     '<div class="okrs-section-sub">Cada etapa tiene un objetivo cualitativo y tres metas medibles con valor actual y meta a 6 meses. Las metas con baseline <strong>—</strong> están en levantamiento de data.</div>' +
     '<div class="okrs-mindset-box"><strong>El foco está en los indicadores, no en las iniciativas.</strong> Los equipos presentan sus métricas actuales y las iniciativas concretas que están ejecutando para moverlas. Las iniciativas son el medio — el indicador es el resultado que importa.</div>' +
     stageHtml +
-    '<div class="okrs-section-title">💰 Impacto estimado en el negocio</div>' +
-    '<div class="okrs-section-sub">Qué significan los indicadores guía traducidos a compras y ventas adicionales. Números construidos sobre supuestos conservadores — reemplazables con data real de Pricing y Operaciones.</div>' +
+    '<div class="okrs-section-title">Tamaño de la oportunidad</div>' +
+    '<div class="okrs-section-sub">Estimación de lo que el sistema actual deja encima de la mesa si mejoramos solo los indicadores clave. <strong>No son compromisos de resultado:</strong> son el techo de lo que se puede capturar sin cambiar la inversión digital ni el inventario base.</div>' +
     impactHtml +
   '</div>';
 }
@@ -3065,8 +3093,10 @@ var EJE_CLUSTERS = {
   },
   venta: {
     northStars: [
-      { metric: 'Cotizaciones web iniciadas / mes', baseline: '862', target: '2.000' },
-      { metric: 'Tasa de descarte del pool de leads', baseline: '77,7%', target: '60%' }
+      { metric: 'Conversión Lead → Venta (end-to-end)', baseline: '4,1%', target: '8%',
+        sub: '3.838 ventas de 92.843 leads · 6 meses Salazar-Israel · mejor mes: 8,8% (Mar 2026)' },
+      { metric: 'Tasa Traffic → Cotización web', baseline: '0,63%', target: '1,5%',
+        sub: '862 cotizaciones / mes de 136.334 sesiones · meta: 2.000 cot/mes' }
     ],
     nsImpact: '+134 ventas / mes · +1.608 / año · ~$161M margen estimado / mes',
     headline: 'El comprador tiene tráfico abundante en el sitio, pero el funnel web pierde el 96% antes de la cotización y la gestión de leads premium quema oportunidades de mayor valor.',
