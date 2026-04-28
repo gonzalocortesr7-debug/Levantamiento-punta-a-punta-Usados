@@ -987,6 +987,29 @@
   .memo-section .gov-grid { gap: 14px; }
   .memo-section .gov-card { padding: 16px 18px; }
 
+  /* Dolores y Soluciones · 3 columnas paralelas */
+  .memo-dolor-grid { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 24px; align-items: start; }
+  .memo-dolor-col { display: flex; flex-direction: column; gap: 12px; }
+  .memo-dolor-head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 2px solid var(--gray-200); }
+  .memo-dolor-col.compra .memo-dolor-head { border-bottom-color: #0F6FC6; }
+  .memo-dolor-col.preparación .memo-dolor-head { border-bottom-color: #EF9F27; }
+  .memo-dolor-col.venta .memo-dolor-head { border-bottom-color: #1D9E75; }
+  .memo-dolor-eje { font-weight: 700; color: var(--navy); font-size: 14px; line-height: 1.2; }
+  .memo-dolor-eje-sub { font-size: 10.5px; color: var(--gray-500); margin-top: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .memo-dolor-list { list-style: none; padding: 0; margin: 0; counter-reset: dolor; display: flex; flex-direction: column; gap: 10px; }
+  .memo-dolor-list li { counter-increment: dolor; padding: 12px 14px 12px 40px; background: var(--white); border: 1px solid var(--gray-200); border-radius: 4px; position: relative; }
+  .memo-dolor-list li::before { content: counter(dolor); position: absolute; left: 12px; top: 12px; width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; line-height: 1; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  .memo-dolor-col.compra .memo-dolor-list li::before { background: #0F6FC6; }
+  .memo-dolor-col.preparación .memo-dolor-list li::before { background: #EF9F27; }
+  .memo-dolor-col.venta .memo-dolor-list li::before { background: #1D9E75; }
+  .memo-dolor-pain { font-size: 12.5px; color: var(--navy); font-weight: 700; line-height: 1.4; }
+  .memo-dolor-fix { font-size: 11.5px; color: var(--gray-600); line-height: 1.5; margin-top: 6px; padding: 6px 8px; background: #F8F9FC; border-left: 3px solid var(--gray-200); border-radius: 0 3px 3px 0; }
+  .memo-dolor-col.compra .memo-dolor-fix { border-left-color: #BDDAF7; }
+  .memo-dolor-col.preparación .memo-dolor-fix { border-left-color: #FAD99A; }
+  .memo-dolor-col.venta .memo-dolor-fix { border-left-color: #A8E4CF; }
+  .memo-dolor-fix::before { content: "→ "; color: var(--gray-400); font-weight: 700; }
+  .memo-dolor-tag { display: inline-block; margin-top: 8px; padding: 2px 8px; background: #FEF2C7; color: #8C5A00; font-size: 9.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; border-radius: 3px; }
+
   /* Drill-down */
   .memo-drill { background: var(--gray-50); }
   .memo-drill-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px 28px; background: var(--white); border-left: 4px solid var(--navy); flex-wrap: wrap; }
@@ -1760,19 +1783,19 @@ var journey = {
       substeps: [
         { num: 1, title: "Registro en Quiter por origen",
           description: "Registro de la unidad según su origen y asignación inicial de ubicación en el sistema. Inventario total actual: 2.574 unidades provenientes de 5 orígenes.",
-          kpis: [{value:"2.574",suffix:"uds",label:"Inventario total (snapshot)"},{value:"5",suffix:"",label:"Orígenes de ingreso activos"},{value:"TBD",suffix:"%",label:"Mix % por origen"}],
+          kpis: [{value:"2.574",suffix:"uds",label:"Inventario total (snapshot)"},{value:"5",suffix:"",label:"Orígenes de ingreso activos"},{value:"—",suffix:"%",label:"Mix % por origen"}],
           hallazgos: ["Inventario actual de 2.574 unidades desde 5 orígenes (VPP, Compras B2B empresa, Compras B2B no empresa, Test Car, Consignados)","La distribución % por origen no está cuantificada: se requiere para identificar orígenes críticos","Los 6 orígenes de ingreso podrían tener flujos operacionales distintos aguas abajo (sin confirmar)","Dependencia de carga manual: sin integración automática desde orígenes de compra"],
           mejoras: ["Reporte de mix por origen para detectar orígenes dominantes y residuales","Unificar SLA de registro independiente del origen","Integración automática desde sistemas de compras y tasación","Campo obligatorio de origen con lista controlada"]
         },
         { num: 2, title: "Llegada y verificación del vehículo",
           description: "El vehículo llega a la sucursal y se verifica documentación, patente y estado declarado vs. recibido.",
-          kpis: [{value:"TBD",suffix:"hrs",label:"Tiempo registro → llegada física"},{value:"TBD",suffix:"%",label:"Verificación correcta al primer intento"},{value:"TBD",suffix:"%",label:"Discrepancias estado declarado vs. recibido"}],
+          kpis: [{value:"—",suffix:"hrs",label:"Tiempo registro → llegada física"},{value:"—",suffix:"%",label:"Verificación correcta al primer intento"},{value:"—",suffix:"%",label:"Discrepancias estado declarado vs. recibido"}],
           hallazgos: ["Sin métrica publicada del tiempo entre registro en Quiter y llegada física del vehículo","Verificación manual expuesta a discrepancias entre lo declarado y lo recibido","Sin protocolo unificado por sucursal para registrar hallazgos de recepción"],
           mejoras: ["Definir y publicar SLA registro → llegada física","Checklist digital de recepción con foto por hallazgo","Registro estructurado de discrepancias para feedback al origen (VPP/B2B/Consignados)"]
         },
         { num: 3, title: "Asignación de ubicación física",
           description: "El vehículo recibido se asigna a zona de exposición o taller según su condición y se actualiza la ubicación en el sistema para permitir logística y fotografía.",
-          kpis: [{value:"TBD",suffix:"%",label:"Unidades con ubicación correcta"},{value:"TBD",suffix:"%",label:"Unidades que pasan por taller antes de vitrina"},{value:"TBD",suffix:"hrs",label:"Tiempo llegada → ubicación final"}],
+          kpis: [{value:"—",suffix:"%",label:"Unidades con ubicación correcta"},{value:"—",suffix:"%",label:"Unidades que pasan por taller antes de vitrina"},{value:"—",suffix:"hrs",label:"Tiempo llegada → ubicación final"}],
           hallazgos: ["Ubicación en sistema vs. física puede divergir por movimientos no registrados","Criterios taller vs. vitrina no están unificados entre sucursales","Sin trazabilidad del movimiento físico de la unidad dentro de la sucursal","Sin auditoría periódica sistemática de ubicación"],
           mejoras: ["App móvil para registrar ubicación al momento del movimiento","QR físico por unidad para escanear y validar ubicación en terreno","Reglas claras taller vs. vitrina con criterios de decisión objetivos","Auditoría semanal de ubicación por sucursal"]
         }
@@ -1786,13 +1809,13 @@ var journey = {
       substeps: [
         { num: 1, title: "Carga del precio",
           description: "Asignación del valor comercial de la unidad. Gate obligatorio antes de publicar: 17 unidades de las 200 no publicadas hoy (8,5%) están bloqueadas específicamente por falta de precio.",
-          kpis: [{value:"17",suffix:"uds",label:"Bloqueadas sin precio (hoy)"},{value:"8,5",suffix:"%",label:"De las 200 no publicadas"},{value:"TBD",suffix:"hrs",label:"Tiempo Quiter -> precio cargado"}],
+          kpis: [{value:"17",suffix:"uds",label:"Bloqueadas sin precio (hoy)"},{value:"8,5",suffix:"%",label:"De las 200 no publicadas"},{value:"—",suffix:"hrs",label:"Tiempo Quiter -> precio cargado"}],
           hallazgos: ["17 unidades disponibles hoy no están publicadas por falta de precio - gate operacional concreto","Sin SLA formal publicado entre registro en Quiter y carga de precio","Posibles inconsistencias entre tasación web y precio final publicado","Reglas de pricing no trazables por modelo/antigüedad"],
           mejoras: ["Alerta automática cuando una unidad lleva > X horas sin precio","Definir y publicar SLA de carga de precio (ej. <24h desde Quiter)","Reporte de dispersión tasación web vs. precio publicado","Reglas paramétricas de pricing por modelo + antigüedad + condición"]
         },
         { num: 2, title: "Ajustes post-publicación",
           description: "Monitoreo de ajustes de precio dentro de los primeros días en stock.",
-          kpis: [{value:"TBD",suffix:"%",label:"Unidades ajustadas en primeros 30 días"},{value:"TBD",suffix:"%",label:"Ajuste promedio (magnitud)"},{value:"TBD",suffix:"días",label:"Tiempo promedio hasta primer ajuste"}],
+          kpis: [{value:"—",suffix:"%",label:"Unidades ajustadas en primeros 30 días"},{value:"—",suffix:"%",label:"Ajuste promedio (magnitud)"},{value:"—",suffix:"días",label:"Tiempo promedio hasta primer ajuste"}],
           hallazgos: ["Sin seguimiento sistemático de precio inicial vs. ajustes","Falta de feedback loop entre ventas y pricing","Decisiones de ajuste sin registro estructurado"],
           mejoras: ["Dashboard de movimientos de precio por unidad","Workflow estructurado para ajustes de precio con motivo","Umbrales automáticos que alerten sobre ajustes excesivos"]
         }
@@ -1849,7 +1872,7 @@ var journey = {
         },
         { num: 3, title: "Cabina virtual 360 (Tier 1)",
           description: "Capacidad incorporada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopción marginal aún - el BI actual no separa Tier 1 del Tier 2 (ambos se cuentan como 'IMPEL' = 1.211 uds, 67,7%), así que la cuantificación específica requiere reporte Impel detallado.",
-          kpis: [{value:"TBD",suffix:"%",label:"Subset Impel con cabina virtual 360"},{value:"1.211",suffix:"uds",label:"Techo teórico (Impel total)"},{value:"TBD",suffix:"",label:"Objetivo 30/60/90 días"}],
+          kpis: [{value:"—",suffix:"%",label:"Subset Impel con cabina virtual 360"},{value:"1.211",suffix:"uds",label:"Techo teórico (Impel total)"},{value:"—",suffix:"",label:"Objetivo 30/60/90 días"}],
           hallazgos: ["El reporte BI vigente no permite medir adopción de Tier 1 aisladamente - bloquea el seguimiento gerencial","Capacidad reciente (2026-04-13): todavía poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorización explícita de segmentos (ej. lujo primero)","Techo teórico de conversión hoy: las 1.211 uds Impel podrían migrarse a Tier 1 sin esfuerzo incremental en captura"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Desarrollar la capa cabina virtual 360 in-house aplicada al momento de la inspección mecánica — deprecar Impel y ahorrar $4,2M/mes","Hasta el corte: priorizar lujo / alto ticket con cabina virtual 360 vía Impel","Reporte semanal de % stock en Tier 1 con tendencia"]
         },
@@ -1879,7 +1902,7 @@ var journey = {
         },
         { num: 2, title: "Impacto comercial por tier",
           description: "Cruce de tier de foto con resultados comerciales (tiempo en stock, visitas, conversión).",
-          kpis: [{value:"TBD",suffix:"días",label:"Días en stock Tier 1 vs Tier 4"},{value:"TBD",suffix:"%",label:"Conversión relativa por tier"},{value:"TBD",suffix:"%",label:"CTR de ficha por tier"}],
+          kpis: [{value:"—",suffix:"días",label:"Días en stock Tier 1 vs Tier 4"},{value:"—",suffix:"%",label:"Conversión relativa por tier"},{value:"—",suffix:"%",label:"CTR de ficha por tier"}],
           hallazgos: ["No hay cruce publicado entre tier de foto y performance comercial","Intuición de negocio: Tier 4 'mata' la visibilidad pero falta evidencia cuantitativa","Justificación para inversión en cabina virtual 360 requiere este dato"],
           mejoras: ["Análisis A/B tier de foto vs. días en stock y conversión","Dashboard de performance comercial segmentado por tier","Business case cuantitativo para inversión en Tier 1"]
         },
@@ -1892,7 +1915,7 @@ var journey = {
         },
         { num: 4, title: "SLA de upgrade de tier",
           description: "Tiempo máximo aceptable en Tier 3 o Tier 4 antes de escalar.",
-          kpis: [{value:"TBD",suffix:"días",label:"Permanencia promedio en Tier 3"},{value:"TBD",suffix:"días",label:"Permanencia promedio en Tier 4"},{value:"TBD",suffix:"%",label:"Unidades que hacen upgrade de tier"}],
+          kpis: [{value:"—",suffix:"días",label:"Permanencia promedio en Tier 3"},{value:"—",suffix:"días",label:"Permanencia promedio en Tier 4"},{value:"—",suffix:"%",label:"Unidades que hacen upgrade de tier"}],
           hallazgos: ["No hay SLA explícito para sacar unidades de Tier 3 / Tier 4","Unidades pueden quedar 'olvidadas' en tiers bajos por meses","Sin owner claro del upgrade de tier"],
           mejoras: ["Definir SLA máximo por tier (ej. Tier 4: max 72h)","Asignar owner operacional del pipeline visual","Cola priorizada de upgrades con edad máxima visible"]
         }
@@ -2061,19 +2084,19 @@ var journey = {
       substeps: [
         { num: 1, title: "Reserva de la unidad",
           description: "Registro de la reserva en Llaima / sistema con monto y vigencia.",
-          kpis: [{value:"TBD",suffix:"%",label:"% reservas que terminan en venta"},{value:"TBD",suffix:"días",label:"Duración promedio de la reserva"},{value:"TBD",suffix:"%",label:"% reservas liberadas por vencimiento"}],
+          kpis: [{value:"—",suffix:"%",label:"% reservas que terminan en venta"},{value:"—",suffix:"días",label:"Duración promedio de la reserva"},{value:"—",suffix:"%",label:"% reservas liberadas por vencimiento"}],
           hallazgos: ["Reservas 'fantasma' que inmovilizan stock (403 uds reservadas hoy)","Sin regla automática de liberación por vencimiento","Sin visibilidad del cliente respecto a su propia reserva"],
           mejoras: ["Liberación automática de reservas a 48h sin avance","Panel del cliente con estado de la reserva y vencimiento","Alerta al asesor antes del vencimiento"]
         },
         { num: 2, title: "Elección del medio de pago",
           description: "El comprador elige entre efectivo, transferencia, crédito automotriz o parte de pago.",
-          kpis: [{value:"TBD",suffix:"%",label:"Mix por medio de pago"},{value:"TBD",suffix:"%",label:"% con crédito automotriz"},{value:"TBD",suffix:"%",label:"% con parte de pago"}],
+          kpis: [{value:"—",suffix:"%",label:"Mix por medio de pago"},{value:"—",suffix:"%",label:"% con crédito automotriz"},{value:"—",suffix:"%",label:"% con parte de pago"}],
           hallazgos: ["Sin mix publicado de medios de pago","Sin integración directa con entidades financieras","Parte de pago requiere tasación del vehículo del comprador -> loop con macro Compra"],
           mejoras: ["Integración con bancos / financieras partner","Workflow específico para parte de pago (tasación express)","Simulador de cuota en la ficha del vehículo"]
         },
         { num: 3, title: "Registro de señal o anticipo",
           description: "Ingreso del pago inicial y formalización en el sistema.",
-          kpis: [{value:"TBD",suffix:"min",label:"Tiempo del proceso de pago"},{value:"TBD",suffix:"%",label:"% pagos digitales vs. presenciales"},{value:"TBD",suffix:"%",label:"% con comprobante entregado al cliente"}],
+          kpis: [{value:"—",suffix:"min",label:"Tiempo del proceso de pago"},{value:"—",suffix:"%",label:"% pagos digitales vs. presenciales"},{value:"—",suffix:"%",label:"% con comprobante entregado al cliente"}],
           hallazgos: ["Sin link de pago digital estándar","Comprobante manual por email / papel","Sin conciliación automática entre pago y reserva"],
           mejoras: ["Link de pago digital con comprobante automático","Conciliación automática entre reserva y pago","Dashboard de pagos pendientes por asesor"]
         }
@@ -2087,14 +2110,14 @@ var journey = {
       substeps: [
         { num: 1, title: "Firma del contrato en plataforma externa",
           description: "El contrato se celebra y almacena en una plataforma fuera del ecosistema de usados, sin integración nativa con Quiter ni con el historial del proceso. El cliente firma, pero la evidencia queda desconectada del ciclo de venta interno.",
-          kpis: [{value:"100",suffix:"%",label:"Firmas en plataforma externa"},{value:"0",suffix:"%",label:"Integración nativa con Quiter"},{value:"TBD",suffix:"min",label:"Tiempo acuerdo -> contrato firmado"}],
+          kpis: [{value:"100",suffix:"%",label:"Firmas en plataforma externa"},{value:"0",suffix:"%",label:"Integración nativa con Quiter"},{value:"—",suffix:"min",label:"Tiempo acuerdo -> contrato firmado"}],
           hallazgos: ["<strong>Firma en plataforma externa:</strong> el contrato se celebra y almacena fuera del ecosistema de usados, sin integración nativa con Quiter ni Autofact","<strong>Pérdida de trazabilidad:</strong> no hay registro unificado del ciclo de venta; el contrato queda desconectado del historial del proceso en Quiter","Sin audit trail consolidado entre contrato firmado, oportunidad comercial y transferencia ejecutada","El cliente recibe evidencia por la plataforma externa, no por un canal oficial de Clicar"],
           mejoras: ["<strong>[TRANSFORMACIONAL]</strong> Integración de la plataforma de firma al ecosistema de usados (Quiter + Autofact) con webhook bidireccional","Unificar el contrato firmado + oportunidad + transferencia en un único registro consultable desde Quiter","Audit trail end-to-end con timestamp de cada evento (generado, enviado, firmado, archivado, transferido)","Entregar copia firmada automáticamente desde Clicar al cliente con branding oficial"],
           chartType: 'firma-hallazgos'
         },
         { num: 2, title: "Verificación Quiter vs Autofact",
           description: "Antes de autorizar cada transferencia, el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas. Es un control crítico pero 100% manual que escala linealmente con el volumen.",
-          kpis: [{value:"100",suffix:"%",label:"Verificación manual diaria"},{value:"1",suffix:"equipo",label:"Trámites concentra el cotejo"},{value:"TBD",suffix:"min",label:"Tiempo promedio por verificación"}],
+          kpis: [{value:"100",suffix:"%",label:"Verificación manual diaria"},{value:"1",suffix:"equipo",label:"Trámites concentra el cotejo"},{value:"—",suffix:"min",label:"Tiempo promedio por verificación"}],
           hallazgos: ["<strong>Verificación manual diaria Quiter vs. Autofact:</strong> el equipo de Trámites coteja manualmente los datos del contrato entre ambas plataformas antes de autorizar cada transferencia","Cuello de botella humano: la capacidad del equipo de Trámites define el throughput diario de transferencias","Riesgo de error humano en cotejos manuales a alto volumen (>55 transferencias/día hábil)","Sin alertas automáticas de discrepancia entre sistemas; se detectan solo cuando alguien las revisa"],
           mejoras: ["Reconciliación automática Quiter ↔ Autofact con motor de reglas (coincidencia RUT + patente + montos)","Workflow con semáforo: verde = autoriza automáticamente · amarillo = revisa Trámites · rojo = bloquea con alerta","Dashboard diario con SLA de cotejo por operador y por discrepancia detectada","Historial estructurado de motivos de discrepancia para retroalimentar el origen del error"]
         },
@@ -2114,19 +2137,19 @@ var journey = {
       substeps: [
         { num: 1, title: "Facturación",
           description: "Emisión de factura y documentos tributarios.",
-          kpis: [{value:"TBD",suffix:"hrs",label:"Tiempo aprobaciones -> factura emitida"},{value:"TBD",suffix:"%",label:"% facturas sin error al primer intento"},{value:"TBD",suffix:"%",label:"% facturas con envío digital"}],
+          kpis: [{value:"—",suffix:"hrs",label:"Tiempo aprobaciones -> factura emitida"},{value:"—",suffix:"%",label:"% facturas sin error al primer intento"},{value:"—",suffix:"%",label:"% facturas con envío digital"}],
           hallazgos: ["Errores frecuentes por datos del cliente digitados manualmente","Envío de factura en papel en algunas sucursales","Sin SLA publicado de emisión"],
           mejoras: ["Prellenado de datos del cliente desde CRM","Envío digital por defecto con copia al correo","SLA formal: factura <2h después de aprobación"]
         },
         { num: 2, title: "Documentación legal y cambio de propiedad",
           description: "Trámite de transferencia en el registro civil y entrega de documentos al comprador.",
-          kpis: [{value:"TBD",suffix:"días",label:"Tiempo factura -> transferencia lista"},{value:"TBD",suffix:"%",label:"% trámites sin observaciones"},{value:"TBD",suffix:"%",label:"% clientes que esperan >7 días"}],
+          kpis: [{value:"—",suffix:"días",label:"Tiempo factura -> transferencia lista"},{value:"—",suffix:"%",label:"% trámites sin observaciones"},{value:"—",suffix:"%",label:"% clientes que esperan >7 días"}],
           hallazgos: ["Trámite presencial con gestor, sujeto a cuellos del Registro Civil","Sin tracking del trámite para el cliente","Documentos físicos que se entregan en una segunda visita"],
           mejoras: ["Uso de canales digitales del Registro Civil cuando aplique","Portal de seguimiento del trámite para el cliente","Courier para entrega de documentos finales"]
         },
         { num: 3, title: "Preparación final y entrega del vehículo",
           description: "Lavado, detailing, revisión final y ceremonia de entrega al comprador.",
-          kpis: [{value:"TBD",suffix:"%",label:"% entregas en fecha comprometida"},{value:"TBD",suffix:"min",label:"Duración ceremonia de entrega"},{value:"TBD",suffix:"",label:"NPS de entrega"}],
+          kpis: [{value:"—",suffix:"%",label:"% entregas en fecha comprometida"},{value:"—",suffix:"min",label:"Duración ceremonia de entrega"},{value:"—",suffix:"",label:"NPS de entrega"}],
           hallazgos: ["Sin protocolo unificado de ceremonia de entrega entre sucursales","Vehículo a veces entregado con detalles menores no resueltos","Sin medición de NPS post-entrega"],
           mejoras: ["Playbook de entrega premium con checklist","Encuesta NPS automática 24h post-entrega","Seguimiento post-venta a 30 / 60 / 90 días"]
         }
@@ -2521,15 +2544,15 @@ var OKRS = {
       krs: [
         { desc: 'Tiempo registro Quiter → llegada física',
           detail: 'Sin métrica publicada hoy. Tramo operacional que define cuándo puede arrancar la preparación efectiva — un SLA formal desbloquea el pipeline aguas abajo.',
-          baseline: 'TBD', target: '<48h',
+          baseline: '—', target: '<48h',
           impacts: 'SLA publicado y medido · Checklist digital de recepción con foto · Integración automática desde sistemas de compras y tasación · Alerta cuando una unidad supera el SLA · Reporte de discrepancias por origen (VPP/B2B/Consignados)' },
         { desc: '% unidades con ubicación correcta en sistema',
           detail: 'Ubicación sistema vs. física puede divergir por movimientos no registrados. Sin auditoría periódica sistemática, se pierde tiempo buscando unidades para fotografía e inspección.',
-          baseline: 'TBD', target: '100%',
+          baseline: '—', target: '100%',
           impacts: 'QR físico por unidad · App móvil para actualizar ubicación en terreno · Auditoría semanal por sucursal · Reglas claras taller vs. vitrina con criterios objetivos · Owner operacional por sucursal' },
         { desc: 'Tiempo llegada → ubicación final (vitrina/taller)',
           detail: 'Entre que llega físicamente el auto y queda ubicado definitivamente pasan horas/días sin trazabilidad. Bloquea fotografía, publicación y disponibilidad real.',
-          baseline: 'TBD', target: '<24h',
+          baseline: '—', target: '<24h',
           impacts: 'Reglas claras taller vs. vitrina · Auditoría semanal · Dashboard de aging por unidad · Trazabilidad del movimiento físico dentro de la sucursal' }
       ] },
     7: { macro: 'preparación', title: 'Etapa 7 · Asignación de Precio de Venta',
@@ -2541,7 +2564,7 @@ var OKRS = {
           impacts: 'Cola de fijación de precio en Llaima antes del traspaso a Quiter · SLA formal <24h desde Quiter · Alerta cuando una unidad lleva >X horas sin precio · Owner asignado por segmento · Reglas paramétricas por modelo + antigüedad + condición' },
         { desc: '% unidades con SLA Quiter → precio cumplido',
           detail: 'No existe SLA publicado hoy. La meta es 100% con visibilidad diaria y escalamiento automático.',
-          baseline: 'TBD', target: '100%',
+          baseline: '—', target: '100%',
           impacts: 'Reglas paramétricas de pricing · Alerta cuando >X horas sin precio · Reporte diario del SLA · Dashboard de cumplimiento por responsable · Revisión mensual de outliers' },
         { desc: '% ajustes de precio con motivo registrado',
           detail: 'Hoy los ajustes se hacen sin registro estructurado, impidiendo feedback loop entre ventas y pricing.',
@@ -2593,7 +2616,7 @@ var OKRS = {
           impacts: 'Ranking interno de sucursales visible · Intervención focalizada semanal en top 5 peores · SLA transitorio por sucursal (máx. 10% sin-foto) · Responsable identificado por sucursal' },
         { desc: 'Permanencia promedio en Tier 4',
           detail: 'No hay SLA explícito para sacar unidades de Tier 3/4. Algunas pueden quedar "olvidadas" por meses sin owner claro.',
-          baseline: 'TBD', target: '<72h',
+          baseline: '—', target: '<72h',
           impacts: 'SLA por tier: Tier 4 máximo 72h · Owner operacional del pipeline visual · Cola priorizada de upgrades con edad máxima visible · Dashboard de aging por tier' }
       ] },
     11: { macro: 'venta', title: 'Etapa 11 · Captación Digital (Venta)',
@@ -2632,16 +2655,16 @@ var OKRS = {
       objective: 'Mover reservas reales a ventas y digitalizar el pago',
       krs: [
         { desc: '% reservas que terminan en venta',
-          detail: 'Data hoy pendiente (TBD). Hipótesis: reservas fantasma inmovilizan stock sin avance real (403 uds reservadas en Preparación).',
-          baseline: 'TBD', target: '>70%',
+          detail: 'Data hoy pendiente. Hipótesis: reservas fantasma inmovilizan stock sin avance real (403 uds reservadas en Preparación).',
+          baseline: '—', target: '>70%',
           impacts: 'Liberación automática de reservas fantasma a 48h sin avance · Panel visible al cliente con estado y vencimiento · Alerta al asesor antes del vencimiento · Separar reservas comerciales activas de fantasma' },
         { desc: '% pagos digitales vs. presenciales',
           detail: 'Hoy sin medición. El pago digital reduce fricción, deja evidencia automática y acelera el cierre.',
-          baseline: 'TBD', target: '80%',
+          baseline: '—', target: '80%',
           impacts: 'Link de pago digital con comprobante automático · Conciliación automática entre reserva y pago · Dashboard de pagos pendientes por asesor · Simulador de cuota en la ficha del vehículo' },
         { desc: 'Tiempo reserva → pago registrado',
           detail: 'Sin medición hoy. El tramo reserva-pago es la bisagra crítica antes del contrato; reducirlo acorta el ciclo de venta.',
-          baseline: 'TBD', target: '<30 min',
+          baseline: '—', target: '<30 min',
           impacts: 'Conciliación automática reserva ↔ pago · Pasos del pago guiados y autocompletados · Integración con bancos/financieras partner · Workflow específico para parte de pago (tasación express del auto del comprador)' }
       ] },
     14: { macro: 'venta', title: 'Etapa 14 · Firma de Contrato',
@@ -2649,11 +2672,11 @@ var OKRS = {
       krs: [
         { desc: '% firmas digitales vs. presenciales',
           detail: 'Hoy firma presencial por defecto, archivo manual en carpetas físicas en algunas sucursales. Digitalizar con DocuSign acelera, da trazabilidad y mejora experiencia del cliente.',
-          baseline: 'TBD', target: '80%',
+          baseline: '—', target: '80%',
           impacts: 'DocuSign por defecto como medio de firma · Archivo automático en CRM con vínculo a la unidad · Entrega inmediata de copia firmada por email · Explicación de cláusulas relevantes en el flujo de firma' },
         { desc: 'Tiempo acuerdo → contrato listo',
           detail: 'Sin medición hoy. Datos del cliente se digitan manualmente en el contrato generando errores y tiempos largos.',
-          baseline: 'TBD', target: '<30 min',
+          baseline: '—', target: '<30 min',
           impacts: 'Prellenado del contrato desde CRM (único source of truth) · Plantilla única versionada centralmente · Audit trail de generación y modificaciones · Envío automático al cliente 24h antes para revisión' },
         { desc: 'Archivo automático en CRM con vínculo a unidad',
           detail: 'Hoy archivo manual y dispar entre sucursales. Sin vínculo automático al CRM se pierde trazabilidad post-venta.',
@@ -2665,15 +2688,15 @@ var OKRS = {
       krs: [
         { desc: '% entregas en fecha comprometida',
           detail: 'Sin medición hoy. Retrasos en transferencia del Registro Civil, documentos físicos entregados en visitas separadas y detalles menores no resueltos afectan la experiencia final.',
-          baseline: 'TBD', target: '95%',
+          baseline: '—', target: '95%',
           impacts: 'Courier de documentos finales · Playbook de entrega premium con checklist · Uso de canales digitales del Registro Civil cuando aplique · Portal de seguimiento del trámite para el cliente · Notificación automática en cada hito' },
         { desc: 'NPS de entrega',
           detail: 'Sin medición sistemática hoy. La entrega es el momento de mayor emocionalidad del cliente y define la recomendación futura.',
-          baseline: 'TBD', target: '>70',
+          baseline: '—', target: '>70',
           impacts: 'Encuesta NPS automática 24h post-entrega · Seguimiento post-venta a 30 / 60 / 90 días · Ceremonia de entrega estandarizada y memorable · Checklist final firmado por el cliente · Kit de bienvenida con asistencia 24/7' },
         { desc: 'Tiempo aprobaciones → factura emitida',
           detail: 'Hoy errores frecuentes por datos digitados manualmente y envío de factura en papel en algunas sucursales. SLA formal acorta el ciclo.',
-          baseline: 'TBD', target: '<2h',
+          baseline: '—', target: '<2h',
           impacts: 'Factura digital por defecto con copia al correo · Prellenado de datos desde CRM · SLA formal: factura <2h post-aprobación · Dashboard de emisión de facturas pendientes · Cero errores en datos del cliente' }
       ] }
   }
@@ -2832,7 +2855,7 @@ function renderOKRsSlide(i) {
     '<div class="okrs-section-title">OKRs por etapa</div>' +
     '<div class="okrs-section-sub">Cada etapa tiene un Objective y 3 Key Results. Cada KR está linkeado a las iniciativas del Roadmap que lo mueven.</div>' +
     stageHtml +
-    '<div class="okrs-legend"><strong>Cómo leer:</strong> Rojo = baseline actual · Verde = meta a 6 meses. La tercera columna nombra las iniciativas del Roadmap que impactan ese KR. KRs con baseline <strong>TBD</strong> requieren levantamiento de data antes de cerrar la meta (se marcan para priorización).</div>' +
+    '<div class="okrs-legend"><strong>Cómo leer:</strong> Rojo = baseline actual · Verde = meta a 6 meses. La tercera columna nombra las iniciativas del Roadmap que impactan ese KR. KRs con baseline <strong>—</strong> están en levantamiento de data.</div>' +
   '</div>';
 }
 
@@ -3373,7 +3396,7 @@ function renderExecSummarySlide(i) {
         '<div class="gov-title">📊 Review de OKRs por eje</div>' +
         '<div class="gov-meta">' +
           '<span class="gov-meta-label">Audiencia</span><span class="gov-meta-value">Líderes de área + Representante Cliente (Felipe Arroyo) + BI</span>' +
-          '<span class="gov-meta-label">Agenda</span><span class="gov-meta-value">Progreso de los 3 KRs por etapa, bloqueos, ajustes de SLA, datos BI pendientes (TBD)</span>' +
+          '<span class="gov-meta-label">Agenda</span><span class="gov-meta-value">Progreso de los 3 KRs por etapa, bloqueos, ajustes de SLA, datos BI pendientes</span>' +
           '<span class="gov-meta-label">Vista</span><span class="gov-meta-value">OKRs & Impacto + etapas específicas</span>' +
         '</div>' +
         '<div class="gov-outputs"><strong>Output:</strong> semáforo verde/ámbar/rojo por KR, tareas escaladas al Steering si están rojas.</div>' +
@@ -3554,52 +3577,106 @@ function renderExecSummarySlide(i) {
       '</ul>' +
     '</section>' +
 
-    // SECCIÓN 2 · Diagnóstico por eje
+    // SECCIÓN 2 · Dolores y Soluciones por Eje
     '<section class="memo-section">' +
-      '<h2 class="memo-h2">1. Diagnóstico por eje</h2>' +
-      '<p class="memo-lead">Estado actual de cada eje del recorrido del cliente, las metas comprometidas a 6 meses y el reporte de respaldo correspondiente.</p>' +
-      '<div class="memo-table-wrap">' +
-        '<table class="memo-table">' +
-          '<thead><tr>' +
-            '<th class="memo-th-eje">Eje</th>' +
-            '<th>Indicadores estratégicos · Hoy → Meta</th>' +
-            '<th>Impacto estimado a 6 meses</th>' +
-            '<th>Análisis de respaldo</th>' +
-          '</tr></thead>' +
-          '<tbody>' + diagRows + '</tbody>' +
-        '</table>' +
-      '</div>' +
-    '</section>' +
-
-    // SECCIÓN 3 · Problemas críticos
-    '<section class="memo-section">' +
-      '<h2 class="memo-h2">2. Problemas críticos identificados</h2>' +
-      '<p class="memo-lead">Los 3 problemas más relevantes de cada eje, ordenados por su impacto en la conversión y el margen. La numeración (1.1, 2.3, etc.) permite referenciarlos en discusión.</p>' +
-      '<div class="memo-problem-grid">' + problemSections + '</div>' +
-    '</section>' +
-
-    // SECCIÓN 4 · Iniciativas estratégicas
-    '<section class="memo-section">' +
-      '<h2 class="memo-h2">3. Iniciativas estratégicas (Plan de Ejecución)</h2>' +
-      '<p class="memo-lead">Las acciones prioritarias que mueven varios indicadores a la vez y/o tienen impacto financiero cuantificado. Son las prioridades del Comité de Dirección.</p>' +
-      '<div class="memo-table-wrap">' +
-        '<table class="memo-table memo-init-table">' +
-          '<thead><tr>' +
-            '<th class="memo-th-num">N°</th>' +
-            '<th>Iniciativa</th>' +
-            '<th>Eje</th>' +
-            '<th>Responsable</th>' +
-            '<th>Impacto</th>' +
-            '<th>Tipo</th>' +
-          '</tr></thead>' +
-          '<tbody>' + initRows + '</tbody>' +
-        '</table>' +
+      '<h2 class="memo-h2">1. Hallazgos y Soluciones por Eje</h2>' +
+      '<p class="memo-lead">Los hallazgos más relevantes detectados en cada eje y las soluciones que los abordan. Las marcadas como <span class="memo-dolor-tag" style="vertical-align: middle;">Transformacional</span> son apuestas que rediseñan el journey, no mejoras incrementales.</p>' +
+      '<div class="memo-dolor-grid">' +
+        // ----------- COMPRA -----------
+        '<div class="memo-dolor-col compra">' +
+          '<div class="memo-dolor-head">' +
+            '<span class="memo-eje-num memo-eje-num-compra">1</span>' +
+            '<div><div class="memo-dolor-eje">Compra</div><div class="memo-dolor-eje-sub">Captación y contactabilidad</div></div>' +
+          '</div>' +
+          '<ol class="memo-dolor-list">' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Baja contactabilidad <strong>(51%)</strong></div>' +
+              '<div class="memo-dolor-fix">Multicanal: <strong>WhatsApp</strong> 1° contacto → llamada (3 intentos) a quienes no respondan → journey de correo automático. Si no reacciona a ninguno, se descarta como no contactado.</div>' +
+              '<span class="memo-dolor-tag">Transformacional</span>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Sin visibilidad del rendimiento de colas</div>' +
+              '<div class="memo-dolor-fix">Reporte operativo de rendimiento de colas por categoría.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Sin seguimiento de la gestión del contact center</div>' +
+              '<div class="memo-dolor-fix">Dashboard con indicadores telefónicos, tiempo de contacto y otros KPIs operativos.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Citas sin confirmación ni recordatorio</div>' +
+              '<div class="memo-dolor-fix">Confirmación y recordatorio automático vía sistema (lugar, fecha, hora y documentos a llevar).</div>' +
+            '</li>' +
+          '</ol>' +
+        '</div>' +
+        // ----------- PREPARACIÓN -----------
+        '<div class="memo-dolor-col preparación">' +
+          '<div class="memo-dolor-head">' +
+            '<span class="memo-eje-num memo-eje-num-preparación">2</span>' +
+            '<div><div class="memo-dolor-eje">Preparación</div><div class="memo-dolor-eje-sub">Inventario y vitrina digital</div></div>' +
+          '</div>' +
+          '<ol class="memo-dolor-list">' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Precios se fijan después del traslado a Quiter</div>' +
+              '<div class="memo-dolor-fix">Crear cola para fijar precios <strong>antes</strong> del traslado a Quiter.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Fotos incompletas en publicaciones</div>' +
+              '<div class="memo-dolor-fix">Foto de publicación con <strong>IA</strong> para asegurar que se publican todas las fotos de cada vehículo comprado.</div>' +
+              '<span class="memo-dolor-tag">Transformacional</span>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Tier 2 y Tier 3 redundantes con la foto IA</div>' +
+              '<div class="memo-dolor-fix">Eliminar Tier 2 y Tier 3: si la foto IA cumple, no se requieren reglas adicionales de publicación ni orden de catálogo.</div>' +
+            '</li>' +
+          '</ol>' +
+        '</div>' +
+        // ----------- VENTA -----------
+        '<div class="memo-dolor-col venta">' +
+          '<div class="memo-dolor-head">' +
+            '<span class="memo-eje-num memo-eje-num-venta">3</span>' +
+            '<div><div class="memo-dolor-eje">Venta</div><div class="memo-dolor-eje-sub">Lead management y cierre comercial</div></div>' +
+          '</div>' +
+          '<ol class="memo-dolor-list">' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Primer contacto sin automatización</div>' +
+              '<div class="memo-dolor-fix">Primer contacto automatizado y operado por agentes.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Cita de venta limitada a algunas sucursales</div>' +
+              '<div class="memo-dolor-fix">Habilitar cita de venta para todas las sucursales de Chile.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Parámetros de temperatura desactualizados</div>' +
+              '<div class="memo-dolor-fix">Redefinir los parámetros de temperatura del lead.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">VPP — solo <strong>8%</strong> se tasa realmente</div>' +
+              '<div class="memo-dolor-fix">Redefinir el proceso de atención para clientes con VPP.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Segmentos de valor sin atención prioritaria — perdemos <strong>+200 clientes/mes</strong></div>' +
+              '<div class="memo-dolor-fix">Atención prioritaria sin fricción para clientes de segmento valor.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Negocios con financiamiento — <strong>95,3% se descarta</strong> (mayor margen)</div>' +
+              '<div class="memo-dolor-fix">Atención prioritaria para leads con financiamiento, segmento que aporta más margen unitario.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Canalidad limitada para reactivar leads</div>' +
+              '<div class="memo-dolor-fix">Combinación de canales (WhatsApp + llamada + correo) para maximizar contactabilidad.</div>' +
+            '</li>' +
+            '<li>' +
+              '<div class="memo-dolor-pain">Crédito simple sin trazabilidad de impacto en margen</div>' +
+              '<div class="memo-dolor-fix">Regular el uso del crédito simple: registrar si afecta al margen y normalizar criterio de aplicación al precio de venta.</div>' +
+            '</li>' +
+          '</ol>' +
+        '</div>' +
       '</div>' +
     '</section>' +
 
     // SECCIÓN 5 · Indicadores de seguimiento
     '<section class="memo-section">' +
-      '<h2 class="memo-h2">4. Indicadores de seguimiento</h2>' +
+      '<h2 class="memo-h2">2. Indicadores de seguimiento</h2>' +
       '<p class="memo-lead">Los 6 indicadores estratégicos que el Comité de Dirección revisa mensualmente. Cada barra muestra el estado actual y el punto de meta a 6 meses.</p>' +
       '<div class="memo-table-wrap">' +
         '<table class="memo-table memo-ind-table">' +
@@ -3616,14 +3693,14 @@ function renderExecSummarySlide(i) {
 
     // SECCIÓN 6 · Equipo
     '<section class="memo-section">' +
-      '<h2 class="memo-h2">5. Equipo de trabajo</h2>' +
+      '<h2 class="memo-h2">3. Equipo de trabajo</h2>' +
       '<p class="memo-lead">Equipos que aportaron data, grabaciones y entrevistas para construir este análisis. Felipe Arroyo (Experiencia de Clientes) acompaña todas las etapas como representante de la voz del cliente.</p>' +
       '<div class="team-grid memo-team-grid">' + teamHtml + '</div>' +
     '</section>' +
 
     // SECCIÓN 7 · Gobernanza
     '<section class="memo-section">' +
-      '<h2 class="memo-h2">6. Reuniones de seguimiento</h2>' +
+      '<h2 class="memo-h2">4. Reuniones de seguimiento</h2>' +
       '<p class="memo-lead">Cuatro instancias con cadencia, audiencia y propósito definidos. Cada una utiliza una vista específica de esta misma presentación.</p>' +
       govHtml +
     '</section>' +
@@ -3831,40 +3908,40 @@ function renderInsightsCx(stageId) {
 // IMPACTO CLIENTE — sub-etapa (legacy, no se usa)
 // ============================================================
 var CLIENTE_POR_SUBSTEP = {
-  "1.1": { kpis: ["Tasa de abandono del formulario (TBD)","Tiempo promedio de completado (TBD)","Campos con mayor fricción reportada (TBD)"], lineamientos: ["Mostrar progreso y campos restantes","Autocompletar a partir de la patente siempre que se pueda","Una duda por vez, no todo junto"] },
-  "1.2": { kpis: ["Tasa de abandono al pedir teléfono (TBD)","NPS del paso de contacto (TBD)","% consentimientos entendidos vs. solo aceptados (TBD)"], lineamientos: ["Explicar por qué pedimos cada dato","Respetar la preferencia de canal del cliente","Nunca enviar SMS que puedan terminar en un tercero"] },
+  "1.1": { kpis: ["Tasa de abandono del formulario","Tiempo promedio de completado","Campos con mayor fricción reportada"], lineamientos: ["Mostrar progreso y campos restantes","Autocompletar a partir de la patente siempre que se pueda","Una duda por vez, no todo junto"] },
+  "1.2": { kpis: ["Tasa de abandono al pedir teléfono","NPS del paso de contacto","% consentimientos entendidos vs. solo aceptados"], lineamientos: ["Explicar por qué pedimos cada dato","Respetar la preferencia de canal del cliente","Nunca enviar SMS que puedan terminar en un tercero"] },
   "1.3": { kpis: ["7.446 completan el resultado verificado / mes","41,5% drop-off post-resultado (no agendan)","38% abandona al ver la tasación","2.944 sesiones con dead clicks convirtieron igual (usuarios altamente comprometidos)"], lineamientos: ["Explicar por qué el precio es un rango y qué factores lo determinan","Diferenciar modalidades por beneficio real, no solo por nombre","CTA 'Agendar' siempre visible y funcional al primer toque","Retargeting para el 38% que abandona sin agendar"] },
   "1.4": { kpis: ["4.358 llegan a agendar inspección / mes","58,5% conversión resultado -> agenda","34% declara interés en financiamiento al agendar"], lineamientos: ["Cambiar 'Formulario de contacto' por 'Agenda tu inspección'","No pedir datos que ya ingresó el usuario","Calendario visual con días disponibles en lugar de dropdowns","Mostrar resumen de selección antes de confirmar"] },
-  "1.5": { kpis: ["Confirmación de la inspección agendada","Momento de mayor compromiso e intención del flujo","% que entiende el próximo paso (TBD)"], lineamientos: ["Pantalla de confirmación memorable con fecha/hora/sucursal destacadas","Checklist claro de documentos que debe llevar","Confirmación automática por WhatsApp y correo con botón de reagendar","CTA alternativo para los que no agendaron"] },
-  "2.1": { kpis: ["Tiempo percibido hasta el primer contacto (TBD)","% satisfacción con la velocidad de respuesta (TBD)"], lineamientos: ["Dar expectativa clara de cuándo lo van a contactar","No dejar el lead 'en cola' silenciosamente"] },
-  "2.2": { kpis: ["15% clientes re-asignados por indisponibilidad","NPS de la primera conversación (TBD)"], lineamientos: ["Evitar cambiar de agente si ya hubo contacto previo","Pasar la ficha completa al agente que toma el lead"] },
-  "2.3": { kpis: ["53% contactabilidad global","21 hrs (CC) tiempo al primer contacto","NPS de la llamada (TBD)"], lineamientos: ["Máximo 3 intentos antes de pasar a canal alternativo","Respetar horario del cliente","Saludar por nombre y referirse a su vehículo"] },
-  "2.4": { kpis: ["9,3% tasa de agendamiento","% claridad del próximo paso post-llamada (TBD)"], lineamientos: ["Dejar el próximo paso por escrito (WhatsApp)","Confirmar fecha y sucursal al cierre de la llamada"] },
-  "3.1": { kpis: ["% cliente informado del código de oportunidad (TBD)","12% leads sin vinculado correcto al origen web"], lineamientos: ["Compartir código de referencia con el cliente","Consolidar un solo ID por cliente sin duplicados"] },
+  "1.5": { kpis: ["Confirmación de la inspección agendada","Momento de mayor compromiso e intención del flujo","% que entiende el próximo paso"], lineamientos: ["Pantalla de confirmación memorable con fecha/hora/sucursal destacadas","Checklist claro de documentos que debe llevar","Confirmación automática por WhatsApp y correo con botón de reagendar","CTA alternativo para los que no agendaron"] },
+  "2.1": { kpis: ["Tiempo percibido hasta el primer contacto","% satisfacción con la velocidad de respuesta"], lineamientos: ["Dar expectativa clara de cuándo lo van a contactar","No dejar el lead 'en cola' silenciosamente"] },
+  "2.2": { kpis: ["15% clientes re-asignados por indisponibilidad","NPS de la primera conversación"], lineamientos: ["Evitar cambiar de agente si ya hubo contacto previo","Pasar la ficha completa al agente que toma el lead"] },
+  "2.3": { kpis: ["53% contactabilidad global","21 hrs (CC) tiempo al primer contacto","NPS de la llamada"], lineamientos: ["Máximo 3 intentos antes de pasar a canal alternativo","Respetar horario del cliente","Saludar por nombre y referirse a su vehículo"] },
+  "2.4": { kpis: ["9,3% tasa de agendamiento","% claridad del próximo paso post-llamada"], lineamientos: ["Dejar el próximo paso por escrito (WhatsApp)","Confirmar fecha y sucursal al cierre de la llamada"] },
+  "3.1": { kpis: ["% cliente informado del código de oportunidad","12% leads sin vinculado correcto al origen web"], lineamientos: ["Compartir código de referencia con el cliente","Consolidar un solo ID por cliente sin duplicados"] },
   "3.2": { kpis: ["18 min tiempo de espera promedio","34% espera >25 min en horario peak","NPS check-in: 67"], lineamientos: ["Mantener al cliente informado si hay demora","Habilitar check-in digital vía QR","Anunciar en pantalla cuando el asesor esté listo"] },
   "3.3": { kpis: ["85% vendedores con documentos completos","22 min tiempo de verificación","15% requiere documentación adicional"], lineamientos: ["Enviar checklist 48h antes vía WhatsApp","No repetir verificaciones ya hechas en web","Aceptar documentos digitales cuando sea posible"] },
   "3.4": { kpis: ["72% tasa de asistencia efectiva","8 min tiempo asignación → contacto","4,2 clientes simultáneos por asesor"], lineamientos: ["Presentar el asesor antes de que el cliente pregunte","Entregar la ficha del lead al asesor con historial web completo"] },
-  "4.1": { kpis: ["45 min tiempo promedio de inspección","% clientes que presencian la inspección (TBD)","Transparencia percibida (TBD)"], lineamientos: ["Invitar al cliente a observar la inspección","Explicar cada hallazgo en lenguaje no técnico","No sorprender con hallazgos al final"] },
-  "4.2": { kpis: ["18 fotos promedio por vehículo","% clientes que reciben el set de fotos (TBD)","Calidad percibida (TBD)"], lineamientos: ["Compartir las fotos con el cliente al cierre","Mostrar cómo se usan las fotos en la inspección"] },
-  "4.3": { kpis: ["15% brecha promedio online vs. oferta final","% clientes que aceptan la brecha (TBD)","Razones desglosadas al cliente (TBD)"], lineamientos: ["Desglosar cada ajuste con evidencia visual","No sorprender con el número final","Ofrecer argumentos comparativos de mercado"] },
+  "4.1": { kpis: ["45 min tiempo promedio de inspección","% clientes que presencian la inspección","Transparencia percibida"], lineamientos: ["Invitar al cliente a observar la inspección","Explicar cada hallazgo en lenguaje no técnico","No sorprender con hallazgos al final"] },
+  "4.2": { kpis: ["18 fotos promedio por vehículo","% clientes que reciben el set de fotos","Calidad percibida"], lineamientos: ["Compartir las fotos con el cliente al cierre","Mostrar cómo se usan las fotos en la inspección"] },
+  "4.3": { kpis: ["15% brecha promedio online vs. oferta final","% clientes que aceptan la brecha","Razones desglosadas al cliente"], lineamientos: ["Desglosar cada ajuste con evidencia visual","No sorprender con el número final","Ofrecer argumentos comparativos de mercado"] },
   "4.4": { kpis: ["35 min tiempo promedio de aprobación","60% de ofertas requieren validación de jefatura","92% tasa de aprobación final"], lineamientos: ["Informar al cliente si la espera será >15 min","Ofrecer café o agua durante la espera","Pre-aprobar dentro de rangos sin hacer esperar al cliente"] },
-  "4.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial (TBD)"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
-  "6.1": { kpis: ["Tiempo adquisición → sistema (TBD)","% unidades con origen trazable al cliente (TBD)"], lineamientos: ["El origen del auto debe ser consultable por el comprador si pregunta","Trazabilidad completa en la ficha pública cuando aplique"] },
-  "6.2": { kpis: ["Tiempo compra → auto físicamente recibido (TBD)","% vendedores informados de la recepción del auto (TBD)"], lineamientos: ["Notificar al vendedor cuando el auto es recibido (transparencia post-venta)","Registrar discrepancias con evidencia para retroalimentar al origen"] },
-  "6.3": { kpis: ["% ubicación correcta cuando el comprador pregunta (TBD)","Tiempo recepción → disponibilidad para visita (TBD)"], lineamientos: ["Mantener la ubicación actualizada en tiempo real","Evitar unidades 'fantasma' entre recepción y publicación"] },
-  "7.1": { kpis: ["17 uds bloqueadas hoy por falta de precio (8,5% de no publicadas)","Tiempo sin precio en vitrina (TBD)"], lineamientos: ["No publicar con placeholder 'precio a consultar'","Si hay rango, explicarlo con argumentos"] },
-  "7.2": { kpis: ["% unidades con ajuste de precio en primeros 30 días (TBD)","% clientes que vieron precio distinto al reservar (TBD)"], lineamientos: ["Respetar el precio cuando hay reserva activa","Comunicar proactivamente cualquier cambio al cliente afectado"] },
-  "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación (TBD)","% fichas con todos los campos completos (TBD)"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
-  "8.2": { kpis: ["200 uds (10,1%) que el cliente no puede ver","166 uds atrapadas 'En acopio' (83%)","Tiempo promedio retenido (TBD)"], lineamientos: ["Destrabar inventario retenido semanalmente","Owner claro por cada motivo de retención"] },
+  "4.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
+  "6.1": { kpis: ["Tiempo adquisición → sistema","% unidades con origen trazable al cliente"], lineamientos: ["El origen del auto debe ser consultable por el comprador si pregunta","Trazabilidad completa en la ficha pública cuando aplique"] },
+  "6.2": { kpis: ["Tiempo compra → auto físicamente recibido","% vendedores informados de la recepción del auto"], lineamientos: ["Notificar al vendedor cuando el auto es recibido (transparencia post-venta)","Registrar discrepancias con evidencia para retroalimentar al origen"] },
+  "6.3": { kpis: ["% ubicación correcta cuando el comprador pregunta","Tiempo recepción → disponibilidad para visita"], lineamientos: ["Mantener la ubicación actualizada en tiempo real","Evitar unidades 'fantasma' entre recepción y publicación"] },
+  "7.1": { kpis: ["17 uds bloqueadas hoy por falta de precio (8,5% de no publicadas)","Tiempo sin precio en vitrina"], lineamientos: ["No publicar con placeholder 'precio a consultar'","Si hay rango, explicarlo con argumentos"] },
+  "7.2": { kpis: ["% unidades con ajuste de precio en primeros 30 días","% clientes que vieron precio distinto al reservar"], lineamientos: ["Respetar el precio cuando hay reserva activa","Comunicar proactivamente cualquier cambio al cliente afectado"] },
+  "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación","% fichas con todos los campos completos"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
+  "8.2": { kpis: ["200 uds (10,1%) que el cliente no puede ver","166 uds atrapadas 'En acopio' (83%)","Tiempo promedio retenido"], lineamientos: ["Destrabar inventario retenido semanalmente","Owner claro por cada motivo de retención"] },
   "8.3": { kpis: ["580 uds (22,5%) no elegibles para publicar","403 reservadas (69% del no disponible)","166 con problema legal"], lineamientos: ["Solo reservar con cliente comprometido","Resolver problemas legales con SLA definido","Evitar reservas fantasma que inmovilizan stock"] },
   "9.1": { kpis: ["204 uds (11,4%) con placeholder 'Estamos preparando esta imagen'","RM concentra 114 de esas 204 uds (55,9%)","~10,1 días promedio entre disponibilidad en sucursal y foto Impel (rango 6,6 VPP Usados → 13,7 VPP Nuevos)"], lineamientos: ["Toda unidad publicada debe tener foto en <72h","Priorizar stock premium y de alto ticket"] },
   "9.2": { kpis: ["1.211 uds con foto Impel (67,7% del publicado)","579 uds publicadas sin Impel lista (32,3%)","Sur lidera con 74,8% / RM peor con 65,3%"], lineamientos: ["Fondo limpio es el mínimo aceptable para publicar","Automatizar entrega al sitio web ni bien Impel esté listo"] },
-  "9.3": { kpis: ["% en cabina virtual 360 (TBD - BI no separa Tier 1 de Tier 2)","Techo teórico actual: 1.211 uds","Diferencial de conversión vs. foto estándar (TBD)"], lineamientos: ["Priorizar segmento lujo en las primeras semanas","Plan de escalamiento con hitos semanales publicados"] },
+  "9.3": { kpis: ["% en cabina virtual 360 (BI no separa Tier 1 de Tier 2 aún)","Techo teórico actual: 1.211 uds","Diferencial de conversión vs. foto estándar"], lineamientos: ["Priorizar segmento lujo en las primeras semanas","Plan de escalamiento con hitos semanales publicados"] },
   "9.4": { kpis: ["579 uds en backlog visible (32,3% del publicado)","375 con foto de inspección que ensucia la vitrina","204 sin ninguna foto (placeholder)"], lineamientos: ["SLA máximo 72h para upgrade o despublicar","Backlog visible con owner asignado por zona"] },
   "10.1": { kpis: ["Mix 67,7% Impel / 20,9% Inspección / 11,4% Sin foto","Target: >80% en Tier 1+2","Target: <5% en Tier 4"], lineamientos: ["Top del catálogo debe ser 100% Tier 1+2","Reportar el mix de tiers semanalmente con tendencia"] },
-  "10.2": { kpis: ["Días en stock Tier 4 vs. Tier 1 (TBD)","Conversión relativa por tier (TBD)","CTR de ficha por tier (TBD)"], lineamientos: ["Invertir donde haya retorno cuantitativo demostrado","Business case con data antes de escalar capacidad"] },
+  "10.2": { kpis: ["Días en stock Tier 4 vs. Tier 1","Conversión relativa por tier","CTR de ficha por tier"], lineamientos: ["Invertir donde haya retorno cuantitativo demostrado","Business case con data antes de escalar capacidad"] },
   "10.3": { kpis: ["Peor sucursal: Concepción J. Alessandri R. 1885 (51,5% sin foto)","2da peor: Vitacura Padre Hurtado 1246 (48,4%)","Top 3 peores = 43 uds sin foto (21% del total)"], lineamientos: ["Intervención focalizada semanal en top 5 peores sucursales","Ranking público interno para presión social positiva"] },
-  "10.4": { kpis: ["Permanencia promedio en Tier 3 (TBD)","Permanencia promedio en Tier 4 (TBD)","% upgrades efectivos por semana (TBD)"], lineamientos: ["SLA máximo por tier: Tier 4 en 72h máximo","Owner operacional claro del pipeline visual"] },
+  "10.4": { kpis: ["Permanencia promedio en Tier 3","Permanencia promedio en Tier 4","% upgrades efectivos por semana"], lineamientos: ["SLA máximo por tier: Tier 4 en 72h máximo","Owner operacional claro del pipeline visual"] },
   "11.1": { kpis: ["136.334 sesiones totales (30 días)","85,7% tráfico mobile (106.867 ses.)","58,4% bounce rate — más de la mitad abandona sin interactuar","3:07 min duración promedio por sesión"], lineamientos: ["Diseño mobile-first real: 85,7% del tráfico decide desde el móvil","La narrativa debe responder a las 4 etapas del viaje del comprador (categoría → modelo → precio → confianza)","El freno principal es la confianza, no el precio — priorizar testimonios, garantías y transparencia"] },
   "11.2": { kpis: ["62.955 sesiones del catálogo (30 días)","56% rebota en pág. 1 sin ver ningún auto","41% llegan a ficha desde catálogo","2.749 clics en botón filtros (solo 4,4% de sesiones)","273K dead clicks mensuales en banners no clicables"], lineamientos: ["Listado ordenado por calidad visual: autos sin foto al final","Filtros y buscador visibles — el usuario quiere refinar","Cero dead clicks: banner clicable o banner eliminado","Si el filtro no tiene stock, sugerir alternativas en vez de mostrar vacío"] },
   "11.3": { kpis: ["21.872 sesiones en ficha (30 días)","4:30 min tiempo promedio en página","17,3% de sesiones con dead click (3.792)","56,1% quickback rate (abandono rápido)","74.943 dead clicks mensuales por falta de swipe/zoom"], lineamientos: ["El carrusel de fotos debe responder a gestos táctiles (swipe + zoom)","Indicador visual 'Desliza para ver más fotos' en mobile","Marca de agua 'Foto en proceso' para autos con foto de inspección, gestionar expectativa visual"] },
@@ -3873,15 +3950,15 @@ var CLIENTE_POR_SUBSTEP = {
   "12.2": { kpis: ["Leads 'Caliente' se descartan +13pp más que 'Frío'","Conversión Caliente 3,9% vs. Frío 4,6% (promedio)","Tibio en Feb 26 convirtió 12,3% — señal no aprovechada"], lineamientos: ["No priorizar por 'temperatura' hasta validar que correlaciona con conversión real","Criterio único de temperatura entre sucursales, revisado trimestralmente","Scoring basado en comportamiento observado, no en intuición del asesor"] },
   "12.3": { kpis: ["+7pp descarte con VPP vs. sin VPP","641 Oro + VIP con VPP descartados (6 meses)","4,0% conversión cuando avanzan vs. 3,3% sin VPP"], lineamientos: ["Bloquear descarte automático de leads Oro/VIP + VPP sin revisión","SLA de contacto más agresivo para clientes con VPP","Reporte visible por sucursal del % Premium descartados"] },
   "12.4": { kpis: ["95,3% descarte con financiamiento (promedio)","-10pp vs. sin financiamiento","22.364 'No contesta' (31% del total)","8.613 'Descarte masivo' (12%, distorsiona métricas)"], lineamientos: ["Pre-evaluación crediticia ANTES de ingresar el lead al CRM","Motivo obligatorio y específico al descartar — eliminar 'Descarte masivo'","Validar teléfono y email al ingreso para reducir 'No contesta'"] },
-  "13.1": { kpis: ["% reservas que terminan en venta (TBD)","Duración promedio de la reserva (TBD)","% reservas liberadas por vencimiento (TBD)"], lineamientos: ["Dejar clara la vigencia de la reserva al cliente","Avisar antes del vencimiento","No reservar sin compromiso real del comprador"] },
-  "13.2": { kpis: ["Mix por medio de pago (TBD)","% con crédito automotriz (TBD)","% con parte de pago (TBD)"], lineamientos: ["Mostrar simulador de cuota en la ficha","Ser transparente con tasas y costos financieros","Explicar el flujo de parte de pago antes de iniciarlo"] },
-  "13.3": { kpis: ["Tiempo del proceso de pago (TBD)","% pagos digitales (TBD)","% con comprobante entregado (TBD)"], lineamientos: ["Link de pago digital por defecto","Comprobante automático al correo al momento del pago","Nunca pedir datos sensibles por canales no seguros"] },
-  "14.1": { kpis: ["Tiempo acuerdo -> contrato listo (TBD)","% contratos sin error (TBD)"], lineamientos: ["Prellenar datos desde CRM para minimizar errores","Usar una única plantilla versionada","Mostrar al cliente un resumen claro de condiciones"] },
-  "14.2": { kpis: ["Tiempo de revisión (TBD)","% contratos modificados en revisión (TBD)"], lineamientos: ["Enviar el contrato 24h antes para revisión tranquila","Registrar dudas frecuentes y resolverlas proactivamente","Respetar el tiempo del cliente para revisar"] },
-  "14.3": { kpis: ["% firmas digitales vs. presenciales (TBD)","Duración ceremonia de firma (TBD)"], lineamientos: ["Firma digital por defecto (más rápido y trazable)","Copia firmada al correo del cliente al instante","Explicar cada cláusula relevante al momento de firmar"] },
-  "15.1": { kpis: ["Tiempo aprobaciones -> factura (TBD)","% facturas sin error (TBD)","% envío digital (TBD)"], lineamientos: ["Factura digital por defecto con copia al correo","Cero errores en datos del cliente (pre-llenado desde CRM)","SLA: factura en <2h después de aprobación"] },
-  "15.2": { kpis: ["Tiempo factura -> transferencia lista (TBD)","% trámites sin observaciones (TBD)"], lineamientos: ["Tracking del trámite visible para el comprador","Courier de documentos finales cuando aplique","Canales digitales del Registro Civil preferidos"] },
-  "15.3": { kpis: ["% entregas en fecha comprometida (TBD)","NPS de entrega (TBD)","Duración ceremonia de entrega (TBD)"], lineamientos: ["Ceremonia de entrega estandarizada y memorable","Checklist final que el cliente firma como conforme","Encuesta NPS automática 24h después","Seguimiento post-venta a 30 / 60 / 90 días"] }
+  "13.1": { kpis: ["% reservas que terminan en venta","Duración promedio de la reserva","% reservas liberadas por vencimiento"], lineamientos: ["Dejar clara la vigencia de la reserva al cliente","Avisar antes del vencimiento","No reservar sin compromiso real del comprador"] },
+  "13.2": { kpis: ["Mix por medio de pago","% con crédito automotriz","% con parte de pago"], lineamientos: ["Mostrar simulador de cuota en la ficha","Ser transparente con tasas y costos financieros","Explicar el flujo de parte de pago antes de iniciarlo"] },
+  "13.3": { kpis: ["Tiempo del proceso de pago","% pagos digitales","% con comprobante entregado"], lineamientos: ["Link de pago digital por defecto","Comprobante automático al correo al momento del pago","Nunca pedir datos sensibles por canales no seguros"] },
+  "14.1": { kpis: ["Tiempo acuerdo -> contrato listo","% contratos sin error"], lineamientos: ["Prellenar datos desde CRM para minimizar errores","Usar una única plantilla versionada","Mostrar al cliente un resumen claro de condiciones"] },
+  "14.2": { kpis: ["Tiempo de revisión","% contratos modificados en revisión"], lineamientos: ["Enviar el contrato 24h antes para revisión tranquila","Registrar dudas frecuentes y resolverlas proactivamente","Respetar el tiempo del cliente para revisar"] },
+  "14.3": { kpis: ["% firmas digitales vs. presenciales","Duración ceremonia de firma"], lineamientos: ["Firma digital por defecto (más rápido y trazable)","Copia firmada al correo del cliente al instante","Explicar cada cláusula relevante al momento de firmar"] },
+  "15.1": { kpis: ["Tiempo aprobaciones -> factura","% facturas sin error","% envío digital"], lineamientos: ["Factura digital por defecto con copia al correo","Cero errores en datos del cliente (pre-llenado desde CRM)","SLA: factura en <2h después de aprobación"] },
+  "15.2": { kpis: ["Tiempo factura -> transferencia lista","% trámites sin observaciones"], lineamientos: ["Tracking del trámite visible para el comprador","Courier de documentos finales cuando aplique","Canales digitales del Registro Civil preferidos"] },
+  "15.3": { kpis: ["% entregas en fecha comprometida","NPS de entrega","Duración ceremonia de entrega"], lineamientos: ["Ceremonia de entrega estandarizada y memorable","Checklist final que el cliente firma como conforme","Encuesta NPS automática 24h después","Seguimiento post-venta a 30 / 60 / 90 días"] }
 };
 
 function renderClienteChip(stageId, subNum) {
@@ -4030,7 +4107,7 @@ var MACRO_META = {
     periodoLabel: "Tipo de data",
     periodoSub: "Estado actual del stock (no evolutivo)",
     periodoSubClass: "",
-    note: "Esta macro tiene data parcial: inventario actual y embudo de publicabilidad con cifras reales. Los KPIs de pipeline de foto (throughput, cabina virtual 360, backlog) siguen como TBD hasta integrar data desde BI y Operaciones."
+    note: "Esta macro tiene data parcial: inventario actual y embudo de publicabilidad con cifras reales. Los KPIs de pipeline de foto (throughput, cabina virtual 360, backlog) están en levantamiento con BI y Operaciones."
   },
   venta: {
     num: 3,
@@ -5611,7 +5688,7 @@ function renderHomeSlide(i) {
       '<div class="alcance-block-title">Ejes del journey</div>' +
       '<div class="alcance-block-sub">Click en una macro para abrir su análisis.</div>' +
       '<div class="macro-cards">' + cardsHtml + '</div>' +
-      '<div class="home-footer-note">Compra usa data real del CRM Llaima (158.753 leads, Oct 25 - Mar 26). Preparación está en levantamiento y muestra KPIs como TBD hasta integrar data desde BI y Operaciones. Venta aún no está mapeada.</div>' +
+      '<div class="home-footer-note">Compra usa data real del CRM Llaima (158.753 leads, Oct 25 - Mar 26). Preparación está en levantamiento de KPIs operativos con BI y Operaciones. Venta en proceso de mapeo.</div>' +
     '</div>' +
   '</div>';
 }
