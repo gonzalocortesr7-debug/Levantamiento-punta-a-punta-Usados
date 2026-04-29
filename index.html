@@ -2071,7 +2071,7 @@ var journey = {
             "El filtro devuelve 0 resultados en algunas combinaciones sin stock disponible, sin sugerencias alternativas."
           ],
           mejoras: [
-            "<strong>Mayor visibilidad del buscador dentro del catálogo</strong> — los usuarios ya lo usan para refinar (patrón validado en SAIS vía GTM).",
+            "<strong>Mayor visibilidad del buscador dentro del catálogo</strong> — los usuarios ya lo usan para refinar (patrón validado en Autos Usados vía GTM).",
             "<strong>Mayor visibilidad del botón de filtro</strong> y optimización para evitar combinaciones sin stock.",
             "Sugerir alternativas cuando el filtro devuelve 0 resultados (stock cercano, misma categoría, rango de precio vecino).",
             "Hacer clicables o eliminar los banners corporativos que generan 273K dead clicks mensuales.",
@@ -2343,7 +2343,7 @@ var ROADMAP = [
     description: "Dead click identificado en el botón 'Mes anterior' del calendario del paso 4 del flujo de cotización. 3.198 dead clicks mensuales atribuidos a este componente. Fix directo de UI.",
     macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Rediseñar filtros y visibilidad del buscador en catálogo",
-    description: "Hoy solo 4,4% de las sesiones del catálogo usan los filtros (2.749 clics / mes sobre 62.955 sesiones) y 30% del uso del buscador de texto del sitio se origina en el catálogo — señal de que los usuarios quieren refinar pero no ven las herramientas. Subir la visibilidad del buscador (patrón validado en SAIS vía GTM) + optimizar filtros para evitar combinaciones sin stock.",
+    description: "Hoy solo 4,4% de las sesiones del catálogo usan los filtros (2.749 clics / mes sobre 62.955 sesiones) y 30% del uso del buscador de texto del sitio se origina en el catálogo — señal de que los usuarios quieren refinar pero no ven las herramientas. Subir la visibilidad del buscador (patrón validado en Autos Usados vía GTM) + optimizar filtros para evitar combinaciones sin stock.",
     macro: "venta", stage: "Captación Digital", substep: "Catálogo — /vehiculos/usado", priority: "alta", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Marca de agua 'Foto en proceso' en catálogo para autos sin fotografía formal",
     description: "Mientras la foto formal no esté lista, mostrar marca de agua 'Foto en proceso' sobre la foto de inspección para gestionar la expectativa visual del usuario y no degradar la percepción de calidad del catálogo.",
@@ -2745,7 +2745,7 @@ var OKRS = {
         { desc: 'Bounce rate del Home',
           detail: '58,4% de las sesiones abandona sin interactuar. Tráfico muy concentrado en mobile (85,7%) y alta dependencia de paid (Ads Meta 36% + Google Paid 20%).',
           baseline: '58,4%', target: '40%',
-          impacts: 'Diseño mobile-first real (85,7% del tráfico) · Hero centrado en confianza (testimonios, garantías, reviews) · Diversificar tráfico bajando dependencia de Ads Meta · A/B de propuesta de valor + atajos a catálogo · Mayor visibilidad del buscador dentro del catálogo (patrón SAIS validado vía GTM)' }
+          impacts: 'Diseño mobile-first real (85,7% del tráfico) · Hero centrado en confianza (testimonios, garantías, reviews) · Diversificar tráfico bajando dependencia de Ads Meta · A/B de propuesta de valor + atajos a catálogo · Mayor visibilidad del buscador dentro del catálogo (patrón Autos Usados validado vía GTM)' }
       ] },
     12: { macro: 'venta', title: 'Etapa 12 · Gestión de Leads (Venta)',
       objective: 'Reducir descarte y recuperar clientes premium',
@@ -4333,11 +4333,11 @@ var BENCHMARK_POR_SUBSTEP = {
     oportunidades: [
       "El <strong>patrón de mayor visibilidad del buscador dentro del catálogo</strong> ya fue validado en Autos Usados vía Google Tag Manager — subió el refinamiento de búsqueda sin campañas adicionales.",
       "En Clicar hoy solo 4,4% de las sesiones del catálogo usan el botón de filtros (2.749 clics / mes), pero el 30% del uso del buscador de texto del sitio se origina dentro del catálogo: existe intención de refinar que no se traduce en uso porque el control no está visible.",
-      "SAIS no publica autos sin foto formal ni deja combinaciones de filtro en cero resultados — ambas prácticas todavía ocurren en Clicar."
+      "Autos Usados no publica autos sin foto formal ni deja combinaciones de filtro en cero resultados — ambas prácticas todavía ocurren en Clicar."
     ],
     oportunidades: [
-      "Replicar el patrón SAIS de buscador visible dentro del catálogo — implementación de bajo costo vía GTM con resultado ya validado en la red.",
-      "Extender la lógica SAIS de 'no combinación cero' (sugerencias alternativas cuando no hay stock) al catálogo de Clicar.",
+      "Replicar el patrón Autos Usados de buscador visible dentro del catálogo — implementación de bajo costo vía GTM con resultado ya validado en la red.",
+      "Extender la lógica Autos Usados de 'no combinación cero' (sugerencias alternativas cuando no hay stock) al catálogo de Clicar.",
       "Benchmark externo (Kavak / Salfa / Gildemeister) pendiente de levantar — confirmar si sus catálogos resuelven la visibilidad del filtro y el tratamiento de autos sin foto."
     ]
   },
