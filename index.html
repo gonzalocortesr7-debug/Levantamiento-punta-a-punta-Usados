@@ -2358,7 +2358,7 @@ var ROADMAP = [
     description: "Los datos se capturan a partir del paso 1, pero el flujo acumula preguntas adicionales que fatigan al usuario y aumentan el abandono. Dejar solo información relevante para acelerar la experiencia y subir la conversión ficha → cotización (hoy 3,9%).",
     macro: "venta", stage: "Captación Digital", substep: "Cotización — /buy-process", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Proteger clientes Oro y VIP con VPP de descarte automático",
-    description: "641 clientes premium (Oro + VIP) con VPP fueron descartados en 6 meses (Salazar-Israel · Oct 25 – Mar 26), con Enero 26 como peor mes (280 perdidos). Bloquear el descarte automático de leads Oro/VIP con VPP sin revisión de supervisor recupera clientes de alto margen y convierte mejor (4,0% vs. 3,3%) cuando avanzan.",
+    description: "641 clientes premium (Oro + VIP) con VPP fueron descartados en 6 meses (Autos Usados · Oct 25 – Mar 26), con Enero 26 como peor mes (280 perdidos). Bloquear el descarte automático de leads Oro/VIP con VPP sin revisión de supervisor recupera clientes de alto margen y convierte mejor (4,0% vs. 3,3%) cuando avanzan.",
     macro: "venta", stage: "Gestión de Leads", substep: "VPP y segmentos de valor", priority: "alta", transformational: true, responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" },
   { iniciativa: "Flujo diferenciado para leads con financiamiento",
     description: "El segmento de mayor margen tiene la peor tasa de gestión: 95,3% de descarte — 10pp más que sin financiamiento. Una pre-evaluación crediticia antes del ingreso al CRM + un SLA de contacto más agresivo en este segmento desbloquea leads de mayor ticket.",
@@ -2578,7 +2578,7 @@ var OKRS = {
     { macro: 'venta', label: 'Eje Venta',
       metric: 'Tasa de descarte del pool de leads',
       baseline: '77,7%', target: '60%', unit: 'de leads descartados',
-      source: 'Salazar-Israel · 72.113 de 92.843 leads descartados (6 meses)' }
+      source: 'Autos Usados · 72.113 de 92.843 leads descartados (6 meses)' }
   ],
   transformacionales: [
     { title: 'Generar la foto final durante la inspección mecánica (in-house)',
@@ -2589,7 +2589,7 @@ var OKRS = {
     { title: 'Proteger clientes Oro/VIP con VPP de descarte automático',
       macro: 'venta',
       kr: '<strong>641 clientes Oro+VIP con VPP descartados / 6 meses → 0</strong> · Conversión con VPP: 3,3% → 4,0%',
-      savings: 'Data Salazar-Israel · ventas premium recuperables',
+      savings: 'Data Autos Usados · ventas premium recuperables',
       owner: 'Por asignar · Lead Management Usados' },
     { title: 'Habilitar swipe/zoom mobile en ficha + reducir fricción del buy-process',
       macro: 'venta',
@@ -2750,12 +2750,12 @@ var OKRS = {
     12: { macro: 'venta', title: 'Etapa 12 · Gestión de Leads (Venta)',
       objective: 'Reducir descarte y recuperar clientes premium',
       krs: [
-        { desc: 'Tasa de descarte global (Salazar-Israel)',
+        { desc: 'Tasa de descarte global (Autos Usados)',
           detail: '77,7% del pool se descarta (72.113 de 92.843 leads en 6 meses). "No contesta" 31% y "Descarte masivo" 12% dominan.',
           baseline: '77,7%', target: '60%',
           impacts: 'Cadencia multi-canal automatizada (llamada → WhatsApp) · Scoring de leads (no FIFO) · Eliminar "Descarte masivo" como motivo válido · Validación de teléfono/email al ingreso al CRM · Replicar condiciones de marzo 26 (mejor mes, 8,8% conversión SQL)' },
         { desc: 'Oro + VIP con VPP descartados (6 meses)',
-          detail: '641 clientes premium perdidos en 6 meses (data Salazar-Israel). Con VPP se descarta +7pp más, pero cuando avanzan convierten mejor (4,0% vs. 3,3%).',
+          detail: '641 clientes premium perdidos en 6 meses (data Autos Usados). Con VPP se descarta +7pp más, pero cuando avanzan convierten mejor (4,0% vs. 3,3%).',
           baseline: '641', target: '0',
           impacts: 'Bloqueo de descarte automático de leads Oro/VIP + VPP sin revisión de supervisor · Flujo diferenciado con SLA de contacto más agresivo · Tagging automático "Premium con VPP" visible al asesor · Reporte semanal por sucursal del % Premium descartados' },
         { desc: 'Descarte en segmento con financiamiento',
@@ -2848,7 +2848,7 @@ function renderOKRsSlide(i) {
         '<span>Mismo inventario base (2.714 uds)</span>' +
         '<span>Mejoras solo en conversión y gestión — no en captación nueva</span>' +
         '<span>Margen promedio por auto $1.200.000 (validar con Pricing)</span>' +
-        '<span>Referencia: 19.150 leads/mes compra · 136.334 visitas/mes venta · 6m Salazar-Israel</span>' +
+        '<span>Referencia: 19.150 leads/mes compra · 136.334 visitas/mes venta · 6m Autos Usados</span>' +
       '</div>' +
     '</div>' +
     '<div class="impact-grid">' +
@@ -2990,7 +2990,7 @@ function renderOKRsSlide(i) {
     '<div class="okrs-hero">' +
       '<div class="eyebrow">Vista directorio · Objetivos, Metas e Impacto</div>' +
       '<h1>Objetivos y Metas — Journey Vehículos Usados</h1>' +
-      '<p>Seguimiento de los indicadores estratégicos por eje. Los baselines vienen de data real (CRM Llaima, BI, Clarity, Salazar-Israel) y las metas son propuestas a 6 meses — ajustables con los dueños de cada área.</p>' +
+      '<p>Seguimiento de los indicadores estratégicos por eje. Los baselines vienen de data real (CRM Llaima, BI, Clarity, Autos Usados) y las metas son propuestas a 6 meses — ajustables con los dueños de cada área.</p>' +
     '</div>' +
     '<div class="okrs-section-title">Indicadores guía</div>' +
     '<div class="okrs-section-sub">La métrica principal de cada eje. Si sube, todo lo demás está funcionando.</div>' +
@@ -3122,7 +3122,7 @@ var EJE_CLUSTERS = {
   venta: {
     northStars: [
       { metric: 'Conversión Lead → Venta (end-to-end)', baseline: '4,1%', target: '8%',
-        sub: '3.838 ventas de 92.843 leads · 6 meses Salazar-Israel · mejor mes: 8,8% (Mar 2026)' },
+        sub: '3.838 ventas de 92.843 leads · 6 meses Autos Usados · mejor mes: 8,8% (Mar 2026)' },
       { metric: 'Tasa Traffic → Cotización web', baseline: '0,63%', target: '1,5%',
         sub: '862 cotizaciones / mes de 136.334 sesiones · meta: 2.000 cot/mes' }
     ],
@@ -3373,7 +3373,7 @@ function renderExecSummarySlide(i) {
           '<div class="eje-card-stat"><div class="eje-card-stat-value">17</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
         '</div>' +
         '<div class="eje-card-scope">Captación Digital · Gestión de Leads · Reserva y Medios de Pago · Firma de Contrato · Facturación y Entrega</div>' +
-        '<div class="eje-card-source">Microsoft Clarity (30 días) + Salazar-Israel · 92.843 leads Oct 25 – Mar 26</div>' +
+        '<div class="eje-card-source">Microsoft Clarity (30 días) + Autos Usados · 92.843 leads Oct 25 – Mar 26</div>' +
       '</div>' +
     '</div>' +
     '<div class="okr-closing">' +
@@ -3788,7 +3788,7 @@ function renderExecSummarySlide(i) {
         '</div>' +
         '<div class="deck-timing-card venta">' +
           '<div class="deck-timing-eje">Eje Venta</div>' +
-          '<div class="deck-timing-data">Salazar-Israel · 92.843 leads<br/>Oct 2025 – Mar 2026</div>' +
+          '<div class="deck-timing-data">Autos Usados · 92.843 leads<br/>Oct 2025 – Mar 2026</div>' +
           '<span class="deck-timing-badge curso">En levantamiento</span>' +
         '</div>' +
       '</div>' +
@@ -4329,9 +4329,9 @@ var BENCHMARK_POR_SUBSTEP = {
     ]
   },
   "11.2": {
-    referentes: "Salazar-Israel (SAIS) · benchmark interno Americar · GTM",
+    referentes: "Autos Usados · benchmark interno Americar · GTM",
     oportunidades: [
-      "El <strong>patrón de mayor visibilidad del buscador dentro del catálogo</strong> ya fue validado en Salazar-Israel (SAIS) vía Google Tag Manager — subió el refinamiento de búsqueda sin campañas adicionales.",
+      "El <strong>patrón de mayor visibilidad del buscador dentro del catálogo</strong> ya fue validado en Autos Usados vía Google Tag Manager — subió el refinamiento de búsqueda sin campañas adicionales.",
       "En Clicar hoy solo 4,4% de las sesiones del catálogo usan el botón de filtros (2.749 clics / mes), pero el 30% del uso del buscador de texto del sitio se origina dentro del catálogo: existe intención de refinar que no se traduce en uso porque el control no está visible.",
       "SAIS no publica autos sin foto formal ni deja combinaciones de filtro en cero resultados — ambas prácticas todavía ocurren en Clicar."
     ],
@@ -4407,18 +4407,18 @@ var MACRO_META = {
   venta: {
     num: 3,
     title: "Venta",
-    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Análisis apoyado en data real de Salazar-Israel (92.843 leads) y Microsoft Clarity.",
+    description: "Recorrido del cliente comprador desde que descubre una unidad en clicar.cl hasta la entrega física. Cubre captación digital, gestión de leads, reserva y medios de pago, firma de contrato y facturación + entrega. Análisis apoyado en data real de Autos Usados (92.843 leads) y Microsoft Clarity.",
     shortDescription: "Captación digital, gestión de leads, reserva y medios de pago, firma de contrato, facturación y entrega.",
     status: { text: "Data real - Oct 2025 a Mar 2026", variant: "real" },
     disabled: false,
     universoValue: "92.843",
     universoValueClass: "",
     universoLabel: "Leads analizados",
-    universoSub: "Data Salazar-Israel · 6 meses", universoSubClass: "",
+    universoSub: "Data Autos Usados · 6 meses", universoSubClass: "",
     periodoValue: "6 meses",
     periodoValueClass: "",
     periodoLabel: "Periodo", periodoSub: "Oct 2025 - Mar 2026 (cerrado)", periodoSubClass: "",
-    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Data real integrada para Captación Digital (Clarity) y Gestión de Leads (Salazar-Israel 92.843 leads). Reserva, Firma y Facturación con data parcial, pendiente de ampliar."
+    note: "Estructura de sub-etapas levantada (5 sub-etapas, 15 subprocesos). Data real integrada para Captación Digital (Clarity) y Gestión de Leads (Autos Usados 92.843 leads). Reserva, Firma y Facturación con data parcial, pendiente de ampliar."
   }
 };
 var currentMacro = "compra";
@@ -4777,7 +4777,7 @@ function renderVtaFunnelSection(slideIdx) {
 }
 
 // ============================================================
-// VENTA - GESTIÓN DE LEADS · Data real Salazar-Israel
+// VENTA - GESTIÓN DE LEADS · Data real Autos Usados
 // Oct 2025 – Mar 2026 · 92.843 leads
 // ============================================================
 var VTA_LEADS_MESES = ['Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
