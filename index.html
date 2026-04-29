@@ -1317,8 +1317,16 @@
   .north-star-source { font-size: 10px; color: var(--gray-500); border-top: 1px solid var(--gray-200); padding-top: 6px; }
   .ns-bar { height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
   .ns-bar-fill { height: 100%; background: linear-gradient(90deg, #B3261E 0%, #EF9F27 50%, #1D9E75 100%); border-radius: 3px; }
-  .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .impact-grid { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; gap: 6px; align-items: stretch; }
+  .impact-arrow { display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; color: #6B7280; line-height: 1; position: relative; }
+  .impact-arrow::after { content: ""; position: absolute; top: 12%; bottom: 12%; left: 50%; width: 1px; background: repeating-linear-gradient(to bottom, #CBD5E1 0, #CBD5E1 3px, transparent 3px, transparent 7px); transform: translateX(-50%); z-index: 0; }
+  .impact-arrow-icon { position: relative; z-index: 1; background: var(--white); padding: 4px 2px; }
+  .impact-arrow-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + 30px)); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #6B7280; white-space: nowrap; background: var(--white); padding: 2px 6px; border: 1px solid var(--gray-200); border-radius: 3px; z-index: 1; }
   .impact-card { background: linear-gradient(180deg, var(--white) 0%, var(--gray-50) 100%); border: 1px solid var(--gray-200); border-top: 4px solid var(--navy); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+  .impact-card-role { font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); padding: 3px 8px; border-radius: 3px; align-self: flex-start; }
+  .impact-card.compra .impact-card-role { background: #0F6FC6; }
+  .impact-card.preparación .impact-card-role { background: #EF9F27; }
+  .impact-card.venta .impact-card-role { background: #1D9E75; }
   .impact-card.compra { border-top-color: #0F6FC6; }
   .impact-card.preparación { border-top-color: #EF9F27; }
   .impact-card.venta { border-top-color: #1D9E75; }
@@ -1345,6 +1353,8 @@
   .impact-totalizer-sub { font-size: 11px; opacity: 0.85; line-height: 1.4; }
   @media (max-width: 900px) {
     .impact-grid { grid-template-columns: 1fr; }
+    .impact-arrow { transform: rotate(90deg); height: 28px; }
+    .impact-arrow-label { transform: rotate(-90deg) translate(-50%, calc(-50% + 30px)); }
     .impact-totalizer { grid-template-columns: 1fr; text-align: left; }
   }
   .trans-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -2754,24 +2764,24 @@ var OKRS = {
       krs: [
         { desc: 'Tasa de descarte global (Autos Usados)',
           detail: '77,7% del pool se descarta (72.113 de 92.843 leads en 6 meses). "No contesta" 31% y "Descarte masivo" 12% dominan.',
-          baseline: '77,7%', target: '60%',
+          baseline: '77,7%', target: '65%',
           impacts: 'Cadencia multi-canal automatizada (llamada → WhatsApp) · Scoring de leads (no FIFO) · Eliminar "Descarte masivo" como motivo válido · Validación de teléfono/email al ingreso al CRM · Replicar condiciones de marzo 26 (mejor mes, 8,8% conversión SQL)' },
-        { desc: 'Oro + VIP con VPP descartados (6 meses)',
-          detail: '641 clientes premium perdidos en 6 meses (data Autos Usados). Con VPP se descarta +7pp más, pero cuando avanzan convierten mejor (4,0% vs. 3,3%).',
-          baseline: '641', target: '0',
-          impacts: 'Bloqueo de descarte automático de leads Oro/VIP + VPP sin revisión de supervisor · Flujo diferenciado con SLA de contacto más agresivo · Tagging automático "Premium con VPP" visible al asesor · Reporte semanal por sucursal del % Premium descartados' },
+        { desc: 'Descarte de leads Oro + VIP con VPP',
+          detail: 'En el período analizado se descarta en promedio un 83% de los leads con VPP de segmento VIP y Oro. Con VPP se descarta +7pp más, pero cuando avanzan convierten mejor (4,0% vs. 3,3%).',
+          baseline: '83%', target: '60%',
+          impacts: 'Reporte de seguimiento diario de leads con Segmento de Valor y VPP desde el lead, como focos estratégicos de atención · Flujo diferenciado con SLA de contacto más agresivo · Tagging automático "Premium con VPP" visible al asesor · Reporte semanal por sucursal del % Premium descartados' },
         { desc: 'Descarte en segmento con financiamiento',
           detail: 'El segmento de mayor margen tiene la peor gestión: 95,3% de descarte vs. 85% sin financiamiento. Desagregado por segmento: Sin segmento 96% · VIP 93% · Oro 91% · Plata 89% · Bronce 87%.',
           baseline: '95,3%', target: '80%',
-          impacts: 'Pre-evaluación crediticia antes del ingreso al CRM · Flujo diferenciado para leads con financiamiento · Integración con entidades financieras partner · Panel de estado de solicitudes · Carga única de documentos en CRM' }
+          impacts: 'Trabajo conjunto con el equipo de F&I en los Sol Lead · Pre-evaluación crediticia antes del ingreso al CRM · Flujo diferenciado para leads con financiamiento · Integración con entidades financieras partner · Panel de estado de solicitudes · Carga única de documentos en CRM' }
       ] },
     13: { macro: 'venta', title: 'Etapa 13 · Reserva y Medios de Pago',
       objective: 'Mover reservas reales a ventas y digitalizar el pago',
       krs: [
         { desc: '% reservas que terminan en venta',
-          detail: 'Data hoy pendiente. Hipótesis: reservas fantasma inmovilizan stock sin avance real (272 uds reservadas en Preparación).',
-          baseline: '—', target: '>70%',
-          impacts: 'Liberación automática de reservas fantasma a 48h sin avance · Alerta al asesor antes del vencimiento · Fomentar Toku como medio de pago (ya implementado)' },
+          detail: 'Hoy 80%. Profundizar en un análisis del impacto que tiene publicar y vender unidades no disponibles en el momento.',
+          baseline: '80%', target: '80%',
+          impacts: 'Análisis de impacto de publicar y vender unidades no disponibles · Liberación automática de reservas fantasma a 48h sin avance · Alerta al asesor antes del vencimiento · Fomentar Toku como medio de pago (ya implementado)' },
         { desc: '% pagos digitales vs. presenciales',
           detail: 'Hoy sin medición. El pago digital reduce fricción, deja evidencia automática y acelera el cierre.',
           baseline: '—', target: '80%',
@@ -2789,9 +2799,13 @@ var OKRS = {
       objective: 'Entregar a tiempo con una ceremonia memorable',
       krs: [
         { desc: '% entregas en fecha comprometida',
-          detail: 'Sin medición hoy. Retrasos en transferencia del Registro Civil, documentos físicos entregados en visitas separadas y detalles menores no resueltos afectan la experiencia final.',
-          baseline: '—', target: '95%',
+          detail: 'Hoy 88%. Retrasos en transferencia del Registro Civil, documentos físicos entregados en visitas separadas y detalles menores no resueltos afectan la experiencia final.',
+          baseline: '88%', target: '95%',
           impacts: 'Courier de documentos finales · Playbook de entrega premium con checklist · Uso de canales digitales del Registro Civil cuando aplique · Portal de seguimiento del trámite para el cliente · Notificación automática en cada hito' },
+        { desc: '% adherencia al proceso Checklist de entrega',
+          detail: 'Hoy 72% en Negocio Usados. El proceso no asegura que el checklist se aplique de manera inmediata.',
+          baseline: '72%', target: '100%',
+          impacts: 'Evaluar incentivos a la realización del Checklist · Evaluar restricciones en el proceso bajo distintos escenarios · Checklist obligatorio antes de cerrar la entrega en CRM · Auditoría aleatoria de adherencia por sucursal' },
         { desc: 'NPS de entrega',
           detail: 'Sin medición sistemática hoy. La entrega es el momento de mayor emocionalidad del cliente y define la recomendación futura.',
           baseline: '—', target: '>70',
@@ -2843,34 +2857,39 @@ function renderOKRsSlide(i) {
     '</div>' +
     '<div class="impact-grid">' +
       '<div class="impact-card compra">' +
+        '<span class="impact-card-role">Input del journey</span>' +
         '<div class="impact-eje">Eje Compra</div>' +
         '<div class="impact-big"><span class="impact-big-number">+294</span><span class="impact-big-unit">compras / mes</span></div>' +
-        '<div class="impact-headline">Lo que el funnel de compra deja sin capturar hoy</div>' +
-        '<div class="impact-detail">Con los mismos <strong>19.150 leads/mes</strong>, subir la conversión Lead→Compra de <strong>2,0% a 3,5%</strong> libera 294 compras adicionales al mes — <em>sin un solo lead nuevo</em>. La palanca es contactabilidad (53% → 70%) + gestión del funnel.</div>' +
+        '<div class="impact-headline">Capturar más inventario en la entrada del journey</div>' +
+        '<div class="impact-detail">Con los mismos <strong>19.150 leads/mes</strong>, subir la conversión Lead→Compra de <strong>2,0% a 3,5%</strong> libera 294 unidades adicionales al mes — <em>sin un solo lead nuevo</em>. La palanca es contactabilidad (53% → 70%) + gestión del funnel.</div>' +
         '<div class="impact-money">Techo: ~$353M / mes de margen potencial</div>' +
         '<div class="impact-assumptions">Palancas: contactabilidad del pool · tiempo al primer contacto · scoring de leads · reducir descarte masivo.</div>' +
       '</div>' +
+      '<div class="impact-arrow"><span class="impact-arrow-icon">→</span><span class="impact-arrow-label">Habilita</span></div>' +
       '<div class="impact-card preparación">' +
+        '<span class="impact-card-role">Multiplicador</span>' +
         '<div class="impact-eje">Eje Preparación</div>' +
         '<div class="impact-big"><span class="impact-big-number">+234</span><span class="impact-big-unit">uds visibles</span></div>' +
-        '<div class="impact-headline">El inventario existe — la vitrina aún no lo muestra todo</div>' +
-        '<div class="impact-detail">El mismo stock, mejor publicado: de <strong>2.149 → 2.443 uds</strong> en vitrina (79,2% → 90%). Foto Tier 1/2 de <strong>61,5% → 95%</strong>. <em>No hay unidades nuevas — hay unidades ocultas y vitrina degradada.</em></div>' +
+        '<div class="impact-headline">Esas unidades llegan a la vitrina — sin esto la cadena se frena</div>' +
+        '<div class="impact-detail">Las 294 unidades adicionales fluyen al pipeline de preparación: foto Tier 1/2 de <strong>61,5% → 95%</strong> y publicación de <strong>2.149 → 2.443 uds</strong> (79,2% → 90%). <em>Si el SLA de foto y publicación no escala, el inventario nuevo se acumula en patio y no se convierte en venta.</em></div>' +
         '<div class="impact-money">Multiplicador del eje Venta · ahorro $4,2M/mes en Impel</div>' +
         '<div class="impact-assumptions">Palancas: pipeline de publicación · SLA de foto · eliminación de reservas fantasma · gate de precio.</div>' +
       '</div>' +
+      '<div class="impact-arrow"><span class="impact-arrow-icon">→</span><span class="impact-arrow-label">Convierte en</span></div>' +
       '<div class="impact-card venta">' +
+        '<span class="impact-card-role">Output del journey</span>' +
         '<div class="impact-eje">Eje Venta</div>' +
         '<div class="impact-big"><span class="impact-big-number">+94</span><span class="impact-big-unit">ventas / mes</span></div>' +
-        '<div class="impact-headline">Lo que el funnel digital y la gestión de leads no convierten</div>' +
-        '<div class="impact-detail">Con las mismas <strong>136.334 visitas/mes</strong>, pasar de 862 a 2.000 cotizaciones + subir conversión cotización→venta de 5,3% a 7% — recuperando además los <strong>641 leads Oro/VIP con VPP descartados.</strong></div>' +
+        '<div class="impact-headline">Vitrina más completa + mejor conversión = más ventas</div>' +
+        '<div class="impact-detail">Con vitrina al 90% (gracias a Compra + Preparación) y las mismas <strong>136.334 visitas/mes</strong>, pasar de 862 a 2.000 cotizaciones + conversión cotización→venta de 5,3% a 7% — recuperando además los <strong>641 leads Oro/VIP con VPP descartados.</strong></div>' +
         '<div class="impact-money">Techo: ~$113M / mes de margen potencial</div>' +
         '<div class="impact-assumptions">Palancas: conversión web (ficha → cotización) · gestión de leads premium · eliminación de descarte masivo.</div>' +
       '</div>' +
     '</div>' +
     '<div class="impact-totalizer">' +
       '<div>' +
-        '<div class="impact-totalizer-label">Oportunidad total identificada en el journey</div>' +
-        '<div class="impact-totalizer-sub">No es proyección de resultados: es el tamaño de lo que el sistema actual no captura. Cada indicador que se mueve convierte en ventas lo que hoy se pierde en fricción operacional.</div>' +
+        '<div class="impact-totalizer-label">La cadena: Compra → Preparación → Venta</div>' +
+        '<div class="impact-totalizer-sub">Los tres ejes están encadenados: si Compra crece pero Preparación no escala, el inventario nuevo se inmoviliza. Si Preparación mejora pero Venta no convierte, las unidades publicadas no rotan. Cada eslabón depende del anterior — moverlos en conjunto es lo que captura toda la oportunidad.</div>' +
       '</div>' +
       '<div style="text-align:right;">' +
         '<div class="impact-totalizer-value">+3.528 compras · +1.128 ventas / año identificadas</div>' +
@@ -3000,6 +3019,116 @@ function renderOKRsSlide(i) {
     '<div class="okrs-section-title">Tamaño de la oportunidad</div>' +
     '<div class="okrs-section-sub">Estimación de lo que el sistema actual deja encima de la mesa si mejoramos solo los indicadores clave. <strong>No son compromisos de resultado:</strong> son el techo de lo que se puede capturar sin cambiar la inversión digital ni el inventario base.</div>' +
     impactHtml +
+    '<div class="okrs-section-title">Estructura de cadencias</div>' +
+    '<div class="okrs-section-sub">Cuatro niveles de revisión que mantienen el foco en los indicadores. Cada nivel tiene participantes, agenda y output definidos — los equipos llegan con su métrica actualizada, no con decks de avance.</div>' +
+    '<div class="deck-gov-grid">' +
+      '<div class="deck-gov-card nivel-1">' +
+        '<div class="deck-gov-card-head">' +
+          '<span class="deck-gov-nivel">1</span>' +
+          '<div class="deck-gov-head-text">' +
+            '<div class="deck-gov-title">Standup de Squad</div>' +
+            '<span class="deck-gov-freq">Diario</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="deck-gov-body">' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Participantes</div>' +
+            '<div class="deck-gov-participants">' +
+              '<span class="deck-gov-participant">Cada squad por separado</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Agenda · 3 preguntas</div>' +
+            '<div class="deck-gov-items">' +
+              '<div class="deck-gov-item">¿Dónde está mi indicador hoy?</div>' +
+              '<div class="deck-gov-item">¿Qué hice ayer para moverlo?</div>' +
+              '<div class="deck-gov-item">¿Qué me bloquea hoy?</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-output">Output: bloqueos visibles · tareas del día alineadas al KR</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="deck-gov-card nivel-2">' +
+        '<div class="deck-gov-card-head">' +
+          '<span class="deck-gov-nivel">2</span>' +
+          '<div class="deck-gov-head-text">' +
+            '<div class="deck-gov-title">Review de Indicadores</div>' +
+            '<span class="deck-gov-freq">Semanal</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="deck-gov-body">' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Participantes</div>' +
+            '<div class="deck-gov-participants">' +
+              '<span class="deck-gov-participant">Todos los squads</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Agenda</div>' +
+            '<div class="deck-gov-items">' +
+              '<div class="deck-gov-item">Cada squad presenta: KR actual → delta semana → iniciativa que lo movió</div>' +
+              '<div class="deck-gov-item">Identificar KRs sin movimiento y revisar iniciativas asociadas</div>' +
+              '<div class="deck-gov-item">Sincronizar dependencias entre squads</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-output">Output: prioridades de la semana siguiente · bloqueos cross-squad resueltos</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="deck-gov-card nivel-3">' +
+        '<div class="deck-gov-card-head">' +
+          '<span class="deck-gov-nivel">3</span>' +
+          '<div class="deck-gov-head-text">' +
+            '<div class="deck-gov-title">Review de Gestión</div>' +
+            '<span class="deck-gov-freq">Quincenal</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="deck-gov-body">' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Participantes</div>' +
+            '<div class="deck-gov-participants">' +
+              '<span class="deck-gov-participant">Squads</span>' +
+              '<span class="deck-gov-participant">Gerencia de Usados</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Agenda</div>' +
+            '<div class="deck-gov-items">' +
+              '<div class="deck-gov-item">Estado de KRs por eje: tendencia de las últimas 2 semanas</div>' +
+              '<div class="deck-gov-item">Decisiones de priorización y asignación de recursos</div>' +
+              '<div class="deck-gov-item">KR sin movimiento por 2 reviews → escala al Comité Ejecutivo</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-output">Output: decisiones de prioridad · recursos desbloqueados · escalaciones</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="deck-gov-card nivel-4">' +
+        '<div class="deck-gov-card-head">' +
+          '<span class="deck-gov-nivel">4</span>' +
+          '<div class="deck-gov-head-text">' +
+            '<div class="deck-gov-title">Comité Ejecutivo</div>' +
+            '<span class="deck-gov-freq">Mensual</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="deck-gov-body">' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Participantes</div>' +
+            '<div class="deck-gov-participants">' +
+              '<span class="deck-gov-participant">C-suite</span>' +
+              '<span class="deck-gov-participant">Directorio</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-section">' +
+            '<div class="deck-gov-section-label">Agenda</div>' +
+            '<div class="deck-gov-items">' +
+              '<div class="deck-gov-item">Revisión de los indicadores guía: ¿se movieron? ¿por qué no?</div>' +
+              '<div class="deck-gov-item">Tamaño de oportunidad capturada vs. identificada</div>' +
+              '<div class="deck-gov-item">Decisiones estratégicas y ajuste de metas si corresponde</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="deck-gov-output">Output: decisiones estratégicas · validación de metas · ajuste de roadmap</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
   '</div>';
 }
 
@@ -3902,129 +4031,6 @@ function renderExecSummarySlide(i) {
       '</div>' +
     '</section>' +
 
-    // DECK 6 · Modelo de gobierno · Estructura de cadencias
-    '<section class="deck-section">' +
-      '<div class="deck-eyebrow">Modelo de Gobierno</div>' +
-      '<h2 class="deck-section-h2">Estructura de cadencias</h2>' +
-      '<p class="deck-subtitle">Tres niveles de revisión que mantienen el foco en los indicadores. Cada nivel tiene participantes, agenda y output definidos — los equipos llegan con su métrica actualizada, no con decks de avance.</p>' +
-      '<div class="deck-gov-grid">' +
-
-        '<div class="deck-gov-card nivel-1">' +
-          '<div class="deck-gov-card-head">' +
-            '<span class="deck-gov-nivel">1</span>' +
-            '<div class="deck-gov-head-text">' +
-              '<div class="deck-gov-title">Standup de Squad</div>' +
-              '<span class="deck-gov-freq">Diario</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="deck-gov-body">' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Participantes</div>' +
-              '<div class="deck-gov-participants">' +
-                '<span class="deck-gov-participant">Cada squad por separado</span>' +
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Agenda · 3 preguntas</div>' +
-              '<div class="deck-gov-items">' +
-                '<div class="deck-gov-item">¿Dónde está mi indicador hoy?</div>' +
-                '<div class="deck-gov-item">¿Qué hice ayer para moverlo?</div>' +
-                '<div class="deck-gov-item">¿Qué me bloquea hoy?</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-output">Output: bloqueos visibles · tareas del día alineadas al KR</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="deck-gov-card nivel-2">' +
-          '<div class="deck-gov-card-head">' +
-            '<span class="deck-gov-nivel">2</span>' +
-            '<div class="deck-gov-head-text">' +
-              '<div class="deck-gov-title">Review de Indicadores</div>' +
-              '<span class="deck-gov-freq">Semanal</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="deck-gov-body">' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Participantes</div>' +
-              '<div class="deck-gov-participants">' +
-                '<span class="deck-gov-participant">Todos los squads</span>' +
-                
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Agenda</div>' +
-              '<div class="deck-gov-items">' +
-                '<div class="deck-gov-item">Cada squad presenta: KR actual → delta semana → iniciativa que lo movió</div>' +
-                '<div class="deck-gov-item">Identificar KRs sin movimiento y revisar iniciativas asociadas</div>' +
-                '<div class="deck-gov-item">Sincronizar dependencias entre squads</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-output">Output: prioridades de la semana siguiente · bloqueos cross-squad resueltos</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="deck-gov-card nivel-3">' +
-          '<div class="deck-gov-card-head">' +
-            '<span class="deck-gov-nivel">3</span>' +
-            '<div class="deck-gov-head-text">' +
-              '<div class="deck-gov-title">Review de Gestión</div>' +
-              '<span class="deck-gov-freq">Quincenal</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="deck-gov-body">' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Participantes</div>' +
-              '<div class="deck-gov-participants">' +
-                
-                '<span class="deck-gov-participant">Squads</span>' +
-                '<span class="deck-gov-participant">Gerencia de Usados</span>' +
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Agenda</div>' +
-              '<div class="deck-gov-items">' +
-                '<div class="deck-gov-item">Estado de KRs por eje: tendencia de las últimas 2 semanas</div>' +
-                '<div class="deck-gov-item">Decisiones de priorización y asignación de recursos</div>' +
-                '<div class="deck-gov-item">KR sin movimiento por 2 reviews → escala al Comité Ejecutivo</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-output">Output: decisiones de prioridad · recursos desbloqueados · escalaciones</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="deck-gov-card nivel-4">' +
-          '<div class="deck-gov-card-head">' +
-            '<span class="deck-gov-nivel">4</span>' +
-            '<div class="deck-gov-head-text">' +
-              '<div class="deck-gov-title">Comité Ejecutivo</div>' +
-              '<span class="deck-gov-freq">Mensual</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="deck-gov-body">' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Participantes</div>' +
-              '<div class="deck-gov-participants">' +
-                '<span class="deck-gov-participant">C-suite</span>' +
-                '<span class="deck-gov-participant">Directorio</span>' +
-                
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-section">' +
-              '<div class="deck-gov-section-label">Agenda</div>' +
-              '<div class="deck-gov-items">' +
-                '<div class="deck-gov-item">Revisión de los indicadores guía: ¿se movieron? ¿por qué no?</div>' +
-                '<div class="deck-gov-item">Tamaño de oportunidad capturada vs. identificada</div>' +
-                '<div class="deck-gov-item">Decisiones estratégicas y ajuste de metas si corresponde</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="deck-gov-output">Output: decisiones estratégicas · validación de metas · ajuste de roadmap</div>' +
-          '</div>' +
-        '</div>' +
-
-      '</div>' +
-    '</section>' +
-
   '</div>';
 }
 
@@ -4250,7 +4256,7 @@ var CLIENTE_POR_SUBSTEP = {
   "11.4": { kpis: ["862 sesiones inician cotización (30 días)","3,9% conversión ficha -> cotización — mayor oportunidad del funnel","19,4% de sesiones con dead click (167 de 862)"], lineamientos: ["Indicador de progreso claro y no clicable en los steps","Solo preguntar lo esencial: menos campos = más conversión","Confirmar al usuario cada hito con mensaje claro"] },
   "12.1": { kpis: ["92.843 leads ingresados (Oct 25 – Mar 26)","77,7% tasa de descarte global","6,0% conversión SQL (5.587 entregados)","3.838 ventas cerradas (4,1% conv. final)","13.548 leads sin gestionar en etapa 'Nuevo' (15%)"], lineamientos: ["Nunca dejar un lead sin dueño / sin gestión >24h","Replicar condiciones de marzo 2026 (mejor mes, 8,8% conversión SQL)","Capacity planning en meses peak (Ene 26 con +28% de volumen convirtió peor)"] },
   "12.2": { kpis: ["Leads 'Caliente' se descartan +13pp más que 'Frío'","Conversión Caliente 3,9% vs. Frío 4,6% (promedio)","Tibio en Feb 26 convirtió 12,3% — señal no aprovechada"], lineamientos: ["No priorizar por 'temperatura' hasta validar que correlaciona con conversión real","Criterio único de temperatura entre sucursales, revisado trimestralmente","Scoring basado en comportamiento observado, no en intuición del asesor"] },
-  "12.3": { kpis: ["+7pp descarte con VPP vs. sin VPP","641 Oro + VIP con VPP descartados (6 meses)","4,0% conversión cuando avanzan vs. 3,3% sin VPP"], lineamientos: ["Bloquear descarte automático de leads Oro/VIP + VPP sin revisión","SLA de contacto más agresivo para clientes con VPP","Reporte visible por sucursal del % Premium descartados"] },
+  "12.3": { kpis: ["83% promedio de descarte en leads VPP de segmento VIP/Oro","+7pp descarte con VPP vs. sin VPP","4,0% conversión cuando avanzan vs. 3,3% sin VPP"], lineamientos: ["Reporte de seguimiento diario de leads con Segmento de Valor y VPP desde el lead, como focos estratégicos de atención","SLA de contacto más agresivo para clientes con VPP","Reporte visible por sucursal del % Premium descartados"] },
   "12.4": { kpis: ["95,3% descarte con financiamiento (promedio)","-10pp vs. sin financiamiento","22.364 'No contesta' (31% del total)","8.613 'Descarte masivo' (12%, distorsiona métricas)"], lineamientos: ["Pre-evaluación crediticia ANTES de ingresar el lead al CRM","Motivo obligatorio y específico al descartar — eliminar 'Descarte masivo'","Validar teléfono y email al ingreso para reducir 'No contesta'"] },
   "13.1": { kpis: ["% reservas que terminan en venta","Duración promedio de la reserva","% reservas liberadas por vencimiento"], lineamientos: ["Dejar clara la vigencia de la reserva al cliente","Avisar antes del vencimiento","No reservar sin compromiso real del comprador"] },
   "13.2": { kpis: ["Mix por medio de pago","% con crédito automotriz","% con parte de pago"], lineamientos: ["Mostrar simulador de cuota en la ficha","Ser transparente con tasas y costos financieros","Explicar el flujo de parte de pago antes de iniciarlo"] },
