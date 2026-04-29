@@ -2200,8 +2200,8 @@ var journey = {
         { num: 1, title: "Reserva de la unidad",
           description: "Registro de la reserva en Llaima / sistema con monto y vigencia.",
           kpis: [{value:"—",suffix:"%",label:"% reservas que terminan en venta"},{value:"—",suffix:"días",label:"Duración promedio de la reserva"},{value:"—",suffix:"%",label:"% reservas liberadas por vencimiento"}],
-          oportunidades: ["Reservas 'fantasma' que inmovilizan stock (403 uds reservadas hoy)","Sin regla automática de liberación por vencimiento","Sin visibilidad del cliente respecto a su propia reserva"],
-          mejoras: ["Liberación automática de reservas a 48h sin avance","Panel del cliente con estado de la reserva y vencimiento","Alerta al asesor antes del vencimiento"]
+          oportunidades: ["Reservas 'fantasma' que inmovilizan stock (272 uds reservadas hoy)","Sin regla automática de liberación por vencimiento","Sin visibilidad del cliente respecto a su propia reserva"],
+          mejoras: ["Liberación automática de reservas a 48h sin avance","Alerta al asesor antes del vencimiento","Fomentar Toku como medio de pago (ya implementado)"]
         },
         { num: 2, title: "Elección del medio de pago",
           description: "El comprador elige entre efectivo, transferencia, crédito automotriz o parte de pago. Dentro de los mecanismos comerciales también se aplica el <strong>Regalo PIE</strong> (bonificación al pie del cliente). Análisis Q1 2026 sobre 4.857 oportunidades USADOS facturadas: 193 con Regalo PIE (3,97% penetración) · $202 MM entregados.",
@@ -2219,15 +2219,14 @@ var journey = {
             "<strong>Cálculo y visibilidad del margen real post-PIE:</strong> dashboard que cruce precio original vs. precio de cierre vs. monto PIE entregado, calculando el margen real por operación, sucursal y responsable. Alertar cuando margen real cae bajo umbrales definidos.",
             "<strong>Política y topes diferenciados por segmento:</strong> definir % máximo PIE/Factura permitido por operación en USADOS (hoy 9,19% promedio · casos sobre 10%), con autorización jerárquica obligatoria sobre el tope.",
             "<strong>Auditoría dirigida a outliers:</strong> revisión caso a caso de sucursales y responsables ≥ 2x el benchmark de penetración (Movicenter, Carshopping, Autopark Departamental; responsables sobre 30%) — confirmar si responde a estrategia autorizada o requiere corrección.",
-            "Reporte mensual de Regalo PIE por sucursal/responsable con trazabilidad completa: precio original, precio final, PIE entregado, margen real y aprobador.",
-            "Integración con bancos/financieras partner · Workflow específico para parte de pago (tasación express) · Simulador de cuota en la ficha del vehículo."
+            "Reporte mensual de Regalo PIE por sucursal/responsable con trazabilidad completa: precio original, precio final, PIE entregado, margen real y aprobador."
           ]
         },
         { num: 3, title: "Registro de señal o anticipo",
           description: "Ingreso del pago inicial y formalización en el sistema.",
           kpis: [{value:"—",suffix:"min",label:"Tiempo del proceso de pago"},{value:"—",suffix:"%",label:"% pagos digitales vs. presenciales"},{value:"—",suffix:"%",label:"% con comprobante entregado al cliente"}],
           oportunidades: ["Sin link de pago digital estándar","Comprobante manual por email / papel","Sin conciliación automática entre pago y reserva"],
-          mejoras: ["Link de pago digital con comprobante automático","Conciliación automática entre reserva y pago","Dashboard de pagos pendientes por asesor"]
+          mejoras: ["Link de pago digital con comprobante automático","Dashboard de pagos pendientes por asesor"]
         }
       ]
     },
@@ -2768,17 +2767,17 @@ var OKRS = {
       objective: 'Mover reservas reales a ventas y digitalizar el pago',
       krs: [
         { desc: '% reservas que terminan en venta',
-          detail: 'Data hoy pendiente. Hipótesis: reservas fantasma inmovilizan stock sin avance real (403 uds reservadas en Preparación).',
+          detail: 'Data hoy pendiente. Hipótesis: reservas fantasma inmovilizan stock sin avance real (272 uds reservadas en Preparación).',
           baseline: '—', target: '>70%',
-          impacts: 'Liberación automática de reservas fantasma a 48h sin avance · Panel visible al cliente con estado y vencimiento · Alerta al asesor antes del vencimiento · Separar reservas comerciales activas de fantasma' },
+          impacts: 'Liberación automática de reservas fantasma a 48h sin avance · Alerta al asesor antes del vencimiento · Fomentar Toku como medio de pago (ya implementado)' },
         { desc: '% pagos digitales vs. presenciales',
           detail: 'Hoy sin medición. El pago digital reduce fricción, deja evidencia automática y acelera el cierre.',
           baseline: '—', target: '80%',
-          impacts: 'Link de pago digital con comprobante automático · Conciliación automática entre reserva y pago · Dashboard de pagos pendientes por asesor · Simulador de cuota en la ficha del vehículo' },
+          impacts: 'Link de pago digital con comprobante automático · Dashboard de pagos pendientes por asesor' },
         { desc: 'Tiempo reserva → pago registrado',
           detail: 'Sin medición hoy. El tramo reserva-pago es la bisagra crítica antes del contrato; reducirlo acorta el ciclo de venta.',
           baseline: '—', target: '<30 min',
-          impacts: 'Conciliación automática reserva ↔ pago · Pasos del pago guiados y autocompletados · Integración con bancos/financieras partner · Workflow específico para parte de pago (tasación express del auto del comprador)' }
+          impacts: 'Conciliación automática reserva ↔ pago · Pasos del pago guiados y autocompletados' }
       ] },
     14: { macro: 'venta', title: 'Etapa 14 · Firma de Contrato',
       objective: 'Digitalizar la firma y acortar tiempos',
