@@ -434,11 +434,11 @@
 <div class="chevrons">
   <div class="chev active" data-stage="context" data-slide="1"><span class="chev-num">I</span><span>Contexto</span></div>
   <div class="chev" data-stage="funnel" data-slide="4"><span class="chev-num">II</span><span>Funnel</span></div>
-  <div class="chev" data-stage="home" data-slide="6"><span class="chev-num">III</span><span>Home</span></div>
-  <div class="chev" data-stage="cat" data-slide="7"><span class="chev-num">IV</span><span>Catálogo</span></div>
-  <div class="chev" data-stage="ficha" data-slide="8"><span class="chev-num">V</span><span>Ficha</span></div>
-  <div class="chev" data-stage="cot" data-slide="9"><span class="chev-num">VI</span><span>Cotización</span></div>
-  <div class="chev" data-stage="sum" data-slide="10"><span class="chev-num">VII</span><span>Resumen</span></div>
+  <div class="chev" data-stage="home" data-slide="7"><span class="chev-num">III</span><span>Home</span></div>
+  <div class="chev" data-stage="cat" data-slide="8"><span class="chev-num">IV</span><span>Catálogo</span></div>
+  <div class="chev" data-stage="ficha" data-slide="9"><span class="chev-num">V</span><span>Ficha</span></div>
+  <div class="chev" data-stage="cot" data-slide="10"><span class="chev-num">VI</span><span>Cotización</span></div>
+  <div class="chev" data-stage="sum" data-slide="11"><span class="chev-num">VII</span><span>Resumen</span></div>
 </div>
 
 <main>
@@ -512,11 +512,117 @@
   </div>
 </section>
 
-<!-- S4 FUNNEL 5M -->
+<!-- S4 FUNNEL SESIONES POR PÁGINA -->
 <section class="slide" data-slide="4">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">03 · Noviembre 2025 — Marzo 2026</div>
+      <div class="slide-eyebrow">03 · Enero — Abril 2026</div>
+      <h2 class="slide-title">Funnel de sesiones por tipo de página y origen del tráfico</h2>
+      <div class="slide-sub">Volumen absoluto del tráfico al sitio segmentado por página de aterrizaje y canal (pago vs. orgánico).</div>
+    </div>
+    <div class="slide-tag">GA4 · 4 meses · 1.236.888 sesiones</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="kpi-val">669.595</div><div class="kpi-label">Usuarios totales</div><div class="kpi-note">100% del total</div></div>
+    <div class="kpi-card"><div class="kpi-val">1.236.888</div><div class="kpi-label">Sesiones totales</div><div class="kpi-note">100% del total</div></div>
+    <div class="kpi-card accent"><div class="kpi-val accent">1,8</div><div class="kpi-label">Sesiones por usuario</div><div class="kpi-note">Promedio</div></div>
+    <div class="kpi-card accent"><div class="kpi-val accent">2,13</div><div class="kpi-label">Páginas por sesión</div><div class="kpi-note">Promedio</div></div>
+  </div>
+
+  <div class="kpi-row" style="grid-template-columns:1fr 1fr;margin-bottom:22px">
+    <div class="kpi-card warn"><div class="kpi-val warn">876.415</div><div class="kpi-label">Canales de pago (agrupados)</div><div class="kpi-note">70,9% del total · 2,4× los orgánicos</div></div>
+    <div class="kpi-card"><div class="kpi-val">360.473</div><div class="kpi-label">Canales orgánicos (agrupados)</div><div class="kpi-note">29,1% del total</div></div>
+  </div>
+
+  <div class="table-wrap">
+    <table class="summary">
+      <thead>
+        <tr>
+          <th style="width:280px">Página</th>
+          <th style="width:130px">Sesiones</th>
+          <th style="width:130px">Pago</th>
+          <th style="width:130px">Orgánico</th>
+          <th style="width:130px">Usuarios</th>
+          <th>% sesiones por canal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="area">/vehiculos/usado<br/><span style="font-weight:400;color:var(--si-muted);font-size:11px">Catálogo</span></td>
+          <td><b>352.248</b><br/><span style="color:var(--si-muted);font-size:11px">28,5% del total</span></td>
+          <td><b>270.318</b><br/><span style="color:var(--si-muted);font-size:11px">76,8%</span></td>
+          <td><b>81.930</b><br/><span style="color:var(--si-muted);font-size:11px">23,2%</span></td>
+          <td><b>239.262</b><br/><span style="color:var(--si-muted);font-size:11px">35,7% del total</span></td>
+          <td>Pago 76,8% · Orgánico 23,2%</td>
+        </tr>
+        <tr>
+          <td class="area">/tasar<br/><span style="font-weight:400;color:var(--si-muted);font-size:11px">Tasación</span></td>
+          <td><b>83.722</b><br/><span style="color:var(--si-muted);font-size:11px">6,8% del total</span></td>
+          <td><b>71.702</b><br/><span style="color:var(--si-muted);font-size:11px">85,7%</span></td>
+          <td><b>12.020</b><br/><span style="color:var(--si-muted);font-size:11px">14,3%</span></td>
+          <td><b>49.312</b><br/><span style="color:var(--si-muted);font-size:11px">7,4% del total</span></td>
+          <td>Pago 85,7% · Orgánico 14,3%</td>
+        </tr>
+        <tr>
+          <td class="area">URLs con /usado/<br/><span style="font-weight:400;color:var(--si-muted);font-size:11px">Incluye subpáginas</span></td>
+          <td><b>440.559</b><br/><span style="color:var(--si-muted);font-size:11px">35,6% del total</span></td>
+          <td><b>304.608</b><br/><span style="color:var(--si-muted);font-size:11px">69,2%</span></td>
+          <td><b>135.951</b><br/><span style="color:var(--si-muted);font-size:11px">30,8%</span></td>
+          <td><b>286.524</b><br/><span style="color:var(--si-muted);font-size:11px">42,8% del total</span></td>
+          <td>Pago 69,2% · Orgánico 30,8%</td>
+        </tr>
+        <tr>
+          <td class="area">Otras páginas<br/><span style="font-weight:400;color:var(--si-muted);font-size:11px">Resto del sitio</span></td>
+          <td><b>360.359</b><br/><span style="color:var(--si-muted);font-size:11px">29,1% del total</span></td>
+          <td><b>229.787</b><br/><span style="color:var(--si-muted);font-size:11px">63,8%</span></td>
+          <td><b>130.572</b><br/><span style="color:var(--si-muted);font-size:11px">36,2%</span></td>
+          <td><b>206.497</b><br/><span style="color:var(--si-muted);font-size:11px">30,8% del total</span></td>
+          <td>Pago 63,8% · Orgánico 36,2%</td>
+        </tr>
+        <tr>
+          <td class="area">Cotizaciones<br/><span style="font-weight:400;color:var(--si-muted);font-size:11px">Leads</span></td>
+          <td><b>753</b><br/><span style="color:var(--si-muted);font-size:11px">0,24% del total</span></td>
+          <td><b>629</b><br/><span style="color:var(--si-muted);font-size:11px">83,5%</span></td>
+          <td><b>124</b><br/><span style="color:var(--si-muted);font-size:11px">16,5%</span></td>
+          <td>—</td>
+          <td>Pago 83,5% · Orgánico 16,5%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col" style="margin-top:22px">
+    <div class="panel">
+      <div class="sec-head"><span class="sec-dot accent"></span>Lectura clave</div>
+      <div class="findings-list" style="padding:0">
+        <div class="find"><div class="find-n">01</div><div><h4>70,9% del tráfico proviene de canales de pago</h4><p>876.415 sesiones de canales pagados — 2,4 veces más que los orgánicos. Alta dependencia de inversión publicitaria.</p></div></div>
+        <div class="find"><div class="find-n">02</div><div><h4>Catálogo es el principal punto de entrada</h4><p>352.248 sesiones (28,5% del total) llegan directo a /vehiculos/usado. Hero del catálogo es la primera pantalla para 1 de cada 3 visitas.</p></div></div>
+        <div class="find"><div class="find-n">03</div><div><h4>Tasación capta 6,8% — alta intención, alto pago</h4><p>83.722 sesiones a /tasar con 85,7% de origen pago — la página con mayor concentración de tráfico de pago.</p></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="sec-head"><span class="sec-dot"></span>Lectura clave</div>
+      <div class="findings-list" style="padding:0">
+        <div class="find"><div class="find-n">04</div><div><h4>URLs con /usado/ concentran 35,6%</h4><p>440.559 sesiones en el ecosistema del catálogo de usados (incluye subpáginas). Es el clúster de mayor tráfico del sitio.</p></div></div>
+        <div class="find"><div class="find-n">05</div><div><h4>Otras páginas: 29,1% del tráfico</h4><p>360.359 sesiones llegan a Home, institucional, ayuda y otras secciones — espacio para arquitectura más enfocada en conversión.</p></div></div>
+        <div class="find"><div class="find-n">06</div><div><h4>Cotizaciones: 0,24% del total</h4><p>Solo 753 cotizaciones generadas en el período. La conversión global desde sesión a lead es la mayor brecha del funnel.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="source" style="margin-top:18px">
+    <b>Canales de pago</b> (agrupados): Paid Search · Paid Social · Paid Other · Display · Video · Affiliates &nbsp;·&nbsp;
+    <b>Canales orgánicos</b> (agrupados): Organic Search · Direct · Referral · Email · Organic Social &nbsp;·&nbsp;
+    Fuente: GA4 · Enero – Abril 2026
+  </div>
+</section>
+
+<!-- S5 FUNNEL 5M -->
+<section class="slide" data-slide="5">
+  <div class="slide-head">
+    <div>
+      <div class="slide-eyebrow">04 · Noviembre 2025 — Marzo 2026</div>
       <h2 class="slide-title">Funnel de conversión · clicar.cl</h2>
       <div class="slide-sub">Sesiones totales y origen del tráfico a lo largo del proceso comercial.</div>
     </div>
@@ -571,10 +677,10 @@
 </section>
 
 <!-- S5 FUNNEL 30D -->
-<section class="slide" data-slide="5">
+<section class="slide" data-slide="6">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">04 · Últimos 30 días</div>
+      <div class="slide-eyebrow">05 · Últimos 30 días</div>
       <h2 class="slide-title">Funnel de conversión · volumen absoluto</h2>
       <div class="slide-sub">Desde sesiones totales hasta inicio de cotización en el buy-process.</div>
     </div>
@@ -595,10 +701,10 @@
 </section>
 
 <!-- S6 HOME -->
-<section class="slide" data-slide="6">
+<section class="slide" data-slide="7">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">05 · Home</div>
+      <div class="slide-eyebrow">06 · Home</div>
       <h2 class="slide-title">Contexto general del sitio</h2>
       <div class="slide-sub">Volumen, composición y calidad del tráfico en la puerta de entrada.</div>
     </div>
@@ -643,10 +749,10 @@
 </section>
 
 <!-- S7 CATALOGO -->
-<section class="slide" data-slide="7">
+<section class="slide" data-slide="8">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">06 · Catálogo</div>
+      <div class="slide-eyebrow">07 · Catálogo</div>
       <h2 class="slide-title">Listado y discovery de vehículos</h2>
       <div class="slide-sub">Dónde entra el tráfico de ventas y cómo se comporta antes de llegar a la ficha.</div>
     </div>
@@ -689,10 +795,10 @@
 </section>
 
 <!-- S8 FICHA -->
-<section class="slide" data-slide="8">
+<section class="slide" data-slide="9">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">07 · Ficha de auto</div>
+      <div class="slide-eyebrow">08 · Ficha de auto</div>
       <h2 class="slide-title">Product Detail Page · el cuello de botella</h2>
       <div class="slide-sub">Altísimo tiempo de permanencia, pero baja conversión hacia cotización.</div>
     </div>
@@ -726,10 +832,10 @@
 </section>
 
 <!-- S9 COTIZACION -->
-<section class="slide" data-slide="9">
+<section class="slide" data-slide="10">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">08 · Flujo de cotización</div>
+      <div class="slide-eyebrow">09 · Flujo de cotización</div>
       <h2 class="slide-title">Buy-process · donde se pierde el lead</h2>
       <div class="slide-sub">El último salto del funnel concentra la mayor oportunidad de mejora.</div>
     </div>
@@ -758,10 +864,10 @@
 </section>
 
 <!-- S10 RESUMEN HOME/CAT -->
-<section class="slide" data-slide="10">
+<section class="slide" data-slide="11">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">09 · Plan de acción · parte I</div>
+      <div class="slide-eyebrow">10 · Plan de acción · parte I</div>
       <h2 class="slide-title">Resumen de mejoras · Home | Catálogo</h2>
       <div class="slide-sub">Prioridad, mejora propuesta y métrica de seguimiento para cada iniciativa.</div>
     </div>
@@ -785,10 +891,10 @@
 </section>
 
 <!-- S11 RESUMEN FICHA/COT -->
-<section class="slide" data-slide="11">
+<section class="slide" data-slide="12">
   <div class="slide-head">
     <div>
-      <div class="slide-eyebrow">10 · Plan de acción · parte II</div>
+      <div class="slide-eyebrow">11 · Plan de acción · parte II</div>
       <h2 class="slide-title">Resumen de mejoras · Ficha | Flujo de cotización</h2>
       <div class="slide-sub">Prioridad, mejora propuesta y métrica de seguimiento para cada iniciativa.</div>
     </div>
@@ -835,9 +941,9 @@
 
   const stageMap = {
     1:'context',2:'context',3:'context',
-    4:'funnel',5:'funnel',
-    6:'home',7:'cat',8:'ficha',9:'cot',
-    10:'sum',11:'sum'
+    4:'funnel',5:'funnel',6:'funnel',
+    7:'home',8:'cat',9:'ficha',10:'cot',
+    11:'sum',12:'sum'
   };
 
   function go(n){
