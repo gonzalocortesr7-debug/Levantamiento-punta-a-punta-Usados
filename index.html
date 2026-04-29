@@ -2116,16 +2116,15 @@ var journey = {
       video: { url: null, title: "Video del proceso - Gestión de Leads (Venta)" },
       resources: [{ href: "./dashboard-leads-ventas.html", label: "Dashboard Ejecutivo — 92.843 leads · 3.838 ventas" }],
       route: "Lead en CRM -> Volumen / Descarte -> Temperatura -> VPP y Segmentos -> Financiamiento / Motivos",
-      description: "Tramo de Contact Center / asesor comercial para el comprador. Análisis apoyado en data real de <strong>Salazar-Israel · Oct 2025 – Mar 2026 · 92.843 leads · 3.838 ventas digitales</strong>: tasa de descarte global 77,7%, conversión SQL 6,0%, conversión final lead → venta 4,1%, marzo 26 mejor mes (8,8% SQL). Oportunidades identificadas: proteger clientes Oro/VIP con VPP, flujo diferenciado para financiamiento, redefinir criterio de temperatura y eliminar 'descarte masivo'.",
+      description: "Análisis apoyado en data real de <strong>Autos Usados · Oct 2025 – Mar 2026 · 92.843 leads · 3.838 ventas digitales</strong>: tasa de descarte global 77,7%, conversión SQL 6,0%, conversión final lead → venta 4,1%, marzo 26 mejor mes (8,8% SQL). Oportunidades identificadas: proteger clientes Oro/VIP con VPP, flujo diferenciado para financiamiento, redefinir criterio de temperatura y eliminar 'descarte masivo'.",
       substeps: [
         { num: 1, title: "Volumen y conversión mensual",
-          description: "Tendencia del período Oct 2025 – Mar 2026: 92.843 leads totales, 72.113 descartados (77,7%), 5.587 SQL entregados (6,0%), 3.838 ventas cerradas (4,1%). Mejor mes: Marzo 2026 con 8,8% de conversión SQL. 13.548 leads quedan en etapa 'Nuevo' sin gestionar.",
+          description: "Tendencia del período Oct 2025 – Mar 2026: 92.843 leads totales, 72.113 descartados (77,7%), 5.587 SQL entregados (6,0%), 3.838 ventas cerradas (4,1%). Mejor mes: Marzo 2026 con 8,8% de conversión SQL.",
           chartType: 'vta-leads-vol',
           kpis: [{value:"92.843",suffix:"",label:"Total leads (6 meses)"},{value:"77,7",suffix:"%",label:"Tasa de descarte global"},{value:"6,0",suffix:"%",label:"Conversión SQL (entregados)"},{value:"3.838",suffix:"",label:"Ventas cerradas (4,1% conv. final)"}],
           oportunidades: [
             "Tasa de descarte del 77,7% sostenida en el período — el pipeline se quiebra antes de la entrega.",
             "Marzo 2026 es el único mes donde todas las métricas mejoran simultáneamente (8,8% conversión SQL, menor descarte y más entregados).",
-            "13.548 leads (15% del total) quedan en etapa 'Nuevo' sin haberse gestionado — volumen crítico sin dueño.",
             "Pico de volumen en Enero 2026 (19.810 leads, +28% vs. promedio) coincide con una peor conversión — falta capacity en meses peak."
           ],
           mejoras: [
@@ -5206,8 +5205,8 @@ function vtaLeadsBuildTable(kind) {
 function renderVtaLeadsSection(slideIdx, type) {
   var blocks = {
     'vta-leads-vol': {
-      title: 'Volumen y conversión mensual · Oct 2025 – Mar 2026',
-      subtitle: 'Total 92.843 leads · Salazar-Israel',
+      title: 'Volumen de Leads y Conversión mensual a SQL · Oct 2025 – Mar 2026',
+      subtitle: 'Total 92.843 leads · Autos Usados',
       charts: [
         { kind:'vol', title:'Total leads vs % conversión', height:260 },
         { kind:'etapas', title:'Etapas por mes (apilado)', height:240 },
@@ -5215,8 +5214,7 @@ function renderVtaLeadsSection(slideIdx, type) {
       ],
       insights: [
         { c:'r', t:'🚨 Tasa de descarte global del 77,7% (72.113 de 92.843). El pipeline se quiebra antes de la entrega.' },
-        { c:'g', t:'✅ Marzo 2026 es el mejor mes: 8,8% de conversión SQL. Identificar qué se hizo distinto y replicarlo es la vía más corta a mejora.' },
-        { c:'w', t:'🟠 13.548 leads quedan en etapa "Nuevo" en el período — volumen significativo sin gestionar.' }
+        { c:'g', t:'✅ Marzo 2026 es el mejor mes: 8,8% de conversión SQL. Identificar qué se hizo distinto y replicarlo es la vía más corta a mejora.' }
       ]
     },
     'vta-leads-temp': {
