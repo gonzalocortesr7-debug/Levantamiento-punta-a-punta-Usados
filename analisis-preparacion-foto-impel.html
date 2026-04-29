@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reporte BI — Vitrina Digital 28 Abril 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:13px;line-height:1.5;}
@@ -400,6 +401,19 @@ const zonaLabels = {
 };
 
 /* ---- CHARTS ---- */
+if (window.ChartDataLabels) Chart.register(window.ChartDataLabels);
+Chart.defaults.set('plugins.datalabels', { display: false });
+
+const fmtNum = v => Number(v).toLocaleString('es-CL');
+const fmtPct = v => Number(v).toFixed(1).replace('.', ',') + '%';
+
+/* Hide a label when the previous data point has the same value (avoids duplicate labels in flat lines) */
+function dedupeLabel(value, ctx) {
+  if (ctx.dataIndex === 0) return true;
+  const prev = ctx.dataset.data[ctx.dataIndex - 1];
+  return prev !== value;
+}
+
 let zonaChart, donutChart, sucChart;
 
 function buildZonaChart(zona='todas') {
@@ -415,14 +429,19 @@ function buildZonaChart(zona='todas') {
     data:{
       labels,
       datasets:[
-        {label:'Publicadas',data:d.pub,backgroundColor:'#1a3d7c',borderRadius:3,yAxisID:'y',order:2},
-        {label:'Sin publicar',data:d.sinpub,backgroundColor:'#E24B4A',borderRadius:3,yAxisID:'y',order:2},
-        {label:'Reservadas',data:d.res,backgroundColor:'#EF9F27',borderRadius:3,yAxisID:'y',order:2},
-        {label:'% publicación',data:pct,type:'line',borderColor:'#1D9E75',backgroundColor:'#1D9E75',pointBackgroundColor:'#1D9E75',pointRadius:5,borderWidth:2.5,tension:0.3,yAxisID:'y2',order:1}
+        {label:'Publicadas',data:d.pub,backgroundColor:'#1a3d7c',borderRadius:3,yAxisID:'y',order:2,
+          datalabels:{display:ctx=>ctx.dataset.data[ctx.dataIndex]>0,anchor:'end',align:'end',offset:2,color:'#1a3d7c',font:{size:10,weight:600},formatter:fmtNum}},
+        {label:'Sin publicar',data:d.sinpub,backgroundColor:'#E24B4A',borderRadius:3,yAxisID:'y',order:2,
+          datalabels:{display:ctx=>ctx.dataset.data[ctx.dataIndex]>0,anchor:'end',align:'end',offset:2,color:'#A32D2D',font:{size:10,weight:600},formatter:fmtNum}},
+        {label:'Reservadas',data:d.res,backgroundColor:'#EF9F27',borderRadius:3,yAxisID:'y',order:2,
+          datalabels:{display:ctx=>ctx.dataset.data[ctx.dataIndex]>0,anchor:'end',align:'end',offset:2,color:'#854F0B',font:{size:10,weight:600},formatter:fmtNum}},
+        {label:'% publicación',data:pct,type:'line',borderColor:'#1D9E75',backgroundColor:'#1D9E75',pointBackgroundColor:'#1D9E75',pointRadius:5,borderWidth:2.5,tension:0.3,yAxisID:'y2',order:1,
+          datalabels:{display:dedupeLabel,anchor:'end',align:'top',offset:6,color:'#1D9E75',backgroundColor:'#fff',borderColor:'#1D9E75',borderWidth:1,borderRadius:4,padding:{top:2,bottom:2,left:5,right:5},font:{size:10,weight:600},formatter:fmtPct}}
       ]
     },
     options:{
       responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:18}},
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.dataset.yAxisID==='y2'?' '+ctx.raw.toFixed(1)+'%':' '+ctx.raw.toLocaleString('es-CL')}}},
       scales:{
         x:{grid:{display:false},ticks:{color:'#888',font:{size:11}}},
@@ -438,7 +457,8 @@ function buildDonutChart() {
     type:'doughnut',
     data:{
       labels:['Impel','Inspección/Subasta','Sin foto'],
-      datasets:[{data:[1322,489,338],backgroundColor:['#1a3d7c','#378ADD','#E24B4A'],borderWidth:2,borderColor:'#fff'}]
+      datasets:[{data:[1322,489,338],backgroundColor:['#1a3d7c','#378ADD','#E24B4A'],borderWidth:2,borderColor:'#fff',
+        datalabels:{display:true,color:'#fff',font:{size:11,weight:700},textAlign:'center',formatter:(v,ctx)=>{const t=ctx.dataset.data.reduce((a,b)=>a+b,0);return fmtNum(v)+'\n('+((v/t)*100).toFixed(1).replace('.',',')+'%)';}}}]
     },
     options:{
       responsive:true,maintainAspectRatio:false,cutout:'62%',
@@ -455,10 +475,12 @@ function buildSucChart() {
     type:'bar',
     data:{
       labels,
-      datasets:[{data:vals,backgroundColor:colors,borderRadius:3}]
+      datasets:[{data:vals,backgroundColor:colors,borderRadius:3,
+        datalabels:{display:true,anchor:'end',align:'end',offset:4,color:'#1a1a1a',font:{size:10,weight:600},formatter:fmtPct}}]
     },
     options:{
       indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      layout:{padding:{right:38}},
       plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.raw.toFixed(1)+'% sin foto'}}},
       scales:{
         x:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'#888',font:{size:11},callback:v=>v+'%'},max:50},
