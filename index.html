@@ -2193,7 +2193,7 @@ var journey = {
     {
       id: 13, macro: "venta", name: "Reserva y Medios de Pago", fullName: "Reserva y Medios de Pago",
       video: { url: null, title: "Video del proceso - Reserva y Medios de Pago" },
-      resources: [{ href: "./pie-regalo-usados.html", label: "Dashboard Pie de Regalo USADOS — Q1 2026 · 4.857 oportunidades · 193 con PIE" }],
+      resources: [{ href: "./pie-regalo-usados.html", label: "Análisis Bono Pie (Medios de Pago) — Q1 2026 · 4.857 oportunidades · 193 con PIE" }],
       route: "Cliente decide -> Reserva -> Medio de pago -> Señal o anticipo registrado",
       description: "Momento en que el comprador formaliza intención con una reserva y define el medio de pago (efectivo, transferencia, crédito automotriz, parte de pago). Aún por mapear con data real.",
       substeps: [
@@ -2573,13 +2573,13 @@ var OKRS = {
       baseline: '79,2%', target: '90%', unit: 'del inventario total',
       source: 'BI 2026-04-28 · 2.149 de 2.714 uds publicadas' },
     { macro: 'venta', label: 'Eje Venta',
-      metric: 'Cotizaciones web iniciadas / mes',
-      baseline: '862', target: '2.000', unit: '/ mes',
-      source: 'Microsoft Clarity · 22 mar – 22 abr 2026 · 3,9% conv. ficha -> cotización' },
+      metric: 'Conversión Lead → Venta (end-to-end)',
+      baseline: '4,1%', target: '8%', unit: 'conversión',
+      source: 'Autos Usados · 3.838 ventas de 92.843 leads · 6 meses · mejor mes 8,8% (Mar 2026)' },
     { macro: 'venta', label: 'Eje Venta',
-      metric: 'Tasa de descarte del pool de leads',
-      baseline: '77,7%', target: '60%', unit: 'de leads descartados',
-      source: 'Autos Usados · 72.113 de 92.843 leads descartados (6 meses)' }
+      metric: 'Tasa Traffic → Cotización web',
+      baseline: '0,63%', target: '1,5%', unit: 'de las sesiones cotizan',
+      source: 'Microsoft Clarity · 862 cotizaciones / mes de 136.334 sesiones · meta 2.000 cot/mes' }
   ],
   transformacionales: [
     { title: 'Generar la foto final durante la inspección mecánica (in-house)',
@@ -3022,7 +3022,8 @@ var EJE_ANALYSES = {
   ],
   venta: [
     { href: 'auditoria-flujo-ventas.html', label: 'Análisis Flujo Web (Venta) · 12 slides (Clarity + Mercado)' },
-    { href: 'dashboard-leads-ventas.html', label: 'Gestión de Leads de Venta · 92.843 leads · 3.838 ventas' }
+    { href: 'dashboard-leads-ventas.html', label: 'Gestión de Leads de Venta · 92.843 leads · 3.838 ventas' },
+    { href: 'pie-regalo-usados.html', label: 'Análisis Bono Pie (Medios de Pago) · Q1 2026 · 4.857 oportunidades · 193 con PIE' }
   ]
 };
 
