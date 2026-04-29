@@ -1943,23 +1943,23 @@ var journey = {
       description: "La unidad pasa a estar visible en el catálogo público de clicar.cl. Este paso es independiente del estado del material fotográfico: una unidad puede publicarse sin foto final e ir al fin del catálogo con placeholder. El tiempo Quiter -> publicación efectiva es un KPI clave del pipeline operacional.",
       substeps: [
         { num: 1, title: "Publicación efectiva",
-          description: "La unidad aparece en el catálogo web con su ficha. Snapshot actual: 1.790 unidades publicadas sobre un inventario total de 2.574.",
-          kpis: [{value:"1.790",suffix:"uds",label:"Publicadas hoy"},{value:"69,5",suffix:"%",label:"Publicadas vs. inventario total"},{value:"89,9",suffix:"%",label:"Publicadas vs. disponibles"}],
-          oportunidades: ["Solo el 69,5% del inventario (2.574 uds) está publicado en la vitrina digital hoy","Del subset disponible para publicar (1.990 uds), el 89,9% está publicado - 10,1% retenido por motivos concretos (ver sub-etapa 2)","580 unidades (22,5% del total) ni siquiera son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
+          description: "La unidad aparece en el catálogo web con su ficha. Snapshot actual: 2.149 unidades publicadas sobre un inventario total de 2.714.",
+          kpis: [{value:"2.149",suffix:"uds",label:"Publicadas hoy"},{value:"79,2",suffix:"%",label:"Publicadas vs. inventario total"},{value:"95,0",suffix:"%",label:"Publicadas vs. disponibles"}],
+          oportunidades: ["El 79,2% del inventario (2.714 uds) está publicado — mejora respecto a períodos anteriores, pero 338 uds publicadas (15,7%) no tienen foto alguna","Del subset disponible para publicar (2.263 uds), el 95% está publicado - 5% retenido por motivos operacionales (ver sub-etapa 2)","451 unidades (16,6% del total) no son elegibles para publicar por motivos de inventario (ver sub-etapa 3)","Unidades se publican sin esperar foto Impel lista, cayendo a Tier 3 o Tier 4 automáticamente"],
           mejoras: ["Reporte diario de brecha disponibles vs. publicadas (meta: >95%)","Monitoreo del mix de motivos de no-publicación para atacar el más frecuente","Definir campos mínimos obligatorios para publicar (con bloqueo)","SLA máximo Quiter -> publicación (ej. 24-48h)"],
           chartType: 'prep-funnel'
         },
         { num: 2, title: "No publicadas del stock disponible",
-          description: "200 unidades disponibles para publicar pero retenidas hoy (10,1% del stock disponible). Desglose por motivo: En acopio 166 (83%), Sin precio 17 (8,5%), Otras razones 15 (7,5%), Concesionario VN 2 (1%).",
-          kpis: [{value:"200",suffix:"uds",label:"Retenidas hoy (disponibles)"},{value:"83",suffix:"%",label:"En acopio (166 uds) - causa dominante"},{value:"10,1",suffix:"%",label:"% del stock disponible"}],
-          oportunidades: ["El 83% de las retenciones (166 uds) están 'En acopio' - categoría que requiere definir operacionalmente qué significa y cuánto tiempo es aceptable","17 uds bloqueadas por falta de precio - gate operacional concreto gestionable","15 uds 'USADOS CENTRO DE ACOPIO FERRY TRUCK' sin categorización clara: debilita la accionabilidad","2 uds en Concesionario VN - volumen marginal pero habla de stock que no debería estar en el pool","Sin categorización estandarizada del motivo en el sistema"],
-          mejoras: ["Desagregar 'En acopio' en subcategorias accionables (recién llegado, pendiente limpieza, pendiente documentación, etc.)","Migrar 'Otras razones' a lista cerrada con 3-5 categorías","SLA máximo por categoría: acopio (ej. 48h), sin precio (ej. 24h)","Dashboard diario de retenciones con alerta cuando una categoría crece"]
+          description: "114 unidades disponibles para publicar pero retenidas hoy (5% del stock disponible). Desglose por motivo: Ferry Truck (Centro de Acopio) 71 (62%), Desfase Actualización 29 (25%), Acopio 10 (9%), Concesionario VN 3 (3%).",
+          kpis: [{value:"114",suffix:"uds",label:"Retenidas hoy (disponibles)"},{value:"62",suffix:"%",label:"Ferry Truck / Acopio (71 uds)"},{value:"5,0",suffix:"%",label:"% del stock disponible"}],
+          oportunidades: ["El 62% de las retenciones (71 uds) corresponden a 'Ferry Truck / Centro de Acopio' - requiere definición de SLA y subcategorías accionables","29 uds en 'Desfase Actualización' — categoría genérica sin owner ni plazo claro","10 uds en Acopio sin criterio definido de liberación","3 uds en Concesionario VN - volumen marginal pero habla de stock que no debería estar en el pool","Sin categorización estandarizada del motivo en el sistema"],
+          mejoras: ["Desagregar 'Ferry Truck/Acopio' en subcategorias accionables (recién llegado, pendiente limpieza, pendiente documentación, etc.)","Migrar 'Desfase Actualización' a categoría con owner y SLA definido","SLA máximo por categoría: acopio (ej. 48h)","Dashboard diario de retenciones con alerta cuando una categoría crece"]
         },
         { num: 3, title: "No disponibles para publicar (inventario)",
-          description: "580 unidades del inventario total no son elegibles para publicar por motivos estructurales (22,5% del inventario). Desglose: Reservadas 403 (Uds reservadas 345, Ferry Truck 57, Acopio 1), Problemas legales 166, UFM/Falla mecánica 9, No disponible 2.",
-          kpis: [{value:"580",suffix:"uds",label:"No disponibles"},{value:"22,5",suffix:"%",label:"Del inventario total"},{value:"403",suffix:"uds",label:"Reservadas (69% de no disp.)"}],
-          oportunidades: ["22,5% del inventario inmovilizado: 1 de cada 4 unidades NO está disponible para la vitrina","Las reservadas (403) dominan con 69%: 345 uds reservadas + 57 Ferry Truck + 1 Acopio - requiere entender si la reserva es comercial legítima o inmovilizado","166 unidades con problemas legales: volumen significativo que hay que destrabar - cruce con legal","9 unidades en UFM (SAIS/Falla mecánica) - bajo volumen pero flag de calidad de compra en origen","Categorías heterogéneas: mezcla compromisos comerciales (reservadas), bloqueos legales, y fallas - cada una con owner y tiempo de resolución distinto"],
-          mejoras: ["Reporte mensual de aging por categoría de no-disponible","Owner claro por categoría: Reservadas (Comercial), Legales (Legal), UFM (Calidad/Compras), No disponible (Operaciones)","Alerta cuando una unidad lleva >X días en categoría no-disponible","Revisar criterio de aceptación en compra para reducir UFM en origen","Diferenciar 'reserva comercial activa' vs. 'reserva fantasma' (>30 días sin avance)"]
+          description: "451 unidades del inventario total no son elegibles para publicar por motivos estructurales (16,6% del inventario). Desglose: Reservadas 272, Problemas legales 166, SAIS/Falla mecánica 13.",
+          kpis: [{value:"451",suffix:"uds",label:"No disponibles"},{value:"16,6",suffix:"%",label:"Del inventario total"},{value:"272",suffix:"uds",label:"Reservadas (60% de no disp.)"}],
+          oportunidades: ["16,6% del inventario inmovilizado: 1 de cada 6 unidades NO está disponible para la vitrina","Las reservadas (272) dominan con 60% — requiere entender si la reserva es comercial legítima o inmovilizado con reserva fantasma (>30 días sin avance)","166 unidades con problemas legales: volumen significativo que hay que destrabar - cruce con legal","13 unidades en SAIS/Falla mecánica - bajo volumen pero flag de calidad de compra en origen","Categorías heterogéneas: compromisos comerciales (reservadas), bloqueos legales, y fallas mecánicas - cada una con owner y tiempo de resolución distinto"],
+          mejoras: ["Reporte mensual de aging por categoría de no-disponible","Owner claro por categoría: Reservadas (Comercial), Legales (Legal), SAIS (Calidad/Compras)","Alerta cuando una unidad lleva >X días en categoría no-disponible","Revisar criterio de aceptación en compra para reducir SAIS en origen","Diferenciar 'reserva comercial activa' vs. 'reserva fantasma' (>30 días sin avance)"]
         }
       ]
     },
@@ -1973,28 +1973,28 @@ var journey = {
       ],
       substeps: [
         { num: 1, title: "Captura de foto de producto",
-          description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-17: 1.586 de 1.790 publicadas (88,6%) tienen alguna foto capturada (Impel o inspección). 204 uds (11,4%) están publicadas SIN ninguna foto.",
-          kpis: [{value:"1.586",suffix:"uds",label:"Publicadas con foto capturada (88,6%)"},{value:"204",suffix:"uds",label:"Publicadas sin foto (11,4%)"},{value:"10,1",suffix:"días",label:"Sucursal disponible -> foto Impel (promedio)"}],
-          oportunidades: ["204 unidades (11,4% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' - ninguna foto ha sido capturada aún","Zona RM concentra 114 de estas 204 uds sin foto (55,9%)","<strong>Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel</strong> — ver tabla de tiempos por origen","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
-          mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '204 sin foto' con owner por sucursal","SLA transitorio <72h para los orígenes más lentos (VPP Nuevos, Carflex, B2B)","Priorización de stock premium y alta rotación durante la transición"],
+          description: "Sesión de foto de la unidad ya ubicada físicamente. Data real BI 2026-04-28: 1.811 de 2.149 publicadas (84,3%) tienen alguna foto capturada (Impel o inspección). 338 uds (15,7%) están publicadas SIN ninguna foto.",
+          kpis: [{value:"1.811",suffix:"uds",label:"Publicadas con foto capturada (84,3%)"},{value:"338",suffix:"uds",label:"Publicadas sin foto (15,7%)"},{value:"10,1",suffix:"días",label:"Sucursal disponible -> foto Impel (promedio)"}],
+          oportunidades: ["338 unidades (15,7% del publicado) están en vitrina con placeholder 'Estamos preparando esta imagen' — ninguna foto ha sido capturada aún","Zona RM concentra 208 de estas 338 uds sin foto (61,5%)","<strong>Tiempo promedio de ~10,1 días entre que la unidad queda disponible en sucursal y pasa a foto Impel</strong> — ver tabla de tiempos por origen","Sin métrica publicada de capacidad instalada ni utilización del equipo de foto","Dependencia de disponibilidad de operador","Sin priorización por segmento premium / ticket alto"],
+          mejoras: ["[SOLUCIÓN DE RAÍZ] Generar la foto final durante la inspección mecánica (desarrollo in-house) — toda unidad publicada sale con foto lista, elimina el pipeline externo de Impel y ahorra $4,2M/mes","Mientras se desarrolla: auditoría diaria del subset '338 sin foto' con owner por sucursal","SLA transitorio <72h para los orígenes más lentos (VPP Nuevos, Carflex, B2B)","Priorización de stock premium y alta rotación durante la transición"],
           chartType: 'foto-impel-tiempos'
         },
         { num: 2, title: "Post-procesado Impel (fondo limpio)",
-          description: "Salida estándar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad. Data real BI 2026-04-17: 1.211 unidades con foto Impel terminada (67,7% del stock publicado). Nota: el BI agrupa Tier 1 + Tier 2 como IMPEL - la adopción específica de cabina virtual 360 requiere reporte Impel detallado.",
-          kpis: [{value:"1.211",suffix:"uds",label:"Con foto Impel (Tier 1 + Tier 2)"},{value:"67,7",suffix:"%",label:"Del stock publicado"},{value:"579",suffix:"uds",label:"Publicadas sin foto Impel lista (32,3%)"}],
-          oportunidades: ["Solo 67,7% del stock publicado tiene foto Impel terminada; 32,3% (579 uds) están en vitrina con foto de inspección o placeholder","El BI no separa Tier 1 de Tier 2, por lo que no podemos cuantificar la adopción específica de cabina virtual 360","Cobertura Impel por zona: Sur lidera con 74,8%, RM es peor con 65,3%","Tier 2 ha sido la salida estándar hasta abril 2026","Sin SLA definido entre 'foto capturada' y 'Impel terminada'"],
+          description: "Salida estándar de Impel: fondo limpio sin cabina virtual. Tier 2 de calidad. Data real BI 2026-04-28: 1.322 unidades con foto Impel terminada (61,5% del stock publicado). Nota: el BI agrupa Tier 1 + Tier 2 como IMPEL - la adopción específica de cabina virtual 360 requiere reporte Impel detallado.",
+          kpis: [{value:"1.322",suffix:"uds",label:"Con foto Impel (Tier 1 + Tier 2)"},{value:"61,5",suffix:"%",label:"Del stock publicado"},{value:"827",suffix:"uds",label:"Publicadas sin foto Impel lista (38,5%)"}],
+          oportunidades: ["Solo 61,5% del stock publicado tiene foto Impel terminada; 38,5% (827 uds) están en vitrina con foto de inspección o placeholder","El BI no separa Tier 1 de Tier 2, por lo que no podemos cuantificar la adopción específica de cabina virtual 360","Cobertura Impel por zona: Longitudinal lidera con 63,8%, RM es la más afectada con 59,6%","Tier 2 ha sido la salida estándar hasta abril 2026","Sin SLA definido entre 'foto capturada' y 'Impel terminada'"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Migrar la generación de fotos finales in-house al momento de la inspección mecánica — deprecar el servicio Impel externo y ahorrar $4,2M/mes ($50,4M/año)","Durante la transición: definir SLA foto tomada → Impel lista (ej. <24h) y medir calidad objetiva","Target mínimo 85% foto Impel por zona hasta completar el roll-out del desarrollo interno"]
         },
         { num: 3, title: "Cabina virtual 360 (Tier 1)",
-          description: "Capacidad incorporada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopción marginal aún - el BI actual no separa Tier 1 del Tier 2 (ambos se cuentan como 'IMPEL' = 1.211 uds, 67,7%), así que la cuantificación específica requiere reporte Impel detallado.",
-          kpis: [{value:"—",suffix:"%",label:"Subset Impel con cabina virtual 360"},{value:"1.211",suffix:"uds",label:"Techo teórico (Impel total)"},{value:"—",suffix:"",label:"Objetivo 30/60/90 días"}],
-          oportunidades: ["El reporte BI vigente no permite medir adopción de Tier 1 aisladamente - bloquea el seguimiento gerencial","Capacidad reciente (2026-04-13): todavía poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorización explícita de segmentos (ej. lujo primero)","Techo teórico de conversión hoy: las 1.211 uds Impel podrían migrarse a Tier 1 sin esfuerzo incremental en captura"],
+          description: "Capacidad incorporada ~2026-04-13. Aplica look de estudio giratorio con branding CLICAR sobre la foto Impel. Adopción marginal aún - el BI actual no separa Tier 1 del Tier 2 (ambos se cuentan como 'IMPEL' = 1.322 uds, 61,5%), así que la cuantificación específica requiere reporte Impel detallado.",
+          kpis: [{value:"—",suffix:"%",label:"Subset Impel con cabina virtual 360"},{value:"1.322",suffix:"uds",label:"Techo teórico (Impel total)"},{value:"—",suffix:"",label:"Objetivo 30/60/90 días"}],
+          oportunidades: ["El reporte BI vigente no permite medir adopción de Tier 1 aisladamente - bloquea el seguimiento gerencial","Capacidad reciente (2026-04-13): todavía poquitas fotos en Tier 1","Sin plan publicado de escalamiento a 100% del stock","Sin priorización explícita de segmentos (ej. lujo primero)","Techo teórico de conversión hoy: las 1.322 uds Impel podrían migrarse a Tier 1 sin esfuerzo incremental en captura"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Desarrollar la capa cabina virtual 360 in-house aplicada al momento de la inspección mecánica — deprecar Impel y ahorrar $4,2M/mes","Hasta el corte: priorizar lujo / alto ticket con cabina virtual 360 vía Impel","Reporte semanal de % stock en Tier 1 con tendencia"]
         },
         { num: 4, title: "Backlog y no-procesamiento",
-          description: "Unidades publicadas esperando foto Impel lista, o que nunca la reciben. Data real BI 2026-04-17: 579 uds en 'backlog visible' = publicadas sin foto Impel (375 con foto de inspección 'Tier 3' + 204 sin foto 'Tier 4').",
-          kpis: [{value:"579",suffix:"uds",label:"Backlog visible (32,3% publicado)"},{value:"375",suffix:"uds",label:"Con foto inspección (Tier 3)"},{value:"204",suffix:"uds",label:"Sin foto alguna (Tier 4)"}],
-          oportunidades: ["1 de cada 3 unidades publicadas (32,3%) NO tiene foto Impel - vitrina degradada de forma masiva","RM concentra 114 de las 204 unidades Tier 4 (55,9%) - vitrina más afectada","El backlog hoy es invisible al negocio: sin reporte ni alerta ni owner","Sin data de antigüedad del backlog - requiere cruce con fecha de publicación por unidad","No se distingue 'esperando Impel' de 'nunca tendra Impel' (abandono)"],
+          description: "Unidades publicadas esperando foto Impel lista, o que nunca la reciben. Data real BI 2026-04-28: 827 uds en 'backlog visible' = publicadas sin foto Impel (489 con foto de inspección 'Tier 3' + 338 sin foto 'Tier 4').",
+          kpis: [{value:"827",suffix:"uds",label:"Backlog visible (38,5% publicado)"},{value:"489",suffix:"uds",label:"Con foto inspección (Tier 3)"},{value:"338",suffix:"uds",label:"Sin foto alguna (Tier 4)"}],
+          oportunidades: ["Más de 1 de cada 3 unidades publicadas (38,5%) NO tiene foto Impel - vitrina degradada de forma masiva","RM concentra 208 de las 338 unidades Tier 4 (61,5%) - vitrina más afectada","El backlog hoy es invisible al negocio: sin reporte ni alerta ni owner","Sin data de antigüedad del backlog - requiere cruce con fecha de publicación por unidad","No se distingue 'esperando Impel' de 'nunca tendrá Impel' (abandono)"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Eliminar el backlog de origen: foto final generada durante la inspección mecánica (in-house) — no hay pipeline externo que se atrase","Mientras tanto: reporte diario de backlog por zona y sucursal + alerta cuando backlog > 20% del publicado","Política transitoria: toda unidad Tier 4 debe tener resolución (Impel o despublicación) en 72h"]
         }
       ]
@@ -2009,9 +2009,9 @@ var journey = {
       ],
       substeps: [
         { num: 1, title: "Distribución de stock por tier",
-          description: "Métrica maestra: que proporción del stock publicado (1.790 uds) está en cada tipo de foto. Data real BI 2026-04-17: Impel 1.211 (67,7%), Inspección 375 (20,9%), Sin foto 204 (11,4%).",
-          kpis: [{value:"67,7",suffix:"%",label:"Con foto Impel (1.211 uds)"},{value:"20,9",suffix:"%",label:"Con foto inspección (375 uds)"},{value:"11,4",suffix:"%",label:"Sin foto (204 uds)"}],
-          oportunidades: ["32,3% del stock publicado NO tiene foto Impel: 375 con inspección + 204 sin foto = 579 uds degradadas","Zona Metropolitana concentra el problema: 114 de 204 sin-foto (55,9%) están en RM","Tier 1 (cabina virtual 360) con adopción marginal - aún no cuantificable como subset del 67,7% Impel","Sin target oficial de distribución por tier","Zona Sur muestra mejor ejecución: solo 8,9% sin foto"],
+          description: "Métrica maestra: que proporción del stock publicado (2.149 uds) está en cada tipo de foto. Data real BI 2026-04-28: Impel 1.322 (61,5%), Inspección 489 (22,8%), Sin foto 338 (15,7%).",
+          kpis: [{value:"61,5",suffix:"%",label:"Con foto Impel (1.322 uds)"},{value:"22,8",suffix:"%",label:"Con foto inspección (489 uds)"},{value:"15,7",suffix:"%",label:"Sin foto (338 uds)"}],
+          oportunidades: ["38,5% del stock publicado NO tiene foto Impel: 489 con inspección + 338 sin foto = 827 uds degradadas","Zona Metropolitana concentra el problema: 208 de 338 sin-foto (61,5%) están en RM","Tier 1 (cabina virtual 360) con adopción marginal - aún no cuantificable como subset del 61,5% Impel","Sin target oficial de distribución por tier","Ninguna zona supera el 70% de cobertura Impel"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] Con foto final generada durante la inspección (in-house), el mix converge a 100% Tier 1 sin necesidad de targets por zona — se elimina la existencia de Tier 3 y Tier 4","Durante la transición: reporte semanal de mix por zona y alerta cuando una zona supera 15% sin-foto"],
           chartType: 'prep-foto-zona'
         },
@@ -2023,8 +2023,8 @@ var journey = {
         },
         { num: 3, title: "Auditoría de calidad visible",
           description: "Revisión operativa del catálogo público para detectar degradación de vitrina. El ranking de sucursales por % sin-foto identifica los puntos de intervención prioritarios (ver gráfico).",
-          kpis: [{value:"51,5",suffix:"%",label:"Peor sucursal (Concepción J. Alessandri R. 1885)"},{value:"48,4",suffix:"%",label:"2da peor (Vitacura Padre Hurtado 1246)"},{value:"43",suffix:"uds",label:"Sin foto en top 3 peores sucursales"}],
-          oportunidades: ["3 sucursales concentran 43 de las 204 unidades sin foto (21%): J. Alessandri 1885, Vitacura Padre Hurtado 1246, José Miguel Carrera 6197","Carshopping A. Vespucio 2451 es la sucursal con MÁS unidades sin foto en absoluto (33 uds) aunque %relativo es 19,4%","Auditoría actual de fotos de inspección es diaria pero sin métrica agregada por sucursal","Sin auditoría sistemática de placeholders Tier 4","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
+          kpis: [{value:"35",suffix:"uds",label:"Mayor absoluto (Carshopping A. Vespucio 2451)"},{value:"23",suffix:"uds",label:"2do (Movicenter A. Vespucio 1155)"},{value:"76",suffix:"uds",label:"Sin foto en top 3 sucursales (22,5%)"}],
+          oportunidades: ["Carshopping lidera con 35 uds sin foto, seguido de Movicenter (23) y Autopark (18): top 3 acumulan 76 de 338 uds (22,5%)","José Miguel Carrera 6197 tiene el mayor % relativo: 15 de 35 publicadas sin foto (42,9%)","Zona Metropolitana concentra 208 de las 338 uds sin foto del sistema (61,5%)","Auditoría actual de fotos de inspección es diaria pero sin métrica agregada por sucursal","Criterio 'mejor sin foto que foto fea' es subjetivo y no documentado por sucursal"],
           mejoras: ["[SOLUCIÓN DE RAÍZ] La auditoría por sucursal deja de ser necesaria cuando la foto se genera durante la inspección (in-house): todas las sucursales entregan unidades con foto lista el mismo día","Mientras se desarrolla: intervención focalizada en top 5 peores sucursales + ranking interno","SLA transitorio por sucursal: no más de 10% sin-foto"],
           chartType: 'prep-foto-sucursal'
         },
@@ -2565,12 +2565,12 @@ var OKRS = {
       source: 'Data comercial Ene-Abr 2026 · 19.150 leads/mes · 376 compras/mes promedio' },
     { macro: 'preparación', label: 'Eje Preparación',
       metric: '% stock publicado con foto Tier 1 / 2 (Impel)',
-      baseline: '67,7%', target: '95%', unit: 'del stock publicado',
-      source: 'BI 2026-04-17 · 1.211 de 1.790 uds con foto Impel' },
+      baseline: '61,5%', target: '95%', unit: 'del stock publicado',
+      source: 'BI 2026-04-28 · 1.322 de 2.149 uds con foto Impel' },
     { macro: 'preparación', label: 'Eje Preparación',
       metric: '% inventario total publicado en vitrina',
-      baseline: '69,5%', target: '90%', unit: 'del inventario total',
-      source: 'BI 2026-04-17 · 1.790 de 2.574 uds publicadas' },
+      baseline: '79,2%', target: '90%', unit: 'del inventario total',
+      source: 'BI 2026-04-28 · 2.149 de 2.714 uds publicadas' },
     { macro: 'venta', label: 'Eje Venta',
       metric: 'Cotizaciones web iniciadas / mes',
       baseline: '862', target: '2.000', unit: '/ mes',
@@ -2583,7 +2583,7 @@ var OKRS = {
   transformacionales: [
     { title: 'Generar la foto final durante la inspección mecánica (in-house)',
       macro: 'preparación',
-      kr: '<strong>Tier 1/2 del stock publicado: 67,7% → 95%</strong> · Tier 4 (sin foto): 204 uds → <30',
+      kr: '<strong>Tier 1/2 del stock publicado: 61,5% → 95%</strong> · Tier 4 (sin foto): 338 uds → <30',
       savings: '$4,2M / mes · $50,4M / año',
       owner: 'Por asignar · TI + Operaciones + Foto' },
     { title: 'Proteger clientes Oro/VIP con VPP de descarte automático',
@@ -2687,15 +2687,15 @@ var OKRS = {
       objective: 'Publicar más stock, más rápido y con data completa',
       krs: [
         { desc: '% stock publicado vs. inventario total',
-          detail: 'Hoy 69,5% del inventario está publicado (1.790 de 2.574 uds). 200 uds disponibles retenidas (10,1%) + 580 no elegibles (22,5%). Subir a 90% ≈ +500 uds visibles al comprador.',
-          baseline: '69,5%', target: '90%',
-          impacts: 'Desagregar "En acopio" en subcategorías accionables · Liberación automática de reservas fantasma · SLA máximo Quiter → publicación (<24-48h) · Bloqueo de publicación sin campos mínimos · Reporte diario de brecha disponibles vs. publicadas' },
-        { desc: 'Unidades retenidas "En acopio"',
-          detail: '166 uds (83% de las retenciones con stock disponible) hoy en "En acopio" — categoría cajón de sastre sin SLA, subcategoría ni owner.',
-          baseline: '166 uds', target: '<50',
+          detail: 'Hoy 79,2% del inventario está publicado (2.149 de 2.714 uds). 114 uds disponibles retenidas (5%) + 451 no elegibles (16,6%). Subir a 90% ≈ +234 uds adicionales visibles al comprador.',
+          baseline: '79,2%', target: '90%',
+          impacts: 'Desagregar Ferry Truck/Acopio en subcategorías accionables · Liberación automática de reservas fantasma · SLA máximo Quiter → publicación (<24-48h) · Bloqueo de publicación sin campos mínimos · Reporte diario de brecha disponibles vs. publicadas' },
+        { desc: 'Unidades retenidas en acopio / sin procesar',
+          detail: '114 uds disponibles retenidas hoy: Ferry Truck 71 (62%), Desfase Actualización 29 (25%), Acopio 10 (9%), Concesionario VN 3 (3%). Categorías sin SLA, sin owner claro.',
+          baseline: '114 uds', target: '<30',
           impacts: 'Subcategorías accionables (recién llegado · pendiente limpieza · pendiente documentación) · Owner y SLA <48h por subcategoría · Dashboard diario con alerta cuando una categoría crece · Aging por unidad retenida' },
         { desc: 'Reservas fantasma liberadas automáticamente',
-          detail: '403 uds reservadas hoy (69% del inventario no disponible). Reservas sin avance inmovilizan stock que debería volver a vitrina.',
+          detail: '272 uds reservadas hoy (60% del inventario no disponible). Reservas sin avance inmovilizan stock que debería volver a vitrina.',
           baseline: '0', target: '100%',
           impacts: 'Regla en Llaima: liberación a 48h sin avance · Alerta al asesor antes del vencimiento · Panel del cliente con estado de la reserva · Diferenciar reserva comercial activa vs. fantasma (>30 días sin avance)' }
       ] },
@@ -2703,28 +2703,28 @@ var OKRS = {
       objective: 'Cerrar la brecha Tier 1/2 del catálogo (solución raíz)',
       krs: [
         { desc: '% stock publicado con foto Impel lista',
-          detail: 'Hoy 67,7% (1.211 de 1.790 uds). El 32,3% restante está en vitrina con foto de inspección (Tier 3) o placeholder (Tier 4). Costo externo: $4,2M/mes que se elimina con la solución raíz.',
-          baseline: '67,7%', target: '95%',
-          impacts: '<strong>[TRANSFORMACIONAL]</strong> Foto final in-house al momento de la inspección mecánica (deprecar Impel) · SLA transitorio foto tomada → Impel <24h · Target mínimo 85% por zona hasta completar el roll-out · Priorización de stock premium durante transición' },
+          detail: 'Hoy 61,5% (1.322 de 2.149 uds). El 38,5% restante está en vitrina con foto de inspección (Tier 3) o placeholder (Tier 4). Costo externo: $4,2M/mes que se elimina con la solución raíz.',
+          baseline: '61,5%', target: '95%',
+          impacts: '<strong>[TRANSFORMACIONAL]</strong> Foto final in-house al momento de la inspección mecánica (deprecar Impel) · SLA transitorio foto tomada → Impel <24h · Target mínimo 80% por zona hasta completar el roll-out · Priorización de stock premium durante transición' },
         { desc: 'Unidades sin foto alguna (Tier 4)',
-          detail: '204 uds publicadas hoy con placeholder "Estamos preparando esta imagen". 114 (55,9%) están en zona RM. Tier 4 mata la visibilidad del auto en la vitrina.',
-          baseline: '204 uds', target: '<30',
+          detail: '338 uds publicadas hoy con placeholder "Estamos preparando esta imagen". 208 (61,5%) están en zona RM. Tier 4 mata la visibilidad del auto en la vitrina.',
+          baseline: '338 uds', target: '<30',
           impacts: 'SLA 72h máximo en Tier 4 (upgrade o despublicación) · Owner operacional del pipeline visual · Reporte diario de backlog por zona/sucursal · Alerta cuando backlog >20% del publicado' },
         { desc: 'Cobertura Impel zona RM',
-          detail: 'Zona Metropolitana es la peor con 65,3% de cobertura. Zona Sur lidera con 74,8%. El problema está concentrado en pocas sucursales.',
-          baseline: '65,3%', target: '90%',
-          impacts: 'Intervención focalizada en top 5 peores sucursales (J. Alessandri, Vitacura, J. M. Carrera) · Ranking interno para presión social positiva · Recursos temporales de fotografía para cerrar brecha · Auditoría diaria del subset Tier 4 con owner por sucursal' }
+          detail: 'Zona Metropolitana es la más afectada con 59,6% de cobertura (669/1.123). Carshopping concentra 35 uds sin foto y Movicenter 23. El problema está concentrado en pocas sucursales.',
+          baseline: '59,6%', target: '90%',
+          impacts: 'Intervención focalizada en top 5 peores sucursales (Carshopping, Movicenter, Autopark, Cerrillos, Los Cobres) · Ranking interno para presión social positiva · Recursos temporales de fotografía para cerrar brecha · Auditoría diaria del subset Tier 4 con owner por sucursal' }
       ] },
     10: { macro: 'preparación', title: 'Etapa 10 · Clasificación y Orden en Catálogo',
       objective: 'Vitrina digital premium, sin degradación visible',
       krs: [
         { desc: '% unidades en Tier 1 + Tier 2',
-          detail: 'Hoy 67,7% del publicado (BI no separa Tier 1 de Tier 2). Con la foto final al inspeccionar se converge a 100% Tier 1 sin targets por zona.',
-          baseline: '67,7%', target: '95%',
+          detail: 'Hoy 61,5% del publicado (BI no separa Tier 1 de Tier 2). Con la foto final al inspeccionar se converge a 100% Tier 1 sin targets por zona.',
+          baseline: '61,5%', target: '95%',
           impacts: 'Foto final in-house al inspeccionar (solución raíz) · Reporte semanal del mix por zona · Alerta cuando una zona supera 15% sin-foto · Plan de escalamiento a Tier 1 priorizando segmento lujo' },
-        { desc: '% sin foto en la peor sucursal',
-          detail: 'Concepción J. Alessandri R. 1885 lidera con 51,5% de sin-foto, seguida de Vitacura Padre Hurtado 1246 (48,4%). Top 3 peores = 43 uds sin foto (21% del total).',
-          baseline: '51,5%', target: '<10%',
+        { desc: 'Unidades sin foto en la peor sucursal',
+          detail: 'Carshopping A. Vespucio 2451 lidera con 35 uds sin foto, seguido de Movicenter (23) y Autopark (18). José Miguel Carrera tiene mayor % relativo: 42,9% (15/35 publicadas).',
+          baseline: '35 uds', target: '<5',
           impacts: 'Ranking interno de sucursales visible · Intervención focalizada semanal en top 5 peores · SLA transitorio por sucursal (máx. 10% sin-foto) · Responsable identificado por sucursal' },
         { desc: 'Permanencia promedio en Tier 4',
           detail: 'No hay SLA explícito para sacar unidades de Tier 3/4. Algunas pueden quedar "olvidadas" por meses sin owner claro.',
@@ -2845,7 +2845,7 @@ function renderOKRsSlide(i) {
       '<div class="impact-assumptions-title">Supuestos base del ejercicio</div>' +
       '<div class="impact-assumptions-list">' +
         '<span>Sin aumentar inversión digital ni volumen de tráfico</span>' +
-        '<span>Mismo inventario base (2.574 uds)</span>' +
+        '<span>Mismo inventario base (2.714 uds)</span>' +
         '<span>Mejoras solo en conversión y gestión — no en captación nueva</span>' +
         '<span>Margen promedio por auto $1.200.000 (validar con Pricing)</span>' +
         '<span>Referencia: 19.150 leads/mes compra · 136.334 visitas/mes venta · 6m Salazar-Israel</span>' +
@@ -2862,9 +2862,9 @@ function renderOKRsSlide(i) {
       '</div>' +
       '<div class="impact-card preparación">' +
         '<div class="impact-eje">Eje Preparación</div>' +
-        '<div class="impact-big"><span class="impact-big-number">+527</span><span class="impact-big-unit">uds visibles</span></div>' +
-        '<div class="impact-headline">El inventario que existe pero la vitrina no muestra</div>' +
-        '<div class="impact-detail">El mismo stock, mejor publicado: de <strong>1.790 → 2.317 uds</strong> en vitrina (69,5% → 90%). Foto Tier 1/2 de <strong>67,7% → 95%</strong>. <em>No hay unidades nuevas — hay unidades ocultas.</em></div>' +
+        '<div class="impact-big"><span class="impact-big-number">+234</span><span class="impact-big-unit">uds visibles</span></div>' +
+        '<div class="impact-headline">El inventario existe — la vitrina aún no lo muestra todo</div>' +
+        '<div class="impact-detail">El mismo stock, mejor publicado: de <strong>2.149 → 2.443 uds</strong> en vitrina (79,2% → 90%). Foto Tier 1/2 de <strong>61,5% → 95%</strong>. <em>No hay unidades nuevas — hay unidades ocultas y vitrina degradada.</em></div>' +
         '<div class="impact-money">Multiplicador del eje Venta · ahorro $4,2M/mes en Impel</div>' +
         '<div class="impact-assumptions">Palancas: pipeline de publicación · SLA de foto · eliminación de reservas fantasma · gate de precio.</div>' +
       '</div>' +
@@ -3075,27 +3075,27 @@ var EJE_CLUSTERS = {
   },
   preparación: {
     northStars: [
-      { metric: '% stock con foto Tier 1/2 (Impel)', baseline: '67,7%', target: '95%' },
-      { metric: '% inventario total publicado en vitrina', baseline: '69,5%', target: '90%' }
+      { metric: '% stock con foto Tier 1/2 (Impel)', baseline: '61,5%', target: '95%' },
+      { metric: '% inventario total publicado en vitrina', baseline: '79,2%', target: '90%' }
     ],
-    nsImpact: '+527 uds visibles · vitrina premium · ahorro $4,2M / mes Impel',
-    headline: 'El inventario existe y la mayoría del stock está disponible, pero la vitrina solo muestra el 69,5% y las fotos no escalan al ritmo del catálogo.',
+    nsImpact: '+234 uds visibles adicionales · vitrina premium · ahorro $4,2M / mes Impel',
+    headline: 'El inventario está mayormente publicado (79,2%), pero 338 uds publicadas no tienen foto (15,7%) y solo el 61,5% tiene foto Impel: más stock visible, calidad visual degradada.',
     clusters: [
       { title: 'Pipeline visual', sub: 'Foto Impel · cabina virtual · Tier 4 sin foto',
         pains: [
-          { t: '32,3% del stock publicado sin foto Impel', impact: '$4,2M / mes · $50,4M / año' }
+          { t: '38,5% del stock publicado sin foto Impel (827 uds)', impact: '$4,2M / mes · $50,4M / año' }
         ],
         iniciativas: [
           { t: '<strong>[TRANSFORMACIONAL]</strong> Foto in-house en la inspección mecánica (deprecar Impel)', owner: 'Vitrina Digital · Productos Digitales · Canales', plazo: 'Q3' },
           { t: 'SLA transitorio foto tomada → Impel <24h con auditoría diaria', owner: 'Vitrina Digital', plazo: '30d' },
-          { t: 'Auditoría diaria del subset 204 sin foto con owner por sucursal', owner: 'Vitrina Digital · Operaciones', plazo: '30d' }
+          { t: 'Auditoría diaria del subset 338 sin foto con owner por sucursal', owner: 'Vitrina Digital · Operaciones', plazo: '30d' }
         ]
       },
-      { title: 'Inventario inmovilizado', sub: 'Reservas fantasma · "En acopio" · gate de precio',
+      { title: 'Inventario inmovilizado', sub: 'Reservas fantasma · acopio sin SLA · gate de precio',
         pains: [
-          { t: '22,5% del inventario inmovilizado', impact: '1 de cada 4 unidades bloqueadas' },
-          { t: '166 uds "En acopio" sin definición operacional', impact: '83% del stock retenido' },
-          { t: '17 uds bloqueadas hoy por falta de precio', impact: '8,5% del retenido' }
+          { t: '16,6% del inventario inmovilizado', impact: '451 uds no elegibles para vitrina' },
+          { t: '114 uds disponibles retenidas sin SLA', impact: 'Ferry Truck 71 + Desfase 29 + otros' },
+          { t: '17 uds bloqueadas hoy por falta de precio', impact: 'Gate operacional concreto' }
         ],
         iniciativas: [
           { t: 'Liberación automática de reservas a 48h sin avance', owner: 'Vitrina Digital · Productos Digitales', plazo: '60d' },
@@ -3105,7 +3105,7 @@ var EJE_CLUSTERS = {
       },
       { title: 'Vitrina y catálogo', sub: 'Cobertura por zona · sucursales críticas',
         pains: [
-          { t: 'Solo 69,5% del inventario en vitrina', impact: '784 uds fuera del catálogo' }
+          { t: '79,2% del inventario en vitrina (brecha: 565 uds sin publicar)', impact: '234 uds adicionales recuperables' }
         ],
         iniciativas: [
           { t: 'Reporte diario de brecha disponibles vs. publicadas', owner: 'Vitrina Digital · BI', plazo: '30d' },
@@ -3115,7 +3115,7 @@ var EJE_CLUSTERS = {
       }
     ],
     krs: [
-      { desc: 'Unidades "En acopio"', baseline: '166', target: '<50' },
+      { desc: 'Unidades retenidas disponibles (acopio/sin procesar)', baseline: '114', target: '<30' },
       { desc: 'Reservas fantasma liberadas auto.', baseline: '0%', target: '100%' }
     ]
   },
@@ -3361,7 +3361,7 @@ function renderExecSummarySlide(i) {
           '<div class="eje-card-stat"><div class="eje-card-stat-value">17</div><div class="eje-card-stat-label">Subprocesos</div></div>' +
         '</div>' +
         '<div class="eje-card-scope">Asignación de Precio · Publicación Web · Foto Impel · Clasificación en Catálogo</div>' +
-        '<div class="eje-card-source">Snapshot BI 2026-04-17 · 2.574 uds inventario · 1.790 publicadas</div>' +
+        '<div class="eje-card-source">Snapshot BI 2026-04-28 · 2.714 uds inventario · 2.149 publicadas</div>' +
       '</div>' +
       '<div class="eje-card venta">' +
         '<div class="eje-card-head">' +
@@ -3420,22 +3420,22 @@ function renderExecSummarySlide(i) {
       title: 'Eje Preparación',
       sub: 'El inventario existe pero no llega limpio a la vitrina: foto, precio y reservas inmovilizan stock',
       items: [
-        { rank: 1, t: '32,3% del stock publicado sin foto Impel', d: '579 uds publicadas con foto de inspección o placeholder. El servicio Impel externo cuesta $4,2M/mes y no escala. Zona RM concentra 114 de 204 uds sin foto (55,9%).',
-          iniciativas: ['<strong>[TRANSFORMACIONAL]</strong> Foto in-house en la inspección mecánica (deprecar Impel)', 'SLA transitorio foto tomada → Impel <24h', 'Auditoría diaria del subset 204 sin foto con owner por sucursal'],
+        { rank: 1, t: '38,5% del stock publicado sin foto Impel', d: '827 uds publicadas con foto de inspección o placeholder. El servicio Impel externo cuesta $4,2M/mes y no escala. Zona RM concentra 208 de 338 uds sin foto (61,5%). Carshopping (35 uds) y Movicenter (23 uds) lideran.',
+          iniciativas: ['<strong>[TRANSFORMACIONAL]</strong> Foto in-house en la inspección mecánica (deprecar Impel)', 'SLA transitorio foto tomada → Impel <24h', 'Auditoría diaria del subset 338 sin foto con owner por sucursal'],
           owner: 'Vitrina Digital · Productos Digitales · Canales Digitales', ownerNames: 'Javiera Jerez · Barbara Colle · Martin Flores',
           i: '$4,2M / mes<br/>$50,4M / año' },
-        { rank: 2, t: '22,5% del inventario inmovilizado', d: '580 uds no elegibles para publicar: 403 reservadas, 166 con problemas legales, 9 UFM/falla mecánica, 2 no disponibles. Sin distinguir reserva comercial activa vs. fantasma.',
+        { rank: 2, t: '16,6% del inventario inmovilizado', d: '451 uds no elegibles para publicar: 272 reservadas, 166 con problemas legales, 13 SAIS/falla mecánica. Sin distinguir reserva comercial activa vs. fantasma.',
           iniciativas: ['Liberación automática de reservas a 48h sin avance', 'Alerta al asesor antes del vencimiento', 'Diferenciar reserva comercial vs. fantasma (>30d)'],
           owner: 'Vitrina Digital · Productos Digitales', ownerNames: 'Javiera Jerez · Barbara Colle',
-          i: '1 de cada 4<br/>unidades bloqueadas' },
-        { rank: 3, t: '166 uds "En acopio" sin definición operacional', d: 'Es el 83% de las 200 retenciones con stock disponible. "En acopio" opera como cajón de sastre: sin SLA, sin subcategoría, sin owner por motivo.',
+          i: '451 uds no elegibles<br/>para vitrina' },
+        { rank: 3, t: '114 uds disponibles retenidas sin SLA (Ferry Truck + Acopio)', d: 'Ferry Truck/Centro de Acopio 71 (62%), Desfase Actualización 29 (25%), Acopio 10 (9%). Operan como cajón de sastre: sin SLA, sin subcategoría, sin owner.',
           iniciativas: ['Subcategorías accionables (recién llegado · limpieza · docs)', 'Owner y SLA <48h por subcategoría', 'Dashboard diario con alerta de aging'],
           owner: 'Vitrina Digital + Logística', ownerNames: 'Javiera Jerez · Natalia Reyes',
-          i: '83% del stock<br/>retenido' },
-        { rank: 4, t: 'Solo 69,5% del inventario en vitrina', d: '1.790 de 2.574 uds publicadas. Peor ejecución: Concepción J. Alessandri R. 1885 (51,5% sin foto) y Vitacura Padre Hurtado 1246 (48,4%).',
+          i: '114 uds disponibles<br/>sin publicar' },
+        { rank: 4, t: '79,2% del inventario en vitrina · brecha hacia 90%', d: '2.149 de 2.714 uds publicadas. Top sucursales por sin foto (absoluto): Carshopping 35, Movicenter 23, Autopark 18.',
           iniciativas: ['Reporte diario de brecha disponibles vs. publicadas', 'Bloqueo de publicación sin campos mínimos', 'Intervención focalizada top 5 peores sucursales'],
           owner: 'Vitrina Digital · Productos Digitales', ownerNames: 'Javiera Jerez · Barbara Colle',
-          i: '784 uds fuera<br/>del catálogo' },
+          i: '234 uds adicionales<br/>recuperables' },
         { rank: 5, t: '17 uds bloqueadas hoy por falta de precio', d: 'Gate operacional concreto. Sin SLA Quiter → precio, sin alerta cuando una unidad lleva > X horas sin valor asignado.',
           iniciativas: ['SLA <24h Quiter → precio cargado', 'Alerta automática por unidad sin precio', 'Reglas paramétricas modelo + antigüedad + condición'],
           owner: 'Pricing Usados · Productos Digitales', ownerNames: 'Raul Olivares · Barbara Colle',
@@ -3783,7 +3783,7 @@ function renderExecSummarySlide(i) {
         '</div>' +
         '<div class="deck-timing-card preparación">' +
           '<div class="deck-timing-eje">Eje Preparación</div>' +
-          '<div class="deck-timing-data">Snapshot BI · 2.574 unidades<br/>Fotografías e inventario · Abr 2026</div>' +
+          '<div class="deck-timing-data">Snapshot BI · 2.714 unidades<br/>Fotografías e inventario · 28 Abr 2026</div>' +
           '<span class="deck-timing-badge curso">En levantamiento</span>' +
         '</div>' +
         '<div class="deck-timing-card venta">' +
@@ -3819,7 +3819,7 @@ function renderExecSummarySlide(i) {
             '<div class="deck-comp-stage">Foto Impel <span class="deck-comp-stage-num">· 3 sub</span></div>' +
             '<div class="deck-comp-stage">Clasificación en Catálogo <span class="deck-comp-stage-num">· 3 sub</span></div>' +
           '</div>' +
-          '<div class="deck-comp-stats"><div class="deck-comp-stat"><div class="deck-comp-stat-val">4</div><div class="deck-comp-stat-label">Procesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">10</div><div class="deck-comp-stat-label">Subprocesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">2.574</div><div class="deck-comp-stat-label">Unidades</div></div></div>' +
+          '<div class="deck-comp-stats"><div class="deck-comp-stat"><div class="deck-comp-stat-val">4</div><div class="deck-comp-stat-label">Procesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">10</div><div class="deck-comp-stat-label">Subprocesos</div></div><div class="deck-comp-stat"><div class="deck-comp-stat-val">2.714</div><div class="deck-comp-stat-label">Unidades</div></div></div>' +
         '</div>' +
         '<div class="deck-comp-eje">' +
           '<div class="deck-comp-head venta"><span class="memo-eje-num memo-eje-num-venta">3</span><div><div class="deck-comp-eje-name">Venta</div><div class="deck-comp-eje-sub">Del comprador al auto entregado</div></div></div>' +
@@ -4226,16 +4226,16 @@ var CLIENTE_POR_SUBSTEP = {
   "4.5": { kpis: ["48% tasa de cierre final","52% no-cierre por precio insuficiente","NPS del cierre comercial"], lineamientos: ["Entregar siempre la oferta por escrito con vigencia (72h)","Explicar los próximos pasos post-venta","Agradecer y despedir aunque no haya cierre"] },
   "7.1": { kpis: ["17 uds bloqueadas hoy por falta de precio (8,5% de no publicadas)","Tiempo sin precio en vitrina"], lineamientos: ["No publicar con placeholder 'precio a consultar'","Si hay rango, explicarlo con argumentos"] },
   "7.2": { kpis: ["% unidades con ajuste de precio en primeros 30 días","% clientes que vieron precio distinto al reservar"], lineamientos: ["Respetar el precio cuando hay reserva activa","Comunicar proactivamente cualquier cambio al cliente afectado"] },
-  "8.1": { kpis: ["1.790 uds visibles al cliente (69,5% del inventario)","Lead time Quiter → publicación","% fichas con todos los campos completos"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
-  "8.2": { kpis: ["200 uds (10,1%) que el cliente no puede ver","166 uds atrapadas 'En acopio' (83%)","Tiempo promedio retenido"], lineamientos: ["Destrabar inventario retenido semanalmente","Owner claro por cada motivo de retención"] },
-  "8.3": { kpis: ["580 uds (22,5%) no elegibles para publicar","403 reservadas (69% del no disponible)","166 con problema legal"], lineamientos: ["Solo reservar con cliente comprometido","Resolver problemas legales con SLA definido","Evitar reservas fantasma que inmovilizan stock"] },
-  "9.1": { kpis: ["204 uds (11,4%) con placeholder 'Estamos preparando esta imagen'","RM concentra 114 de esas 204 uds (55,9%)","~10,1 días promedio entre disponibilidad en sucursal y foto Impel (rango 6,6 VPP Usados → 13,7 VPP Nuevos)"], lineamientos: ["Toda unidad publicada debe tener foto en <72h","Priorizar stock premium y de alto ticket"] },
-  "9.2": { kpis: ["1.211 uds con foto Impel (67,7% del publicado)","579 uds publicadas sin Impel lista (32,3%)","Sur lidera con 74,8% / RM peor con 65,3%"], lineamientos: ["Fondo limpio es el mínimo aceptable para publicar","Automatizar entrega al sitio web ni bien Impel esté listo"] },
-  "9.3": { kpis: ["% en cabina virtual 360 (BI no separa Tier 1 de Tier 2 aún)","Techo teórico actual: 1.211 uds","Diferencial de conversión vs. foto estándar"], lineamientos: ["Priorizar segmento lujo en las primeras semanas","Plan de escalamiento con hitos semanales publicados"] },
-  "9.4": { kpis: ["579 uds en backlog visible (32,3% del publicado)","375 con foto de inspección que ensucia la vitrina","204 sin ninguna foto (placeholder)"], lineamientos: ["SLA máximo 72h para upgrade o despublicar","Backlog visible con owner asignado por zona"] },
-  "10.1": { kpis: ["Mix 67,7% Impel / 20,9% Inspección / 11,4% Sin foto","Target: >80% en Tier 1+2","Target: <5% en Tier 4"], lineamientos: ["Top del catálogo debe ser 100% Tier 1+2","Reportar el mix de tiers semanalmente con tendencia"] },
+  "8.1": { kpis: ["2.149 uds visibles al cliente (79,2% del inventario)","Lead time Quiter → publicación","% fichas con todos los campos completos"], lineamientos: ["Mostrar disponibilidad real de stock","No publicar con data incompleta"] },
+  "8.2": { kpis: ["114 uds disponibles retenidas (5% del stock disponible)","Ferry Truck/Acopio 71 uds (62% del retenido)","Tiempo promedio retenido"], lineamientos: ["Destrabar inventario retenido semanalmente","Owner claro por cada motivo de retención"] },
+  "8.3": { kpis: ["451 uds (16,6%) no elegibles para publicar","272 reservadas (60% del no disponible)","166 con problema legal"], lineamientos: ["Solo reservar con cliente comprometido","Resolver problemas legales con SLA definido","Evitar reservas fantasma que inmovilizan stock"] },
+  "9.1": { kpis: ["338 uds (15,7%) con placeholder 'Estamos preparando esta imagen'","RM concentra 208 de esas 338 uds (61,5%)","~10,1 días promedio entre disponibilidad en sucursal y foto Impel (rango 6,6 VPP Usados → 13,7 VPP Nuevos)"], lineamientos: ["Toda unidad publicada debe tener foto en <72h","Priorizar stock premium y de alto ticket"] },
+  "9.2": { kpis: ["1.322 uds con foto Impel (61,5% del publicado)","827 uds publicadas sin Impel lista (38,5%)","Longitudinal lidera con 63,8% / RM más afectada con 59,6%"], lineamientos: ["Fondo limpio es el mínimo aceptable para publicar","Automatizar entrega al sitio web ni bien Impel esté listo"] },
+  "9.3": { kpis: ["% en cabina virtual 360 (BI no separa Tier 1 de Tier 2 aún)","Techo teórico actual: 1.322 uds","Diferencial de conversión vs. foto estándar"], lineamientos: ["Priorizar segmento lujo en las primeras semanas","Plan de escalamiento con hitos semanales publicados"] },
+  "9.4": { kpis: ["827 uds en backlog visible (38,5% del publicado)","489 con foto de inspección que ensucia la vitrina","338 sin ninguna foto (placeholder)"], lineamientos: ["SLA máximo 72h para upgrade o despublicar","Backlog visible con owner asignado por zona"] },
+  "10.1": { kpis: ["Mix 61,5% Impel / 22,8% Inspección / 15,7% Sin foto","Target: >80% en Tier 1+2","Target: <5% en Tier 4"], lineamientos: ["Top del catálogo debe ser 100% Tier 1+2","Reportar el mix de tiers semanalmente con tendencia"] },
   "10.2": { kpis: ["Días en stock Tier 4 vs. Tier 1","Conversión relativa por tier","CTR de ficha por tier"], lineamientos: ["Invertir donde haya retorno cuantitativo demostrado","Business case con data antes de escalar capacidad"] },
-  "10.3": { kpis: ["Peor sucursal: Concepción J. Alessandri R. 1885 (51,5% sin foto)","2da peor: Vitacura Padre Hurtado 1246 (48,4%)","Top 3 peores = 43 uds sin foto (21% del total)"], lineamientos: ["Intervención focalizada semanal en top 5 peores sucursales","Ranking público interno para presión social positiva"] },
+  "10.3": { kpis: ["Mayor absoluto: Carshopping A. Vespucio 2451 (35 uds sin foto)","Mayor %: José Miguel Carrera 6197 (42,9% sin foto)","Top 3 absoluto = 76 uds sin foto (22,5% del total)"], lineamientos: ["Intervención focalizada semanal en top 5 peores sucursales","Ranking público interno para presión social positiva"] },
   "10.4": { kpis: ["Permanencia promedio en Tier 3","Permanencia promedio en Tier 4","% upgrades efectivos por semana"], lineamientos: ["SLA máximo por tier: Tier 4 en 72h máximo","Owner operacional claro del pipeline visual"] },
   "11.1": { kpis: ["136.334 sesiones totales (30 días)","85,7% tráfico mobile (106.867 ses.)","58,4% bounce rate — más de la mitad abandona sin interactuar","3:07 min duración promedio por sesión"], lineamientos: ["Diseño mobile-first real: 85,7% del tráfico decide desde el móvil","La narrativa debe responder a las 4 etapas del viaje del comprador (categoría → modelo → precio → confianza)","El freno principal es la confianza, no el precio — priorizar testimonios, garantías y transparencia"] },
   "11.2": { kpis: ["62.955 sesiones del catálogo (30 días)","56% rebota en pág. 1 sin ver ningún auto","41% llegan a ficha desde catálogo","2.749 clics en botón filtros (solo 4,4% de sesiones)","273K dead clicks mensuales en banners no clicables"], lineamientos: ["Listado ordenado por calidad visual: autos sin foto al final","Filtros y buscador visibles — el usuario quiere refinar","Cero dead clicks: banner clicable o banner eliminado","Si el filtro no tiene stock, sugerir alternativas en vez de mostrar vacío"] },
@@ -4392,7 +4392,7 @@ var MACRO_META = {
     shortDescription: "Quiter, precio, publicación y pipeline de foto Impel (4 tiers: cabina virtual 360, fondo limpio, inspección, sin foto).",
     status: { text: "Data parcial - snapshot inventario", variant: "wip" },
     disabled: false,
-    universoValue: "2.574",
+    universoValue: "2.714",
     universoValueClass: "",
     universoLabel: "Unidades en inventario",
     universoSub: "Snapshot - fecha exacta por confirmar con Operaciones",
@@ -4479,62 +4479,62 @@ var chartState = {};
 })();
 
 // ============================================================
-// PREPARACION - DATA REAL (Reporte BI 2026-04-17)
+// PREPARACION - DATA REAL (Reporte BI 2026-04-28)
 // ============================================================
 var PREP_FUNNEL = {
-  total: 2574,
-  publicadas: 1790,
-  no_publicadas_disp: 200,
-  no_disponibles: 580
+  total: 2714,
+  publicadas: 2149,
+  no_publicadas_disp: 114,
+  no_disponibles: 451
 };
 var PREP_FOTOS_ZONA = [
-  { zona: 'Concepción',    impel: 157, inspección: 43,  sin_foto: 32,  total: 232 },
-  { zona: 'Longitudinal',  impel: 183, inspección: 57,  sin_foto: 26,  total: 266 },
-  { zona: 'Metropolitana', impel: 610, inspección: 210, sin_foto: 114, total: 934 },
-  { zona: 'Sur',           impel: 151, inspección: 33,  sin_foto: 18,  total: 202 },
-  { zona: 'Temuco',        impel: 110, inspección: 32,  sin_foto: 14,  total: 156 }
+  { zona: 'Concepción',    impel: 176, inspección: 75,  sin_foto: 32,  total: 283 },
+  { zona: 'Longitudinal',  impel: 203, inspección: 78,  sin_foto: 37,  total: 318 },
+  { zona: 'Metropolitana', impel: 669, inspección: 246, sin_foto: 208, total: 1123 },
+  { zona: 'Sur',           impel: 167, inspección: 50,  sin_foto: 35,  total: 252 },
+  { zona: 'Temuco',        impel: 107, inspección: 40,  sin_foto: 26,  total: 173 }
 ];
 var PREP_FOTOS_SUCURSAL = [
-  { s: 'Clinica J. Alessandri R. 2121',           z: 'Concepción',    impel: 37,  inspección: 10, sin_foto: 4,  total: 51 },
-  { s: 'Concepción C. Colón 8961',                z: 'Concepción',    impel: 40,  inspección: 3,  sin_foto: 2,  total: 45 },
-  { s: 'Concepción J. Alessandri R. 1885',        z: 'Concepción',    impel: 2,   inspección: 14, sin_foto: 17, total: 33 },
-  { s: 'Concepción Paicaví 2592',                 z: 'Concepción',    impel: 38,  inspección: 14, sin_foto: 5,  total: 57 },
-  { s: 'Vega 21 de Mayo 3225',                    z: 'Concepción',    impel: 40,  inspección: 2,  sin_foto: 4,  total: 46 },
-  { s: 'Chillan Av Brasil 80',                    z: 'Longitudinal',  impel: 27,  inspección: 12, sin_foto: 5,  total: 44 },
-  { s: 'Chillan Ecuador 330',                     z: 'Longitudinal',  impel: 13,  inspección: 5,  sin_foto: 2,  total: 20 },
-  { s: 'Chillan Ecuador 768',                     z: 'Longitudinal',  impel: 20,  inspección: 6,  sin_foto: 2,  total: 28 },
-  { s: 'Linares Leon Bustos 0239',                z: 'Longitudinal',  impel: 12,  inspección: 0,  sin_foto: 0,  total: 12 },
-  { s: 'Los Angeles Av. Alemania 410',            z: 'Longitudinal',  impel: 22,  inspección: 9,  sin_foto: 4,  total: 35 },
-  { s: 'Los Angeles Industrias 7730',             z: 'Longitudinal',  impel: 27,  inspección: 10, sin_foto: 1,  total: 38 },
-  { s: 'Talca 11 Oriente 1180',                   z: 'Longitudinal',  impel: 12,  inspección: 4,  sin_foto: 4,  total: 20 },
-  { s: 'Talca San Miguel 2790',                   z: 'Longitudinal',  impel: 50,  inspección: 11, sin_foto: 8,  total: 69 },
-  { s: 'Autopark Departamental 4500',             z: 'Metropolitana', impel: 95,  inspección: 17, sin_foto: 9,  total: 121 },
-  { s: 'Carshopping A. Vespucio 2451',            z: 'Metropolitana', impel: 96,  inspección: 41, sin_foto: 33, total: 170 },
-  { s: 'Cerrillos Pedro A. Cerda 669',            z: 'Metropolitana', impel: 51,  inspección: 11, sin_foto: 5,  total: 67 },
-  { s: 'Jose Miguel Carrera 6197',                z: 'Metropolitana', impel: 15,  inspección: 4,  sin_foto: 11, total: 30 },
-  { s: 'La Dehesa J. A. Delano 11021',            z: 'Metropolitana', impel: 16,  inspección: 9,  sin_foto: 3,  total: 28 },
-  { s: 'Las Condes Fco. Bilbao 5593',             z: 'Metropolitana', impel: 22,  inspección: 11, sin_foto: 2,  total: 35 },
-  { s: 'Los Cobres Vitacura 6875',                z: 'Metropolitana', impel: 29,  inspección: 12, sin_foto: 6,  total: 47 },
-  { s: 'Maipu Av. Pajaritos 2557',                z: 'Metropolitana', impel: 19,  inspección: 9,  sin_foto: 0,  total: 28 },
-  { s: 'Movicenter A. Vespucio 1155',             z: 'Metropolitana', impel: 141, inspección: 41, sin_foto: 6,  total: 188 },
-  { s: 'San Bdo. Av. Portales 3698',              z: 'Metropolitana', impel: 21,  inspección: 8,  sin_foto: 4,  total: 33 },
-  { s: 'San Felipe Chacabuco 109',                z: 'Metropolitana', impel: 17,  inspección: 0,  sin_foto: 0,  total: 17 },
-  { s: 'San Felipe Chacabuco 255',                z: 'Metropolitana', impel: 10,  inspección: 7,  sin_foto: 0,  total: 17 },
-  { s: 'Vina del Mar Limache 3677',               z: 'Metropolitana', impel: 22,  inspección: 19, sin_foto: 5,  total: 46 },
-  { s: 'Vitacura 5555',                           z: 'Metropolitana', impel: 32,  inspección: 4,  sin_foto: 9,  total: 45 },
-  { s: 'Vitacura Padre Hurtado 1246',             z: 'Metropolitana', impel: 12,  inspección: 4,  sin_foto: 15, total: 31 },
-  { s: 'Vitacura Vitacura 7649',                  z: 'Metropolitana', impel: 12,  inspección: 13, sin_foto: 6,  total: 31 },
-  { s: 'Las Animas P. A. Cerda 410',              z: 'Sur',           impel: 24,  inspección: 6,  sin_foto: 2,  total: 32 },
-  { s: 'Osorno Andres Bello 663',                 z: 'Sur',           impel: 22,  inspección: 2,  sin_foto: 3,  total: 27 },
-  { s: 'Osorno Juan Mackenna 1659',               z: 'Sur',           impel: 21,  inspección: 8,  sin_foto: 2,  total: 31 },
-  { s: 'Puerto Montt Benavente 753',              z: 'Sur',           impel: 26,  inspección: 2,  sin_foto: 3,  total: 31 },
-  { s: 'Puerto Montt Regimiento 861',             z: 'Sur',           impel: 20,  inspección: 8,  sin_foto: 3,  total: 31 },
-  { s: 'Puerto Montt Serrano 328',                z: 'Sur',           impel: 8,   inspección: 1,  sin_foto: 0,  total: 9 },
-  { s: 'Valdivia Av. R. Picarte 2240',            z: 'Sur',           impel: 30,  inspección: 6,  sin_foto: 5,  total: 41 },
-  { s: 'Temuco Alemania 501',                     z: 'Temuco',        impel: 18,  inspección: 7,  sin_foto: 0,  total: 25 },
-  { s: 'Temuco Caupolican 693',                   z: 'Temuco',        impel: 29,  inspección: 0,  sin_foto: 2,  total: 31 },
-  { s: 'Temuco Hochstetter 976',                  z: 'Temuco',        impel: 19,  inspección: 15, sin_foto: 6,  total: 40 },
-  { s: 'Temuco Tolosa Caupolican 149',            z: 'Temuco',        impel: 44,  inspección: 10, sin_foto: 6,  total: 60 }
+  { s: 'Clínica J. Alessandri R. 2121',           z: 'Concepción',    impel: 42,  inspección: 18, sin_foto: 6,  total: 66 },
+  { s: 'Concepción C. Colón 8961',                z: 'Concepción',    impel: 34,  inspección: 7,  sin_foto: 1,  total: 42 },
+  { s: 'Concepción J. Alessandri R. 1885',        z: 'Concepción',    impel: 17,  inspección: 7,  sin_foto: 9,  total: 33 },
+  { s: 'Concepción Paicaví 2592',                 z: 'Concepción',    impel: 45,  inspección: 31, sin_foto: 8,  total: 84 },
+  { s: 'Vega 21 de Mayo 3225',                    z: 'Concepción',    impel: 38,  inspección: 12, sin_foto: 8,  total: 58 },
+  { s: 'Chillán Av. Brasil 80',                   z: 'Longitudinal',  impel: 24,  inspección: 16, sin_foto: 4,  total: 44 },
+  { s: 'Chillán Ecuador 330',                     z: 'Longitudinal',  impel: 15,  inspección: 6,  sin_foto: 1,  total: 22 },
+  { s: 'Chillán Ecuador 768',                     z: 'Longitudinal',  impel: 25,  inspección: 11, sin_foto: 5,  total: 41 },
+  { s: 'Linares León Bustos 0239',                z: 'Longitudinal',  impel: 15,  inspección: 0,  sin_foto: 4,  total: 19 },
+  { s: 'Los Ángeles Av. Alemania 410',            z: 'Longitudinal',  impel: 27,  inspección: 5,  sin_foto: 8,  total: 40 },
+  { s: 'Los Ángeles Industrias 7730',             z: 'Longitudinal',  impel: 29,  inspección: 19, sin_foto: 0,  total: 48 },
+  { s: 'Talca 11 Oriente 1180',                   z: 'Longitudinal',  impel: 16,  inspección: 6,  sin_foto: 5,  total: 27 },
+  { s: 'Talca San Miguel 2790',                   z: 'Longitudinal',  impel: 52,  inspección: 15, sin_foto: 10, total: 77 },
+  { s: 'Autopark Departamental 4500',             z: 'Metropolitana', impel: 94,  inspección: 18, sin_foto: 18, total: 130 },
+  { s: 'Carshopping A. Vespucio 2451',            z: 'Metropolitana', impel: 88,  inspección: 52, sin_foto: 35, total: 175 },
+  { s: 'Cerrillos Pedro A. Cerda 669',            z: 'Metropolitana', impel: 55,  inspección: 15, sin_foto: 17, total: 87 },
+  { s: 'José Miguel Carrera 6197',                z: 'Metropolitana', impel: 16,  inspección: 4,  sin_foto: 15, total: 35 },
+  { s: 'La Dehesa J. A. Delano 11021',            z: 'Metropolitana', impel: 19,  inspección: 11, sin_foto: 10, total: 40 },
+  { s: 'Las Condes Fco. Bilbao 5593',             z: 'Metropolitana', impel: 28,  inspección: 13, sin_foto: 9,  total: 50 },
+  { s: 'Los Cobres Vitacura 6875',                z: 'Metropolitana', impel: 30,  inspección: 10, sin_foto: 16, total: 56 },
+  { s: 'Maipú Av. Pajaritos 2557',                z: 'Metropolitana', impel: 18,  inspección: 9,  sin_foto: 9,  total: 36 },
+  { s: 'Movicenter A. Vespucio 1155',             z: 'Metropolitana', impel: 148, inspección: 54, sin_foto: 23, total: 225 },
+  { s: 'San Bdo. Av. Portales 3698',              z: 'Metropolitana', impel: 31,  inspección: 7,  sin_foto: 10, total: 48 },
+  { s: 'San Felipe Chacabuco 109',                z: 'Metropolitana', impel: 16,  inspección: 5,  sin_foto: 4,  total: 25 },
+  { s: 'San Felipe Chacabuco 255',                z: 'Metropolitana', impel: 12,  inspección: 7,  sin_foto: 3,  total: 22 },
+  { s: 'Viña del Mar Limache 3677',               z: 'Metropolitana', impel: 27,  inspección: 21, sin_foto: 10, total: 58 },
+  { s: 'Vitacura 5555',                           z: 'Metropolitana', impel: 39,  inspección: 8,  sin_foto: 13, total: 60 },
+  { s: 'Vitacura Padre Hurtado 1246',             z: 'Metropolitana', impel: 27,  inspección: 2,  sin_foto: 1,  total: 30 },
+  { s: 'Vitacura Vitacura 7649',                  z: 'Metropolitana', impel: 21,  inspección: 10, sin_foto: 15, total: 46 },
+  { s: 'Las Ánimas P. A. Cerda 410',              z: 'Sur',           impel: 33,  inspección: 6,  sin_foto: 9,  total: 48 },
+  { s: 'Osorno Andrés Bello 663',                 z: 'Sur',           impel: 21,  inspección: 4,  sin_foto: 2,  total: 27 },
+  { s: 'Osorno Juan Mackenna 1659',               z: 'Sur',           impel: 24,  inspección: 15, sin_foto: 6,  total: 45 },
+  { s: 'Puerto Montt Benavente 753',              z: 'Sur',           impel: 29,  inspección: 4,  sin_foto: 5,  total: 38 },
+  { s: 'Puerto Montt Regimiento 861',             z: 'Sur',           impel: 15,  inspección: 12, sin_foto: 5,  total: 32 },
+  { s: 'Puerto Montt Serrano 328',                z: 'Sur',           impel: 13,  inspección: 0,  sin_foto: 0,  total: 13 },
+  { s: 'Valdivia Av. R. Picarte 2240',            z: 'Sur',           impel: 32,  inspección: 9,  sin_foto: 8,  total: 49 },
+  { s: 'Temuco Alemania 501',                     z: 'Temuco',        impel: 16,  inspección: 6,  sin_foto: 4,  total: 26 },
+  { s: 'Temuco Caupolican 693',                   z: 'Temuco',        impel: 19,  inspección: 7,  sin_foto: 6,  total: 32 },
+  { s: 'Temuco Hochstetter 976',                  z: 'Temuco',        impel: 26,  inspección: 13, sin_foto: 10, total: 49 },
+  { s: 'Temuco Tolosa Caupolican 149',            z: 'Temuco',        impel: 46,  inspección: 14, sin_foto: 6,  total: 66 }
 ];
 
 // Chart.js helpers (preparación)
@@ -4545,9 +4545,9 @@ var prepFunnelLabelsPlugin = {
   afterDraw: function(chart) {
     var ctx = chart.ctx;
     var segments = [
-      { val: PREP_FUNNEL.publicadas,         pct: '69,5%' },
+      { val: PREP_FUNNEL.publicadas,         pct: '79,2%' },
       { val: PREP_FUNNEL.no_publicadas_disp, pct: null    },
-      { val: PREP_FUNNEL.no_disponibles,     pct: '22,5%' }
+      { val: PREP_FUNNEL.no_disponibles,     pct: '16,6%' }
     ];
     var cy = (chart.chartArea.top + chart.chartArea.bottom) / 2;
     chart.data.datasets.forEach(function(ds, di) {
@@ -4578,11 +4578,11 @@ function buildPrepFunnelCfg() {
   return {
     type: 'bar',
     data: {
-      labels: ['Inventario total (2.574 uds)'],
+      labels: ['Inventario total (2.714 uds)'],
       datasets: [
-        { label: 'Publicadas (1.790 - 69,5%)',               data: [f.publicadas],         backgroundColor: '#0B5C1F', borderWidth: 0 },
-        { label: 'Disponibles no publicadas (200 - 7,8%)',   data: [f.no_publicadas_disp], backgroundColor: '#F0A830', borderWidth: 0 },
-        { label: 'No disponibles (580 - 22,5%)',             data: [f.no_disponibles],     backgroundColor: '#C00000', borderWidth: 0 }
+        { label: 'Publicadas (2.149 - 79,2%)',               data: [f.publicadas],         backgroundColor: '#0B5C1F', borderWidth: 0 },
+        { label: 'Disponibles no publicadas (114 - 4,2%)',   data: [f.no_publicadas_disp], backgroundColor: '#F0A830', borderWidth: 0 },
+        { label: 'No disponibles (451 - 16,6%)',             data: [f.no_disponibles],     backgroundColor: '#C00000', borderWidth: 0 }
       ]
     },
     plugins: [prepFunnelLabelsPlugin],
@@ -4639,17 +4639,17 @@ function buildPrepFotoZonaCfg() {
 
 function buildPrepFotoSucursalCfg() {
   var data = PREP_FOTOS_SUCURSAL.slice().filter(function(r){ return r.total >= 10; });
-  data.sort(function(a,b){ return pctBar(b.sin_foto,b.total) - pctBar(a.sin_foto,a.total); });
+  data.sort(function(a,b){ return b.sin_foto - a.sin_foto; });
   data = data.slice(0, 15);
-  var labels = data.map(function(r){ return r.s + ' (' + r.total + ')'; });
-  var pcts = data.map(function(r){ return pctBar(r.sin_foto, r.total); });
+  var labels = data.map(function(r){ return r.s; });
   var counts = data.map(function(r){ return r.sin_foto; });
+  var pcts = data.map(function(r){ return pctBar(r.sin_foto, r.total); });
   return {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [
-        { label: '% Sin foto', data: pcts, backgroundColor: '#C00000cc', borderColor: '#C00000', borderWidth: 1 }
+        { label: 'Sin foto (uds)', data: counts, backgroundColor: '#C00000cc', borderColor: '#C00000', borderWidth: 1 }
       ]
     },
     options: {
@@ -4658,11 +4658,11 @@ function buildPrepFotoSucursalCfg() {
         legend: { display: false },
         tooltip: {
           backgroundColor: '#0B1F65', titleColor:'#fff', bodyColor:'#fff', padding:10,
-          callbacks: { label: function(ctx){ return '% Sin foto: ' + ctx.parsed.x + '% (' + counts[ctx.dataIndex] + ' uds)'; } }
+          callbacks: { label: function(ctx){ return 'Sin foto: ' + ctx.parsed.x + ' uds (' + pcts[ctx.dataIndex] + '%)'; } }
         }
       },
       scales: {
-        x: { max: 60, ticks: { color: '#7F7F7F', callback: function(v){ return v + '%'; } }, grid: { color: 'rgba(0,0,0,0.05)' } },
+        x: { ticks: { color: '#7F7F7F', stepSize: 5 }, grid: { color: 'rgba(0,0,0,0.05)' } },
         y: { ticks: { color: '#7F7F7F', font: { size: 10 } }, grid: { display: false } }
       }
     }
@@ -5308,14 +5308,14 @@ function initVtaLeadsCharts() {
 
 function renderPrepChartSection(slideIdx, chartType) {
   var titles = {
-    'prep-funnel': { t: 'Funnel de publicabilidad', s: 'Inventario total (2.574 uds) y cuáles llegan realmente a la vitrina digital - Reporte BI 2026-04-17' },
-    'prep-foto-zona': { t: 'Composición de fotos por zona', s: 'Mix % Impel / Inspección / Sin foto sobre el stock publicado (1.790 uds)' },
-    'prep-foto-sucursal': { t: 'Ranking sucursales por % sin foto', s: 'Top 15 sucursales con mayor % de unidades sin foto (publicaciones con placeholder). Filtro: sucursales con >= 10 uds.' }
+    'prep-funnel': { t: 'Funnel de publicabilidad', s: 'Inventario total (2.714 uds) y cuáles llegan realmente a la vitrina digital - Reporte BI 2026-04-28' },
+    'prep-foto-zona': { t: 'Composición de fotos por zona', s: 'Mix % Impel / Inspección / Sin foto sobre el stock publicado (2.149 uds) - Reporte BI 2026-04-28' },
+    'prep-foto-sucursal': { t: 'Ranking sucursales por unidades sin foto', s: 'Top 15 sucursales con mayor cantidad absoluta de unidades sin foto - Reporte BI 2026-04-28' }
   };
   var insights = {
-    'prep-funnel': '<strong>1 de cada 4 unidades (22,5%) ni siquiera es elegible</strong> para publicar. De las 1.990 disponibles, 200 (10,1%) están retenidas por motivos operacionales (83% en acopio, 8,5% sin precio). La vitrina solo muestra 1.790 / 2.574 = 69,5% del inventario total.',
-    'prep-foto-zona': '<strong>Zona Metropolitana concentra el problema:</strong> 114 de las 204 unidades sin foto del sistema (55,9%) están en RM. En cambio Zona Sur muestra la mejor ejecución con solo 8,9% sin foto. Ningún zona supera el 75% de cobertura Impel.',
-    'prep-foto-sucursal': '<strong>Dos sucursales superan el 48% de sin-foto:</strong> Concepción J. Alessandri R. 1885 (51,5%) y Vitacura Padre Hurtado 1246 (48,4%) son intervenciones prioritarias. José Miguel Carrera 6197 le sigue con 36,7%. Estas 3 sucursales aportan 43 de las 204 uds sin foto (21%).'
+    'prep-funnel': '<strong>El 79,2% del inventario ya está publicado</strong> en vitrina (2.149 de 2.714 uds) y solo 114 uds disponibles están retenidas. Sin embargo, 338 publicadas no tienen foto alguna (Tier 4, 15,7%) y solo 61,5% tiene foto Impel: más stock visible, pero calidad visual degradada.',
+    'prep-foto-zona': '<strong>Zona Metropolitana concentra el 61,5% del problema:</strong> 208 de las 338 uds sin foto. Zona Longitudinal suma 37 uds sin foto (subida vs. período anterior). Ninguna zona supera el 70% de cobertura Impel — la mejor es Longitudinal con 63,8%.',
+    'prep-foto-sucursal': '<strong>Carshopping lidera con 35 uds sin foto</strong>, seguido de Movicenter (23) y Autopark (18). El top 3 acumula 76 de 338 uds (22,5% del total). José Miguel Carrera tiene el mayor % relativo: 15 de 35 publicadas sin foto (42,9%).'
   };
   var t = titles[chartType] || { t: '', s: '' };
   return '<div class="data-section">' +
