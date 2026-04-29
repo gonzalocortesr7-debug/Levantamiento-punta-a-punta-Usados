@@ -439,6 +439,7 @@
   .resp-row.resp-compra .resp-avatar { background: #0F6FC6; }
   .resp-row.resp-preparación .resp-avatar { background: #EF9F27; }
   .resp-row.resp-venta .resp-avatar { background: #1D9E75; }
+  .resp-row.resp-cross .resp-avatar { background: #534AB7; }
   .resp-row.resp-cliente .resp-avatar { background: linear-gradient(135deg, #F0D388 0%, #D9A227 100%); color: #5B3F00; }
   .resp-row.resp-cliente { background: #FFF8EA; border-color: #F0D388; }
   .resp-info { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; flex: 1 1 auto; }
@@ -3325,10 +3326,20 @@ function renderExecSummarySlide(i) {
   var teamHtml = '';
   for (var tg = 0; tg < teamGroups.length; tg++) {
     var grp = teamGroups[tg];
-    var memHtml = '';
+    var memHtml = '<div class="resp-list">';
     for (var mm = 0; mm < grp.members.length; mm++) {
-      memHtml += '<div class="team-member"><span class="team-member-name">' + grp.members[mm].n + '</span><span class="team-member-role">· ' + grp.members[mm].r + '</span></div>';
+      var mb = grp.members[mm];
+      var rowClass = (mb.r === 'Experiencia de Clientes') ? 'resp-cliente' : 'resp-' + grp.macro;
+      memHtml +=
+        '<div class="resp-row ' + rowClass + '">' +
+          '<span class="resp-avatar">' + getInitials(mb.n) + '</span>' +
+          '<div class="resp-info">' +
+            '<span class="resp-nombre">' + mb.n + '</span>' +
+            '<span class="resp-rol">' + mb.r + '</span>' +
+          '</div>' +
+        '</div>';
     }
+    memHtml += '</div>';
     teamHtml += '<div class="team-area-card ' + grp.macro + '">' +
       '<div class="team-area-label">' + (grp.macro === 'cross' ? 'Cross · todo el journey' : 'Eje ' + (MACRO_META[grp.macro] && MACRO_META[grp.macro].title)) + '</div>' +
       '<div class="team-area-title">' + grp.title + '</div>' +
