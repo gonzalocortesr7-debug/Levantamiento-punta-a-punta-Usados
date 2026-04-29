@@ -1364,7 +1364,9 @@
   .stage-okr-card.macro-compra .stage-okr-head { background: rgba(15,111,198,0.06); }
   .stage-okr-card.macro-preparación .stage-okr-head { background: rgba(239,159,39,0.08); }
   .stage-okr-card.macro-venta .stage-okr-head { background: rgba(29,158,117,0.07); }
-  .stage-okr-title { font-size: 15px; font-weight: 800; color: var(--navy); }
+  .stage-okr-title { font-size: 15px; font-weight: 800; color: var(--navy); display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .okr-upcoming-badge { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #8A5A00; background: #FFF4DC; border: 1px solid #F0D388; padding: 3px 8px; border-radius: 10px; }
+  .stage-okr-upcoming-body { padding: 12px 14px 14px; font-size: 12px; color: var(--gray-500); font-style: italic; }
   .stage-okr-objective { font-size: 11.5px; color: var(--gray-600); font-style: italic; }
   /* KR rows inside card */
   .stage-okr-card .kr-rows-body { padding: 0 14px 8px; }
@@ -2781,20 +2783,8 @@ var OKRS = {
       ] },
     14: { macro: 'venta', title: 'Etapa 14 · Firma de Contrato',
       objective: 'Digitalizar la firma y acortar tiempos',
-      krs: [
-        { desc: '% firmas digitales vs. presenciales',
-          detail: 'Hoy firma presencial por defecto, archivo manual en carpetas físicas en algunas sucursales. Digitalizar con DocuSign acelera, da trazabilidad y mejora experiencia del cliente.',
-          baseline: '—', target: '80%',
-          impacts: 'DocuSign por defecto como medio de firma · Archivo automático en CRM con vínculo a la unidad · Entrega inmediata de copia firmada por email · Explicación de cláusulas relevantes en el flujo de firma' },
-        { desc: 'Tiempo acuerdo → contrato listo',
-          detail: 'Sin medición hoy. Datos del cliente se digitan manualmente en el contrato generando errores y tiempos largos.',
-          baseline: '—', target: '<30 min',
-          impacts: 'Prellenado del contrato desde CRM (único source of truth) · Plantilla única versionada centralmente · Audit trail de generación y modificaciones · Envío automático al cliente 24h antes para revisión' },
-        { desc: 'Archivo automático en CRM con vínculo a unidad',
-          detail: 'Hoy archivo manual y dispar entre sucursales. Sin vínculo automático al CRM se pierde trazabilidad post-venta.',
-          baseline: '0%', target: '100%',
-          impacts: 'Hand-off digital a facturación con checklist · Vinculación automática contrato ↔ unidad en CRM · FAQ del contrato + registro de dudas frecuentes · Copia firmada al correo del cliente al instante' }
-      ] },
+      upcoming: true,
+      krs: [] },
     15: { macro: 'venta', title: 'Etapa 15 · Facturación y Entrega',
       objective: 'Entregar a tiempo con una ceremonia memorable',
       krs: [
@@ -2935,18 +2925,20 @@ function renderOKRsSlide(i) {
     for (var si = 0; si < stageIds.length; si++) {
       var st = meta.byStage[stageIds[si]];
       var krsHtml = '';
-      krsHtml += '<div class="kr-row" style="font-weight:700; color:var(--gray-500); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;">' +
-        '<div>Meta medible</div><div>Hoy</div><div>Meta 6m</div><div>Iniciativas que la mueven</div>' +
-      '</div>';
-      for (var kr = 0; kr < st.krs.length; kr++) {
-        var k = st.krs[kr];
-        var detailHtml = k.detail ? '<div class="kr-detail">' + k.detail + '</div>' : '';
-        krsHtml += '<div class="kr-wrap"><div class="kr-row">' +
-          '<div class="kr-desc"><div class="kr-desc-title">' + k.desc + '</div>' + detailHtml + '</div>' +
-          '<div class="kr-baseline">' + k.baseline + '</div>' +
-          '<div class="kr-target">' + k.target + '</div>' +
-          '<div class="kr-impacts-col"><div class="kr-impacts">' + k.impacts + '</div></div>' +
-        '</div></div>';
+      if (!st.upcoming) {
+        krsHtml += '<div class="kr-row" style="font-weight:700; color:var(--gray-500); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;">' +
+          '<div>Meta medible</div><div>Hoy</div><div>Meta 6m</div><div>Iniciativas que la mueven</div>' +
+        '</div>';
+        for (var kr = 0; kr < st.krs.length; kr++) {
+          var k = st.krs[kr];
+          var detailHtml = k.detail ? '<div class="kr-detail">' + k.detail + '</div>' : '';
+          krsHtml += '<div class="kr-wrap"><div class="kr-row">' +
+            '<div class="kr-desc"><div class="kr-desc-title">' + k.desc + '</div>' + detailHtml + '</div>' +
+            '<div class="kr-baseline">' + k.baseline + '</div>' +
+            '<div class="kr-target">' + k.target + '</div>' +
+            '<div class="kr-impacts-col"><div class="kr-impacts">' + k.impacts + '</div></div>' +
+          '</div></div>';
+        }
       }
       var stageResps = RESPONSABLES_POR_ETAPA[parseInt(stageIds[si])] || [];
       var respChips = '';
@@ -2954,15 +2946,19 @@ function renderOKRsSlide(i) {
         respChips += '<span class="okr-resp-chip"><span class="okr-resp-nombre">' + stageResps[ri].nombre + '</span><span class="okr-resp-rol">' + stageResps[ri].rol + '</span></span>';
       }
       var respHtml = respChips ? '<div class="okr-resp-list">' + respChips + '</div>' : '';
-      paneHtml += '<div class="stage-okr-card macro-' + st.macro + '">' +
+      var upcomingBadge = st.upcoming ? '<span class="okr-upcoming-badge">Próximamente</span>' : '';
+      var bodyHtml = st.upcoming
+        ? '<div class="stage-okr-upcoming-body">Levantamiento en curso · metas e iniciativas se publicarán en una próxima iteración.</div>'
+        : '<div class="kr-rows-body">' + krsHtml + '</div>';
+      paneHtml += '<div class="stage-okr-card macro-' + st.macro + (st.upcoming ? ' upcoming' : '') + '">' +
         '<div class="stage-okr-head">' +
           '<div>' +
-            '<div class="stage-okr-title">' + st.title + '</div>' +
+            '<div class="stage-okr-title">' + st.title + upcomingBadge + '</div>' +
             '<div class="stage-okr-objective">' + st.objective + '</div>' +
           '</div>' +
           respHtml +
         '</div>' +
-        '<div class="kr-rows-body">' + krsHtml + '</div>' +
+        bodyHtml +
       '</div>';
     }
     paneHtml += '</div></div>';
