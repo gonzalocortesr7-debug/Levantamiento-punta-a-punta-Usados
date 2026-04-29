@@ -1808,7 +1808,7 @@ var journey = {
     {
       id: 2, macro: "compra", name: "Gestión de Leads", fullName: "Gestión de Leads",
       video: { url: null, title: "Video del proceso - Gestión de Leads" },
-      resources: [{ href: "./dashboard-eje-compra.html", label: "Dashboard Operacional · Llamadas · Contactabilidad · Colas — 158.753 leads" }],
+      resources: [{ href: "./dashboard-eje-compra.html", label: "Dashboard Gestión de Leads de Compra · Llamadas · Contactabilidad · Colas — 158.753 leads" }],
       route: "Nuevos Leads -> Leads tomados (CC) -> Leads con cita - CRM Llaima",
       description: "Los leads generados desde web ingresan al pool del Contact Center, se asignan a agentes, se realizan contactos telefónicos de seguimiento y se califican para traspaso a sucursal. El foco está en contactabilidad, velocidad de primer contacto, tasa de agendamiento y conversión a oportunidad real. Esta etapa analiza 158.753 leads entre Oct 25 y Mar 26 segmentados en 8 categorías de calificación.",
       substeps: [
@@ -1880,7 +1880,7 @@ var journey = {
     {
       id: 4, macro: "compra", name: "Inspección y Cierre", fullName: "Inspección y Cierre Comercial",
       video: { url: null, title: "Video del proceso - Inspección y Cierre" },
-      resources: [{ href: "./dashboard-compras-empresariales.html", label: "Dashboard Compras Empresariales · Compra directa vs VPP · 51k registros" }],
+      resources: [{ href: "./dashboard-compras-empresariales.html", label: "Dashboard Gestión Operativa (Compras) · Compra directa vs VPP · 51k registros" }],
       route: "Inspección -> Validación Comercial - Oferta definitiva",
       description: "Evaluación técnica y documental del vehículo, registro fotográfico estandarizado, cálculo de la oferta final considerando costos de re-acondicionamiento, validación comercial por jefatura cuando excede la autonomía del asesor y negociación/cierre con el cliente. Cierra la compra del vehículo o lo registra como no-cierre con razones estructuradas para activar flujos de seguimiento posteriores.",
       substeps: [
@@ -2040,7 +2040,7 @@ var journey = {
     {
       id: 11, macro: "venta", name: "Captación Digital", fullName: "Captación Digital (Venta)",
       video: { url: null, title: "Video del proceso - Captación Digital (Venta)" },
-      resources: [{ href: "./auditoria-flujo-ventas.html", label: "Auditoría Flujo Ventas Digital — 12 slides (Clarity + Mercado)" }],
+      resources: [{ href: "./auditoria-flujo-ventas.html", label: "Análisis Flujo Web (Venta) — 12 slides (Clarity + Mercado)" }],
       route: "Home -> Catálogo -> Ficha de auto -> Cotización (buy-process)",
       description: "Recorrido del cliente comprador en clicar.cl: Home → Catálogo → Ficha de auto → Cotización. Análisis de comportamiento basado en Microsoft Clarity (22 mar – 22 abr 2026): 136.334 sesiones totales con 85,7% tráfico mobile. Contexto de mercado: 142M búsquedas 2025 en Google (Google Trends/Ubersuggest), ticket promedio $9M–$13M, SUV lidera con 40% del total de búsquedas. Freno principal de compra en el mercado chileno: el miedo / desconfianza, mayor inhibidor que el precio.",
       substeps: [
@@ -2115,7 +2115,7 @@ var journey = {
     {
       id: 12, macro: "venta", name: "Gestión de Leads", fullName: "Gestión de Leads (Venta)",
       video: { url: null, title: "Video del proceso - Gestión de Leads (Venta)" },
-      resources: [{ href: "./dashboard-leads-ventas.html", label: "Dashboard Ejecutivo — 92.843 leads · 3.838 ventas" }],
+      resources: [{ href: "./dashboard-leads-ventas.html", label: "Gestión de Leads de Venta — 92.843 leads · 3.838 ventas" }],
       route: "Lead en CRM -> Volumen / Descarte -> Temperatura -> VPP y Segmentos -> Financiamiento / Motivos",
       description: "Análisis apoyado en data real de <strong>Autos Usados · Oct 2025 – Mar 2026 · 92.843 leads · 3.838 ventas digitales</strong>: tasa de descarte global 77,7%, conversión SQL 6,0%, conversión final lead → venta 4,1%, marzo 26 mejor mes (8,8% SQL). Oportunidades identificadas: proteger clientes Oro/VIP con VPP, flujo diferenciado para financiamiento, redefinir criterio de temperatura y eliminar 'descarte masivo'.",
       substeps: [
@@ -3014,15 +3014,15 @@ function renderOKRsSlide(i) {
 // ============================================================
 var EJE_ANALYSES = {
   compra: [
-    { href: 'dashboard-eje-compra.html', label: 'Dashboard Gestión de Leads · Llamadas · Contactabilidad · Colas — 158.753 leads' },
-    { href: 'dashboard-compras-empresariales.html', label: 'Dashboard Compras Empresariales · Compra directa vs VPP · 51k registros' }
+    { href: 'dashboard-eje-compra.html', label: 'Dashboard Gestión de Leads de Compra · Llamadas · Contactabilidad · Colas — 158.753 leads' },
+    { href: 'dashboard-compras-empresariales.html', label: 'Dashboard Gestión Operativa (Compras) · Compra directa vs VPP · 51k registros' }
   ],
   preparación: [
     { href: 'analisis-preparacion-foto-impel.html', label: 'Análisis Preparación · 21 slides (foto Impel + tiers)' }
   ],
   venta: [
-    { href: 'auditoria-flujo-ventas.html', label: 'Auditoría Flujo Ventas Digital · 12 slides (Clarity + Mercado)' },
-    { href: 'dashboard-leads-ventas.html', label: 'Dashboard Ejecutivo · 92.843 leads · 3.838 ventas' }
+    { href: 'auditoria-flujo-ventas.html', label: 'Análisis Flujo Web (Venta) · 12 slides (Clarity + Mercado)' },
+    { href: 'dashboard-leads-ventas.html', label: 'Gestión de Leads de Venta · 92.843 leads · 3.838 ventas' }
   ]
 };
 
