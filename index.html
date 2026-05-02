@@ -1535,6 +1535,27 @@
   .okr-track-table td.cell-mes-empty::before { content: "—"; color: var(--gray-300); }
   .okr-track-table tr.eje-divider td { background: var(--gray-100); font-size: 10px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 10px; }
   .okr-track-legend { font-size: 10.5px; color: var(--gray-500); margin-top: 10px; line-height: 1.5; }
+  .okr-track-legend-top { background: var(--gray-50); border: 1px solid var(--gray-200); padding: 10px 14px; margin-bottom: 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .okr-track-legend-top span { font-size: 10.5px; color: var(--gray-700); }
+  .okr-track-legend-top b { color: var(--navy); font-weight: 700; }
+  .okr-track-eje { background: var(--white); border: 1px solid var(--gray-200); padding: 18px 20px 22px; margin-bottom: 22px; }
+  .okr-track-eje-head { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 2px solid var(--gray-200); margin-bottom: 14px; }
+  .okr-track-eje-head h2 { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
+  .okr-track-eje-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .okr-track-eje-dot.compra { background: #0F6FC6; }
+  .okr-track-eje-dot.preparación { background: #EF9F27; }
+  .okr-track-eje-dot.venta { background: #1D9E75; }
+  .okr-track-eje.eje-compra { border-top: 4px solid #0F6FC6; }
+  .okr-track-eje.eje-preparación { border-top: 4px solid #EF9F27; }
+  .okr-track-eje.eje-venta { border-top: 4px solid #1D9E75; }
+  .okr-track-table tr.ns-section-row th { background: var(--clicar-green); color: var(--navy); font-size: 10px; padding: 6px 10px; text-align: left; }
+  .okr-track-table tr.kr-section-row th { background: var(--gray-100); color: var(--navy); font-size: 10px; padding: 6px 10px; text-align: left; }
+  .okr-track-table tr.ns-track-row td { background: #FFFBE6; font-weight: 600; }
+  .okr-track-table tr.ns-track-row td.ns-track-label { color: var(--navy); font-size: 12px; font-weight: 700; }
+  .ns-track-metric { font-size: 12px; font-weight: 700; color: var(--navy); }
+  .ns-track-sub { font-size: 10px; color: var(--gray-500); font-weight: 400; margin-top: 2px; }
+  .kr-track-stage { font-size: 10px; color: var(--gray-500); font-weight: 400; margin-top: 2px; }
+  .okr-track-table td.cell-variacion, .okr-track-table td.cell-cumplimiento { text-align: center; font-weight: 700; min-width: 90px; }
   .roadmap-savings { display: inline-block; background: #E7F5E7; color: var(--green); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; border: 1px solid #B6E0B6; white-space: nowrap; }
   .roadmap-table td.col-ahorro { min-width: 140px; }
   @media (max-width: 900px) {
@@ -1571,6 +1592,10 @@
       <button class="macro-view-btn" data-view="okrs">
         <span class="macro-view-icon">🎯</span>
         <span>OKRs & Impacto</span>
+      </button>
+      <button class="macro-view-btn" data-view="okr-seguimiento">
+        <span class="macro-view-icon">📈</span>
+        <span>Seguimiento OKR</span>
       </button>
       <button class="macro-view-btn" data-view="roadmap">
         <span class="macro-view-icon">🗺️</span>
@@ -2444,16 +2469,13 @@ var ROADMAP = [
 ];
 
 // ============================================================
-// SEGUIMIENTO OKR · render de tabla mensual
+// SEGUIMIENTO OKR · página dedicada con tabla por eje
 // ============================================================
-function renderOKRSeguimientoHtml() {
+function renderOKRSeguimientoSlide(i) {
   var meses = OKR_SEGUIMIENTO_MESES;
-  var thMeses = '';
-  for (var m = 0; m < meses.length; m++) {
-    thMeses += '<th class="col-meta-mes">' + meses[m] + '</th>';
-  }
-  var rowsHtml = '';
   var macroOrder = ['compra','preparación','venta'];
+  var ejesHtml = '';
+
   for (var mi = 0; mi < macroOrder.length; mi++) {
     var mk = macroOrder[mi];
     var ejeStages = [];
@@ -2462,7 +2484,29 @@ function renderOKRSeguimientoHtml() {
     }
     if (!ejeStages.length) continue;
     var ejeTitle = (MACRO_META[mk] && MACRO_META[mk].title) || mk;
-    rowsHtml += '<tr class="eje-divider"><td colspan="' + (4 + meses.length) + '">Eje ' + ejeTitle + '</td></tr>';
+
+    // Indicadores guía del eje
+    var ejeNS = (EJE_CLUSTERS[mk] && EJE_CLUSTERS[mk].northStars) ? EJE_CLUSTERS[mk].northStars : [];
+    var nsCardsHtml = '';
+    for (var nsi = 0; nsi < ejeNS.length; nsi++) {
+      var ns = ejeNS[nsi];
+      var nsMesCells = '';
+      for (var nm = 0; nm < meses.length; nm++) {
+        nsMesCells += '<td class="cell-mes cell-mes-empty"></td>';
+      }
+      var subLine = ns.sub ? '<div class="ns-track-sub">' + ns.sub + '</div>' : '';
+      nsCardsHtml += '<tr class="ns-track-row">' +
+        '<td class="col-kr ns-track-label"><div class="ns-track-metric">' + ns.metric + '</div>' + subLine + '</td>' +
+        '<td class="cell-baseline">' + ns.baseline + '</td>' +
+        '<td class="cell-target">' + ns.target + '</td>' +
+        nsMesCells +
+        '<td class="cell-variacion cell-mes-empty"></td>' +
+        '<td class="cell-cumplimiento cell-mes-empty"></td>' +
+      '</tr>';
+    }
+
+    // KRs por etapa
+    var krsRowsHtml = '';
     for (var es = 0; es < ejeStages.length; es++) {
       var st = OKRS.byStage[ejeStages[es]];
       if (!st || st.upcoming || !st.krs || !st.krs.length) continue;
@@ -2472,36 +2516,73 @@ function renderOKRSeguimientoHtml() {
         for (var mc = 0; mc < meses.length; mc++) {
           mesCells += '<td class="cell-mes cell-mes-empty"></td>';
         }
-        rowsHtml += '<tr>' +
-          '<td class="col-eje ' + mk + '">' + ejeTitle + '</td>' +
-          '<td class="col-kr"><div>' + kr.desc + '</div><div style="font-size:10px;color:var(--gray-500);font-weight:400;margin-top:2px;">' + st.title + '</div></td>' +
+        krsRowsHtml += '<tr>' +
+          '<td class="col-kr"><div>' + kr.desc + '</div><div class="kr-track-stage">' + st.title + '</div></td>' +
           '<td class="cell-baseline">' + kr.baseline + '</td>' +
           '<td class="cell-target">' + kr.target + '</td>' +
           mesCells +
+          '<td class="cell-variacion cell-mes-empty"></td>' +
+          '<td class="cell-cumplimiento cell-mes-empty"></td>' +
         '</tr>';
       }
     }
-  }
-  return '<div class="okr-track-wrap">' +
-    '<div class="okr-track-head">' +
-      '<div>' +
-        '<div class="okr-track-title">Tablero de seguimiento mensual</div>' +
-        '<div class="okr-track-sub">Cada KR se mide contra su baseline (rojo) y meta a 6 meses (verde). Los squads completan el valor de cierre de cada mes en el Review de Indicadores. Las celdas en blanco indican meses pendientes de medición.</div>' +
+
+    var thMeses = '';
+    for (var thm = 0; thm < meses.length; thm++) {
+      thMeses += '<th class="col-meta-mes">' + meses[thm] + '</th>';
+    }
+    var totalCols = 5 + meses.length;
+
+    ejesHtml += '<section class="okr-track-eje eje-' + mk + '">' +
+      '<header class="okr-track-eje-head">' +
+        '<span class="okr-track-eje-dot ' + mk + '"></span>' +
+        '<h2>Eje ' + ejeTitle + '</h2>' +
+      '</header>' +
+      '<div class="okr-track-table-wrap">' +
+        '<table class="okr-track-table">' +
+          '<thead>' +
+            '<tr class="ns-section-row"><th colspan="' + totalCols + '">Indicadores guía del eje</th></tr>' +
+            '<tr>' +
+              '<th>Indicador</th>' +
+              '<th class="col-meta-baseline">Hoy</th>' +
+              '<th class="col-meta-target">Meta 6m</th>' +
+              thMeses +
+              '<th class="col-meta-mes">Variación</th>' +
+              '<th class="col-meta-mes">Cumplimiento</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' + nsCardsHtml + '</tbody>' +
+          '<thead>' +
+            '<tr class="kr-section-row"><th colspan="' + totalCols + '">KRs por etapa</th></tr>' +
+            '<tr>' +
+              '<th>Meta medible · etapa</th>' +
+              '<th class="col-meta-baseline">Hoy</th>' +
+              '<th class="col-meta-target">Meta 6m</th>' +
+              thMeses +
+              '<th class="col-meta-mes">Variación</th>' +
+              '<th class="col-meta-mes">Cumplimiento</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' + krsRowsHtml + '</tbody>' +
+        '</table>' +
       '</div>' +
+    '</section>';
+  }
+
+  return '<div class="slide exec-summary" data-slide="' + i + '">' +
+    '<div class="okrs-hero">' +
+      '<div class="eyebrow">Seguimiento de KRs · cierre mensual</div>' +
+      '<h1>📈 Tablero de seguimiento de OKRs</h1>' +
+      '<p>Tabla viva donde cada eje arranca con sus indicadores guía y luego baja a las metas medibles por etapa. Los squads completan el valor de cierre de cada mes en el Review de Indicadores; <strong>Variación</strong> y <strong>Cumplimiento</strong> se calculan a partir del último valor cargado contra el baseline y la meta a 6 meses.</p>' +
     '</div>' +
-    '<div class="okr-track-table-wrap">' +
-      '<table class="okr-track-table">' +
-        '<thead><tr>' +
-          '<th>Eje</th>' +
-          '<th>Meta medible · etapa</th>' +
-          '<th class="col-meta-baseline">Hoy</th>' +
-          '<th class="col-meta-target">Meta 6m</th>' +
-          thMeses +
-        '</tr></thead>' +
-        '<tbody>' + rowsHtml + '</tbody>' +
-      '</table>' +
+    '<div class="okr-track-legend okr-track-legend-top">' +
+      '<strong>Cómo se lee:</strong> ' +
+      '<span><b>Hoy</b> = baseline del KR</span> · ' +
+      '<span><b>Meta 6m</b> = valor objetivo</span> · ' +
+      '<span><b>Variación</b> = último valor cargado − baseline</span> · ' +
+      '<span><b>Cumplimiento</b> = (último − baseline) / (meta − baseline) × 100%</span>' +
     '</div>' +
-    '<div class="okr-track-legend"><strong>Cómo se completa:</strong> al cierre de cada mes, cada squad llena la celda de su KR con el valor del indicador (mismo formato que baseline). El Comité Ejecutivo revisa la evolución mes a mes contra la meta a 6 meses para decidir ajustes.</div>' +
+    ejesHtml +
   '</div>';
 }
 
@@ -3215,9 +3296,6 @@ function renderOKRsSlide(i) {
     '<div class="okrs-section-title">Tamaño de la oportunidad</div>' +
     '<div class="okrs-section-sub">Estimación de lo que el sistema actual deja encima de la mesa si mejoramos solo los indicadores clave. <strong>No son compromisos de resultado:</strong> son el techo de lo que se puede capturar sin cambiar la inversión digital ni el inventario base.</div>' +
     impactHtml +
-    '<div class="okrs-section-title">Seguimiento mensual de KRs</div>' +
-    '<div class="okrs-section-sub">Tabla viva para registrar el valor del indicador mes a mes y comparar contra el baseline y la meta a 6 meses. Se actualiza después de cada Review de Indicadores semanal · Mayo arranca el primer ciclo de medición.</div>' +
-    renderOKRSeguimientoHtml() +
     '<div class="okrs-section-title">Estructura de cadencias</div>' +
     '<div class="okrs-section-sub">Cuatro niveles de revisión que mantienen el foco en los indicadores. Cada nivel tiene participantes, agenda y output definidos — los equipos llegan con su métrica actualizada, no con decks de avance.</div>' +
     '<div class="deck-gov-grid">' +
@@ -4642,7 +4720,7 @@ function getActiveStages() {
   return out;
 }
 function buildFlatSlides() {
-  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'overview' }];
+  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'okr-seguimiento' }, { type: 'overview' }];
   var active = getActiveStages();
   for (var si = 0; si < active.length; si++) {
     var stage = active[si];
@@ -4655,7 +4733,7 @@ function buildFlatSlides() {
 
 // Flatten (initial)
 var flatSlides = buildFlatSlides();
-var TOTAL_SUBSTEPS = flatSlides.length - 5;
+var TOTAL_SUBSTEPS = flatSlides.length - 6;
 var currentSlide = 0;
 var chartInstances = {};
 var chartState = {};
@@ -5834,7 +5912,7 @@ function setMacro(macro) {
   if (macro !== currentMacro) {
     currentMacro = macro;
     flatSlides = buildFlatSlides();
-    TOTAL_SUBSTEPS = flatSlides.length - 5;
+    TOTAL_SUBSTEPS = flatSlides.length - 6;
     renderMacroTabs();
     renderStageTabs();
     renderSlides();
@@ -5845,6 +5923,7 @@ function setMacro(macro) {
 function goToExecSummary() { goToSlide(1); }
 function goToRoadmap() { goToSlide(2); }
 function goToOKRs() { goToSlide(3); }
+function goToOKRSeguimiento() { goToSlide(4); }
 
 function goToRoadmapTarget(macro, stageName, substepName) {
   if (!macro || !stageName) return;
@@ -5968,6 +6047,8 @@ function renderSlides() {
       html += renderRoadmapSlide(i);
     } else if (s.type === 'okrs') {
       html += renderOKRsSlide(i);
+    } else if (s.type === 'okr-seguimiento') {
+      html += renderOKRSeguimientoSlide(i);
     } else if (s.type === 'overview') {
       html += renderOverviewSlide(i);
     } else {
@@ -7044,7 +7125,7 @@ function updateChrome() {
   var prevBtn = document.getElementById('prev-btn');
   var nextBtn = document.getElementById('next-btn');
 
-  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap');
+  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okr-seguimiento');
   var macroTabsEl = document.querySelectorAll('.macro-stage');
   for (var mti = 0; mti < macroTabsEl.length; mti++) {
     if (isSpecialView) {
@@ -7084,6 +7165,11 @@ function updateChrome() {
     stepper.style.display = 'none';
     breadcrumb.innerHTML = '<span class="bc-stage">OKRs & Impacto</span>';
     counter.innerHTML = '<span class="current">-</span> <span class="total">Vista directorio</span>';
+  } else if (slide.type === 'okr-seguimiento') {
+    for (var th4b = 0; th4b < tabs.length; th4b++) tabs[th4b].classList.remove('active');
+    stepper.style.display = 'none';
+    breadcrumb.innerHTML = '<span class="bc-stage">Seguimiento OKR · cierre mensual</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">Tablero por eje</span>';
   } else if (slide.type === 'overview') {
     for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
     stepper.style.display = 'none';
@@ -7188,6 +7274,7 @@ function init() {
           if (v === 'exec-summary') goToExecSummary();
           else if (v === 'roadmap') goToRoadmap();
           else if (v === 'okrs') goToOKRs();
+          else if (v === 'okr-seguimiento') goToOKRSeguimiento();
         });
       })(viewBtns[vbi2]);
     }
