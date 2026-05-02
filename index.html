@@ -1578,6 +1578,16 @@
   .okr-track-krs-scroll { max-height: 55vh; overflow-y: auto; border: 1px solid var(--gray-200); border-top: none; }
   .okr-track-krs-scroll table thead th { position: sticky; top: 0; z-index: 1; }
   section.okr-track-eje.eje-hidden { display: none; }
+  .okr-track-toolbar { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .okr-track-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .okr-track-action { font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 4px; background: var(--white); border: 1px solid var(--gray-300); color: var(--gray-700); cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+  .okr-track-action:hover { background: var(--gray-100); color: var(--navy); border-color: var(--navy); }
+  .okr-track-action.danger { color: #B3261E; border-color: #F0BBB6; }
+  .okr-track-action.danger:hover { background: #FEE2E2; color: #7A1010; border-color: #B3261E; }
+  .okr-track-table td.cell-mes[contenteditable="true"] { cursor: text; transition: background 0.12s, box-shadow 0.12s; }
+  .okr-track-table td.cell-mes[contenteditable="true"]:hover { background: #F0FAEF; }
+  .okr-track-table td.cell-mes[contenteditable="true"]:focus { background: #FFFBE6; outline: 2px solid var(--clicar-green); outline-offset: -2px; color: var(--navy); font-weight: 700; }
+  .okr-track-table td.cell-mes[contenteditable="true"].cell-mes-empty:hover::before { content: "✏️"; opacity: 0.3; font-size: 10px; }
   .roadmap-savings { display: inline-block; background: #E7F5E7; color: var(--green); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; border: 1px solid #B6E0B6; white-space: nowrap; }
   .roadmap-table td.col-ahorro { min-width: 140px; }
   @media (max-width: 900px) {
@@ -2498,6 +2508,20 @@ function renderOKRSeguimientoSlide(i) {
   var macroOrder = ['compra','preparación','venta'];
   var ejesHtml = '';
 
+  function escAttr(s) { return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
+  function buildCellsHtml(rowId, baseline, target) {
+    var rowAttrs = ' data-track-row="' + escAttr(rowId) + '" data-baseline="' + escAttr(baseline) + '" data-target="' + escAttr(target) + '"';
+    var mesCellsHtml = '';
+    for (var nn = 0; nn < meses.length; nn++) {
+      mesCellsHtml += '<td class="cell-mes cell-mes-empty" contenteditable="true" spellcheck="false" data-track-cell="' + escAttr(rowId) + '" data-track-mes="' + escAttr(meses[nn]) + '" title="Click para editar"></td>';
+    }
+    return {
+      attrs: rowAttrs,
+      mesCells: mesCellsHtml,
+      tail: '<td class="cell-variacion cell-mes-empty" data-track-variacion="' + escAttr(rowId) + '"></td><td class="cell-cumplimiento cell-mes-empty" data-track-cumplimiento="' + escAttr(rowId) + '"></td>'
+    };
+  }
+
   for (var mi = 0; mi < macroOrder.length; mi++) {
     var mk = macroOrder[mi];
     var ejeStages = [];
@@ -2512,18 +2536,15 @@ function renderOKRSeguimientoSlide(i) {
     var nsCardsHtml = '';
     for (var nsi = 0; nsi < ejeNS.length; nsi++) {
       var ns = ejeNS[nsi];
-      var nsMesCells = '';
-      for (var nm = 0; nm < meses.length; nm++) {
-        nsMesCells += '<td class="cell-mes cell-mes-empty"></td>';
-      }
+      var nsRowId = 'ns:' + mk + ':' + nsi;
+      var nsCells = buildCellsHtml(nsRowId, ns.baseline, ns.target);
       var subLine = ns.sub ? '<div class="ns-track-sub">' + ns.sub + '</div>' : '';
-      nsCardsHtml += '<tr class="ns-track-row">' +
+      nsCardsHtml += '<tr class="ns-track-row"' + nsCells.attrs + '>' +
         '<td class="col-kr ns-track-label"><div class="ns-track-metric">' + ns.metric + '</div>' + subLine + '</td>' +
         '<td class="cell-baseline">' + ns.baseline + '</td>' +
         '<td class="cell-target">' + ns.target + '</td>' +
-        nsMesCells +
-        '<td class="cell-variacion cell-mes-empty"></td>' +
-        '<td class="cell-cumplimiento cell-mes-empty"></td>' +
+        nsCells.mesCells +
+        nsCells.tail +
       '</tr>';
     }
 
@@ -2534,17 +2555,14 @@ function renderOKRSeguimientoSlide(i) {
       if (!st || st.upcoming || !st.krs || !st.krs.length) continue;
       for (var ki = 0; ki < st.krs.length; ki++) {
         var kr = st.krs[ki];
-        var mesCells = '';
-        for (var mc = 0; mc < meses.length; mc++) {
-          mesCells += '<td class="cell-mes cell-mes-empty"></td>';
-        }
-        krsRowsHtml += '<tr>' +
+        var krRowId = 'kr:' + ejeStages[es] + ':' + ki;
+        var krCells = buildCellsHtml(krRowId, kr.baseline, kr.target);
+        krsRowsHtml += '<tr' + krCells.attrs + '>' +
           '<td class="col-kr"><div>' + kr.desc + '</div><div class="kr-track-stage">' + st.title + '</div></td>' +
           '<td class="cell-baseline">' + kr.baseline + '</td>' +
           '<td class="cell-target">' + kr.target + '</td>' +
-          mesCells +
-          '<td class="cell-variacion cell-mes-empty"></td>' +
-          '<td class="cell-cumplimiento cell-mes-empty"></td>' +
+          krCells.mesCells +
+          krCells.tail +
         '</tr>';
       }
     }
@@ -2614,18 +2632,23 @@ function renderOKRSeguimientoSlide(i) {
       '<p>Tabla viva donde cada eje arranca con sus indicadores guía y luego baja a las metas medibles por etapa. Los squads completan el valor de cierre de cada mes en el Review de Indicadores; <strong>Variación</strong> y <strong>Cumplimiento</strong> se calculan a partir del último valor cargado contra el baseline y la meta a 6 meses.</p>' +
     '</div>' +
     '<div class="okr-track-legend okr-track-legend-top">' +
-      '<strong>Cómo se lee:</strong> ' +
-      '<span><b>Hoy</b> = baseline del KR</span> · ' +
-      '<span><b>Meta 6m</b> = valor objetivo</span> · ' +
-      '<span><b>Variación</b> = último valor cargado − baseline</span> · ' +
-      '<span><b>Cumplimiento</b> = (último − baseline) / (meta − baseline) × 100%</span>' +
+      '<strong>Cómo cargar:</strong> ' +
+      '<span>Click en cualquier celda mensual para escribir el valor del cierre del mes (mismo formato que <b>Hoy</b>, ej: <b>65%</b>, <b>2.149</b>, <b>94 ventas</b>). Se guarda automáticamente en este navegador y recalcula <b>Variación</b> y <b>Cumplimiento</b>.</span>' +
     '</div>' +
-    '<div class="okr-track-filters">' +
-      '<span class="okr-track-filter-label">Ver eje:</span>' +
-      '<button type="button" class="okr-track-filter active" data-okr-filter="all">Todos</button>' +
-      '<button type="button" class="okr-track-filter" data-okr-filter="compra">Compra</button>' +
-      '<button type="button" class="okr-track-filter" data-okr-filter="preparación">Preparación</button>' +
-      '<button type="button" class="okr-track-filter" data-okr-filter="venta">Venta</button>' +
+    '<div class="okr-track-toolbar">' +
+      '<div class="okr-track-filters">' +
+        '<span class="okr-track-filter-label">Ver eje:</span>' +
+        '<button type="button" class="okr-track-filter active" data-okr-filter="all">Todos</button>' +
+        '<button type="button" class="okr-track-filter" data-okr-filter="compra">Compra</button>' +
+        '<button type="button" class="okr-track-filter" data-okr-filter="preparación">Preparación</button>' +
+        '<button type="button" class="okr-track-filter" data-okr-filter="venta">Venta</button>' +
+      '</div>' +
+      '<div class="okr-track-actions">' +
+        '<button type="button" class="okr-track-action" data-okr-action="export">⬇ Exportar JSON</button>' +
+        '<button type="button" class="okr-track-action" data-okr-action="import">⬆ Importar JSON</button>' +
+        '<button type="button" class="okr-track-action danger" data-okr-action="clear">Limpiar todo</button>' +
+        '<input type="file" accept=".json,application/json" id="okr-track-import-file" style="display:none">' +
+      '</div>' +
     '</div>' +
     ejesHtml +
   '</div>';
@@ -6162,6 +6185,7 @@ function renderSlides() {
   bindOkrEjeSwitcher(area);
   bindOkrTrackFilters(area);
   bindOkrTrackCollapse(area);
+  bindOkrTrackEditing(area);
   initPrepCharts();
   bindVtaViewToggles(area);
   highlightRecordatorios(area);
@@ -6183,6 +6207,169 @@ function bindOkrTrackFilters(area) {
         }
       });
     })(btns[b]);
+  }
+}
+
+var OKR_TRACK_STORAGE_KEY = 'okr_track_v1';
+
+function loadOkrTrack() {
+  try { return JSON.parse(localStorage.getItem(OKR_TRACK_STORAGE_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveOkrTrack(data) {
+  try { localStorage.setItem(OKR_TRACK_STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+function parseOkrNumeric(value) {
+  if (value == null) return null;
+  var s = String(value).replace(/[^0-9.,\-]/g, '').replace(',', '.');
+  if (!s || s === '-' || s === '.') return null;
+  var n = parseFloat(s);
+  return isNaN(n) ? null : n;
+}
+function formatOkrDelta(value, like) {
+  if (value == null) return '';
+  var sign = value > 0 ? '+' : '';
+  var hasPct = /%/.test(String(like || ''));
+  var rounded = Math.abs(value) >= 100 ? Math.round(value) : Math.round(value * 10) / 10;
+  var s = String(rounded).replace('.', ',');
+  return sign + s + (hasPct ? ' pp' : '');
+}
+function recalcOkrTrackRow(row) {
+  if (!row) return;
+  var baseline = row.getAttribute('data-baseline');
+  var target = row.getAttribute('data-target');
+  var cells = row.querySelectorAll('[data-track-cell]');
+  var lastVal = null;
+  for (var i = cells.length - 1; i >= 0; i--) {
+    var v = (cells[i].textContent || '').trim();
+    if (v) { lastVal = v; break; }
+  }
+  var varCell = row.querySelector('[data-track-variacion]');
+  var cumCell = row.querySelector('[data-track-cumplimiento]');
+  if (lastVal === null) {
+    if (varCell) { varCell.textContent = ''; varCell.classList.add('cell-mes-empty'); varCell.style.color = ''; }
+    if (cumCell) { cumCell.textContent = ''; cumCell.classList.add('cell-mes-empty'); cumCell.style.color = ''; }
+    return;
+  }
+  var lastNum = parseOkrNumeric(lastVal);
+  var baseNum = parseOkrNumeric(baseline);
+  var targetNum = parseOkrNumeric(target);
+  if (varCell) {
+    if (lastNum != null && baseNum != null) {
+      var diff = lastNum - baseNum;
+      varCell.textContent = formatOkrDelta(diff, baseline);
+      varCell.classList.remove('cell-mes-empty');
+      var directionUp = (targetNum != null && targetNum > baseNum);
+      var good = directionUp ? diff > 0 : diff < 0;
+      varCell.style.color = diff === 0 ? 'var(--gray-500)' : (good ? '#0F6E56' : '#B3261E');
+    } else {
+      varCell.textContent = '—'; varCell.classList.add('cell-mes-empty'); varCell.style.color = '';
+    }
+  }
+  if (cumCell) {
+    if (lastNum != null && baseNum != null && targetNum != null && targetNum !== baseNum) {
+      var pct = ((lastNum - baseNum) / (targetNum - baseNum)) * 100;
+      cumCell.textContent = (pct >= 0 ? '' : '') + Math.round(pct) + '%';
+      cumCell.classList.remove('cell-mes-empty');
+      if (pct >= 100) cumCell.style.color = '#0F6E56';
+      else if (pct >= 50) cumCell.style.color = '#8A5A00';
+      else if (pct >= 0) cumCell.style.color = '#B3261E';
+      else cumCell.style.color = '#7A1010';
+    } else {
+      cumCell.textContent = '—'; cumCell.classList.add('cell-mes-empty'); cumCell.style.color = '';
+    }
+  }
+}
+function bindOkrTrackEditing(area) {
+  var cells = area.querySelectorAll('[data-track-cell]');
+  if (!cells.length) return;
+  var data = loadOkrTrack();
+  for (var c = 0; c < cells.length; c++) {
+    var cell = cells[c];
+    var rowId = cell.getAttribute('data-track-cell');
+    var mes = cell.getAttribute('data-track-mes');
+    var key = rowId + '::' + mes;
+    if (data[key]) {
+      cell.textContent = data[key];
+      cell.classList.remove('cell-mes-empty');
+    }
+    (function(c2, k2) {
+      c2.addEventListener('blur', function() {
+        var val = (c2.textContent || '').trim();
+        var d = loadOkrTrack();
+        if (val) { d[k2] = val; c2.classList.remove('cell-mes-empty'); }
+        else { delete d[k2]; c2.classList.add('cell-mes-empty'); }
+        saveOkrTrack(d);
+        recalcOkrTrackRow(c2.closest('tr'));
+      });
+      c2.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); c2.blur(); }
+        if (e.key === 'Escape') { e.preventDefault(); c2.blur(); }
+      });
+    })(cell, key);
+  }
+  var rows = area.querySelectorAll('[data-track-row]');
+  for (var r = 0; r < rows.length; r++) recalcOkrTrackRow(rows[r]);
+  // Toolbar actions
+  var actions = area.querySelectorAll('[data-okr-action]');
+  for (var a = 0; a < actions.length; a++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var act = btn.getAttribute('data-okr-action');
+        if (act === 'export') {
+          var d = loadOkrTrack();
+          var blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
+          var url = URL.createObjectURL(blob);
+          var a2 = document.createElement('a');
+          var stamp = new Date().toISOString().slice(0,10);
+          a2.href = url; a2.download = 'okr-seguimiento-' + stamp + '.json';
+          document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+          URL.revokeObjectURL(url);
+        } else if (act === 'import') {
+          var input = area.querySelector('#okr-track-import-file');
+          if (input) input.click();
+        } else if (act === 'clear') {
+          if (confirm('¿Borrar todos los valores cargados de seguimiento OKR? Esta acción no se puede deshacer.')) {
+            saveOkrTrack({});
+            var allCells = area.querySelectorAll('[data-track-cell]');
+            for (var ac = 0; ac < allCells.length; ac++) {
+              allCells[ac].textContent = '';
+              allCells[ac].classList.add('cell-mes-empty');
+            }
+            var allRows = area.querySelectorAll('[data-track-row]');
+            for (var ar = 0; ar < allRows.length; ar++) recalcOkrTrackRow(allRows[ar]);
+          }
+        }
+      });
+    })(actions[a]);
+  }
+  var fileInput = area.querySelector('#okr-track-import-file');
+  if (fileInput) {
+    fileInput.addEventListener('change', function() {
+      var f = fileInput.files && fileInput.files[0];
+      if (!f) return;
+      var reader = new FileReader();
+      reader.onload = function() {
+        try {
+          var imported = JSON.parse(reader.result);
+          if (typeof imported !== 'object' || imported === null) throw new Error('Formato inválido');
+          saveOkrTrack(imported);
+          // Refresh visible cells
+          var allCells = area.querySelectorAll('[data-track-cell]');
+          for (var ic = 0; ic < allCells.length; ic++) {
+            var rid = allCells[ic].getAttribute('data-track-cell');
+            var ms = allCells[ic].getAttribute('data-track-mes');
+            var k = rid + '::' + ms;
+            if (imported[k]) { allCells[ic].textContent = imported[k]; allCells[ic].classList.remove('cell-mes-empty'); }
+            else { allCells[ic].textContent = ''; allCells[ic].classList.add('cell-mes-empty'); }
+          }
+          var allRows = area.querySelectorAll('[data-track-row]');
+          for (var ir = 0; ir < allRows.length; ir++) recalcOkrTrackRow(allRows[ir]);
+        } catch(e) { alert('No se pudo importar: ' + e.message); }
+        fileInput.value = '';
+      };
+      reader.readAsText(f);
+    });
   }
 }
 
