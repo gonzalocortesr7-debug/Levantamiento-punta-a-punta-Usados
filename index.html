@@ -1512,6 +1512,11 @@
   .plan-iniciativa-body { flex: 1; }
   .plan-iniciativa-txt { font-weight: 600; }
   .plan-iniciativa-nota { font-size: 10.5px; color: var(--gray-500); font-style: italic; margin-top: 3px; }
+  .plan-iniciativa-fecha { font-size: 10.5px; color: var(--navy); font-weight: 600; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--gray-200); display: flex; align-items: center; gap: 5px; }
+  .plan-iniciativa-fecha .plan-fecha-icon { font-size: 11px; }
+  .plan-iniciativa-fecha .plan-fecha-label { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 9.5px; color: var(--gray-500); }
+  .plan-iniciativa-fecha-pending { color: var(--gray-500); font-style: italic; font-weight: 500; }
+  .plan-mes-eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clicar-green); margin-bottom: 4px; }
   @media (max-width: 1100px) { .plan-grupos-grid { grid-template-columns: 1fr; } }
 
   /* Seguimiento OKR */
@@ -1556,6 +1561,23 @@
   .ns-track-sub { font-size: 10px; color: var(--gray-500); font-weight: 400; margin-top: 2px; }
   .kr-track-stage { font-size: 10px; color: var(--gray-500); font-weight: 400; margin-top: 2px; }
   .okr-track-table td.cell-variacion, .okr-track-table td.cell-cumplimiento { text-align: center; font-weight: 700; min-width: 90px; }
+  .okr-track-filters { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
+  .okr-track-filter-label { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; }
+  .okr-track-filter { font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 14px; background: var(--white); border: 1px solid var(--gray-300); color: var(--gray-700); cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+  .okr-track-filter:hover { border-color: var(--navy); color: var(--navy); }
+  .okr-track-filter.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .okr-track-section-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--clicar-green); margin: 8px 0 6px; padding: 4px 10px; background: #F0FAEF; border-left: 3px solid var(--clicar-green); }
+  .okr-track-collapse-btn { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--gray-100); border: 1px solid var(--gray-200); padding: 10px 14px; font-family: inherit; font-size: 11.5px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; margin-top: 14px; transition: background 0.15s; }
+  .okr-track-collapse-btn:hover { background: var(--gray-200); }
+  .okr-track-collapse-btn .okr-collapse-icon { font-size: 11px; transition: transform 0.2s; color: var(--navy); }
+  .okr-track-collapse-btn.collapsed .okr-collapse-icon { transform: rotate(-90deg); }
+  .okr-track-collapse-btn .okr-collapse-label { flex: 1; text-align: left; }
+  .okr-track-collapse-btn .okr-collapse-count { font-size: 10px; background: var(--navy); color: var(--white); padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+  .okr-track-collapse-body { display: block; }
+  .okr-track-collapse-body.collapsed { display: none; }
+  .okr-track-krs-scroll { max-height: 55vh; overflow-y: auto; border: 1px solid var(--gray-200); border-top: none; }
+  .okr-track-krs-scroll table thead th { position: sticky; top: 0; z-index: 1; }
+  section.okr-track-eje.eje-hidden { display: none; }
   .roadmap-savings { display: inline-block; background: #E7F5E7; color: var(--green); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; border: 1px solid #B6E0B6; white-space: nowrap; }
   .roadmap-table td.col-ahorro { min-width: 140px; }
   @media (max-width: 900px) {
@@ -2533,15 +2555,21 @@ function renderOKRSeguimientoSlide(i) {
     }
     var totalCols = 5 + meses.length;
 
-    ejesHtml += '<section class="okr-track-eje eje-' + mk + '">' +
+    var krsCount = 0;
+    for (var kc = 0; kc < ejeStages.length; kc++) {
+      var stc = OKRS.byStage[ejeStages[kc]];
+      if (stc && !stc.upcoming && stc.krs) krsCount += stc.krs.length;
+    }
+
+    ejesHtml += '<section class="okr-track-eje eje-' + mk + '" data-eje="' + mk + '">' +
       '<header class="okr-track-eje-head">' +
         '<span class="okr-track-eje-dot ' + mk + '"></span>' +
         '<h2>Eje ' + ejeTitle + '</h2>' +
       '</header>' +
+      '<div class="okr-track-section-label">Indicadores guía del eje</div>' +
       '<div class="okr-track-table-wrap">' +
         '<table class="okr-track-table">' +
           '<thead>' +
-            '<tr class="ns-section-row"><th colspan="' + totalCols + '">Indicadores guía del eje</th></tr>' +
             '<tr>' +
               '<th>Indicador</th>' +
               '<th class="col-meta-baseline">Hoy</th>' +
@@ -2552,19 +2580,29 @@ function renderOKRSeguimientoSlide(i) {
             '</tr>' +
           '</thead>' +
           '<tbody>' + nsCardsHtml + '</tbody>' +
-          '<thead>' +
-            '<tr class="kr-section-row"><th colspan="' + totalCols + '">KRs por etapa</th></tr>' +
-            '<tr>' +
-              '<th>Meta medible · etapa</th>' +
-              '<th class="col-meta-baseline">Hoy</th>' +
-              '<th class="col-meta-target">Meta 6m</th>' +
-              thMeses +
-              '<th class="col-meta-mes">Variación</th>' +
-              '<th class="col-meta-mes">Cumplimiento</th>' +
-            '</tr>' +
-          '</thead>' +
-          '<tbody>' + krsRowsHtml + '</tbody>' +
         '</table>' +
+      '</div>' +
+      '<button type="button" class="okr-track-collapse-btn" data-okr-collapse="' + mk + '">' +
+        '<span class="okr-collapse-icon">▼</span>' +
+        '<span class="okr-collapse-label">KRs por etapa</span>' +
+        '<span class="okr-collapse-count">' + krsCount + '</span>' +
+      '</button>' +
+      '<div class="okr-track-collapse-body" data-okr-collapse-body="' + mk + '">' +
+        '<div class="okr-track-table-wrap okr-track-krs-scroll">' +
+          '<table class="okr-track-table">' +
+            '<thead>' +
+              '<tr>' +
+                '<th>Meta medible · etapa</th>' +
+                '<th class="col-meta-baseline">Hoy</th>' +
+                '<th class="col-meta-target">Meta 6m</th>' +
+                thMeses +
+                '<th class="col-meta-mes">Variación</th>' +
+                '<th class="col-meta-mes">Cumplimiento</th>' +
+              '</tr>' +
+            '</thead>' +
+            '<tbody>' + krsRowsHtml + '</tbody>' +
+          '</table>' +
+        '</div>' +
       '</div>' +
     '</section>';
   }
@@ -2582,6 +2620,13 @@ function renderOKRSeguimientoSlide(i) {
       '<span><b>Variación</b> = último valor cargado − baseline</span> · ' +
       '<span><b>Cumplimiento</b> = (último − baseline) / (meta − baseline) × 100%</span>' +
     '</div>' +
+    '<div class="okr-track-filters">' +
+      '<span class="okr-track-filter-label">Ver eje:</span>' +
+      '<button type="button" class="okr-track-filter active" data-okr-filter="all">Todos</button>' +
+      '<button type="button" class="okr-track-filter" data-okr-filter="compra">Compra</button>' +
+      '<button type="button" class="okr-track-filter" data-okr-filter="preparación">Preparación</button>' +
+      '<button type="button" class="okr-track-filter" data-okr-filter="venta">Venta</button>' +
+    '</div>' +
     ejesHtml +
   '</div>';
 }
@@ -2592,31 +2637,31 @@ function renderOKRSeguimientoSlide(i) {
 var PLAN_MENSUAL = [
   {
     mes: '2026-05',
-    label: 'Mayo 2026',
-    sub: 'Primer ciclo de ejecución · arranque del plan',
+    label: 'Iniciativas · Mayo 2026',
+    sub: 'Primer ciclo de ejecución del plan · acciones comprometidas para mayo',
     grupos: [
       { macro: 'compra', label: 'Eje Compra', iniciativas: [
-        { txt: 'Habilitar patente (con solución alternativa basada en Patentamiento y clientes)' },
-        { txt: 'Habilitar RUT' },
-        { txt: 'Pre-seleccionar la opción inmediata en la tasación para que el botón de agendamiento esté visible' },
-        { txt: 'Alinear región y ciudad con las sucursales reales en el flujo de agendamiento' },
-        { txt: 'Mostrar mensaje aclarativo si el cliente tasa en una región sin cobertura' },
-        { txt: 'Confirmación y recordatorio de cita de agendamiento' },
-        { txt: 'Implementación de consulta dealernet de pensión de alimentos para compras', nota: 'No inmediata' },
-        { txt: 'Analizar cambio de número en llamada' }
+        { txt: 'Habilitar patente (con solución alternativa basada en Patentamiento y clientes)', fecha: 'Por definir' },
+        { txt: 'Habilitar RUT', fecha: 'Por definir' },
+        { txt: 'Pre-seleccionar la opción inmediata en la tasación para que el botón de agendamiento esté visible', fecha: 'Por definir' },
+        { txt: 'Alinear región y ciudad con las sucursales reales en el flujo de agendamiento', fecha: 'Por definir' },
+        { txt: 'Mostrar mensaje aclarativo si el cliente tasa en una región sin cobertura', fecha: 'Por definir' },
+        { txt: 'Confirmación y recordatorio de cita de agendamiento', fecha: 'Por definir' },
+        { txt: 'Implementación de consulta dealernet de pensión de alimentos para compras', nota: 'No inmediata', fecha: 'Por definir' },
+        { txt: 'Analizar cambio de número en llamada', fecha: 'Por definir' }
       ]},
       { macro: 'preparación', label: 'Eje Preparación', iniciativas: [
-        { txt: 'Publicación de unidades reservadas', nota: 'No requiere desarrollo' },
-        { txt: 'Foto en la inspección con solución de Photo Studio IA' }
+        { txt: 'Publicación de unidades reservadas', nota: 'No requiere desarrollo', fecha: 'Por definir' },
+        { txt: 'Foto en la inspección con solución de Photo Studio IA', fecha: 'Por definir' }
       ]},
       { macro: 'venta', label: 'Eje Venta', iniciativas: [
-        { txt: 'Propuesta para destacar atributos de Clicar en la ficha del auto', nota: 'Hasta 12 meses de cobertura mecánica · inspección de 200 atributos · entrega inmediata' },
-        { txt: 'En mobile subir el catálogo y eliminar banner + contenido de concesionarios; habilitar buscador libre arriba' },
-        { txt: 'Etiquetas diferenciadoras en la ficha', nota: 'Único dueño · mantenciones en marca · garantía vigente' },
-        { txt: 'Sacar la categoría de auto (SUV, Pickup, etc.) y agregar la versión del auto en la ficha' },
-        { txt: 'Panel de seguimiento para leads con VPP, financiamiento y segmento de valor + scoring de leads' },
-        { txt: 'Tasación sin cierre del journey' },
-        { txt: 'Campo de bonificación adicional por segmento de valor en VPP y cola de atención prioritaria' }
+        { txt: 'Propuesta para destacar atributos de Clicar en la ficha del auto', nota: 'Hasta 12 meses de cobertura mecánica · inspección de 200 atributos · entrega inmediata', fecha: 'Por definir' },
+        { txt: 'En mobile subir el catálogo y eliminar banner + contenido de concesionarios; habilitar buscador libre arriba', fecha: 'Por definir' },
+        { txt: 'Etiquetas diferenciadoras en la ficha', nota: 'Único dueño · mantenciones en marca · garantía vigente', fecha: 'Por definir' },
+        { txt: 'Sacar la categoría de auto (SUV, Pickup, etc.) y agregar la versión del auto en la ficha', fecha: 'Por definir' },
+        { txt: 'Panel de seguimiento para leads con VPP, financiamiento y segmento de valor + scoring de leads', fecha: 'Por definir' },
+        { txt: 'Tasación sin cierre del journey', fecha: 'Por definir' },
+        { txt: 'Campo de bonificación adicional por segmento de valor en VPP y cola de atención prioritaria', fecha: 'Por definir' }
       ]}
     ]
   }
@@ -2682,11 +2727,15 @@ function renderRoadmapSlide(i) {
       for (var ii = 0; ii < gr.iniciativas.length; ii++) {
         var ini = gr.iniciativas[ii];
         var notaHtml = ini.nota ? '<div class="plan-iniciativa-nota">' + ini.nota + '</div>' : '';
+        var fechaText = ini.fecha || 'Por definir';
+        var fechaCls = (fechaText === 'Por definir') ? ' plan-iniciativa-fecha-pending' : '';
+        var fechaHtml = '<div class="plan-iniciativa-fecha' + fechaCls + '"><span class="plan-fecha-icon">📅</span><span class="plan-fecha-label">Implementación:</span> ' + fechaText + '</div>';
         iniHtml += '<div class="plan-iniciativa">' +
           '<span class="plan-iniciativa-num">' + (ii + 1) + '</span>' +
           '<div class="plan-iniciativa-body">' +
             '<div class="plan-iniciativa-txt">' + ini.txt + '</div>' +
             notaHtml +
+            fechaHtml +
           '</div>' +
         '</div>';
       }
@@ -2698,10 +2747,11 @@ function renderRoadmapSlide(i) {
     planHtml += '<div class="plan-mes-card">' +
       '<div class="plan-mes-head">' +
         '<div>' +
+          '<div class="plan-mes-eyebrow">Plan de ejecución del mes</div>' +
           '<div class="plan-mes-title">' + mes.label + '</div>' +
           '<div class="plan-mes-sub">' + mes.sub + '</div>' +
         '</div>' +
-        '<div class="plan-mes-count">' + totalMes + ' iniciativas</div>' +
+        '<div class="plan-mes-count">' + totalMes + ' iniciativas comprometidas</div>' +
       '</div>' +
       '<div class="plan-grupos-grid">' + gruposHtml + '</div>' +
     '</div>';
@@ -6110,9 +6160,46 @@ function renderSlides() {
     })(stageLinks[rsl]);
   }
   bindOkrEjeSwitcher(area);
+  bindOkrTrackFilters(area);
+  bindOkrTrackCollapse(area);
   initPrepCharts();
   bindVtaViewToggles(area);
   highlightRecordatorios(area);
+}
+
+function bindOkrTrackFilters(area) {
+  var btns = area.querySelectorAll('.okr-track-filter');
+  if (!btns.length) return;
+  for (var b = 0; b < btns.length; b++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var filter = btn.getAttribute('data-okr-filter');
+        var all = area.querySelectorAll('.okr-track-filter');
+        for (var a = 0; a < all.length; a++) all[a].classList.toggle('active', all[a] === btn);
+        var ejes = area.querySelectorAll('section.okr-track-eje');
+        for (var e = 0; e < ejes.length; e++) {
+          var eje = ejes[e].getAttribute('data-eje');
+          ejes[e].classList.toggle('eje-hidden', filter !== 'all' && filter !== eje);
+        }
+      });
+    })(btns[b]);
+  }
+}
+
+function bindOkrTrackCollapse(area) {
+  var btns = area.querySelectorAll('.okr-track-collapse-btn');
+  if (!btns.length) return;
+  for (var b = 0; b < btns.length; b++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var key = btn.getAttribute('data-okr-collapse');
+        var body = area.querySelector('[data-okr-collapse-body="' + key + '"]');
+        if (!body) return;
+        var collapsed = body.classList.toggle('collapsed');
+        btn.classList.toggle('collapsed', collapsed);
+      });
+    })(btns[b]);
+  }
 }
 
 function bindOkrEjeSwitcher(area) {
