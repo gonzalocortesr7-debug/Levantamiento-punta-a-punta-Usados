@@ -7399,7 +7399,7 @@ function updateChrome() {
   var prevBtn = document.getElementById('prev-btn');
   var nextBtn = document.getElementById('next-btn');
 
-  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okr-seguimiento');
+  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okrs' || slide.type === 'okr-seguimiento');
   var macroTabsEl = document.querySelectorAll('.macro-stage');
   for (var mti = 0; mti < macroTabsEl.length; mti++) {
     if (isSpecialView) {
