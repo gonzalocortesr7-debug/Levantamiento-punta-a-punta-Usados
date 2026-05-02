@@ -1481,6 +1481,60 @@
   .roadmap-summary-chip strong { color: var(--navy); font-weight: 700; font-size: 15px; margin-right: 4px; }
   .transformational-badge { background: var(--navy); color: var(--white); border: 1px solid var(--navy); font-weight: 800; letter-spacing: 0.06em; }
   .roadmap-description { font-size: 10.5px; color: var(--gray-500); margin-top: 4px; line-height: 1.45; font-weight: 400; font-style: normal; }
+
+  /* Roadmap view tabs (Vista global / Plan mensual) */
+  .roadmap-view-tabs { display: flex; gap: 4px; border-bottom: 2px solid var(--gray-200); margin-bottom: 18px; }
+  .roadmap-view-tab { background: transparent; border: none; padding: 10px 18px; font-size: 12px; font-weight: 700; cursor: pointer; color: var(--gray-500); font-family: inherit; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color 0.15s, border-color 0.15s; }
+  .roadmap-view-tab:hover { color: var(--navy); }
+  .roadmap-view-tab.active { color: var(--navy); border-bottom-color: var(--clicar-green); }
+  .roadmap-view-pane { display: none; }
+  .roadmap-view-pane.active { display: block; }
+
+  /* Plan Mensual */
+  .plan-mes-card { background: var(--white); border: 1px solid var(--gray-200); border-top: 4px solid var(--clicar-green); padding: 18px 22px 20px; margin-bottom: 18px; }
+  .plan-mes-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); margin-bottom: 16px; }
+  .plan-mes-title { font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
+  .plan-mes-sub { font-size: 11.5px; color: var(--gray-500); margin-top: 2px; }
+  .plan-mes-count { font-size: 11px; font-weight: 700; color: var(--navy); background: var(--gray-100); padding: 4px 10px; border-radius: 10px; }
+  .plan-grupos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .plan-grupo { border: 1px solid var(--gray-200); padding: 14px 16px 16px; background: var(--gray-50); }
+  .plan-grupo.compra { border-top: 3px solid #0F6FC6; }
+  .plan-grupo.preparación { border-top: 3px solid #EF9F27; }
+  .plan-grupo.venta { border-top: 3px solid #1D9E75; }
+  .plan-grupo-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .plan-grupo.compra .plan-grupo-label { color: #0F6FC6; }
+  .plan-grupo.preparación .plan-grupo-label { color: #8A5A00; }
+  .plan-grupo.venta .plan-grupo-label { color: #0F6E56; }
+  .plan-grupo-count { font-size: 10px; background: var(--white); border: 1px solid var(--gray-200); padding: 1px 7px; border-radius: 8px; color: var(--gray-700); }
+  .plan-iniciativas { display: flex; flex-direction: column; gap: 8px; }
+  .plan-iniciativa { background: var(--white); border: 1px solid var(--gray-200); padding: 8px 12px 10px; font-size: 11.5px; color: var(--navy); line-height: 1.45; display: flex; gap: 8px; align-items: flex-start; }
+  .plan-iniciativa-num { background: var(--navy); color: var(--white); width: 18px; height: 18px; border-radius: 50%; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .plan-iniciativa-body { flex: 1; }
+  .plan-iniciativa-txt { font-weight: 600; }
+  .plan-iniciativa-nota { font-size: 10.5px; color: var(--gray-500); font-style: italic; margin-top: 3px; }
+  @media (max-width: 1100px) { .plan-grupos-grid { grid-template-columns: 1fr; } }
+
+  /* Seguimiento OKR */
+  .okr-track-wrap { background: var(--white); border: 1px solid var(--gray-200); padding: 18px 20px 20px; margin-top: 20px; }
+  .okr-track-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); margin-bottom: 14px; }
+  .okr-track-title { font-size: 16px; font-weight: 800; color: var(--navy); }
+  .okr-track-sub { font-size: 11.5px; color: var(--gray-500); margin-top: 2px; max-width: 760px; line-height: 1.5; }
+  .okr-track-table-wrap { overflow-x: auto; }
+  .okr-track-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .okr-track-table th { background: var(--navy); color: var(--white); text-align: left; padding: 8px 10px; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .okr-track-table th.col-meta-mes, .okr-track-table th.col-meta-baseline, .okr-track-table th.col-meta-target { text-align: center; }
+  .okr-track-table td { padding: 7px 10px; border-bottom: 1px solid var(--gray-200); vertical-align: middle; color: var(--gray-700); }
+  .okr-track-table td.col-eje { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray-500); }
+  .okr-track-table td.col-eje.compra { color: #0F6FC6; }
+  .okr-track-table td.col-eje.preparación { color: #8A5A00; }
+  .okr-track-table td.col-eje.venta { color: #0F6E56; }
+  .okr-track-table td.col-kr { font-weight: 600; color: var(--navy); min-width: 250px; line-height: 1.4; }
+  .okr-track-table td.cell-baseline { text-align: center; font-weight: 700; color: #B3261E; }
+  .okr-track-table td.cell-target { text-align: center; font-weight: 700; color: #0F6E56; }
+  .okr-track-table td.cell-mes { text-align: center; font-weight: 600; color: var(--gray-500); }
+  .okr-track-table td.cell-mes-empty::before { content: "—"; color: var(--gray-300); }
+  .okr-track-table tr.eje-divider td { background: var(--gray-100); font-size: 10px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 10px; }
+  .okr-track-legend { font-size: 10.5px; color: var(--gray-500); margin-top: 10px; line-height: 1.5; }
   .roadmap-savings { display: inline-block; background: #E7F5E7; color: var(--green); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; border: 1px solid #B6E0B6; white-space: nowrap; }
   .roadmap-table td.col-ahorro { min-width: 140px; }
   @media (max-width: 900px) {
@@ -2389,6 +2443,109 @@ var ROADMAP = [
     macro: "venta", stage: "Gestión de Leads", substep: "Volumen y conversión mensual", priority: "media", responsable: "Por asignar", fecha: "Por definir", estado: "pendiente" }
 ];
 
+// ============================================================
+// SEGUIMIENTO OKR · render de tabla mensual
+// ============================================================
+function renderOKRSeguimientoHtml() {
+  var meses = OKR_SEGUIMIENTO_MESES;
+  var thMeses = '';
+  for (var m = 0; m < meses.length; m++) {
+    thMeses += '<th class="col-meta-mes">' + meses[m] + '</th>';
+  }
+  var rowsHtml = '';
+  var macroOrder = ['compra','preparación','venta'];
+  for (var mi = 0; mi < macroOrder.length; mi++) {
+    var mk = macroOrder[mi];
+    var ejeStages = [];
+    for (var sk in OKRS.byStage) {
+      if (OKRS.byStage[sk].macro === mk) ejeStages.push(sk);
+    }
+    if (!ejeStages.length) continue;
+    var ejeTitle = (MACRO_META[mk] && MACRO_META[mk].title) || mk;
+    rowsHtml += '<tr class="eje-divider"><td colspan="' + (4 + meses.length) + '">Eje ' + ejeTitle + '</td></tr>';
+    for (var es = 0; es < ejeStages.length; es++) {
+      var st = OKRS.byStage[ejeStages[es]];
+      if (!st || st.upcoming || !st.krs || !st.krs.length) continue;
+      for (var ki = 0; ki < st.krs.length; ki++) {
+        var kr = st.krs[ki];
+        var mesCells = '';
+        for (var mc = 0; mc < meses.length; mc++) {
+          mesCells += '<td class="cell-mes cell-mes-empty"></td>';
+        }
+        rowsHtml += '<tr>' +
+          '<td class="col-eje ' + mk + '">' + ejeTitle + '</td>' +
+          '<td class="col-kr"><div>' + kr.desc + '</div><div style="font-size:10px;color:var(--gray-500);font-weight:400;margin-top:2px;">' + st.title + '</div></td>' +
+          '<td class="cell-baseline">' + kr.baseline + '</td>' +
+          '<td class="cell-target">' + kr.target + '</td>' +
+          mesCells +
+        '</tr>';
+      }
+    }
+  }
+  return '<div class="okr-track-wrap">' +
+    '<div class="okr-track-head">' +
+      '<div>' +
+        '<div class="okr-track-title">Tablero de seguimiento mensual</div>' +
+        '<div class="okr-track-sub">Cada KR se mide contra su baseline (rojo) y meta a 6 meses (verde). Los squads completan el valor de cierre de cada mes en el Review de Indicadores. Las celdas en blanco indican meses pendientes de medición.</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="okr-track-table-wrap">' +
+      '<table class="okr-track-table">' +
+        '<thead><tr>' +
+          '<th>Eje</th>' +
+          '<th>Meta medible · etapa</th>' +
+          '<th class="col-meta-baseline">Hoy</th>' +
+          '<th class="col-meta-target">Meta 6m</th>' +
+          thMeses +
+        '</tr></thead>' +
+        '<tbody>' + rowsHtml + '</tbody>' +
+      '</table>' +
+    '</div>' +
+    '<div class="okr-track-legend"><strong>Cómo se completa:</strong> al cierre de cada mes, cada squad llena la celda de su KR con el valor del indicador (mismo formato que baseline). El Comité Ejecutivo revisa la evolución mes a mes contra la meta a 6 meses para decidir ajustes.</div>' +
+  '</div>';
+}
+
+// ============================================================
+// PLAN MENSUAL · iniciativas concretas por mes y eje
+// ============================================================
+var PLAN_MENSUAL = [
+  {
+    mes: '2026-05',
+    label: 'Mayo 2026',
+    sub: 'Primer ciclo de ejecución · arranque del plan',
+    grupos: [
+      { macro: 'compra', label: 'Eje Compra', iniciativas: [
+        { txt: 'Habilitar patente (con solución alternativa basada en Patentamiento y clientes)' },
+        { txt: 'Habilitar RUT' },
+        { txt: 'Pre-seleccionar la opción inmediata en la tasación para que el botón de agendamiento esté visible' },
+        { txt: 'Alinear región y ciudad con las sucursales reales en el flujo de agendamiento' },
+        { txt: 'Mostrar mensaje aclarativo si el cliente tasa en una región sin cobertura' },
+        { txt: 'Confirmación y recordatorio de cita de agendamiento' },
+        { txt: 'Implementación de consulta dealernet de pensión de alimentos para compras', nota: 'No inmediata' },
+        { txt: 'Analizar cambio de número en llamada' }
+      ]},
+      { macro: 'preparación', label: 'Eje Preparación', iniciativas: [
+        { txt: 'Publicación de unidades reservadas', nota: 'No requiere desarrollo' },
+        { txt: 'Foto en la inspección con solución de Photo Studio IA' }
+      ]},
+      { macro: 'venta', label: 'Eje Venta', iniciativas: [
+        { txt: 'Propuesta para destacar atributos de Clicar en la ficha del auto', nota: 'Hasta 12 meses de cobertura mecánica · inspección de 200 atributos · entrega inmediata' },
+        { txt: 'En mobile subir el catálogo y eliminar banner + contenido de concesionarios; habilitar buscador libre arriba' },
+        { txt: 'Etiquetas diferenciadoras en la ficha', nota: 'Único dueño · mantenciones en marca · garantía vigente' },
+        { txt: 'Sacar la categoría de auto (SUV, Pickup, etc.) y agregar la versión del auto en la ficha' },
+        { txt: 'Panel de seguimiento para leads con VPP, financiamiento y segmento de valor + scoring de leads' },
+        { txt: 'Tasación sin cierre del journey' },
+        { txt: 'Campo de bonificación adicional por segmento de valor en VPP y cola de atención prioritaria' }
+      ]}
+    ]
+  }
+];
+
+// ============================================================
+// SEGUIMIENTO OKR · valores por mes para cada KR
+// ============================================================
+var OKR_SEGUIMIENTO_MESES = ['Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre'];
+
 function renderRoadmapSlide(i) {
   var total = ROADMAP.length;
   var porMacro = { compra: 0, "preparación": 0 };
@@ -2431,34 +2588,81 @@ function renderRoadmapSlide(i) {
       '<td><span class="roadmap-badge ' + estadoClass + '">' + estadoLabel + '</span></td>' +
     '</tr>';
   }
+  // Plan Mensual HTML
+  var planHtml = '';
+  for (var pm = 0; pm < PLAN_MENSUAL.length; pm++) {
+    var mes = PLAN_MENSUAL[pm];
+    var totalMes = 0;
+    for (var gg = 0; gg < mes.grupos.length; gg++) totalMes += mes.grupos[gg].iniciativas.length;
+    var gruposHtml = '';
+    for (var g = 0; g < mes.grupos.length; g++) {
+      var gr = mes.grupos[g];
+      var iniHtml = '';
+      for (var ii = 0; ii < gr.iniciativas.length; ii++) {
+        var ini = gr.iniciativas[ii];
+        var notaHtml = ini.nota ? '<div class="plan-iniciativa-nota">' + ini.nota + '</div>' : '';
+        iniHtml += '<div class="plan-iniciativa">' +
+          '<span class="plan-iniciativa-num">' + (ii + 1) + '</span>' +
+          '<div class="plan-iniciativa-body">' +
+            '<div class="plan-iniciativa-txt">' + ini.txt + '</div>' +
+            notaHtml +
+          '</div>' +
+        '</div>';
+      }
+      gruposHtml += '<div class="plan-grupo ' + gr.macro + '">' +
+        '<div class="plan-grupo-label"><span>' + gr.label + '</span><span class="plan-grupo-count">' + gr.iniciativas.length + '</span></div>' +
+        '<div class="plan-iniciativas">' + iniHtml + '</div>' +
+      '</div>';
+    }
+    planHtml += '<div class="plan-mes-card">' +
+      '<div class="plan-mes-head">' +
+        '<div>' +
+          '<div class="plan-mes-title">' + mes.label + '</div>' +
+          '<div class="plan-mes-sub">' + mes.sub + '</div>' +
+        '</div>' +
+        '<div class="plan-mes-count">' + totalMes + ' iniciativas</div>' +
+      '</div>' +
+      '<div class="plan-grupos-grid">' + gruposHtml + '</div>' +
+    '</div>';
+  }
+
   return '<div class="slide exec-summary" data-slide="' + i + '">' +
     '<div class="roadmap-hero">' +
-      '<div class="eyebrow">Roadmap de mejoras · vista global</div>' +
+      '<div class="eyebrow">Roadmap de mejoras</div>' +
       '<h1>🗺️ Roadmap de iniciativas priorizadas</h1>' +
-      '<p>Lista curada de las iniciativas priorizadas que salen del análisis, con eje y proceso de origen, prioridad, responsable y fecha comprometida. Los campos Responsable y Fecha están como placeholder hasta asignarse con los owners de cada área.</p>' +
+      '<p>Vista global de todas las iniciativas priorizadas y plan mensual de ejecución. Cambia entre las pestañas para ver el detalle según el corte que necesites.</p>' +
     '</div>' +
-    '<div class="roadmap-filters">' +
-      '<span class="filter-label">Filtrar:</span>' +
-      '<button class="roadmap-filter active" data-filter-type="all">Todas (' + total + ')</button>' +
-      '<button class="roadmap-filter" data-filter-type="macro" data-filter-value="compra">Compra (' + (porMacro.compra || 0) + ')</button>' +
-      '<button class="roadmap-filter" data-filter-type="macro" data-filter-value="preparación">Preparación (' + (porMacro["preparación"] || 0) + ')</button>' +
-      '<button class="roadmap-filter" data-filter-type="impacto" data-filter-value="alta">Alto impacto (' + (porPrioridad.alta || 0) + ')</button>' +
-      '<button class="roadmap-filter" data-filter-type="impacto" data-filter-value="media">Impacto medio (' + (porPrioridad.media || 0) + ')</button>' +
-      '<button class="roadmap-download" id="roadmap-download-btn" type="button">Descargar Excel</button>' +
+    '<div class="roadmap-view-tabs">' +
+      '<button type="button" class="roadmap-view-tab active" data-rm-view="global">Vista global</button>' +
+      '<button type="button" class="roadmap-view-tab" data-rm-view="mensual">Plan mensual</button>' +
     '</div>' +
-    '<div class="roadmap-table-wrap">' +
-      '<table class="roadmap-table">' +
-        '<thead><tr>' +
-          '<th>Iniciativa</th>' +
-          '<th>Eje / Proceso</th>' +
-          '<th>Impacto</th>' +
-          '<th>Ahorro estimado</th>' +
-          '<th>Responsable</th>' +
-          '<th>Fecha comprometida</th>' +
-          '<th>Estado</th>' +
-        '</tr></thead>' +
-        '<tbody>' + rowsHtml + '</tbody>' +
-      '</table>' +
+    '<div class="roadmap-view-pane active" data-rm-pane="global">' +
+      '<div class="roadmap-filters">' +
+        '<span class="filter-label">Filtrar:</span>' +
+        '<button class="roadmap-filter active" data-filter-type="all">Todas (' + total + ')</button>' +
+        '<button class="roadmap-filter" data-filter-type="macro" data-filter-value="compra">Compra (' + (porMacro.compra || 0) + ')</button>' +
+        '<button class="roadmap-filter" data-filter-type="macro" data-filter-value="preparación">Preparación (' + (porMacro["preparación"] || 0) + ')</button>' +
+        '<button class="roadmap-filter" data-filter-type="impacto" data-filter-value="alta">Alto impacto (' + (porPrioridad.alta || 0) + ')</button>' +
+        '<button class="roadmap-filter" data-filter-type="impacto" data-filter-value="media">Impacto medio (' + (porPrioridad.media || 0) + ')</button>' +
+        '<button class="roadmap-download" id="roadmap-download-btn" type="button">Descargar Excel</button>' +
+      '</div>' +
+      '<div class="roadmap-table-wrap">' +
+        '<table class="roadmap-table">' +
+          '<thead><tr>' +
+            '<th>Iniciativa</th>' +
+            '<th>Eje / Proceso</th>' +
+            '<th>Impacto</th>' +
+            '<th>Ahorro estimado</th>' +
+            '<th>Responsable</th>' +
+            '<th>Fecha comprometida</th>' +
+            '<th>Estado</th>' +
+          '</tr></thead>' +
+          '<tbody>' + rowsHtml + '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+    '<div class="roadmap-view-pane" data-rm-pane="mensual">' +
+      planHtml +
     '</div>' +
   '</div>';
 }
@@ -3011,6 +3215,9 @@ function renderOKRsSlide(i) {
     '<div class="okrs-section-title">Tamaño de la oportunidad</div>' +
     '<div class="okrs-section-sub">Estimación de lo que el sistema actual deja encima de la mesa si mejoramos solo los indicadores clave. <strong>No son compromisos de resultado:</strong> son el techo de lo que se puede capturar sin cambiar la inversión digital ni el inventario base.</div>' +
     impactHtml +
+    '<div class="okrs-section-title">Seguimiento mensual de KRs</div>' +
+    '<div class="okrs-section-sub">Tabla viva para registrar el valor del indicador mes a mes y comparar contra el baseline y la meta a 6 meses. Se actualiza después de cada Review de Indicadores semanal · Mayo arranca el primer ciclo de medición.</div>' +
+    renderOKRSeguimientoHtml() +
     '<div class="okrs-section-title">Estructura de cadencias</div>' +
     '<div class="okrs-section-sub">Cuatro niveles de revisión que mantienen el foco en los indicadores. Cada nivel tiene participantes, agenda y output definidos — los equipos llegan con su métrica actualizada, no con decks de avance.</div>' +
     '<div class="deck-gov-grid">' +
@@ -5796,6 +6003,20 @@ function renderSlides() {
     })(roadmapFilterBtns[rfi]);
   }
   if (roadmapFilterBtns.length) applyRoadmapFilters();
+  var roadmapViewTabs = area.querySelectorAll('.roadmap-view-tab');
+  for (var rvt = 0; rvt < roadmapViewTabs.length; rvt++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var view = btn.getAttribute('data-rm-view');
+        var tabs = area.querySelectorAll('.roadmap-view-tab');
+        for (var t = 0; t < tabs.length; t++) tabs[t].classList.toggle('active', tabs[t] === btn);
+        var panes = area.querySelectorAll('.roadmap-view-pane');
+        for (var p = 0; p < panes.length; p++) {
+          panes[p].classList.toggle('active', panes[p].getAttribute('data-rm-pane') === view);
+        }
+      });
+    })(roadmapViewTabs[rvt]);
+  }
   var downloadBtn = area.querySelector('#roadmap-download-btn');
   if (downloadBtn) downloadBtn.addEventListener('click', downloadRoadmapExcel);
   var stageLinks = area.querySelectorAll('.roadmap-stage-link');
