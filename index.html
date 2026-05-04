@@ -1525,18 +1525,21 @@
   .okr-track-title { font-size: 16px; font-weight: 800; color: var(--navy); }
   .okr-track-sub { font-size: 11.5px; color: var(--gray-500); margin-top: 2px; max-width: 760px; line-height: 1.5; }
   .okr-track-table-wrap { overflow-x: auto; }
-  .okr-track-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .okr-track-table { width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed; }
   .okr-track-table th { background: var(--navy); color: var(--white); text-align: left; padding: 8px 10px; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-  .okr-track-table th.col-meta-mes, .okr-track-table th.col-meta-baseline, .okr-track-table th.col-meta-target { text-align: center; }
+  .okr-track-table th.col-meta-mes, .okr-track-table th.col-meta-baseline, .okr-track-table th.col-meta-target, .okr-track-table th.col-meta-var, .okr-track-table th.col-meta-cum { text-align: center; }
+  .okr-track-table th:first-child, .okr-track-table td:first-child { width: 30%; }
+  .okr-track-table th.col-meta-baseline, .okr-track-table th.col-meta-target, .okr-track-table th.col-meta-mes { width: 9%; }
+  .okr-track-table th.col-meta-var, .okr-track-table th.col-meta-cum { width: 12.5%; }
   .okr-track-table td { padding: 7px 10px; border-bottom: 1px solid var(--gray-200); vertical-align: middle; color: var(--gray-700); }
   .okr-track-table td.col-eje { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gray-500); }
   .okr-track-table td.col-eje.compra { color: #0F6FC6; }
   .okr-track-table td.col-eje.preparación { color: #8A5A00; }
   .okr-track-table td.col-eje.venta { color: #0F6E56; }
-  .okr-track-table td.col-kr { font-weight: 600; color: var(--navy); min-width: 250px; line-height: 1.4; }
-  .okr-track-table td.cell-baseline { text-align: center; font-weight: 700; color: #B3261E; }
-  .okr-track-table td.cell-target { text-align: center; font-weight: 700; color: #0F6E56; }
-  .okr-track-table td.cell-mes { text-align: center; font-weight: 600; color: var(--gray-500); }
+  .okr-track-table td.col-kr { font-weight: 600; color: var(--navy); line-height: 1.4; word-wrap: break-word; }
+  .okr-track-table td.cell-baseline { text-align: center; font-weight: 700; color: #B3261E; font-variant-numeric: tabular-nums; }
+  .okr-track-table td.cell-target { text-align: center; font-weight: 700; color: #0F6E56; font-variant-numeric: tabular-nums; }
+  .okr-track-table td.cell-mes { text-align: center; font-weight: 600; color: var(--gray-500); font-variant-numeric: tabular-nums; }
   .okr-track-table td.cell-mes-empty::before { content: "—"; color: var(--gray-300); }
   .okr-track-table tr.eje-divider td { background: var(--gray-100); font-size: 10px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 10px; }
   .okr-track-legend { font-size: 10.5px; color: var(--gray-500); margin-top: 10px; line-height: 1.5; }
@@ -1560,23 +1563,21 @@
   .ns-track-metric { font-size: 12px; font-weight: 700; color: var(--navy); }
   .ns-track-sub { font-size: 10px; color: var(--gray-500); font-weight: 400; margin-top: 2px; }
   .kr-track-stage { font-size: 10px; color: var(--gray-500); font-weight: 400; margin-top: 2px; }
-  .okr-track-table td.cell-variacion, .okr-track-table td.cell-cumplimiento { text-align: center; font-weight: 700; min-width: 90px; }
+  .okr-track-table td.cell-variacion, .okr-track-table td.cell-cumplimiento { text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
   .okr-track-filters { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; align-items: center; }
   .okr-track-filter-label { font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; }
   .okr-track-filter { font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 14px; background: var(--white); border: 1px solid var(--gray-300); color: var(--gray-700); cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s, border-color 0.15s; }
   .okr-track-filter:hover { border-color: var(--navy); color: var(--navy); }
   .okr-track-filter.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
   .okr-track-section-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--clicar-green); margin: 8px 0 6px; padding: 4px 10px; background: #F0FAEF; border-left: 3px solid var(--clicar-green); }
-  .okr-track-collapse-btn { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--gray-100); border: 1px solid var(--gray-200); padding: 10px 14px; font-family: inherit; font-size: 11.5px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; margin-top: 14px; transition: background 0.15s; }
-  .okr-track-collapse-btn:hover { background: var(--gray-200); }
-  .okr-track-collapse-btn .okr-collapse-icon { font-size: 11px; transition: transform 0.2s; color: var(--navy); }
-  .okr-track-collapse-btn.collapsed .okr-collapse-icon { transform: rotate(-90deg); }
-  .okr-track-collapse-btn .okr-collapse-label { flex: 1; text-align: left; }
-  .okr-track-collapse-btn .okr-collapse-count { font-size: 10px; background: var(--navy); color: var(--white); padding: 2px 8px; border-radius: 10px; font-weight: 700; }
-  .okr-track-collapse-body { display: block; }
-  .okr-track-collapse-body.collapsed { display: none; }
-  .okr-track-krs-scroll { max-height: 55vh; overflow-y: auto; border: 1px solid var(--gray-200); border-top: none; }
-  .okr-track-krs-scroll table thead th { position: sticky; top: 0; z-index: 1; }
+  .okr-track-table tr.okr-section-banner td { padding: 8px 12px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+  .okr-track-table tr.okr-section-banner-guia td { background: #F0FAEF; color: var(--clicar-green); border-left: 3px solid var(--clicar-green); }
+  .okr-track-table tr.okr-section-banner-krs td { background: var(--gray-100); color: var(--navy); cursor: pointer; }
+  .okr-track-table tr.okr-section-banner-krs:hover td { background: var(--gray-200); }
+  .okr-track-table tr.okr-section-banner-krs .okr-collapse-icon { display: inline-block; font-size: 11px; transition: transform 0.2s; color: var(--navy); margin-right: 8px; }
+  .okr-track-table tr.okr-section-banner-krs.collapsed .okr-collapse-icon { transform: rotate(-90deg); }
+  .okr-track-table tr.okr-section-banner-krs .okr-collapse-count { font-size: 10px; background: var(--navy); color: var(--white); padding: 2px 8px; border-radius: 10px; font-weight: 700; margin-left: 10px; }
+  .okr-track-table tr.row-collapsed { display: none; }
   section.okr-track-eje.eje-hidden { display: none; }
   .okr-track-toolbar { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 18px; }
   .okr-track-actions { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -1601,6 +1602,52 @@
     .overview-kpis { grid-template-columns: repeat(2, 1fr); }
     .stage-summary-grid { grid-template-columns: 1fr 1fr; }
     .title-block { display: none; }
+  }
+
+  /* Seguimiento OKR · adjuntos por indicador */
+  .okr-track-table td.cell-mes.cell-mes-has-attach { position: relative; }
+  .okr-track-table td.cell-mes.cell-mes-has-attach::after {
+    content: '📎'; position: absolute; top: 1px; right: 3px; font-size: 9px; opacity: 0.85; pointer-events: none;
+  }
+  .okr-attach-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: 6px; min-width: 22px; height: 20px; padding: 0 5px; border-radius: 4px;
+    background: var(--white); border: 1px solid var(--gray-300); color: var(--gray-500);
+    cursor: pointer; font-size: 11px; vertical-align: middle; font-family: inherit;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .okr-attach-btn:hover { background: var(--gray-100); color: var(--navy); border-color: var(--navy); }
+  .okr-attach-btn.has-attach { background: #FFFBE6; color: #8A5A00; border-color: #E8B400; }
+  .okr-attach-btn .okr-attach-count { margin-left: 4px; font-size: 9px; font-weight: 700; }
+  .okr-attach-modal { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; }
+  .okr-attach-modal.open { display: flex; }
+  .okr-attach-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.55); }
+  .okr-attach-panel { position: relative; background: var(--white); width: min(720px, 92vw); max-height: 88vh; display: flex; flex-direction: column; border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,0.25); overflow: hidden; }
+  .okr-attach-head { display: flex; justify-content: space-between; align-items: flex-start; padding: 18px 22px 14px; border-bottom: 1px solid var(--gray-200); gap: 16px; }
+  .okr-attach-eyebrow { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--clicar-green); }
+  .okr-attach-title { font-size: 15px; font-weight: 800; color: var(--navy); margin-top: 2px; line-height: 1.3; }
+  .okr-attach-close { background: transparent; border: none; font-size: 24px; line-height: 1; color: var(--gray-500); cursor: pointer; padding: 0 4px; }
+  .okr-attach-close:hover { color: var(--navy); }
+  .okr-attach-body { padding: 18px 22px; overflow-y: auto; }
+  .okr-attach-row-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .okr-attach-row-meta label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 700; color: var(--gray-700); }
+  .okr-attach-row-meta input { font: inherit; font-size: 12px; padding: 7px 10px; border: 1px solid var(--gray-300); border-radius: 4px; background: var(--white); color: var(--navy); font-weight: 500; }
+  .okr-attach-row-meta input:focus { outline: 2px solid var(--clicar-green); outline-offset: -2px; border-color: var(--clicar-green); }
+  .okr-attach-section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--navy); margin: 6px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--gray-200); }
+  .okr-attach-mes-list { display: flex; flex-direction: column; gap: 12px; }
+  .okr-attach-mes { border: 1px solid var(--gray-200); border-radius: 4px; padding: 10px 12px; background: var(--gray-50); }
+  .okr-attach-mes-head { font-size: 11px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .okr-attach-mes label { display: flex; flex-direction: column; gap: 3px; font-size: 10px; font-weight: 700; color: var(--gray-500); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .okr-attach-mes label:last-child { margin-bottom: 0; }
+  .okr-attach-mes input, .okr-attach-mes textarea { font: inherit; font-size: 12px; padding: 6px 9px; border: 1px solid var(--gray-300); border-radius: 4px; background: var(--white); color: var(--navy); font-weight: 500; resize: vertical; text-transform: none; letter-spacing: normal; }
+  .okr-attach-mes textarea { min-height: 44px; }
+  .okr-attach-mes input:focus, .okr-attach-mes textarea:focus { outline: 2px solid var(--clicar-green); outline-offset: -2px; border-color: var(--clicar-green); }
+  .okr-attach-foot { display: flex; gap: 8px; align-items: center; padding: 14px 22px; border-top: 1px solid var(--gray-200); background: var(--gray-50); }
+  .okr-attach-foot .okr-attach-spacer { flex: 1; }
+  .okr-track-action.primary { background: var(--clicar-green); color: var(--white); border-color: var(--clicar-green); }
+  .okr-track-action.primary:hover { background: #0E8260; border-color: #0E8260; color: var(--white); }
+  @media (max-width: 700px) {
+    .okr-attach-row-meta { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -2509,6 +2556,10 @@ function renderOKRSeguimientoSlide(i) {
   var ejesHtml = '';
 
   function escAttr(s) { return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
+  function escText(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function attachBtnHtml(rowId, title) {
+    return ' <button type="button" class="okr-attach-btn" data-attach-btn="' + escAttr(rowId) + '" data-attach-title="' + escAttr(title) + '" title="Adjuntar reportes y notas">📎<span class="okr-attach-count" data-attach-count></span></button>';
+  }
   function buildCellsHtml(rowId, baseline, target) {
     var rowAttrs = ' data-track-row="' + escAttr(rowId) + '" data-baseline="' + escAttr(baseline) + '" data-target="' + escAttr(target) + '"';
     var mesCellsHtml = '';
@@ -2540,7 +2591,7 @@ function renderOKRSeguimientoSlide(i) {
       var nsCells = buildCellsHtml(nsRowId, ns.baseline, ns.target);
       var subLine = ns.sub ? '<div class="ns-track-sub">' + ns.sub + '</div>' : '';
       nsCardsHtml += '<tr class="ns-track-row"' + nsCells.attrs + '>' +
-        '<td class="col-kr ns-track-label"><div class="ns-track-metric">' + ns.metric + '</div>' + subLine + '</td>' +
+        '<td class="col-kr ns-track-label"><div class="ns-track-metric">' + ns.metric + attachBtnHtml(nsRowId, ns.metric) + '</div>' + subLine + '</td>' +
         '<td class="cell-baseline">' + ns.baseline + '</td>' +
         nsCells.mesCells +
         '<td class="cell-target">' + ns.target + '</td>' +
@@ -2558,7 +2609,7 @@ function renderOKRSeguimientoSlide(i) {
         var krRowId = 'kr:' + ejeStages[es] + ':' + ki;
         var krCells = buildCellsHtml(krRowId, kr.baseline, kr.target);
         krsRowsHtml += '<tr' + krCells.attrs + '>' +
-          '<td class="col-kr"><div>' + kr.desc + '</div><div class="kr-track-stage">' + st.title + '</div></td>' +
+          '<td class="col-kr"><div>' + kr.desc + attachBtnHtml(krRowId, kr.desc + ' · ' + st.title) + '</div><div class="kr-track-stage">' + st.title + '</div></td>' +
           '<td class="cell-baseline">' + kr.baseline + '</td>' +
           krCells.mesCells +
           '<td class="cell-target">' + kr.target + '</td>' +
@@ -2573,54 +2624,57 @@ function renderOKRSeguimientoSlide(i) {
     }
     var totalCols = 5 + meses.length;
 
+    // colgroup compartido para que ambas tablas tengan EXACTAMENTE las mismas columnas
+    var colgroupHtml = '<colgroup>' +
+      '<col style="width:30%">' +
+      '<col style="width:9%">';
+    for (var cg = 0; cg < meses.length; cg++) {
+      colgroupHtml += '<col style="width:9%">';
+    }
+    colgroupHtml += '<col style="width:9%">' +
+      '<col style="width:12.5%">' +
+      '<col style="width:12.5%">' +
+      '</colgroup>';
+
     var krsCount = 0;
     for (var kc = 0; kc < ejeStages.length; kc++) {
       var stc = OKRS.byStage[ejeStages[kc]];
       if (stc && !stc.upcoming && stc.krs) krsCount += stc.krs.length;
     }
 
+    var krsRowsHtmlTagged = krsRowsHtml.replace(/<tr/g, '<tr data-okr-collapse-body="' + mk + '"');
+
     ejesHtml += '<section class="okr-track-eje eje-' + mk + '" data-eje="' + mk + '">' +
       '<header class="okr-track-eje-head">' +
         '<span class="okr-track-eje-dot ' + mk + '"></span>' +
         '<h2>Eje ' + ejeTitle + '</h2>' +
       '</header>' +
-      '<div class="okr-track-section-label">Indicadores guía del eje</div>' +
       '<div class="okr-track-table-wrap">' +
         '<table class="okr-track-table">' +
+          colgroupHtml +
           '<thead>' +
             '<tr>' +
               '<th>Indicador</th>' +
               '<th class="col-meta-baseline">Baseline</th>' +
               thMeses +
               '<th class="col-meta-target">Meta 6m</th>' +
-              '<th class="col-meta-mes">Variación</th>' +
-              '<th class="col-meta-mes">Cumplimiento</th>' +
+              '<th class="col-meta-var">Variación</th>' +
+              '<th class="col-meta-cum">Cumplimiento</th>' +
             '</tr>' +
           '</thead>' +
-          '<tbody>' + nsCardsHtml + '</tbody>' +
+          '<tbody>' +
+            '<tr class="okr-section-banner okr-section-banner-guia"><td colspan="' + totalCols + '">Indicadores guía del eje</td></tr>' +
+            nsCardsHtml +
+            '<tr class="okr-section-banner okr-section-banner-krs okr-track-collapse-btn" data-okr-collapse="' + mk + '" role="button" tabindex="0">' +
+              '<td colspan="' + totalCols + '">' +
+                '<span class="okr-collapse-icon">▼</span>' +
+                '<span class="okr-collapse-label">KRs por etapa</span>' +
+                '<span class="okr-collapse-count">' + krsCount + '</span>' +
+              '</td>' +
+            '</tr>' +
+            krsRowsHtmlTagged +
+          '</tbody>' +
         '</table>' +
-      '</div>' +
-      '<button type="button" class="okr-track-collapse-btn" data-okr-collapse="' + mk + '">' +
-        '<span class="okr-collapse-icon">▼</span>' +
-        '<span class="okr-collapse-label">KRs por etapa</span>' +
-        '<span class="okr-collapse-count">' + krsCount + '</span>' +
-      '</button>' +
-      '<div class="okr-track-collapse-body" data-okr-collapse-body="' + mk + '">' +
-        '<div class="okr-track-table-wrap okr-track-krs-scroll">' +
-          '<table class="okr-track-table">' +
-            '<thead>' +
-              '<tr>' +
-                '<th>Meta medible · etapa</th>' +
-                '<th class="col-meta-baseline">Baseline</th>' +
-                thMeses +
-                '<th class="col-meta-target">Meta 6m</th>' +
-                '<th class="col-meta-mes">Variación</th>' +
-                '<th class="col-meta-mes">Cumplimiento</th>' +
-              '</tr>' +
-            '</thead>' +
-            '<tbody>' + krsRowsHtml + '</tbody>' +
-          '</table>' +
-        '</div>' +
       '</div>' +
     '</section>';
   }
@@ -2633,7 +2687,7 @@ function renderOKRSeguimientoSlide(i) {
     '</div>' +
     '<div class="okr-track-legend okr-track-legend-top">' +
       '<strong>Cómo cargar:</strong> ' +
-      '<span>Click en cualquier celda mensual para escribir el valor del cierre del mes (mismo formato que <b>Baseline</b>, ej: <b>65%</b>, <b>2.149</b>, <b>94 ventas</b>). Se guarda automáticamente en este navegador y recalcula <b>Variación</b> y <b>Cumplimiento</b>.</span>' +
+      '<span>Click en cualquier celda mensual para escribir el valor del cierre del mes (mismo formato que <b>Baseline</b>, ej: <b>65%</b>, <b>2.149</b>, <b>94 ventas</b>). Se guarda automáticamente en este navegador y recalcula <b>Variación</b> y <b>Cumplimiento</b>. Usá el botón <b>📎</b> al lado del nombre del indicador para adjuntar URL del reporte, nota por mes, carpeta del indicador y owner.</span>' +
     '</div>' +
     '<div class="okr-track-toolbar">' +
       '<div class="okr-track-filters">' +
@@ -2651,6 +2705,32 @@ function renderOKRSeguimientoSlide(i) {
       '</div>' +
     '</div>' +
     ejesHtml +
+    '<div class="okr-attach-modal" id="okr-attach-modal" data-row-id="">' +
+      '<div class="okr-attach-backdrop" data-attach-close></div>' +
+      '<div class="okr-attach-panel" role="dialog" aria-modal="true" aria-labelledby="okr-attach-title">' +
+        '<header class="okr-attach-head">' +
+          '<div>' +
+            '<div class="okr-attach-eyebrow">Adjuntos del indicador</div>' +
+            '<div class="okr-attach-title" id="okr-attach-title"></div>' +
+          '</div>' +
+          '<button type="button" class="okr-attach-close" data-attach-close aria-label="Cerrar">×</button>' +
+        '</header>' +
+        '<div class="okr-attach-body">' +
+          '<div class="okr-attach-row-meta">' +
+            '<label><span>📁 Carpeta del indicador (URL)</span><input type="url" id="okr-attach-folder" placeholder="https://drive.google.com/..."></label>' +
+            '<label><span>👤 Owner</span><input type="text" id="okr-attach-owner" placeholder="Responsable del KR"></label>' +
+          '</div>' +
+          '<div class="okr-attach-section-title">Reportes por mes</div>' +
+          '<div class="okr-attach-mes-list" id="okr-attach-mes-list"></div>' +
+        '</div>' +
+        '<footer class="okr-attach-foot">' +
+          '<button type="button" class="okr-track-action danger" data-attach-clear>Limpiar adjuntos</button>' +
+          '<div class="okr-attach-spacer"></div>' +
+          '<button type="button" class="okr-track-action" data-attach-close>Cancelar</button>' +
+          '<button type="button" class="okr-track-action primary" data-attach-save>Guardar</button>' +
+        '</footer>' +
+      '</div>' +
+    '</div>' +
   '</div>';
 }
 
@@ -6211,6 +6291,7 @@ function bindOkrTrackFilters(area) {
 }
 
 var OKR_TRACK_STORAGE_KEY = 'okr_track_v1';
+var OKR_TRACK_META_KEY = 'okr_track_meta_v1';
 
 function loadOkrTrack() {
   try { return JSON.parse(localStorage.getItem(OKR_TRACK_STORAGE_KEY) || '{}'); }
@@ -6218,6 +6299,13 @@ function loadOkrTrack() {
 }
 function saveOkrTrack(data) {
   try { localStorage.setItem(OKR_TRACK_STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+function loadOkrMeta() {
+  try { return JSON.parse(localStorage.getItem(OKR_TRACK_META_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveOkrMeta(data) {
+  try { localStorage.setItem(OKR_TRACK_META_KEY, JSON.stringify(data)); } catch(e) {}
 }
 function parseOkrNumeric(value) {
   if (value == null) return null;
@@ -6280,6 +6368,122 @@ function recalcOkrTrackRow(row) {
     }
   }
 }
+function refreshOkrAttachIndicators(area) {
+  if (!area) return;
+  var meta = loadOkrMeta();
+  var btns = area.querySelectorAll('[data-attach-btn]');
+  for (var bi = 0; bi < btns.length; bi++) {
+    var rid = btns[bi].getAttribute('data-attach-btn');
+    var entry = meta[rid] || {};
+    var count = 0;
+    if (entry.byMes) {
+      for (var mk in entry.byMes) {
+        var em = entry.byMes[mk];
+        if (em && (em.url || em.nota)) count++;
+      }
+    }
+    var hasMeta = count > 0 || entry.folder || entry.owner;
+    btns[bi].classList.toggle('has-attach', !!hasMeta);
+    var countSpan = btns[bi].querySelector('[data-attach-count]');
+    if (countSpan) countSpan.textContent = count > 0 ? String(count) : '';
+  }
+  var cells = area.querySelectorAll('[data-track-cell]');
+  for (var ci = 0; ci < cells.length; ci++) {
+    var rowId = cells[ci].getAttribute('data-track-cell');
+    var mes = cells[ci].getAttribute('data-track-mes');
+    var entry2 = meta[rowId] || {};
+    var em2 = entry2.byMes && entry2.byMes[mes];
+    var has = !!(em2 && (em2.url || em2.nota));
+    cells[ci].classList.toggle('cell-mes-has-attach', has);
+    if (has) {
+      var t = '';
+      if (em2.url) t += '📎 ' + em2.url;
+      if (em2.nota) t += (t ? '\n' : '') + 'Nota: ' + em2.nota;
+      cells[ci].setAttribute('title', t);
+    } else {
+      cells[ci].setAttribute('title', 'Click para editar');
+    }
+  }
+}
+
+function escAttachAttr(s) { return String(s == null ? '' : s).replace(/"/g, '&quot;'); }
+function escAttachText(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function openOkrAttachModal(area, rowId, title) {
+  var modal = area.querySelector('#okr-attach-modal');
+  if (!modal) return;
+  var meta = loadOkrMeta();
+  var entry = meta[rowId] || { folder: '', owner: '', byMes: {} };
+  modal.setAttribute('data-row-id', rowId);
+  var titleEl = area.querySelector('#okr-attach-title');
+  if (titleEl) titleEl.textContent = title || rowId;
+  var folderEl = area.querySelector('#okr-attach-folder');
+  if (folderEl) folderEl.value = entry.folder || '';
+  var ownerEl = area.querySelector('#okr-attach-owner');
+  if (ownerEl) ownerEl.value = entry.owner || '';
+  var list = area.querySelector('#okr-attach-mes-list');
+  if (list) {
+    var html = '';
+    for (var i = 0; i < OKR_SEGUIMIENTO_MESES.length; i++) {
+      var m = OKR_SEGUIMIENTO_MESES[i];
+      var em = (entry.byMes && entry.byMes[m]) || {};
+      html += '<div class="okr-attach-mes" data-attach-mes="' + escAttachAttr(m) + '">' +
+        '<div class="okr-attach-mes-head">' + escAttachText(m) + '</div>' +
+        '<label><span>URL del reporte</span><input type="url" data-attach-input="url" value="' + escAttachAttr(em.url || '') + '" placeholder="https://..."></label>' +
+        '<label><span>Nota</span><textarea data-attach-input="nota" placeholder="Contexto del valor cargado">' + escAttachText(em.nota || '') + '</textarea></label>' +
+      '</div>';
+    }
+    list.innerHTML = html;
+  }
+  modal.classList.add('open');
+}
+
+function closeOkrAttachModal(area) {
+  var modal = area.querySelector('#okr-attach-modal');
+  if (modal) { modal.classList.remove('open'); modal.setAttribute('data-row-id', ''); }
+}
+
+function saveOkrAttachModal(area) {
+  var modal = area.querySelector('#okr-attach-modal');
+  if (!modal) return;
+  var rowId = modal.getAttribute('data-row-id');
+  if (!rowId) return;
+  var folder = ((area.querySelector('#okr-attach-folder') || {}).value || '').trim();
+  var owner = ((area.querySelector('#okr-attach-owner') || {}).value || '').trim();
+  var byMes = {};
+  var mesBlocks = area.querySelectorAll('.okr-attach-mes');
+  for (var i = 0; i < mesBlocks.length; i++) {
+    var m = mesBlocks[i].getAttribute('data-attach-mes');
+    var urlInput = mesBlocks[i].querySelector('[data-attach-input="url"]');
+    var notaInput = mesBlocks[i].querySelector('[data-attach-input="nota"]');
+    var url = (urlInput ? urlInput.value : '').trim();
+    var nota = (notaInput ? notaInput.value : '').trim();
+    if (url || nota) byMes[m] = { url: url, nota: nota };
+  }
+  var meta = loadOkrMeta();
+  if (folder || owner || Object.keys(byMes).length) {
+    meta[rowId] = { folder: folder, owner: owner, byMes: byMes };
+  } else {
+    delete meta[rowId];
+  }
+  saveOkrMeta(meta);
+  refreshOkrAttachIndicators(area);
+  closeOkrAttachModal(area);
+}
+
+function clearOkrAttachForRow(area) {
+  var modal = area.querySelector('#okr-attach-modal');
+  if (!modal) return;
+  var rowId = modal.getAttribute('data-row-id');
+  if (!rowId) return;
+  if (!confirm('¿Borrar todos los adjuntos de este indicador?')) return;
+  var meta = loadOkrMeta();
+  delete meta[rowId];
+  saveOkrMeta(meta);
+  refreshOkrAttachIndicators(area);
+  closeOkrAttachModal(area);
+}
+
 function bindOkrTrackEditing(area) {
   var cells = area.querySelectorAll('[data-track-cell]');
   if (!cells.length) return;
@@ -6310,6 +6514,34 @@ function bindOkrTrackEditing(area) {
   }
   var rows = area.querySelectorAll('[data-track-row]');
   for (var r = 0; r < rows.length; r++) recalcOkrTrackRow(rows[r]);
+
+  // Botones 📎 por fila → modal de adjuntos
+  var attachBtns = area.querySelectorAll('[data-attach-btn]');
+  for (var ab = 0; ab < attachBtns.length; ab++) {
+    (function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openOkrAttachModal(area, btn.getAttribute('data-attach-btn'), btn.getAttribute('data-attach-title'));
+      });
+    })(attachBtns[ab]);
+  }
+  var attachCloses = area.querySelectorAll('[data-attach-close]');
+  for (var acl = 0; acl < attachCloses.length; acl++) {
+    attachCloses[acl].addEventListener('click', function() { closeOkrAttachModal(area); });
+  }
+  var saveBtn = area.querySelector('[data-attach-save]');
+  if (saveBtn) saveBtn.addEventListener('click', function() { saveOkrAttachModal(area); });
+  var clearBtn = area.querySelector('[data-attach-clear]');
+  if (clearBtn) clearBtn.addEventListener('click', function() { clearOkrAttachForRow(area); });
+  var modalEl = area.querySelector('#okr-attach-modal');
+  if (modalEl) {
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modalEl.classList.contains('open')) closeOkrAttachModal(area);
+    });
+  }
+  refreshOkrAttachIndicators(area);
+
   // Toolbar actions
   var actions = area.querySelectorAll('[data-okr-action]');
   for (var a = 0; a < actions.length; a++) {
@@ -6318,7 +6550,9 @@ function bindOkrTrackEditing(area) {
         var act = btn.getAttribute('data-okr-action');
         if (act === 'export') {
           var d = loadOkrTrack();
-          var blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
+          var m = loadOkrMeta();
+          var payload = { __version: 2, exportedAt: new Date().toISOString(), values: d, meta: m };
+          var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
           var url = URL.createObjectURL(blob);
           var a2 = document.createElement('a');
           var stamp = new Date().toISOString().slice(0,10);
@@ -6329,8 +6563,9 @@ function bindOkrTrackEditing(area) {
           var input = area.querySelector('#okr-track-import-file');
           if (input) input.click();
         } else if (act === 'clear') {
-          if (confirm('¿Borrar todos los valores cargados de seguimiento OKR? Esta acción no se puede deshacer.')) {
+          if (confirm('¿Borrar todos los valores y adjuntos del seguimiento OKR? Esta acción no se puede deshacer.')) {
             saveOkrTrack({});
+            saveOkrMeta({});
             var allCells = area.querySelectorAll('[data-track-cell]');
             for (var ac = 0; ac < allCells.length; ac++) {
               allCells[ac].textContent = '';
@@ -6338,6 +6573,7 @@ function bindOkrTrackEditing(area) {
             }
             var allRows = area.querySelectorAll('[data-track-row]');
             for (var ar = 0; ar < allRows.length; ar++) recalcOkrTrackRow(allRows[ar]);
+            refreshOkrAttachIndicators(area);
           }
         }
       });
@@ -6353,18 +6589,28 @@ function bindOkrTrackEditing(area) {
         try {
           var imported = JSON.parse(reader.result);
           if (typeof imported !== 'object' || imported === null) throw new Error('Formato inválido');
-          saveOkrTrack(imported);
+          var values, meta;
+          if (imported.__version === 2 && imported.values) {
+            values = imported.values || {};
+            meta = imported.meta || {};
+          } else {
+            values = imported;
+            meta = {};
+          }
+          saveOkrTrack(values);
+          saveOkrMeta(meta);
           // Refresh visible cells
           var allCells = area.querySelectorAll('[data-track-cell]');
           for (var ic = 0; ic < allCells.length; ic++) {
             var rid = allCells[ic].getAttribute('data-track-cell');
             var ms = allCells[ic].getAttribute('data-track-mes');
             var k = rid + '::' + ms;
-            if (imported[k]) { allCells[ic].textContent = imported[k]; allCells[ic].classList.remove('cell-mes-empty'); }
+            if (values[k]) { allCells[ic].textContent = values[k]; allCells[ic].classList.remove('cell-mes-empty'); }
             else { allCells[ic].textContent = ''; allCells[ic].classList.add('cell-mes-empty'); }
           }
           var allRows = area.querySelectorAll('[data-track-row]');
           for (var ir = 0; ir < allRows.length; ir++) recalcOkrTrackRow(allRows[ir]);
+          refreshOkrAttachIndicators(area);
         } catch(e) { alert('No se pudo importar: ' + e.message); }
         fileInput.value = '';
       };
@@ -6378,12 +6624,17 @@ function bindOkrTrackCollapse(area) {
   if (!btns.length) return;
   for (var b = 0; b < btns.length; b++) {
     (function(btn) {
-      btn.addEventListener('click', function() {
+      function toggle() {
         var key = btn.getAttribute('data-okr-collapse');
-        var body = area.querySelector('[data-okr-collapse-body="' + key + '"]');
-        if (!body) return;
-        var collapsed = body.classList.toggle('collapsed');
-        btn.classList.toggle('collapsed', collapsed);
+        var rows = area.querySelectorAll('[data-okr-collapse-body="' + key + '"]');
+        var collapsed = btn.classList.toggle('collapsed');
+        for (var r = 0; r < rows.length; r++) {
+          rows[r].classList.toggle('row-collapsed', collapsed);
+        }
+      }
+      btn.addEventListener('click', toggle);
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
       });
     })(btns[b]);
   }
