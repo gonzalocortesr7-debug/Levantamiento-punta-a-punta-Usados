@@ -1676,6 +1676,10 @@
         <span class="macro-view-icon">📈</span>
         <span>Seguimiento OKR</span>
       </button>
+      <button class="macro-view-btn" data-view="control-semanal">
+        <span class="macro-view-icon">📅</span>
+        <span>Control Semanal</span>
+      </button>
       <button class="macro-view-btn" data-view="roadmap">
         <span class="macro-view-icon">🗺️</span>
         <span>Roadmap</span>
@@ -4873,7 +4877,7 @@ function getActiveStages() {
   return out;
 }
 function buildFlatSlides() {
-  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'okr-seguimiento' }, { type: 'overview' }];
+  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'okr-seguimiento' }, { type: 'control-semanal' }, { type: 'overview' }];
   var active = getActiveStages();
   for (var si = 0; si < active.length; si++) {
     var stage = active[si];
@@ -4886,7 +4890,7 @@ function buildFlatSlides() {
 
 // Flatten (initial)
 var flatSlides = buildFlatSlides();
-var TOTAL_SUBSTEPS = flatSlides.length - 6;
+var TOTAL_SUBSTEPS = flatSlides.length - 7;
 var currentSlide = 0;
 var chartInstances = {};
 var chartState = {};
@@ -6065,18 +6069,19 @@ function setMacro(macro) {
   if (macro !== currentMacro) {
     currentMacro = macro;
     flatSlides = buildFlatSlides();
-    TOTAL_SUBSTEPS = flatSlides.length - 6;
+    TOTAL_SUBSTEPS = flatSlides.length - 7;
     renderMacroTabs();
     renderStageTabs();
     renderSlides();
   }
-  goToSlide(5);
+  goToSlide(6);
 }
 
 function goToExecSummary() { goToSlide(1); }
 function goToRoadmap() { goToSlide(2); }
 function goToOKRs() { goToSlide(3); }
 function goToOKRSeguimiento() { goToSlide(4); }
+function goToControlSemanal() { goToSlide(5); }
 
 function goToRoadmapTarget(macro, stageName, substepName) {
   if (!macro || !stageName) return;
@@ -6202,6 +6207,8 @@ function renderSlides() {
       html += renderOKRsSlide(i);
     } else if (s.type === 'okr-seguimiento') {
       html += renderOKRSeguimientoSlide(i);
+    } else if (s.type === 'control-semanal') {
+      html += renderControlSemanalSlide(i);
     } else if (s.type === 'overview') {
       html += renderOverviewSlide(i);
     } else {
@@ -6817,6 +6824,10 @@ function renderHomeSlide(i) {
       '<div class="home-footer-note">Compra usa data real del CRM Llaima (158.753 leads, Oct 25 - Mar 26). Preparación está en levantamiento de KPIs operativos con BI y Operaciones. Venta en proceso de mapeo.</div>' +
     '</div>' +
   '</div>';
+}
+
+function renderControlSemanalSlide(i) {
+  return '<div class="slide" data-index="' + i + '"><div style="padding:40px;"><h2 style="font-size:22px;font-weight:800;color:var(--navy);">📅 Control Semanal</h2></div></div>';
 }
 
 function renderOverviewSlide(i) {
@@ -7650,7 +7661,7 @@ function updateChrome() {
   var prevBtn = document.getElementById('prev-btn');
   var nextBtn = document.getElementById('next-btn');
 
-  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okrs' || slide.type === 'okr-seguimiento');
+  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okrs' || slide.type === 'okr-seguimiento' || slide.type === 'control-semanal');
   var macroTabsEl = document.querySelectorAll('.macro-stage');
   for (var mti = 0; mti < macroTabsEl.length; mti++) {
     if (isSpecialView) {
@@ -7695,6 +7706,11 @@ function updateChrome() {
     stepper.style.display = 'none';
     breadcrumb.innerHTML = '<span class="bc-stage">Seguimiento OKR · cierre mensual</span>';
     counter.innerHTML = '<span class="current">-</span> <span class="total">Tablero por eje</span>';
+  } else if (slide.type === 'control-semanal') {
+    for (var th4c = 0; th4c < tabs.length; th4c++) tabs[th4c].classList.remove('active');
+    stepper.style.display = 'none';
+    breadcrumb.innerHTML = '<span class="bc-stage">Control Semanal</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">Vista semanal</span>';
   } else if (slide.type === 'overview') {
     for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
     stepper.style.display = 'none';
@@ -7714,7 +7730,7 @@ function updateChrome() {
     stepper.style.display = 'block';
     renderStepper(stage, slide.subIdx);
     breadcrumb.innerHTML = '<button class="bc-link bc-stage" data-bc-macro="' + stage.macro + '" title="Volver a vista general del eje">Etapa ' + stage.id + ' - ' + stage.fullName + '</button><span class="bc-sep">&rsaquo;</span><span class="bc-substep">' + sub.num + '. ' + sub.title + '</span>';
-    counter.innerHTML = '<span class="current">' + (currentSlide - 4) + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
+    counter.innerHTML = '<span class="current">' + (currentSlide - 5) + '</span> <span class="total">/ ' + TOTAL_SUBSTEPS + '</span>';
     var bcMacroBtn = breadcrumb.querySelector('[data-bc-macro]');
     if (bcMacroBtn) bcMacroBtn.addEventListener('click', function() {
       setMacro(this.getAttribute('data-bc-macro'));
@@ -7800,6 +7816,7 @@ function init() {
           else if (v === 'roadmap') goToRoadmap();
           else if (v === 'okrs') goToOKRs();
           else if (v === 'okr-seguimiento') goToOKRSeguimiento();
+          else if (v === 'control-semanal') goToControlSemanal();
         });
       })(viewBtns[vbi2]);
     }
