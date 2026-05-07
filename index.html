@@ -1540,7 +1540,25 @@
   .okr-track-table td.cell-baseline { text-align: center; font-weight: 700; color: #B3261E; font-variant-numeric: tabular-nums; }
   .okr-track-table td.cell-target { text-align: center; font-weight: 700; color: #0F6E56; font-variant-numeric: tabular-nums; }
   .okr-track-table td.cell-mes { text-align: center; font-weight: 600; color: var(--gray-500); font-variant-numeric: tabular-nums; }
-  .okr-track-table td.cell-mes-empty::before { content: "—"; color: var(--gray-300); }
+  .okr-track-table td.cell-mes { position: relative; padding-top: 18px; padding-bottom: 6px; }
+  .okr-track-table td.cell-mes[data-meta-sugerida]:not([data-meta-sugerida=""])::before {
+    content: 'Meta: ' attr(data-meta-sugerida);
+    position: absolute;
+    top: 2px; left: 0; right: 0;
+    font-size: 8.5px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-align: center;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    text-transform: none;
+  }
+  .okr-track-table td.cell-mes.cell-mes-empty::after { content: "—"; color: var(--gray-300); }
+  .okr-track-table td.cell-variacion.cell-mes-empty::before,
+  .okr-track-table td.cell-cumplimiento.cell-mes-empty::before { content: "—"; color: var(--gray-300); }
+  .okr-track-table td.cell-mes.cell-status-green { background: #E8F7EE !important; }
+  .okr-track-table td.cell-mes.cell-status-amber { background: #FFF4D9 !important; }
+  .okr-track-table td.cell-mes.cell-status-red   { background: #FCE7E7 !important; }
   .okr-track-table tr.eje-divider td { background: var(--gray-100); font-size: 10px; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 10px; }
   .okr-track-legend { font-size: 10.5px; color: var(--gray-500); margin-top: 10px; line-height: 1.5; }
   .okr-track-legend-top { background: var(--gray-50); border: 1px solid var(--gray-200); padding: 10px 14px; margin-bottom: 22px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
@@ -1588,7 +1606,91 @@
   .okr-track-table td.cell-mes[contenteditable="true"] { cursor: text; transition: background 0.12s, box-shadow 0.12s; }
   .okr-track-table td.cell-mes[contenteditable="true"]:hover { background: #F0FAEF; }
   .okr-track-table td.cell-mes[contenteditable="true"]:focus { background: #FFFBE6; outline: 2px solid var(--clicar-green); outline-offset: -2px; color: var(--navy); font-weight: 700; }
-  .okr-track-table td.cell-mes[contenteditable="true"].cell-mes-empty:hover::before { content: "✏️"; opacity: 0.3; font-size: 10px; }
+  .okr-track-table td.cell-mes[contenteditable="true"].cell-mes-empty:hover::after { content: "✏️"; opacity: 0.4; font-size: 10px; color: inherit; }
+
+  /* ============ Control Semanal ============ */
+  .cs-mes { background: var(--white); border: 1px solid var(--gray-200); margin-bottom: 18px; }
+  .cs-mes-head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); user-select: none; }
+  .cs-mes-head:hover { background: var(--gray-100); }
+  .cs-mes-head h2 { font-size: 16px; font-weight: 800; color: var(--navy); flex: 1; letter-spacing: -0.01em; }
+  .cs-mes-icon { font-size: 12px; color: var(--navy); transition: transform 0.2s; display: inline-block; }
+  .cs-mes-count { font-size: 10px; font-weight: 700; color: var(--gray-500); background: var(--white); padding: 3px 10px; border-radius: 10px; border: 1px solid var(--gray-200); text-transform: uppercase; letter-spacing: 0.04em; }
+  .cs-mes-collapsed .cs-semanas-list { display: none; }
+  .cs-semanas-list { display: flex; flex-direction: column; }
+  .cs-semana { border-bottom: 1px solid var(--gray-200); }
+  .cs-semana:last-child { border-bottom: none; }
+  .cs-semana-head { display: flex; align-items: center; gap: 14px; padding: 10px 16px; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .cs-semana-head:hover { background: var(--gray-50); }
+  .cs-semana-icon { font-size: 11px; color: var(--gray-500); width: 14px; text-align: center; }
+  .cs-semana-num { font-size: 11px; font-weight: 800; color: var(--navy); background: var(--gray-100); padding: 3px 9px; border-radius: 4px; letter-spacing: 0.04em; min-width: 32px; text-align: center; }
+  .cs-semana-rango { font-size: 12px; font-weight: 600; color: var(--gray-700); flex: 1; }
+  .cs-semana-actual-badge { font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; background: var(--clicar-green); color: var(--white); padding: 3px 9px; border-radius: 10px; }
+  .cs-semana-actual .cs-semana-num { background: var(--clicar-green); color: var(--white); }
+  .cs-semana-body { display: none; padding: 4px 16px 18px; background: var(--gray-50); border-top: 1px solid var(--gray-200); }
+  .cs-semana-open .cs-semana-body { display: block; }
+  .cs-eje { background: var(--white); border: 1px solid var(--gray-200); padding: 12px 14px 14px; margin-top: 12px; }
+  .cs-eje-head { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 1px dashed var(--gray-200); margin-bottom: 10px; }
+  .cs-eje-head h3 { font-size: 13px; font-weight: 800; color: var(--navy); letter-spacing: -0.005em; }
+  .cs-bloques { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .cs-bloque { display: flex; flex-direction: column; gap: 4px; }
+  .cs-bloque-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-500); }
+  .cs-bloque-compromisos .cs-bloque-label { color: #0F6FC6; }
+  .cs-bloque-acciones .cs-bloque-label { color: #0F6E56; }
+  .cs-bloque-comentarios .cs-bloque-label { color: #8A5A00; }
+  .cs-textarea { font-family: inherit; font-size: 11.5px; line-height: 1.5; color: var(--navy); background: var(--white); border: 1px solid var(--gray-200); padding: 8px 10px; resize: vertical; min-height: 64px; transition: border-color 0.15s, background 0.15s, box-shadow 0.15s; outline: none; }
+  .cs-textarea:hover { border-color: var(--gray-300); }
+  .cs-textarea:focus { border-color: var(--clicar-green); background: #FFFBE6; box-shadow: 0 0 0 2px rgba(127, 198, 124, 0.18); }
+  .cs-textarea::placeholder { color: #B0B0B0; font-style: italic; }
+  @media (max-width: 1100px) {
+    .cs-bloques { grid-template-columns: 1fr; }
+  }
+
+  /* Estado de indicadores del eje (Control Semanal) */
+  .cs-ind-section { margin: 4px 0 12px; }
+  .cs-ind-toggle { display: flex; align-items: center; gap: 10px; width: 100%; background: var(--white); border: 1px solid var(--gray-200); padding: 8px 12px; font-family: inherit; font-size: 11.5px; font-weight: 700; color: var(--navy); cursor: pointer; transition: background 0.15s, border-color 0.15s; text-align: left; }
+  .cs-ind-toggle:hover { background: var(--gray-50); border-color: var(--gray-300); }
+  .cs-ind-toggle.cs-ind-toggle-open { background: var(--gray-50); border-color: var(--gray-300); }
+  .cs-ind-icon { font-size: 10px; color: var(--gray-500); width: 12px; }
+  .cs-ind-toggle-label { flex: 1; letter-spacing: -0.005em; }
+  .cs-ind-summary { display: inline-flex; gap: 4px; align-items: center; }
+  .cs-ind-pill { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; line-height: 1.4; letter-spacing: 0.02em; }
+  .cs-ind-pill.cs-status-green { background: #E8F7EE; color: #0F6E56; }
+  .cs-ind-pill.cs-status-amber { background: #FFF4D9; color: #8A5A00; }
+  .cs-ind-pill.cs-status-red   { background: #FCE7E7; color: #B3261E; }
+  .cs-ind-pill.cs-status-empty { background: var(--gray-100); color: var(--gray-500); }
+  .cs-ind-panel { background: var(--white); border: 1px solid var(--gray-200); border-top: none; padding: 12px 14px 14px; }
+  .cs-ind-summary-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--gray-200); }
+  .cs-ind-summary-pill { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px; }
+  .cs-ind-summary-pill.cs-status-green { background: #E8F7EE; color: #0F6E56; }
+  .cs-ind-summary-pill.cs-status-amber { background: #FFF4D9; color: #8A5A00; }
+  .cs-ind-summary-pill.cs-status-red   { background: #FCE7E7; color: #B3261E; }
+  .cs-ind-summary-pill.cs-status-empty { background: var(--gray-100); color: var(--gray-500); }
+  .cs-ind-summary-note { font-size: 10px; color: var(--gray-500); font-style: italic; margin-left: auto; }
+  .cs-ind-tablewrap { overflow-x: auto; }
+  .cs-ind-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .cs-ind-table th { background: var(--gray-50); color: var(--navy); text-align: left; padding: 6px 8px; font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gray-200); }
+  .cs-ind-table th.num { text-align: center; }
+  .cs-ind-table td { padding: 7px 8px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+  .cs-ind-table td.cs-ind-meta, .cs-ind-table td.cs-ind-val, .cs-ind-table td.cs-ind-gap, .cs-ind-table td.cs-ind-status { text-align: center; font-variant-numeric: tabular-nums; font-weight: 700; }
+  .cs-ind-table td.cs-ind-meta { color: var(--gray-500); }
+  .cs-ind-table td.cs-ind-val  { color: var(--navy); }
+  .cs-ind-table td.cs-ind-gap  { color: var(--gray-700); }
+  .cs-ind-table td.cs-ind-label { font-weight: 700; color: var(--navy); }
+  .cs-ind-sub { font-size: 9.5px; color: var(--gray-500); font-weight: 500; margin-top: 1px; }
+  .cs-ind-typebadge { display: inline-block; font-size: 8.5px; font-weight: 800; padding: 1px 5px; border-radius: 3px; margin-right: 6px; vertical-align: middle; letter-spacing: 0.05em; }
+  .cs-ind-ns { background: #FFFBE6; color: #8A5A00; border: 1px solid #F0D9A0; }
+  .cs-ind-kr { background: #EAF7F0; color: #0F6E56; border: 1px solid #B6E0CE; }
+  .cs-ind-empty { color: var(--gray-300); font-style: italic; }
+  .cs-status-dot { display: inline-block; width: 22px; height: 22px; border-radius: 50%; line-height: 22px; text-align: center; font-weight: 800; font-size: 11px; }
+  .cs-status-dot.cs-status-green { background: #0F6E56; color: var(--white); }
+  .cs-status-dot.cs-status-amber { background: #D49F00; color: var(--white); }
+  .cs-status-dot.cs-status-red   { background: #B3261E; color: var(--white); }
+  .cs-status-dot.cs-status-empty { background: var(--gray-200); color: var(--gray-500); }
+  .cs-ind-row.cs-status-green td.cs-ind-val { color: #0F6E56; }
+  .cs-ind-row.cs-status-red td.cs-ind-val   { color: #B3261E; }
+  .cs-ind-row.cs-status-amber td.cs-ind-val { color: #8A5A00; }
+  .cs-ind-empty-msg { font-size: 11px; color: var(--gray-500); font-style: italic; padding: 8px 4px; }
+
   .roadmap-savings { display: inline-block; background: #E7F5E7; color: var(--green); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; border: 1px solid #B6E0B6; white-space: nowrap; }
   .roadmap-table td.col-ahorro { min-width: 140px; }
   @media (max-width: 900px) {
@@ -1677,7 +1779,7 @@
         <span>Seguimiento OKR</span>
       </button>
       <button class="macro-view-btn" data-view="control-semanal">
-        <span class="macro-view-icon">📅</span>
+        <span class="macro-view-icon">🗓️</span>
         <span>Control Semanal</span>
       </button>
       <button class="macro-view-btn" data-view="roadmap">
@@ -2568,7 +2670,9 @@ function renderOKRSeguimientoSlide(i) {
     var rowAttrs = ' data-track-row="' + escAttr(rowId) + '" data-baseline="' + escAttr(baseline) + '" data-target="' + escAttr(target) + '"';
     var mesCellsHtml = '';
     for (var nn = 0; nn < meses.length; nn++) {
-      mesCellsHtml += '<td class="cell-mes cell-mes-empty" contenteditable="true" spellcheck="false" data-track-cell="' + escAttr(rowId) + '" data-track-mes="' + escAttr(meses[nn]) + '" title="Click para editar"></td>';
+      var mMeta = formattedMonthlyMeta(rowId, nn, baseline, target);
+      var metaAttr = mMeta != null ? ' data-meta-sugerida="' + escAttr(mMeta) + '"' : '';
+      mesCellsHtml += '<td class="cell-mes cell-mes-empty" contenteditable="true" spellcheck="false" data-track-cell="' + escAttr(rowId) + '" data-track-mes="' + escAttr(meses[nn]) + '" data-mes-idx="' + nn + '"' + metaAttr + ' title="Click para editar · Meta del mes en gris"></td>';
     }
     return {
       attrs: rowAttrs,
@@ -2778,6 +2882,240 @@ var PLAN_MENSUAL = [
 // SEGUIMIENTO OKR · valores por mes para cada KR
 // ============================================================
 var OKR_SEGUIMIENTO_MESES = ['Mayo', 'Junio', 'Julio'];
+
+// ============================================================
+// CONTROL SEMANAL · cadencia ágil por eje, semana y mes
+// ============================================================
+var CONTROL_SEMANAL_MESES = [
+  { key: '2026-05', label: 'Mayo 2026', mesName: 'Mayo', mesIdx: 0, semanas: [
+    { key: 'S1', rango: '1-7 may',   actual: true },
+    { key: 'S2', rango: '8-14 may'  },
+    { key: 'S3', rango: '15-21 may' },
+    { key: 'S4', rango: '22-28 may' },
+    { key: 'S5', rango: '29-31 may' }
+  ]},
+  { key: '2026-06', label: 'Junio 2026', mesName: 'Junio', mesIdx: 1, semanas: [
+    { key: 'S1', rango: '1-7 jun'  },
+    { key: 'S2', rango: '8-14 jun' },
+    { key: 'S3', rango: '15-21 jun' },
+    { key: 'S4', rango: '22-28 jun' },
+    { key: 'S5', rango: '29-30 jun' }
+  ]},
+  { key: '2026-07', label: 'Julio 2026', mesName: 'Julio', mesIdx: 2, semanas: [
+    { key: 'S1', rango: '1-7 jul'  },
+    { key: 'S2', rango: '8-14 jul' },
+    { key: 'S3', rango: '15-21 jul' },
+    { key: 'S4', rango: '22-28 jul' },
+    { key: 'S5', rango: '29-31 jul' }
+  ]}
+];
+
+var CONTROL_SEMANAL_EJES = [
+  { key: 'compra',       label: 'Eje Compra',       dot: 'compra' },
+  { key: 'preparación',  label: 'Eje Preparación',  dot: 'preparación' },
+  { key: 'venta',        label: 'Eje Venta',        dot: 'venta' }
+];
+
+var CONTROL_SEMANAL_BLOQUES = [
+  { key: 'compromisos',  label: 'Compromisos',         placeholder: 'Qué nos comprometemos a entregar esta semana...\n• Item por línea' },
+  { key: 'acciones',     label: 'Acciones realizadas', placeholder: 'Qué se ejecutó / aprendizajes...\n• Item por línea' },
+  { key: 'comentarios',  label: 'Comentarios / bloqueos', placeholder: 'Riesgos, dependencias, decisiones, soporte requerido...' }
+];
+
+function getEjeIndicatorsList(ejeKey) {
+  var list = [];
+  var ns = (typeof EJE_CLUSTERS !== 'undefined' && EJE_CLUSTERS[ejeKey] && EJE_CLUSTERS[ejeKey].northStars) ? EJE_CLUSTERS[ejeKey].northStars : [];
+  for (var i = 0; i < ns.length; i++) {
+    list.push({
+      type: 'ns',
+      label: ns[i].metric,
+      sub: ns[i].sub || 'Indicador guía',
+      rowId: 'ns:' + ejeKey + ':' + i,
+      baseline: ns[i].baseline,
+      target: ns[i].target
+    });
+  }
+  if (typeof OKRS !== 'undefined' && OKRS.byStage) {
+    for (var sk in OKRS.byStage) {
+      var st = OKRS.byStage[sk];
+      if (!st || st.macro !== ejeKey || st.upcoming || !st.krs) continue;
+      for (var ki = 0; ki < st.krs.length; ki++) {
+        list.push({
+          type: 'kr',
+          label: st.krs[ki].desc,
+          sub: st.title,
+          rowId: 'kr:' + sk + ':' + ki,
+          baseline: st.krs[ki].baseline,
+          target: st.krs[ki].target
+        });
+      }
+    }
+  }
+  return list;
+}
+
+function escHtml(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderEjeIndicatorsPanelHtml(ejeKey, mesIdx, mesName) {
+  var inds = getEjeIndicatorsList(ejeKey);
+  if (!inds.length) return '<div class="cs-ind-empty-msg">Sin indicadores configurados para este eje.</div>';
+  var data = loadOkrTrack();
+  var rows = '';
+  var cnt = { green: 0, amber: 0, red: 0, empty: 0 };
+  for (var i = 0; i < inds.length; i++) {
+    var ind = inds[i];
+    var meta = formattedMonthlyMeta(ind.rowId, mesIdx, ind.baseline, ind.target);
+    var key = ind.rowId + '::' + mesName;
+    var val = data[key] || '';
+    var status = val ? isMetaOnTrack(val, meta, ind.baseline, ind.target) : null;
+    if (status === 'green') cnt.green++;
+    else if (status === 'amber') cnt.amber++;
+    else if (status === 'red') cnt.red++;
+    else cnt.empty++;
+    var statusClass = status ? ('cs-status-' + status) : 'cs-status-empty';
+    var statusIcon = status === 'green' ? '✓' : status === 'amber' ? '~' : status === 'red' ? '!' : '·';
+    var statusLabel = status === 'green' ? 'En meta' : status === 'amber' ? 'Cerca' : status === 'red' ? 'Fuera de meta' : 'Pendiente';
+    var brecha = '—';
+    if (val) {
+      var vNum = parseOkrNumeric(val);
+      var mNum = parseOkrNumeric(meta);
+      if (vNum != null && mNum != null) {
+        brecha = formatOkrDelta(vNum - mNum, ind.baseline);
+      }
+    }
+    var typeBadge = ind.type === 'ns' ? '<span class="cs-ind-typebadge cs-ind-ns">NS</span>' : '<span class="cs-ind-typebadge cs-ind-kr">KR</span>';
+    rows += '<tr class="cs-ind-row ' + statusClass + '">' +
+      '<td class="cs-ind-label">' + typeBadge + escHtml(ind.label) + '<div class="cs-ind-sub">' + escHtml(ind.sub) + '</div></td>' +
+      '<td class="cs-ind-meta">' + escHtml(meta || '—') + '</td>' +
+      '<td class="cs-ind-val">' + (val ? escHtml(val) : '<span class="cs-ind-empty">— pendiente</span>') + '</td>' +
+      '<td class="cs-ind-gap">' + escHtml(brecha) + '</td>' +
+      '<td class="cs-ind-status"><span class="cs-status-dot ' + statusClass + '" title="' + statusLabel + '">' + statusIcon + '</span></td>' +
+    '</tr>';
+  }
+  var summary = '<div class="cs-ind-summary-row">' +
+    '<span class="cs-ind-summary-pill cs-status-green" title="En meta">✓ ' + cnt.green + '</span>' +
+    '<span class="cs-ind-summary-pill cs-status-amber" title="Cerca de meta">~ ' + cnt.amber + '</span>' +
+    '<span class="cs-ind-summary-pill cs-status-red" title="Fuera de meta">! ' + cnt.red + '</span>' +
+    '<span class="cs-ind-summary-pill cs-status-empty" title="Sin valor cargado">· ' + cnt.empty + '</span>' +
+    '<span class="cs-ind-summary-note">Datos del Seguimiento OKR · mes ' + escHtml(mesName) + '</span>' +
+  '</div>';
+  return summary +
+    '<div class="cs-ind-tablewrap"><table class="cs-ind-table">' +
+    '<thead><tr>' +
+      '<th>Indicador</th>' +
+      '<th class="num">Meta ' + escHtml(mesName) + '</th>' +
+      '<th class="num">Valor cargado</th>' +
+      '<th class="num">Brecha</th>' +
+      '<th class="num">Estado</th>' +
+    '</tr></thead>' +
+    '<tbody>' + rows + '</tbody>' +
+    '</table></div>';
+}
+
+function renderEjeIndicatorsSummary(ejeKey, mesIdx, mesName) {
+  var inds = getEjeIndicatorsList(ejeKey);
+  var data = loadOkrTrack();
+  var cnt = { green: 0, amber: 0, red: 0, empty: 0 };
+  for (var i = 0; i < inds.length; i++) {
+    var ind = inds[i];
+    var meta = formattedMonthlyMeta(ind.rowId, mesIdx, ind.baseline, ind.target);
+    var val = data[ind.rowId + '::' + mesName] || '';
+    var status = val ? isMetaOnTrack(val, meta, ind.baseline, ind.target) : null;
+    if (status === 'green') cnt.green++;
+    else if (status === 'amber') cnt.amber++;
+    else if (status === 'red') cnt.red++;
+    else cnt.empty++;
+  }
+  return '<span class="cs-ind-pill cs-status-green">✓ ' + cnt.green + '</span>' +
+    '<span class="cs-ind-pill cs-status-amber">~ ' + cnt.amber + '</span>' +
+    '<span class="cs-ind-pill cs-status-red">! ' + cnt.red + '</span>' +
+    '<span class="cs-ind-pill cs-status-empty">· ' + cnt.empty + '</span>';
+}
+
+function renderControlSemanalSlide(i) {
+  var ejesByMacro = CONTROL_SEMANAL_EJES;
+  var html = '<div class="slide exec-summary" data-slide="' + i + '">' +
+    '<div class="okrs-hero">' +
+      '<div class="eyebrow">Control semanal · cadencia ágil</div>' +
+      '<h1>🗓️ Control Semanal</h1>' +
+      '<p>Bitácora viva por <strong>eje</strong>, <strong>semana</strong> y <strong>mes</strong>: compromisos asumidos, acciones realizadas y comentarios / bloqueos. Todo se guarda automáticamente en este navegador. Usá <strong>Exportar JSON</strong> para respaldar y compartir.</p>' +
+    '</div>' +
+    '<div class="okr-track-toolbar">' +
+      '<div class="okr-track-filters">' +
+        '<span class="okr-track-filter-label">Ver eje:</span>' +
+        '<button type="button" class="okr-track-filter active" data-cs-filter="all">Todos</button>' +
+        '<button type="button" class="okr-track-filter" data-cs-filter="compra">Compra</button>' +
+        '<button type="button" class="okr-track-filter" data-cs-filter="preparación">Preparación</button>' +
+        '<button type="button" class="okr-track-filter" data-cs-filter="venta">Venta</button>' +
+      '</div>' +
+      '<div class="okr-track-actions">' +
+        '<button type="button" class="okr-track-action" data-cs-action="export">⬇ Exportar JSON</button>' +
+        '<button type="button" class="okr-track-action" data-cs-action="import">⬆ Importar JSON</button>' +
+        '<button type="button" class="okr-track-action danger" data-cs-action="clear">Limpiar todo</button>' +
+        '<input type="file" accept=".json,application/json" id="cs-import-file" style="display:none">' +
+      '</div>' +
+    '</div>';
+
+  for (var mi = 0; mi < CONTROL_SEMANAL_MESES.length; mi++) {
+    var mes = CONTROL_SEMANAL_MESES[mi];
+    html += '<section class="cs-mes" data-cs-mes="' + mes.key + '">' +
+      '<header class="cs-mes-head">' +
+        '<span class="cs-mes-icon">▼</span>' +
+        '<h2>' + mes.label + '</h2>' +
+        '<span class="cs-mes-count">' + mes.semanas.length + ' semanas</span>' +
+      '</header>' +
+      '<div class="cs-semanas-list">';
+
+    for (var si = 0; si < mes.semanas.length; si++) {
+      var sem = mes.semanas[si];
+      var semKey = mes.key + '.' + sem.key;
+      var isActual = !!sem.actual;
+      html += '<article class="cs-semana' + (isActual ? ' cs-semana-actual cs-semana-open' : '') + '" data-cs-semana="' + semKey + '">' +
+        '<header class="cs-semana-head" role="button" tabindex="0" data-cs-toggle="' + semKey + '">' +
+          '<span class="cs-semana-icon">' + (isActual ? '▼' : '▶') + '</span>' +
+          '<span class="cs-semana-num">' + sem.key + '</span>' +
+          '<span class="cs-semana-rango">' + sem.rango + '</span>' +
+          (isActual ? '<span class="cs-semana-actual-badge">Semana en curso</span>' : '') +
+        '</header>' +
+        '<div class="cs-semana-body">';
+
+      for (var ei = 0; ei < ejesByMacro.length; ei++) {
+        var eje = ejesByMacro[ei];
+        var indPanelKey = eje.key + ':' + semKey;
+        html += '<div class="cs-eje" data-cs-eje="' + eje.key + '">' +
+          '<div class="cs-eje-head">' +
+            '<span class="okr-track-eje-dot ' + eje.dot + '"></span>' +
+            '<h3>' + eje.label + '</h3>' +
+          '</div>' +
+          '<div class="cs-ind-section">' +
+            '<button type="button" class="cs-ind-toggle" data-cs-ind-toggle="' + indPanelKey + '" data-cs-ind-eje="' + eje.key + '" data-cs-ind-mesidx="' + mes.mesIdx + '" data-cs-ind-mesname="' + mes.mesName + '">' +
+              '<span class="cs-ind-icon">▶</span>' +
+              '<span class="cs-ind-toggle-label">Estado de indicadores del eje · ' + mes.mesName + '</span>' +
+              '<span class="cs-ind-summary" data-cs-ind-summary="' + indPanelKey + '"></span>' +
+            '</button>' +
+            '<div class="cs-ind-panel" data-cs-ind-panel="' + indPanelKey + '" hidden></div>' +
+          '</div>' +
+          '<div class="cs-bloques">';
+        for (var bi = 0; bi < CONTROL_SEMANAL_BLOQUES.length; bi++) {
+          var bloque = CONTROL_SEMANAL_BLOQUES[bi];
+          var dataKey = semKey + '.' + eje.key + '.' + bloque.key;
+          html += '<div class="cs-bloque cs-bloque-' + bloque.key + '">' +
+            '<label class="cs-bloque-label">' + bloque.label + '</label>' +
+            '<textarea class="cs-textarea" data-cs-key="' + dataKey + '" placeholder="' + bloque.placeholder.replace(/"/g, '&quot;') + '" spellcheck="false"></textarea>' +
+          '</div>';
+        }
+        html += '</div></div>';
+      }
+
+      html += '</div></article>';
+    }
+
+    html += '</div></section>';
+  }
+
+  html += '</div>';
+  return html;
+}
 
 function renderRoadmapSlide(i) {
   var total = ROADMAP.length;
@@ -6273,6 +6611,7 @@ function renderSlides() {
   bindOkrTrackFilters(area);
   bindOkrTrackCollapse(area);
   bindOkrTrackEditing(area);
+  bindControlSemanal(area);
   initPrepCharts();
   bindVtaViewToggles(area);
   highlightRecordatorios(area);
@@ -6329,11 +6668,89 @@ function formatOkrDelta(value, like) {
   var s = String(rounded).replace('.', ',');
   return sign + s + (hasPct ? ' pp' : '');
 }
+function formatOkrLike(num, likeStr) {
+  if (num == null || isNaN(num)) return '';
+  var like = String(likeStr || '');
+  var rest = like.replace(/^[<>~]+\s*/, '');
+  var match = rest.match(/^[\-+]?[\d.,]+(.*)$/);
+  var suffix = match ? match[1] : '';
+  var rounded;
+  if (Math.abs(num) >= 100) rounded = Math.round(num);
+  else rounded = Math.round(num * 10) / 10;
+  var s = String(rounded).replace('.', ',');
+  return s + (suffix || '');
+}
+var OKR_META_OVERRIDE_KEY = 'okr_meta_override_v1';
+function loadOkrMetaOverrides() {
+  try { return JSON.parse(localStorage.getItem(OKR_META_OVERRIDE_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveOkrMetaOverrides(d) {
+  try { localStorage.setItem(OKR_META_OVERRIDE_KEY, JSON.stringify(d || {})); } catch(e) {}
+}
+function computeMonthlyMetaNum(baselineStr, targetStr, mesIdx, totalMeses) {
+  totalMeses = totalMeses || 6;
+  var b = parseOkrNumeric(baselineStr);
+  var t = parseOkrNumeric(targetStr);
+  if (b == null || t == null) return null;
+  return b + (t - b) * (mesIdx + 1) / totalMeses;
+}
+function formattedMonthlyMeta(rowId, mesIdx, baselineStr, targetStr) {
+  var overrides = loadOkrMetaOverrides();
+  var key = rowId + '::' + mesIdx;
+  if (overrides[key]) return overrides[key];
+  var v = computeMonthlyMetaNum(baselineStr, targetStr, mesIdx);
+  if (v == null) return null;
+  return formatOkrLike(v, baselineStr);
+}
+function isMetaOnTrack(valueStr, monthlyMetaStr, baselineStr, targetStr) {
+  // Returns 'green' (cumple), 'amber' (cerca), 'red' (lejos), or null si no hay datos.
+  var v = parseOkrNumeric(valueStr);
+  var m = parseOkrNumeric(monthlyMetaStr);
+  var b = parseOkrNumeric(baselineStr);
+  var t = parseOkrNumeric(targetStr);
+  if (v == null || m == null || b == null || t == null || t === b) return null;
+  var directionUp = (t > b);
+  var meets = directionUp ? v >= m : v <= m;
+  if (meets) return 'green';
+  // Brecha relativa al span baseline→target
+  var span = Math.abs(t - b);
+  var miss = directionUp ? (m - v) : (v - m);
+  var rel = miss / (span || 1);
+  return rel <= 0.10 ? 'amber' : 'red';
+}
+function getCurrentMonthIdx() {
+  var now = new Date();
+  var monthMap = { 'Enero':0,'Febrero':1,'Marzo':2,'Abril':3,'Mayo':4,'Junio':5,'Julio':6,'Agosto':7,'Septiembre':8,'Octubre':9,'Noviembre':10,'Diciembre':11 };
+  var meses = (typeof OKR_SEGUIMIENTO_MESES !== 'undefined') ? OKR_SEGUIMIENTO_MESES : [];
+  for (var i = 0; i < meses.length; i++) {
+    if (monthMap[meses[i]] === now.getMonth()) return i;
+  }
+  // Si la fecha actual es anterior al primer mes del horizonte, devolver 0
+  // Si es posterior, devolver el último
+  var firstMonth = monthMap[meses[0]];
+  if (firstMonth != null && now.getMonth() < firstMonth) return 0;
+  return Math.max(0, meses.length - 1);
+}
+function paintMesCellAgainstMeta(cell, baselineStr, targetStr) {
+  if (!cell) return;
+  cell.classList.remove('cell-status-green','cell-status-amber','cell-status-red');
+  var val = (cell.textContent || '').trim();
+  if (!val) return;
+  var meta = cell.getAttribute('data-meta-sugerida');
+  if (!meta) return;
+  var s = isMetaOnTrack(val, meta, baselineStr, targetStr);
+  if (s === 'green') cell.classList.add('cell-status-green');
+  else if (s === 'amber') cell.classList.add('cell-status-amber');
+  else if (s === 'red') cell.classList.add('cell-status-red');
+}
+
 function recalcOkrTrackRow(row) {
   if (!row) return;
   var baseline = row.getAttribute('data-baseline');
   var target = row.getAttribute('data-target');
   var cells = row.querySelectorAll('[data-track-cell]');
+  for (var pi = 0; pi < cells.length; pi++) paintMesCellAgainstMeta(cells[pi], baseline, target);
   var lastVal = null;
   for (var i = cells.length - 1; i >= 0; i--) {
     var v = (cells[i].textContent || '').trim();
@@ -6645,6 +7062,218 @@ function bindOkrTrackCollapse(area) {
       });
     })(btns[b]);
   }
+}
+
+// ============================================================
+// CONTROL SEMANAL · persistencia + filtros + collapse + IO
+// ============================================================
+var CS_STORAGE_KEY = 'cs_semanal_v1';
+function loadCS() {
+  try {
+    var raw = localStorage.getItem(CS_STORAGE_KEY);
+    if (!raw) return {};
+    var d = JSON.parse(raw);
+    return (d && typeof d === 'object') ? d : {};
+  } catch(e) { return {}; }
+}
+function saveCS(d) {
+  try { localStorage.setItem(CS_STORAGE_KEY, JSON.stringify(d || {})); } catch(e) {}
+}
+
+function refreshControlSemanalIndicatorSummaries(area) {
+  if (!area) return;
+  var sums = area.querySelectorAll('[data-cs-ind-summary]');
+  for (var i = 0; i < sums.length; i++) {
+    var key = sums[i].getAttribute('data-cs-ind-summary');
+    var btn = area.querySelector('[data-cs-ind-toggle="' + key + '"]');
+    if (!btn) continue;
+    var ejeKey = btn.getAttribute('data-cs-ind-eje');
+    var mesIdx = parseInt(btn.getAttribute('data-cs-ind-mesidx') || '0', 10);
+    var mesName = btn.getAttribute('data-cs-ind-mesname') || '';
+    sums[i].innerHTML = renderEjeIndicatorsSummary(ejeKey, mesIdx, mesName);
+  }
+  // Re-render panels que ya estén abiertos
+  var openPanels = area.querySelectorAll('[data-cs-ind-panel]:not([hidden])');
+  for (var p = 0; p < openPanels.length; p++) {
+    var k = openPanels[p].getAttribute('data-cs-ind-panel');
+    var btn2 = area.querySelector('[data-cs-ind-toggle="' + k + '"]');
+    if (!btn2) continue;
+    openPanels[p].innerHTML = renderEjeIndicatorsPanelHtml(btn2.getAttribute('data-cs-ind-eje'), parseInt(btn2.getAttribute('data-cs-ind-mesidx') || '0', 10), btn2.getAttribute('data-cs-ind-mesname') || '');
+  }
+}
+
+function bindControlSemanal(area) {
+  var textareas = area.querySelectorAll('[data-cs-key]');
+  // Lazy toggle de paneles de indicadores (independiente de si hay textareas)
+  var indToggles = area.querySelectorAll('[data-cs-ind-toggle]');
+  for (var it = 0; it < indToggles.length; it++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var key = btn.getAttribute('data-cs-ind-toggle');
+        var panel = area.querySelector('[data-cs-ind-panel="' + key + '"]');
+        if (!panel) return;
+        var nowHidden = panel.hasAttribute('hidden');
+        if (nowHidden) {
+          var ejeKey = btn.getAttribute('data-cs-ind-eje');
+          var mesIdx = parseInt(btn.getAttribute('data-cs-ind-mesidx') || '0', 10);
+          var mesName = btn.getAttribute('data-cs-ind-mesname') || '';
+          panel.innerHTML = renderEjeIndicatorsPanelHtml(ejeKey, mesIdx, mesName);
+          panel.removeAttribute('hidden');
+          btn.classList.add('cs-ind-toggle-open');
+          var icon = btn.querySelector('.cs-ind-icon');
+          if (icon) icon.textContent = '▼';
+        } else {
+          panel.setAttribute('hidden', '');
+          btn.classList.remove('cs-ind-toggle-open');
+          var icon2 = btn.querySelector('.cs-ind-icon');
+          if (icon2) icon2.textContent = '▶';
+        }
+      });
+    })(indToggles[it]);
+  }
+
+  refreshControlSemanalIndicatorSummaries(area);
+
+  if (!textareas.length) return;
+  var data = loadCS();
+
+  for (var t = 0; t < textareas.length; t++) {
+    var ta = textareas[t];
+    var key = ta.getAttribute('data-cs-key');
+    if (data[key]) ta.value = data[key];
+    autoGrowTextarea(ta);
+    (function(ta2, k2) {
+      ta2.addEventListener('input', function() { autoGrowTextarea(ta2); });
+      ta2.addEventListener('blur', function() {
+        var val = ta2.value || '';
+        var d = loadCS();
+        if (val.trim()) d[k2] = val;
+        else delete d[k2];
+        saveCS(d);
+      });
+    })(ta, key);
+  }
+
+  // Collapse semana on click
+  var toggles = area.querySelectorAll('[data-cs-toggle]');
+  for (var tg = 0; tg < toggles.length; tg++) {
+    (function(head) {
+      function toggle() {
+        var card = head.closest('.cs-semana');
+        if (!card) return;
+        var open = card.classList.toggle('cs-semana-open');
+        var icon = head.querySelector('.cs-semana-icon');
+        if (icon) icon.textContent = open ? '▼' : '▶';
+        if (open) {
+          var tas = card.querySelectorAll('textarea.cs-textarea');
+          for (var i = 0; i < tas.length; i++) autoGrowTextarea(tas[i]);
+        }
+      }
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    })(toggles[tg]);
+  }
+
+  // Mes collapse
+  var mesHeads = area.querySelectorAll('.cs-mes-head');
+  for (var mh = 0; mh < mesHeads.length; mh++) {
+    (function(head) {
+      head.addEventListener('click', function() {
+        var sec = head.closest('.cs-mes');
+        if (!sec) return;
+        var collapsed = sec.classList.toggle('cs-mes-collapsed');
+        var icon = head.querySelector('.cs-mes-icon');
+        if (icon) icon.textContent = collapsed ? '▶' : '▼';
+      });
+    })(mesHeads[mh]);
+  }
+
+  // Filtros por eje
+  var filterBtns = area.querySelectorAll('[data-cs-filter]');
+  function applyCSFilter(val) {
+    for (var f = 0; f < filterBtns.length; f++) {
+      filterBtns[f].classList.toggle('active', filterBtns[f].getAttribute('data-cs-filter') === val);
+    }
+    var ejes = area.querySelectorAll('[data-cs-eje]');
+    for (var e = 0; e < ejes.length; e++) {
+      var k = ejes[e].getAttribute('data-cs-eje');
+      ejes[e].style.display = (val === 'all' || k === val) ? '' : 'none';
+    }
+  }
+  for (var fb = 0; fb < filterBtns.length; fb++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        applyCSFilter(btn.getAttribute('data-cs-filter'));
+      });
+    })(filterBtns[fb]);
+  }
+
+  // Acciones export / import / clear
+  var actions = area.querySelectorAll('[data-cs-action]');
+  for (var aa = 0; aa < actions.length; aa++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var act = btn.getAttribute('data-cs-action');
+        if (act === 'export') {
+          var d = loadCS();
+          var payload = { __version: 1, type: 'control-semanal', exportedAt: new Date().toISOString(), values: d };
+          var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+          var url = URL.createObjectURL(blob);
+          var a2 = document.createElement('a');
+          var stamp = new Date().toISOString().slice(0,10);
+          a2.href = url; a2.download = 'control-semanal-' + stamp + '.json';
+          document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+          URL.revokeObjectURL(url);
+        } else if (act === 'import') {
+          var input = area.querySelector('#cs-import-file');
+          if (input) input.click();
+        } else if (act === 'clear') {
+          if (confirm('¿Borrar toda la bitácora del Control Semanal? Esta acción no se puede deshacer.')) {
+            saveCS({});
+            var all = area.querySelectorAll('[data-cs-key]');
+            for (var ai = 0; ai < all.length; ai++) {
+              all[ai].value = '';
+              autoGrowTextarea(all[ai]);
+            }
+          }
+        }
+      });
+    })(actions[aa]);
+  }
+
+  var fileInput = area.querySelector('#cs-import-file');
+  if (fileInput) {
+    fileInput.addEventListener('change', function() {
+      var f = fileInput.files && fileInput.files[0];
+      if (!f) return;
+      var reader = new FileReader();
+      reader.onload = function() {
+        try {
+          var imported = JSON.parse(reader.result);
+          if (!imported || typeof imported !== 'object') throw new Error('Formato inválido');
+          var values = (imported.__version && imported.values) ? imported.values : imported;
+          saveCS(values || {});
+          var all = area.querySelectorAll('[data-cs-key]');
+          for (var ai = 0; ai < all.length; ai++) {
+            var k = all[ai].getAttribute('data-cs-key');
+            all[ai].value = values && values[k] ? values[k] : '';
+            autoGrowTextarea(all[ai]);
+          }
+        } catch(err) { alert('No se pudo importar: ' + err.message); }
+        fileInput.value = '';
+      };
+      reader.readAsText(f);
+    });
+  }
+}
+
+function autoGrowTextarea(ta) {
+  if (!ta) return;
+  ta.style.height = 'auto';
+  var min = 64;
+  ta.style.height = Math.max(min, ta.scrollHeight) + 'px';
 }
 
 function bindOkrEjeSwitcher(area) {
@@ -7518,6 +8147,9 @@ function goToSlide(index) {
     t.classList.add('active');
     t.scrollTop = 0;
     setTimeout(function() { initSlideCharts(index, t); }, 80);
+    if (flatSlides[index] && flatSlides[index].type === 'control-semanal') {
+      refreshControlSemanalIndicatorSummaries(t);
+    }
   }
   updateChrome();
 }
@@ -7709,8 +8341,8 @@ function updateChrome() {
   } else if (slide.type === 'control-semanal') {
     for (var th4c = 0; th4c < tabs.length; th4c++) tabs[th4c].classList.remove('active');
     stepper.style.display = 'none';
-    breadcrumb.innerHTML = '<span class="bc-stage">Control Semanal</span>';
-    counter.innerHTML = '<span class="current">-</span> <span class="total">Vista semanal</span>';
+    breadcrumb.innerHTML = '<span class="bc-stage">Control semanal · cadencia ágil</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">Bitácora por eje y semana</span>';
   } else if (slide.type === 'overview') {
     for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
     stepper.style.display = 'none';
