@@ -3123,7 +3123,7 @@ var OKR_SEGUIMIENTO_MESES = ['Mayo', 'Junio', 'Julio'];
 // ============================================================
 var CONTROL_SEMANAL_MESES = [
   { key: '2026-05', label: 'Mayo 2026', mesName: 'Mayo', mesIdx: 0, semanas: [
-    { key: 'S1', rango: '1-7 may',   actual: true },
+    { key: 'S1', rango: '1-7 may'   },
     { key: 'S2', rango: '8-14 may'  },
     { key: 'S3', rango: '15-21 may' },
     { key: 'S4', rango: '22-28 may' },
@@ -3267,6 +3267,15 @@ function renderEjeIndicatorsSummary(ejeKey, mesIdx, mesName) {
     '<span class="cs-ind-pill cs-status-empty">· ' + cnt.empty + '</span>';
 }
 
+function isWeekActual(mesKey, semKey) {
+  var today = new Date();
+  var mesCurrent = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
+  if (mesCurrent !== mesKey) return false;
+  var rangos = { S1:[1,7], S2:[8,14], S3:[15,21], S4:[22,28], S5:[29,31] };
+  var r = rangos[semKey];
+  return !!r && today.getDate() >= r[0] && today.getDate() <= r[1];
+}
+
 function renderControlSemanalSlide(i) {
   var ejesByMacro = CONTROL_SEMANAL_EJES;
   var html = '<div class="slide exec-summary" data-slide="' + i + '">' +
@@ -3304,7 +3313,7 @@ function renderControlSemanalSlide(i) {
     for (var si = 0; si < mes.semanas.length; si++) {
       var sem = mes.semanas[si];
       var semKey = mes.key + '.' + sem.key;
-      var isActual = !!sem.actual;
+      var isActual = isWeekActual(mes.key, sem.key);
       html += '<article class="cs-semana' + (isActual ? ' cs-semana-actual cs-semana-open' : '') + '" data-cs-semana="' + semKey + '">' +
         '<header class="cs-semana-head" role="button" tabindex="0" data-cs-toggle="' + semKey + '">' +
           '<span class="cs-semana-icon">' + (isActual ? '▼' : '▶') + '</span>' +
