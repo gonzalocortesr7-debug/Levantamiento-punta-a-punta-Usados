@@ -1496,28 +1496,150 @@
   .plan-mes-title { font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
   .plan-mes-sub { font-size: 11.5px; color: var(--gray-500); margin-top: 2px; }
   .plan-mes-count { font-size: 11px; font-weight: 700; color: var(--navy); background: var(--gray-100); padding: 4px 10px; border-radius: 10px; }
-  .plan-grupos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .plan-grupo { border: 1px solid var(--gray-200); padding: 14px 16px 16px; background: var(--gray-50); }
-  .plan-grupo.compra { border-top: 3px solid #0F6FC6; }
-  .plan-grupo.preparación { border-top: 3px solid #EF9F27; }
-  .plan-grupo.venta { border-top: 3px solid #1D9E75; }
-  .plan-grupo-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-500); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-  .plan-grupo.compra .plan-grupo-label { color: #0F6FC6; }
-  .plan-grupo.preparación .plan-grupo-label { color: #8A5A00; }
-  .plan-grupo.venta .plan-grupo-label { color: #0F6E56; }
+  .plan-grupos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+  .plan-grupo { border: 1px solid var(--gray-200); padding: 14px 16px 16px; background: var(--gray-50); border-top: 3px solid var(--clicar-green); }
+  .plan-grupo-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
   .plan-grupo-count { font-size: 10px; background: var(--white); border: 1px solid var(--gray-200); padding: 1px 7px; border-radius: 8px; color: var(--gray-700); }
   .plan-iniciativas { display: flex; flex-direction: column; gap: 8px; }
-  .plan-iniciativa { background: var(--white); border: 1px solid var(--gray-200); padding: 8px 12px 10px; font-size: 11.5px; color: var(--navy); line-height: 1.45; display: flex; gap: 8px; align-items: flex-start; }
+  .plan-iniciativa { background: var(--white); border: 1px solid var(--gray-200); padding: 9px 12px 11px; font-size: 11.5px; color: var(--navy); line-height: 1.45; display: flex; gap: 8px; align-items: flex-start; }
   .plan-iniciativa-num { background: var(--navy); color: var(--white); width: 18px; height: 18px; border-radius: 50%; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
   .plan-iniciativa-body { flex: 1; }
   .plan-iniciativa-txt { font-weight: 600; }
+  .plan-iniciativa-meta { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 6px; font-size: 10.5px; }
+  .plan-iniciativa-resp { color: var(--gray-500); font-weight: 600; margin-left: 4px; }
   .plan-iniciativa-nota { font-size: 10.5px; color: var(--gray-500); font-style: italic; margin-top: 3px; }
   .plan-iniciativa-fecha { font-size: 10.5px; color: var(--navy); font-weight: 600; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--gray-200); display: flex; align-items: center; gap: 5px; }
   .plan-iniciativa-fecha .plan-fecha-icon { font-size: 11px; }
   .plan-iniciativa-fecha .plan-fecha-label { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 9.5px; color: var(--gray-500); }
   .plan-iniciativa-fecha-pending { color: var(--gray-500); font-style: italic; font-weight: 500; }
   .plan-mes-eyebrow { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clicar-green); margin-bottom: 4px; }
-  @media (max-width: 1100px) { .plan-grupos-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .plan-grupos-grid { grid-template-columns: 1fr; } }
+
+  /* ===== Roadmap operacional 2026 ===== */
+  .rm-program-bar { display: flex; flex-wrap: wrap; gap: 4px; background: var(--white); border: 1px solid var(--gray-200); padding: 4px; margin-bottom: 16px; }
+  .rm-prog-btn { padding: 8px 14px; font-size: 12px; font-weight: 600; border: none; background: transparent; color: var(--gray-500); cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px; transition: color 0.15s, background 0.15s; }
+  .rm-prog-btn:hover { color: var(--navy); }
+  .rm-prog-btn.on { background: var(--gray-100); color: var(--navy); font-weight: 700; }
+  .rm-prog-btn .rm-ct { font-size: 10px; padding: 1px 7px; border-radius: 8px; background: var(--gray-100); color: var(--gray-700); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rm-prog-btn.on .rm-ct { background: var(--white); color: var(--navy); border: 1px solid var(--gray-200); }
+
+  .rm-banner { padding: 11px 14px; background: #F0FAEF; border-left: 3px solid var(--clicar-green); font-size: 12px; color: var(--gray-700); margin-bottom: 18px; line-height: 1.5; border-radius: 0 4px 4px 0; }
+  .rm-banner b { color: var(--navy); font-weight: 700; }
+
+  .rm-subtabs { display: flex; gap: 24px; padding-bottom: 0; border-bottom: 1px solid var(--gray-200); margin-bottom: 16px; }
+  .rm-subtab { padding: 9px 0; font-size: 11.5px; cursor: pointer; border: none; background: transparent; color: var(--gray-500); border-bottom: 2px solid transparent; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; font-family: inherit; transition: color 0.15s, border-color 0.15s; }
+  .rm-subtab:hover { color: var(--navy); }
+  .rm-subtab.on { color: var(--navy); border-bottom-color: var(--clicar-green); font-weight: 700; }
+  .rm-pane { display: none; }
+  .rm-pane.on { display: block; }
+
+  .rm-kgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-bottom: 18px; border: 1px solid var(--gray-200); }
+  .rm-kgrid-3 { grid-template-columns: repeat(3, 1fr); }
+  .rm-k { padding: 14px 16px; border-right: 1px solid var(--gray-200); background: var(--white); }
+  .rm-k:last-child { border-right: none; }
+  .rm-kl { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; font-weight: 700; }
+  .rm-kv { font-size: 24px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; color: var(--navy); }
+  .rm-kv .rm-un { font-size: 14px; color: var(--gray-500); font-weight: 500; margin-left: 2px; }
+  .rm-ktrend { font-size: 11px; margin-top: 6px; color: var(--gray-500); }
+  .rm-tup { color: #0F6E56; }
+  .rm-tdn { color: #B3261E; }
+  .rm-tn  { color: var(--gray-500); }
+  .rm-k-alert { background: #FCEBEB; }
+  .rm-k-alert .rm-kv { color: #791F1F; }
+
+  .rm-section-tt { font-size: 11px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; margin: 4px 0 12px; }
+  .rm-portfolio { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .rm-pf-card { padding: 14px 16px; border: 1px solid var(--gray-200); background: var(--white); transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
+  .rm-pf-card[data-rm-prog-card], .rm-pf-card[data-rm-fs-card] { cursor: pointer; }
+  .rm-pf-card[data-rm-prog-card]:hover, .rm-pf-card[data-rm-fs-card]:hover { border-color: var(--navy); box-shadow: 0 2px 8px rgba(11, 49, 87, 0.10); transform: translateY(-1px); }
+  .rm-pf-card.rm-area-compra { border-left: 3px solid #712B13; }
+  .rm-pf-card.rm-area-venta  { border-left: 3px solid #0C447C; }
+  .rm-pf-hd { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .rm-pf-name { font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--navy); }
+  .rm-pf-sub { font-size: 11px; color: var(--gray-500); margin-top: 2px; font-weight: 500; }
+  .rm-pf-pct { font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--navy); }
+  .rm-pf-pct .rm-un { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+  .rm-pf-bar { height: 4px; background: var(--gray-200); overflow: hidden; margin: 8px 0 10px; border-radius: 2px; }
+  .rm-pf-bar-fill { height: 100%; background: var(--clicar-green); border-radius: 2px; transition: width 0.3s; }
+  .rm-pf-card.rm-area-compra .rm-pf-bar-fill { background: #712B13; }
+  .rm-pf-card.rm-area-venta .rm-pf-bar-fill { background: #0C447C; }
+  .rm-pf-stats { display: flex; gap: 16px; font-size: 11px; color: var(--gray-500); flex-wrap: wrap; }
+  .rm-pf-stats b { color: var(--navy); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .rm-ft { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; align-items: center; }
+  .rm-fl { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 4px; font-weight: 700; }
+  .rm-ch { padding: 5px 11px; font-size: 11px; border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-700); cursor: pointer; font-family: inherit; font-weight: 600; transition: background 0.12s, color 0.12s, border-color 0.12s; display: inline-flex; align-items: center; gap: 6px; }
+  .rm-ch:hover { border-color: var(--navy); color: var(--navy); }
+  .rm-ch.on { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .rm-ch .rm-ct { background: var(--gray-100); color: var(--gray-700); padding: 1px 6px; border-radius: 8px; font-size: 10px; }
+  .rm-ch.on .rm-ct { background: var(--white); color: var(--navy); }
+  .rm-divider { width: 1px; height: 14px; background: var(--gray-200); margin: 0 4px; }
+  .rm-count { font-size: 11px; color: var(--gray-500); margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+
+  .rm-table-wrap { overflow-x: auto; border: 1px solid var(--gray-200); }
+  .rm-table { width: 100%; border-collapse: collapse; font-size: 11.5px; table-layout: fixed; }
+  .rm-table th { background: var(--gray-50); text-align: left; padding: 9px 10px; font-size: 10px; color: var(--navy); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gray-200); }
+  .rm-table td { padding: 10px; border-bottom: 1px solid var(--gray-100); vertical-align: top; word-wrap: break-word; }
+  .rm-table tr:hover td { background: var(--gray-50); }
+  .rm-table .rm-cell-muted { font-size: 10.5px; color: var(--gray-500); }
+  .rm-table .rm-cell-iniciativa { font-size: 11px; color: var(--navy); line-height: 1.4; }
+  .rm-table .rm-cell-resp { font-size: 11px; color: var(--gray-700); }
+  .rm-row-sub { font-size: 10px; color: var(--gray-500); margin-top: 3px; line-height: 1.35; }
+
+  .rm-mini-badge { display: inline-block; padding: 2px 8px; font-size: 10px; font-weight: 700; white-space: nowrap; letter-spacing: 0.03em; line-height: 1.4; border-radius: 3px; }
+  .rm-tipo-tec    { background: #E6F1FB; color: #0C447C; }
+  .rm-tipo-proc   { background: #EAF3DE; color: #27500A; }
+  .rm-tipo-estr   { background: #EEEDFE; color: #3C3489; }
+  .rm-tipo-tecmkt { background: #FBEAF0; color: #72243E; }
+  .rm-est-ok { background: #EAF3DE; color: #27500A; }
+  .rm-est-cu { background: #FAEEDA; color: #633806; }
+  .rm-est-ep { background: #FAEEDA; color: #633806; }
+  .rm-est-pe { background: #EEEDFE; color: #3C3489; }
+  .rm-est-no { background: #F1EFE8; color: #444441; }
+  .rm-prio-p1 { background: #FCEBEB; color: #791F1F; }
+  .rm-prio-p2 { background: #FAEEDA; color: #633806; }
+  .rm-prio-p3 { background: #E6F1FB; color: #0C447C; }
+  .rm-area-compra { background: #FAECE7; color: #712B13; }
+  .rm-area-venta  { background: #E6F1FB; color: #0C447C; }
+  .rm-area-sub    { background: #F1EFE8; color: #444441; }
+  .rm-empty-dash  { color: var(--gray-300); font-size: 10px; }
+
+  .rm-empty { padding: 36px 18px; text-align: center; background: var(--gray-50); border: 1px solid var(--gray-200); color: var(--gray-500); font-size: 12.5px; }
+
+  /* Cronograma (gantt) */
+  .rm-gantt-wrap { overflow-x: auto; }
+  .rm-gantt { min-width: 600px; }
+  .rm-gms { display: grid; grid-template-columns: 280px 1fr 90px; gap: 14px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid var(--gray-200); }
+  .rm-gmb-lbl { font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .rm-gmb-right { text-align: right; }
+  .rm-gmb { display: grid; font-size: 10px; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .rm-gmb div { text-align: center; padding: 2px 0; border-left: 1px solid var(--gray-200); }
+  .rm-gmb div:first-child { border-left: none; }
+  .rm-gr { display: grid; grid-template-columns: 280px 1fr 90px; gap: 14px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--gray-100); font-size: 11px; }
+  .rm-gr:hover { background: var(--gray-50); }
+  .rm-gn { font-weight: 500; font-size: 11.5px; line-height: 1.35; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; color: var(--navy); }
+  .rm-gm { color: var(--gray-500); font-size: 10px; margin-top: 3px; }
+  .rm-gtr { position: relative; height: 14px; background: var(--gray-100); border-radius: 2px; }
+  .rm-gb { position: absolute; top: 0; bottom: 0; border-radius: 2px; }
+  .rm-gb.rm-est-ok { background: #3B6D11; }
+  .rm-gb.rm-est-cu { background: #854F0B; }
+  .rm-gb.rm-est-ep { background: #854F0B; }
+  .rm-gb.rm-est-pe { background: #3C3489; }
+  .rm-gb.rm-est-no { background: #888780; }
+  .rm-gb-tbd { position: absolute; left: 6px; top: 1px; font-size: 9px; color: var(--gray-500); }
+  .rm-gdr { font-size: 10px; color: var(--gray-500); text-align: right; font-variant-numeric: tabular-nums; }
+  .rm-lg { display: flex; gap: 16px; font-size: 11px; color: var(--gray-700); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--gray-200); flex-wrap: wrap; }
+  .rm-lg span { display: inline-flex; align-items: center; gap: 6px; }
+  .rm-lg i { width: 8px; height: 8px; border-radius: 1px; display: inline-block; }
+  .rm-lg i.rm-est-ok { background: #3B6D11; }
+  .rm-lg i.rm-est-cu { background: #854F0B; }
+  .rm-lg i.rm-est-pe { background: #3C3489; }
+  .rm-lg i.rm-est-no { background: #888780; }
+  @media (max-width: 720px) {
+    .rm-kgrid { grid-template-columns: repeat(2, 1fr); }
+    .rm-kgrid-3 { grid-template-columns: 1fr; }
+    .rm-gms, .rm-gr { grid-template-columns: 160px 1fr 70px; }
+  }
 
   /* Seguimiento OKR */
   .okr-track-wrap { background: var(--white); border: 1px solid var(--gray-200); padding: 18px 20px 20px; margin-top: 20px; }
@@ -2563,9 +2685,129 @@ var journey = {
 };
 
 // ============================================================
-// ROADMAP DE MEJORAS (curado)
+// ROADMAP OPERACIONAL 2026 · 84 iniciativas
+// Formato: [progKey, iniciativa, tipo, prio, responsable, estado, inicio, fin, area, objetivo, kr]
 // ============================================================
-var ROADMAP = [
+var RM_PROG_LABELS = {
+  E1: 'Publicación en Sitio Web',
+  E2: 'Foto Impel',
+  E3: 'Precio Venta',
+  E4: 'Inspección y Cierre',
+  E5: 'Gestión de Leads',
+  E6: 'Captación Digital'
+};
+
+// Filas ordenadas por flujo end-to-end: E6 → E5 → E4 → E3 → E1 → E2
+var ROADMAP_2026 = [
+  ['E6','Reformular título: \'Ingresa tus datos para recibir la tasación de tu auto\'','Tec/Marketing',1,'Constanza Araya','En proceso','2026-05-07','2026-05-18','Ingreso datos del auto','Eliminar fricción de entrada al formulario','Tasa abandono <40%'],
+  ['E6','Corregir bug de cambio de campo (formulario en estado inconsistente)','Tecnológica',1,'Frontend','No Iniciado','2026-05-11','2026-05-18','Ingreso datos del auto','Eliminar fricción de entrada al formulario','Tasa abandono <40%'],
+  ['E6','Unificar nomenclatura \'Datos del auto\' en todas las pantallas','Tecnológica',1,'Constanza Araya','En proceso','2026-05-07','2026-05-18','Ingreso datos del auto','Eliminar fricción de entrada al formulario','Tasa abandono <40%'],
+  ['E6','Pre-filtro de elegibilidad al inicio del flujo + modal de rechazo empático','Tecnológica',1,'Constanza A. / Frontend / Backend','No Iniciado','2026-05-11','2026-05-25','Ingreso datos del auto','Comunicar criterios de elegibilidad',''],
+  ['E6','UX del flujo con autocompletado por patente (Autofact ~$1.2M/mes)','Tecnológica',1,'Constanza A. / Frontend / Backend','En proceso','2026-05-07','2026-05-11','Ingreso datos del auto','Autocompletar datos del vehículo desde la patente',''],
+  ['E6','Buscador tipeable (typeahead) en selectores Marca, Modelo, Versión','Tecnológica',1,'Frontend','No Iniciado','2026-05-11','2026-05-18','Ingreso datos del auto','Autocompletar datos del vehículo desde la patente',''],
+  ['E6','Validación inteligente de kilometraje con mensaje inline no bloqueante','Tecnológica',1,'Frontend','No Iniciado','2026-05-18','2026-05-25','Ingreso datos del auto','Autocompletar datos del vehículo desde la patente',''],
+  ['E6','Diseño: teléfono integrado al formulario + rediseño completo del modal OTP','Tecnológica',1,'Constanza A. / Frontend / Backend','No Iniciado','2026-05-11','2026-05-25','Validación datos personales','Eliminar el modal OTP sorpresa','Drop-off 24% → 12%'],
+  ['E6','Diseño: campo RUT con autoformateo + experiencia de cliente reconocido','Tecnológica',2,'Constanza A. / Frontend / Backend','No Iniciado','2026-05-11','2026-06-01','Validación datos personales','Detectar clientes existentes y precompletar datos vía RUT',''],
+  ['E6','Reformular frase: \'buenas condiciones\' → \'El valor final se confirma tras la inspección\'','Tec/Marketing',1,'Constanza Araya','En proceso','2026-05-07','2026-05-18','Tasación','Generar confianza en el precio mostrado','Aceptación ≥50%'],
+  ['E6','Ícono ⓘ junto al precio con condiciones desplegables en contexto','Tecnológica',1,'Constanza Araya / Frontend','En proceso','2026-05-07','2026-05-18','Tasación','Generar confianza en el precio mostrado','Aceptación ≥50%'],
+  ['E6','Diferenciar visualmente Intercambio vs Inmediata por beneficio real','Tecnológica',1,'Constanza Araya / Frontend','No Iniciado','2026-05-11','2026-05-25','Tasación','Generar confianza en el precio mostrado','Aceptación ≥50%'],
+  ['E6','Diseño: componente de rango referencial de vehículos similares junto al precio','Tecnológica',3,'Constanza Araya / Backend','No Iniciado','2026-05-25','2026-06-08','Tasación','Dar contexto de mercado al precio ofrecido',''],
+  ['E6','Cambiar título \'Formulario de contacto\' → \'Agenda tu inspección\'','Tecnológica',2,'Constanza Araya','En proceso','2026-05-07','2026-05-18','Agendamiento Inspección','Eliminar datos duplicados y bug de región vacía','Drop-off 41,5% → 25%'],
+  ['E6','Corregir bug de persistencia: campo Región aparece vacío','Tecnológica',2,'Frontend','No Iniciado','2026-05-07','2026-05-11','Agendamiento Inspección','Eliminar datos duplicados y bug de región vacía','Drop-off 41,5% → 25%'],
+  ['E6','Datos de contacto como resumen de solo lectura con \'¿Editar datos?\'','Tecnológica',2,'Constanza Araya / Frontend','No Iniciado','2026-05-11','2026-05-18','Agendamiento Inspección','Eliminar datos duplicados y bug de región vacía','Drop-off 41,5% → 25%'],
+  ['E6','Calendario visual de fechas disponibles + chips de horario mobile-first','Tecnológica',2,'Constanza Araya / Frontend','No Iniciado','2026-05-25','2026-06-08','Agendamiento Inspección','Mejorar la selección de fecha, hora y sucursal en mobile',''],
+  ['E6','CTA \'Agenda tu inspección\' sticky visible en mobile sin scroll','Tecnológica',2,'Constanza Araya','No Iniciado','2026-05-11','2026-06-25','Agendamiento Inspección','Mejorar la selección de fecha, hora y sucursal en mobile',''],
+  ['E6','Reformular título: \'¡Tu inspección está agendada!\'','Tec/Marketing',2,'Constanza Araya / Frontend','En proceso','2026-05-07','2026-05-18','Confirmación','Aprovechar el momento de mayor intención del usuario','Conversión ≥70%'],
+  ['E6','Corregir bug de email cortado en pantalla de confirmación en mobile','Tecnológica',2,'Frontend','No Iniciado','2026-05-11','2026-05-18','Confirmación','Aprovechar el momento de mayor intención del usuario','Conversión ≥70%'],
+  ['E6','Nueva pantalla de confirmación + CTAs relevantes','Tecnológica',2,'Constanza Araya / Frontend','No Iniciado','2026-05-25','2026-06-08','Confirmación','Aprovechar el momento de mayor intención del usuario','Conversión ≥70%'],
+  ['E6','Confirmación automática WhatsApp + correo con botón reagendar/cancelar','Tecnológica',2,'Backend','No Iniciado','2026-05-25','2026-06-16','Confirmación','Activar comunicación post-agendamiento y retargeting',''],
+  ['E6','Flujo de retargeting (email + WhatsApp) para usuarios que tasaron sin agendar','Tecnológica',2,'Backend','No Iniciado','2026-05-25','2026-06-16','Confirmación','Activar comunicación post-agendamiento y retargeting',''],
+  ['E6','Ajustar posición del botón WhatsApp flotante para no tapar CTAs en mobile','Tecnológica',1,'Constanza Araya / Frontend','No Iniciado','2026-05-11','2026-05-18','Transversal','Corregir problemas de UX mobile presentes en todo el flujo','Drop-off mobile 54,25% → 34%'],
+  ['E6','Stepper adaptado a mobile: compacto y siempre visible en todos los pasos','Tecnológica',1,'Constanza Araya / Frontend','No Iniciado','2026-05-11','2026-06-01','Transversal','Corregir problemas de UX mobile presentes en todo el flujo','Drop-off mobile 54,25% → 34%'],
+  ['E5','Cadencias de contactos automáticos y por diferentes canales','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','COMPRA','Aumentar contactabilidad global','53% → 70%'],
+  ['E5','OTP en flujo inicial de Leads de compra (sólo números validados)','Estratégica',1,'Gestión de Leads','Pendiente','2026-03-23','2026-05-08','COMPRA','Aumentar contactabilidad global','53% → 70%'],
+  ['E5','Reasignación Express','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-06-12','COMPRA','Bajar tiempo de contacto global','8h → <6h'],
+  ['E5','Monitoreo de colas y atención de leads. Priorización categoría muy alta/alta','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-11','2026-05-29','COMPRA','Bajar tiempo de contacto global','8h → <6h'],
+  ['E5','Monitoreo de citas agendadas y atención (leads en etapa nuevo)','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-11','2026-05-29','COMPRA','Bajar tiempo de contacto global','8h → <6h'],
+  ['E5','Validación de citas de inspección desde el lead (seguimiento)','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-11','2026-05-29','COMPRA','Mejorar conversión lead → oportunidad','1.5% → 3%'],
+  ['E5','Análisis tipo cliente/auto que más concreta compra → Lead Scoring Predictivo','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-25','2026-06-05','COMPRA','Mejorar conversión lead → oportunidad','1.5% → 3%'],
+  ['E5','Capacitación y auditoría de protocolos en llamadas (inspección)','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','COMPRA','Mejorar conversión lead → oportunidad','1.5% → 3%'],
+  ['E5','Segmentación de tipos de leads y diseño por paneles para grupos de foco','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','VENTA','Bajar % descarte global','73% → 65%'],
+  ['E5','Etapa maduración de lead (no pese sobre atraso) para cierres más largos','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-25','2026-06-05','VENTA','Bajar % descarte global','73% → 65%'],
+  ['E5','Análisis perfil autos más vendidos / clientes que más compran (insights a Marketing)','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','VENTA','Bajar % descarte global','73% → 65%'],
+  ['E5','Flujos y cadencia exclusiva para leads Oro + VIP con VPP','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','VENTA','Bajar % descarte Oro + VIP con VPP','70% → 60%'],
+  ['E5','Asignación al asesor financiero directamente','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','VENTA','Bajar % descarte financiamiento','90% → 80%'],
+  ['E5','Abrir motivos de descarte para feedback a Marketing','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','VENTA','Bajar % descarte financiamiento','90% → 80%'],
+  ['E5','Expansión a todas las sucursales (2 zonas/sem) + rutina jefe + canal web','Estratégica',1,'Gestión de Leads','Pendiente','2026-05-18','2026-05-29','VENTA','Aumentar tasa citas venta completadas','29% → 35%'],
+  ['E5','Automatización del flujo de confirmación y recordatorio de cita','Estratégica',1,'Gestión de Leads','Pendiente',null,null,'VENTA','Aumentar tasa citas venta confirmadas','Baseline pendiente'],
+  ['E4','Validación comercial Mobile y responsiva','Tecnológica',1,'Por asignar','No Iniciado','2026-05-15','2026-06-15','','',''],
+  ['E4','Separar inspección de tasación','Tecnológica',1,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Mejoras proceso de creación de fichas en BO','Tecnológica',2,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Renovación automática Autofact','Tecnológica',2,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Revisión automática de errores en datos Llaima','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Argumentos automáticos de precio entregado','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Obtención automática de Dicom','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Costo por deméritos manual','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E4','Revisión y actualización puntos inspección y deméritos','Tecnológica',3,'Víctor Araya','En curso','2026-05-01','2026-05-15','','',''],
+  ['E4','Proceso de cuadratura automático','Tecnológica',3,'CDN','No Iniciado',null,null,'','',''],
+  ['E3','Incorporar campo en CRM para Tasadores (Pricing)','Tecnológica',1,'Bárbara Colle','En curso','2026-05-01','2026-05-31','','',''],
+  ['E3','Automatizar el ingreso a Quiter en Compras','Tecnológica',1,'Bárbara Colle / Jorge Olmedo / Daniel Abarca','No Iniciado',null,null,'','',''],
+  ['E3','Extender integración VPP para todos los concesionarios','Tecnológica',1,'Bárbara Colle / Jorge Olmedo / Daniel Abarca','No Iniciado',null,null,'','',''],
+  ['E3','Mejorar integración actual VPP','Tecnológica',1,'Bárbara Colle / Jorge Olmedo / Daniel Abarca','No Iniciado','2026-05-15','2026-06-15','','',''],
+  ['E3','Reporte diario del SLA (Facturación → Quiter)','Proceso',1,'Raúl Olivares','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E3','Workflow estructurado con motivo obligatorio','Proceso',2,'Raúl Olivares','No Iniciado','2026-06-15','2026-07-15','','',''],
+  ['E3','Dashboard de movimientos de precio por unidad','Proceso',2,'Manuel Chávez','No Iniciado','2026-05-15','2026-06-15','','',''],
+  ['E3','Reporte de dispersión tasación web vs. precio toma','Proceso',2,'Raúl Olivares','No Iniciado','2026-05-15','2026-06-15','','',''],
+  ['E3','Aviso cuando la BBDD se cierra (12:30)','Tecnológica',1,'Jorge Olmedo','No Iniciado',null,null,'','',''],
+  ['E3','Disminuir tiempo cambios precio Quiter → Llaima','Tecnológica',1,'Jorge Olmedo / Daniel Abarca','No Iniciado',null,null,'','',''],
+  ['E3','Precio mercado interno Americar (Scrapping)','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E3','Bono aporte al pie en Llaima','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E3','Precio cambia a $1 cuando hay devoluciones','Tecnológica',3,'Por asignar','No Iniciado',null,null,'','',''],
+  ['E1','Publicar unidades en Acopio','Proceso',1,'Diego Villegas','Ok','2026-05-01','2026-05-31','','',''],
+  ['E1','SLA máximo Quiter → publicación (<24-48h)','Proceso',1,'Raúl Olivares','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E1','Actualización de precios de Autos Publicados con errores','Tecnológica',1,'Jorge Olmedo','No Iniciado',null,null,'','',''],
+  ['E1','Bloqueo de publicación sin campos mínimos','Proceso',1,'Javiera Jerez / Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E1','Reporte diario de brecha disponibles vs. publicadas','Proceso',1,'Génesis Barrera','Ok','2026-05-01','2026-05-15','','',''],
+  ['E1','Cambio de estado en Gestpark de \'Previsión\' a \'Stock\'','Tecnológica',2,'Bárbara Colle','No Iniciado','2026-06-15','2026-07-15','','',''],
+  ['E1','Liberación automática de reservas fantasma','Tecnológica',1,'Daniel Abarca','En curso','2026-04-15','2026-05-15','','',''],
+  ['E1','Regla en Llaima: liberación a 48h sin avance','Tecnológica',1,'Daniel Abarca','En curso','2026-05-15','2026-05-31','','',''],
+  ['E1','Alerta al asesor antes del vencimiento','Tecnológica',1,'Daniel Abarca','En curso','2026-05-15','2026-05-31','','',''],
+  ['E1','Diferenciar reserva activa vs. fantasma (>30 días)','Tecnológica',1,'Daniel Abarca','En curso','2026-05-15','2026-05-31','','',''],
+  ['E2','Foto final in-house en inspección mecánica','Tecnológica',1,'Víctor Araya','No Iniciado','2026-05-15','2026-07-15','','',''],
+  ['E2','SLA transitorio foto tomada → Impel <24h','Proceso',2,'Javiera Jerez / Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E2','Target mínimo 80% por zona hasta completar el roll-out','Proceso',2,'Javiera Jerez / Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E2','Priorización de stock premium durante transición','Proceso',2,'Javiera Jerez / Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E2','Ingresar a Llaima todas las unidades','Proceso',2,'Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E2','Priorización de stock sin fotografía','Proceso',2,'Javiera Jerez / Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','',''],
+  ['E2','Alerta cuando backlog >20% del publicado','Proceso',2,'Javiera Jerez / Diego Villegas','No Iniciado','2026-05-15','2026-05-31','','','']
+];
+
+var ROADMAP = ROADMAP_2026; // alias para compatibilidad con código existente
+
+// Botones de filtro ordenados por flujo end-to-end (Captación → ... → Publicación y Fotos)
+var ROADMAP_2026_GROUPS = [
+  { id:'all', label:'Vista global',           filter:function(){ return true; } },
+  { id:'cd',  label:'Captación Digital',      filter:function(r){ return r[0]==='E6'; } },
+  { id:'le',  label:'Gestión de Leads',       filter:function(r){ return r[0]==='E5'; } },
+  { id:'in',  label:'Inspección y Cierre',    filter:function(r){ return r[0]==='E4'; } },
+  { id:'pr',  label:'Asignación Precio Venta',filter:function(r){ return r[0]==='E3'; } },
+  { id:'pf',  label:'Publicación y Fotos',    filter:function(r){ return r[0]==='E1' || r[0]==='E2'; } }
+];
+
+function rmProg(r){ return RM_PROG_LABELS[r[0]] || r[0]; }
+function rmIniciativa(r){ return r[1]; }
+function rmTipo(r){ return r[2]; }
+function rmPrio(r){ return r[3]; }
+function rmResp(r){ return r[4]; }
+function rmEstado(r){ return r[5]; }
+function rmInicio(r){ return r[6]; }
+function rmFin(r){ return r[7]; }
+function rmArea(r){ return r[8]; }
+function rmObj(r){ return r[9]; }
+function rmKR(r){ return r[10]; }
+
+// Bloque ROADMAP legacy (no usado, conservado solo por referencia histórica)
+var ROADMAP_LEGACY = [
   { iniciativa: "Generar la foto final (cabina virtual 360) durante la inspección mecánica — desarrollo in-house",
     description: "Al terminar la inspección la unidad ya tiene su foto lista para publicarse. Elimina Tier 3 (foto de inspección) y Tier 4 (sin foto) del catálogo. Absorbe: SLAs de foto, backlog, escalamiento de cabina virtual 360, intervención por sucursal, dashboards de backlog, auditoría diaria, ranking por sucursal y targets de tier.",
     ahorro: "$4,2M/mes · $50,4M/año",
@@ -2843,40 +3085,33 @@ function renderOKRSeguimientoSlide(i) {
 }
 
 // ============================================================
-// PLAN MENSUAL · iniciativas concretas por mes y eje
+// PLAN MENSUAL · derivado del Roadmap 2026 (iniciativas con inicio en mayo)
 // ============================================================
-var PLAN_MENSUAL = [
-  {
+function buildPlanMensualMayo() {
+  var matches = [];
+  for (var i = 0; i < ROADMAP_2026.length; i++) {
+    var inicio = ROADMAP_2026[i][6];
+    if (inicio && inicio.indexOf('2026-05') === 0) matches.push(ROADMAP_2026[i]);
+  }
+  // Agrupar por programa, en el orden definido en RM_PROG_LABELS
+  var grupos = [];
+  var orden = ['E1','E2','E3','E4','E5','E6'];
+  for (var p = 0; p < orden.length; p++) {
+    var pk = orden[p];
+    var ini = matches.filter(function(r){ return r[0] === pk; });
+    if (!ini.length) continue;
+    grupos.push({ progKey: pk, label: RM_PROG_LABELS[pk], iniciativas: ini });
+  }
+  return {
     mes: '2026-05',
     label: 'Iniciativas · Mayo 2026',
-    sub: 'Primer ciclo de ejecución del plan · acciones comprometidas para mayo',
-    grupos: [
-      { macro: 'compra', label: 'Eje Compra', iniciativas: [
-        { txt: 'Habilitar patente (con solución alternativa basada en Patentamiento y clientes)', fecha: 'Por definir' },
-        { txt: 'Habilitar RUT', fecha: 'Por definir' },
-        { txt: 'Pre-seleccionar la opción inmediata en la tasación para que el botón de agendamiento esté visible', fecha: 'Por definir' },
-        { txt: 'Alinear región y ciudad con las sucursales reales en el flujo de agendamiento', fecha: 'Por definir' },
-        { txt: 'Mostrar mensaje aclarativo si el cliente tasa en una región sin cobertura', fecha: 'Por definir' },
-        { txt: 'Confirmación y recordatorio de cita de agendamiento', fecha: 'Por definir' },
-        { txt: 'Implementación de consulta dealernet de pensión de alimentos para compras', nota: 'No inmediata', fecha: 'Por definir' },
-        { txt: 'Analizar cambio de número en llamada', fecha: 'Por definir' }
-      ]},
-      { macro: 'preparación', label: 'Eje Preparación', iniciativas: [
-        { txt: 'Publicación de unidades reservadas', nota: 'No requiere desarrollo', fecha: 'Por definir' },
-        { txt: 'Foto en la inspección con solución de Photo Studio IA', fecha: 'Por definir' }
-      ]},
-      { macro: 'venta', label: 'Eje Venta', iniciativas: [
-        { txt: 'Propuesta para destacar atributos de Clicar en la ficha del auto', nota: 'Hasta 12 meses de cobertura mecánica · inspección de 200 atributos · entrega inmediata', fecha: 'Por definir' },
-        { txt: 'En mobile subir el catálogo y eliminar banner + contenido de concesionarios; habilitar buscador libre arriba', fecha: 'Por definir' },
-        { txt: 'Etiquetas diferenciadoras en la ficha', nota: 'Único dueño · mantenciones en marca · garantía vigente', fecha: 'Por definir' },
-        { txt: 'Sacar la categoría de auto (SUV, Pickup, etc.) y agregar la versión del auto en la ficha', fecha: 'Por definir' },
-        { txt: 'Panel de seguimiento para leads con VPP, financiamiento y segmento de valor + scoring de leads', fecha: 'Por definir' },
-        { txt: 'Tasación sin cierre del journey', fecha: 'Por definir' },
-        { txt: 'Campo de bonificación adicional por segmento de valor en VPP y cola de atención prioritaria', fecha: 'Por definir' }
-      ]}
-    ]
-  }
-];
+    sub: 'Primer ciclo de ejecución · iniciativas del Roadmap 2026 con fecha de inicio en mayo',
+    grupos: grupos,
+    total: matches.length
+  };
+}
+var PLAN_MENSUAL_MAYO = buildPlanMensualMayo();
+var PLAN_MENSUAL = [PLAN_MENSUAL_MAYO]; // alias para compatibilidad
 
 // ============================================================
 // SEGUIMIENTO OKR · valores por mes para cada KR
@@ -3118,124 +3353,93 @@ function renderControlSemanalSlide(i) {
 }
 
 function renderRoadmapSlide(i) {
-  var total = ROADMAP.length;
-  var porMacro = { compra: 0, "preparación": 0 };
-  var porPrioridad = { alta: 0, media: 0, baja: 0 };
-  for (var k = 0; k < ROADMAP.length; k++) {
-    porMacro[ROADMAP[k].macro] = (porMacro[ROADMAP[k].macro] || 0) + 1;
-    porPrioridad[ROADMAP[k].priority] = (porPrioridad[ROADMAP[k].priority] || 0) + 1;
-  }
-  var transCount = 0;
-  for (var tc = 0; tc < ROADMAP.length; tc++) if (ROADMAP[tc].transformational) transCount++;
-  var rowsHtml = '';
-  for (var r = 0; r < ROADMAP.length; r++) {
-    var it = ROADMAP[r];
-    var macroLabel = (MACRO_META[it.macro] && MACRO_META[it.macro].title) || it.macro;
-    var estadoClass = 'estado-' + it.estado.replace(/ /g,'-');
-    var estadoLabel = it.estado.charAt(0).toUpperCase() + it.estado.slice(1);
-    var respClass = (it.responsable === 'Por asignar') ? ' roadmap-placeholder' : '';
-    var fechaClass = (it.fecha === 'Por definir') ? ' roadmap-placeholder' : '';
-    var iniciativaHtml = (r+1) + '. ' + it.iniciativa;
-    if (it.description) {
-      iniciativaHtml += '<div class="roadmap-description">' + it.description + '</div>';
-    }
-    var impactoBadge = it.transformational
-      ? '<span class="roadmap-badge transformational-badge">Transformacional</span>'
-      : '<span class="roadmap-badge priority-' + it.priority + '">' + it.priority + '</span>';
-    var ahorroHtml = it.ahorro
-      ? '<span class="roadmap-savings">' + it.ahorro + '</span>'
-      : '<span class="roadmap-placeholder">—</span>';
-    var escMacro = (it.macro || '').replace(/"/g, '&quot;');
-    var escStage = (it.stage || '').replace(/"/g, '&quot;');
-    var escSubstep = (it.substep || '').replace(/"/g, '&quot;');
-    var stageCell = '<button type="button" class="roadmap-stage-link" data-rm-macro="' + escMacro + '" data-rm-stage="' + escStage + '" data-rm-substep="' + escSubstep + '" title="Ver datos que justifican esta iniciativa"><strong>' + macroLabel + '</strong><br/>' + it.stage + ' → ' + it.substep + '</button>';
-    rowsHtml += '<tr data-idx="' + r + '">' +
-      '<td class="col-iniciativa">' + iniciativaHtml + '</td>' +
-      '<td class="col-stage">' + stageCell + '</td>' +
-      '<td>' + impactoBadge + '</td>' +
-      '<td class="col-ahorro">' + ahorroHtml + '</td>' +
-      '<td class="' + respClass + '">' + it.responsable + '</td>' +
-      '<td class="' + fechaClass + '">' + it.fecha + '</td>' +
-      '<td><span class="roadmap-badge ' + estadoClass + '">' + estadoLabel + '</span></td>' +
-    '</tr>';
-  }
-  // Plan Mensual HTML
-  var planHtml = '';
-  for (var pm = 0; pm < PLAN_MENSUAL.length; pm++) {
-    var mes = PLAN_MENSUAL[pm];
-    var totalMes = 0;
-    for (var gg = 0; gg < mes.grupos.length; gg++) totalMes += mes.grupos[gg].iniciativas.length;
-    var gruposHtml = '';
-    for (var g = 0; g < mes.grupos.length; g++) {
-      var gr = mes.grupos[g];
-      var iniHtml = '';
-      for (var ii = 0; ii < gr.iniciativas.length; ii++) {
-        var ini = gr.iniciativas[ii];
-        var notaHtml = ini.nota ? '<div class="plan-iniciativa-nota">' + ini.nota + '</div>' : '';
-        var fechaText = ini.fecha || 'Por definir';
-        var fechaCls = (fechaText === 'Por definir') ? ' plan-iniciativa-fecha-pending' : '';
-        var fechaHtml = '<div class="plan-iniciativa-fecha' + fechaCls + '"><span class="plan-fecha-icon">📅</span><span class="plan-fecha-label">Implementación:</span> ' + fechaText + '</div>';
-        iniHtml += '<div class="plan-iniciativa">' +
-          '<span class="plan-iniciativa-num">' + (ii + 1) + '</span>' +
-          '<div class="plan-iniciativa-body">' +
-            '<div class="plan-iniciativa-txt">' + ini.txt + '</div>' +
-            notaHtml +
-            fechaHtml +
-          '</div>' +
-        '</div>';
+  var total = ROADMAP_2026.length;
+
+  // Plan Mensual (Mayo 2026) — derivado de ROADMAP_2026
+  var planMayo = PLAN_MENSUAL_MAYO;
+  var planTotal = planMayo.total;
+  var planGruposHtml = '';
+  for (var g = 0; g < planMayo.grupos.length; g++) {
+    var gr = planMayo.grupos[g];
+    var iniHtml = '';
+    for (var ii = 0; ii < gr.iniciativas.length; ii++) {
+      var rrr = gr.iniciativas[ii];
+      var areaT = rmArea(rrr);
+      var areaBadge = '';
+      if (areaT) {
+        var areaCls = areaT === 'COMPRA' ? 'rm-area-compra' : areaT === 'VENTA' ? 'rm-area-venta' : 'rm-area-sub';
+        areaBadge = '<span class="rm-mini-badge ' + areaCls + '">' + escHtml(areaT) + '</span>';
       }
-      gruposHtml += '<div class="plan-grupo ' + gr.macro + '">' +
-        '<div class="plan-grupo-label"><span>' + gr.label + '</span><span class="plan-grupo-count">' + gr.iniciativas.length + '</span></div>' +
-        '<div class="plan-iniciativas">' + iniHtml + '</div>' +
+      var prioN = rmPrio(rrr);
+      var prioBadge = '<span class="rm-mini-badge rm-prio-p' + prioN + '">P' + prioN + '</span>';
+      var estadoT = rmEstado(rrr);
+      var estadoBadge = '<span class="rm-mini-badge rm-est-' + estadoCss(estadoT) + '">' + escHtml(estadoT) + '</span>';
+      var inicio = rmInicio(rrr) ? rmFmtDate(rmInicio(rrr)) : 'TBD';
+      var fin    = rmFin(rrr)    ? rmFmtDate(rmFin(rrr))    : 'TBD';
+      var fechaTxt = inicio + ' → ' + fin;
+      var fechaCls = (rmInicio(rrr) && rmFin(rrr)) ? '' : ' plan-iniciativa-fecha-pending';
+      iniHtml += '<div class="plan-iniciativa">' +
+        '<span class="plan-iniciativa-num">' + (ii + 1) + '</span>' +
+        '<div class="plan-iniciativa-body">' +
+          '<div class="plan-iniciativa-txt">' + escHtml(rmIniciativa(rrr)) + '</div>' +
+          '<div class="plan-iniciativa-meta">' + areaBadge + prioBadge + estadoBadge +
+            '<span class="plan-iniciativa-resp">' + escHtml(rmResp(rrr)) + '</span>' +
+          '</div>' +
+          '<div class="plan-iniciativa-fecha' + fechaCls + '">' +
+            '<span class="plan-fecha-icon">📅</span><span class="plan-fecha-label">Periodo:</span> ' + fechaTxt +
+          '</div>' +
+        '</div>' +
       '</div>';
     }
-    planHtml += '<div class="plan-mes-card">' +
-      '<div class="plan-mes-head">' +
-        '<div>' +
-          '<div class="plan-mes-eyebrow">Plan de ejecución del mes</div>' +
-          '<div class="plan-mes-title">' + mes.label + '</div>' +
-          '<div class="plan-mes-sub">' + mes.sub + '</div>' +
-        '</div>' +
-        '<div class="plan-mes-count">' + totalMes + ' iniciativas comprometidas</div>' +
-      '</div>' +
-      '<div class="plan-grupos-grid">' + gruposHtml + '</div>' +
+    planGruposHtml += '<div class="plan-grupo">' +
+      '<div class="plan-grupo-label"><span>' + gr.label + '</span><span class="plan-grupo-count">' + gr.iniciativas.length + '</span></div>' +
+      '<div class="plan-iniciativas">' + iniHtml + '</div>' +
     '</div>';
   }
+  var planHtml = '<div class="plan-mes-card">' +
+    '<div class="plan-mes-head">' +
+      '<div>' +
+        '<div class="plan-mes-eyebrow">Plan de ejecución del mes</div>' +
+        '<div class="plan-mes-title">' + planMayo.label + '</div>' +
+        '<div class="plan-mes-sub">' + planMayo.sub + '</div>' +
+      '</div>' +
+      '<div class="plan-mes-count">' + planTotal + ' iniciativas comprometidas</div>' +
+    '</div>' +
+    '<div class="plan-grupos-grid">' + planGruposHtml + '</div>' +
+  '</div>';
+
+  // Programa filter bar
+  var progBar = '<div class="rm-program-bar">';
+  for (var p = 0; p < ROADMAP_2026_GROUPS.length; p++) {
+    var grp = ROADMAP_2026_GROUPS[p];
+    var cnt = ROADMAP_2026.filter(grp.filter).length;
+    progBar += '<button type="button" class="rm-prog-btn' + (p===0?' on':'') + '" data-rm-prog="' + grp.id + '">' +
+      escHtml(grp.label) + ' <span class="rm-ct">' + cnt + '</span>' +
+    '</button>';
+  }
+  progBar += '</div>';
 
   return '<div class="slide exec-summary" data-slide="' + i + '">' +
     '<div class="roadmap-hero">' +
-      '<div class="eyebrow">Roadmap de mejoras</div>' +
-      '<h1>🗺️ Roadmap de iniciativas priorizadas</h1>' +
-      '<p>Vista global de todas las iniciativas priorizadas y plan mensual de ejecución. Cambia entre las pestañas para ver el detalle según el corte que necesites.</p>' +
+      '<div class="eyebrow">Roadmap operacional 2026</div>' +
+      '<h1>🗺️ Portafolio de iniciativas priorizadas</h1>' +
+      '<p>Período Mar – Jul 2026 · <strong>' + total + ' iniciativas activas</strong>. Cambia de programa, sub-tab y prioridad para drilldown. La pestaña <strong>Plan mensual · Mayo</strong> agrupa las iniciativas con fecha de inicio en mayo.</p>' +
     '</div>' +
     '<div class="roadmap-view-tabs">' +
       '<button type="button" class="roadmap-view-tab active" data-rm-view="global">Vista global</button>' +
-      '<button type="button" class="roadmap-view-tab" data-rm-view="mensual">Plan mensual</button>' +
+      '<button type="button" class="roadmap-view-tab" data-rm-view="mensual">Plan mensual · Mayo</button>' +
     '</div>' +
     '<div class="roadmap-view-pane active" data-rm-pane="global">' +
-      '<div class="roadmap-filters">' +
-        '<span class="filter-label">Filtrar:</span>' +
-        '<button class="roadmap-filter active" data-filter-type="all">Todas (' + total + ')</button>' +
-        '<button class="roadmap-filter" data-filter-type="macro" data-filter-value="compra">Compra (' + (porMacro.compra || 0) + ')</button>' +
-        '<button class="roadmap-filter" data-filter-type="macro" data-filter-value="preparación">Preparación (' + (porMacro["preparación"] || 0) + ')</button>' +
-        '<button class="roadmap-filter" data-filter-type="impacto" data-filter-value="alta">Alto impacto (' + (porPrioridad.alta || 0) + ')</button>' +
-        '<button class="roadmap-filter" data-filter-type="impacto" data-filter-value="media">Impacto medio (' + (porPrioridad.media || 0) + ')</button>' +
-        '<button class="roadmap-download" id="roadmap-download-btn" type="button">Descargar Excel</button>' +
+      progBar +
+      '<div class="rm-banner" data-rm-banner></div>' +
+      '<div class="rm-subtabs">' +
+        '<button type="button" class="rm-subtab on" data-rm-subtab="d">Resumen ejecutivo</button>' +
+        '<button type="button" class="rm-subtab" data-rm-subtab="l">Detalle</button>' +
+        '<button type="button" class="rm-subtab" data-rm-subtab="g">Cronograma</button>' +
       '</div>' +
-      '<div class="roadmap-table-wrap">' +
-        '<table class="roadmap-table">' +
-          '<thead><tr>' +
-            '<th>Iniciativa</th>' +
-            '<th>Eje / Proceso</th>' +
-            '<th>Impacto</th>' +
-            '<th>Ahorro estimado</th>' +
-            '<th>Responsable</th>' +
-            '<th>Fecha comprometida</th>' +
-            '<th>Estado</th>' +
-          '</tr></thead>' +
-          '<tbody>' + rowsHtml + '</tbody>' +
-        '</table>' +
-      '</div>' +
+      '<div class="rm-pane on" data-rm-subpane="d"><div data-rm-render="resumen"></div></div>' +
+      '<div class="rm-pane" data-rm-subpane="l"><div data-rm-render="detalle"></div></div>' +
+      '<div class="rm-pane" data-rm-subpane="g"><div data-rm-render="cronograma"></div></div>' +
     '</div>' +
     '<div class="roadmap-view-pane" data-rm-pane="mensual">' +
       planHtml +
@@ -3243,104 +3447,398 @@ function renderRoadmapSlide(i) {
   '</div>';
 }
 
-var roadmapFilters = { macros: [], impactos: [], transformational: false };
-
-function applyRoadmapFilters() {
-  var anyActive = roadmapFilters.macros.length > 0 || roadmapFilters.impactos.length > 0 || roadmapFilters.transformational;
-  var rows = document.querySelectorAll('.roadmap-table tbody tr');
-  for (var rix = 0; rix < rows.length; rix++) {
-    var idx = parseInt(rows[rix].getAttribute('data-idx'));
-    var it = ROADMAP[idx];
-    if (!it) continue;
-    var show;
-    if (!anyActive) {
-      show = true;
-    } else {
-      show = false;
-      if (roadmapFilters.macros.length > 0 && roadmapFilters.macros.indexOf(it.macro) >= 0) show = true;
-      if (roadmapFilters.impactos.length > 0 && roadmapFilters.impactos.indexOf(it.priority) >= 0) show = true;
-      if (roadmapFilters.transformational && it.transformational === true) show = true;
-    }
-    rows[rix].style.display = show ? '' : 'none';
-  }
-  var isAll = !anyActive;
-  var btns = document.querySelectorAll('.roadmap-filter');
-  for (var bi = 0; bi < btns.length; bi++) {
-    var btn = btns[bi];
-    var type = btn.getAttribute('data-filter-type');
-    var val = btn.getAttribute('data-filter-value');
-    var active = false;
-    if (type === 'all') active = isAll;
-    else if (type === 'macro') active = roadmapFilters.macros.indexOf(val) >= 0;
-    else if (type === 'impacto') active = roadmapFilters.impactos.indexOf(val) >= 0;
-    else if (type === 'transformational') active = roadmapFilters.transformational;
-    if (active) btn.classList.add('active'); else btn.classList.remove('active');
-  }
+// ============================================================
+// Roadmap 2026 · helpers de render
+// ============================================================
+function estadoCss(e) {
+  if (e === 'Ok') return 'ok';
+  if (e === 'En curso') return 'cu';
+  if (e === 'En proceso') return 'ep';
+  if (e === 'Pendiente') return 'pe';
+  return 'no';
 }
+function tipoCss(t) {
+  if (t === 'Tecnológica') return 'tec';
+  if (t === 'Proceso') return 'proc';
+  if (t === 'Estratégica') return 'estr';
+  if (t === 'Tec/Marketing') return 'tecmkt';
+  return 'proc';
+}
+function rmFmtDate(d) {
+  if (!d) return '—';
+  var dt = new Date(d);
+  if (isNaN(dt.getTime())) return d;
+  try { return dt.toLocaleDateString('es-CL',{day:'2-digit',month:'short'}); } catch(e) { return d; }
+}
+
+var RM_GANTT_START = new Date('2026-03-01');
+var RM_GANTT_END   = new Date('2026-07-31');
+var RM_GANTT_MESES = ['Mar','Abr','May','Jun','Jul'];
+function rmGanttPos(d) {
+  if (!d) return null;
+  var dt = new Date(d);
+  if (isNaN(dt.getTime())) return null;
+  var totalDays = (RM_GANTT_END - RM_GANTT_START) / 86400000;
+  var dayDiff = (dt - RM_GANTT_START) / 86400000;
+  return Math.max(0, Math.min(100, dayDiff / totalDays * 100));
+}
+
+function buildRmNarrative(scoped) {
+  var t = scoped.length;
+  if (t === 0) return 'Sin iniciativas en esta vista.';
+  var ok = scoped.filter(function(r){ return rmEstado(r)==='Ok'; }).length;
+  var en = scoped.filter(function(r){ return rmEstado(r)==='En curso' || rmEstado(r)==='En proceso'; }).length;
+  var pe = scoped.filter(function(r){ return rmEstado(r)==='Pendiente'; }).length;
+  var p1 = scoped.filter(function(r){ return rmPrio(r)===1; }).length;
+  var noStart = scoped.filter(function(r){ return !rmInicio(r); }).length;
+  var av = t ? Math.round((ok + en*0.5)/t*100) : 0;
+  var parts = ['<b>' + t + ' iniciativas</b> en seguimiento'];
+  if (p1 > 0) parts.push(p1 + ' de prioridad alta');
+  if (av > 0) parts.push(av + '% de avance ponderado');
+  var detail = '';
+  if (en > 0) detail += ' ' + en + ' en ejecución activa.';
+  if (pe > 0) detail += ' ' + pe + ' en estado pendiente de arranque.';
+  if (noStart > 0) detail += ' ' + noStart + ' sin fecha de inicio definida (TBD).';
+  if (ok > 0 && t <= 20) detail += ' ' + ok + ' completada' + (ok>1?'s':'') + '.';
+  return parts.join(' · ') + '.' + detail;
+}
+
+function renderRmResumen(scoped, st) {
+  var t = scoped.length;
+  if (t === 0) return '<div class="rm-empty">Sin iniciativas en esta vista.</div>';
+  var tec = scoped.filter(function(r){ return rmTipo(r)==='Tecnológica' || rmTipo(r)==='Tec/Marketing'; }).length;
+  var pr  = scoped.filter(function(r){ return rmTipo(r)==='Proceso'; }).length;
+  var p1  = scoped.filter(function(r){ return rmPrio(r)===1; }).length;
+  var ok  = scoped.filter(function(r){ return rmEstado(r)==='Ok'; }).length;
+  var en  = scoped.filter(function(r){ return rmEstado(r)==='En curso' || rmEstado(r)==='En proceso'; }).length;
+  var av  = t ? Math.round((ok + en*0.5)/t*100) : 0;
+  var noStart = scoped.filter(function(r){ return !rmInicio(r); }).length;
+  var html = '<div class="rm-kgrid">';
+  html += '<div class="rm-k"><div class="rm-kl">Total iniciativas</div><div class="rm-kv">' + t + '</div><div class="rm-ktrend rm-tn">En portafolio</div></div>';
+  html += '<div class="rm-k' + (p1>0?' rm-k-alert':'') + '"><div class="rm-kl">Prioridad alta</div><div class="rm-kv">' + p1 + '</div><div class="rm-ktrend ' + (p1>0?'rm-tdn':'rm-tn') + '">' + Math.round(p1/t*100) + '% del total</div></div>';
+  html += '<div class="rm-k"><div class="rm-kl">Avance ponderado</div><div class="rm-kv">' + av + '<span class="rm-un">%</span></div><div class="rm-ktrend ' + (av>=50?'rm-tup':av>=25?'rm-tn':'rm-tdn') + '">' + ok + ' completadas, ' + en + ' activas</div></div>';
+  html += '<div class="rm-k"><div class="rm-kl">Sin fecha definida</div><div class="rm-kv">' + noStart + '</div><div class="rm-ktrend ' + (noStart>0?'rm-tdn':'rm-tup') + '">' + (noStart>0?'Requieren plan':'Todas calendarizadas') + '</div></div>';
+  html += '</div>';
+
+  var isGlobal = st === 'all';
+  var isLeads  = st === 'le';
+  var isCaptacion = st === 'cd';
+
+  if (isGlobal) {
+    html += '<div class="rm-section-tt">Distribución por programa</div>';
+    html += '<div class="rm-portfolio">';
+    for (var pi = 0; pi < ROADMAP_2026_GROUPS.length; pi++) {
+      var s2 = ROADMAP_2026_GROUPS[pi];
+      if (s2.id === 'all') continue;
+      var sx = ROADMAP_2026.filter(s2.filter);
+      if (!sx.length) continue;
+      var sok = sx.filter(function(r){ return rmEstado(r)==='Ok'; }).length;
+      var sen = sx.filter(function(r){ return rmEstado(r)==='En curso' || rmEstado(r)==='En proceso'; }).length;
+      var sp1 = sx.filter(function(r){ return rmPrio(r)===1; }).length;
+      var sav = Math.round((sok + sen*0.5)/sx.length*100);
+      html += '<div class="rm-pf-card" data-rm-prog-card="' + escHtml(s2.id) + '" role="button" tabindex="0" title="Ver iniciativas de ' + escHtml(s2.label) + '">' +
+        '<div class="rm-pf-hd">' +
+          '<div><div class="rm-pf-name">' + escHtml(s2.label) + '</div><div class="rm-pf-sub">' + sx.length + ' iniciativas · ' + sp1 + ' P1</div></div>' +
+          '<div class="rm-pf-pct">' + sav + '<span class="rm-un">%</span></div>' +
+        '</div>' +
+        '<div class="rm-pf-bar"><div class="rm-pf-bar-fill" style="width:' + sav + '%"></div></div>' +
+        '<div class="rm-pf-stats"><span><b>' + sok + '</b> Ok</span><span><b>' + sen + '</b> en curso</span><span><b>' + (sx.length - sok - sen) + '</b> pendientes</span></div>' +
+      '</div>';
+    }
+    html += '</div>';
+  } else if (isLeads) {
+    html += '<div class="rm-section-tt">Distribución por área</div>';
+    html += '<div class="rm-portfolio">';
+    var areas = [['COMPRA','rm-area-compra'],['VENTA','rm-area-venta']];
+    for (var ai = 0; ai < areas.length; ai++) {
+      var ar = scoped.filter(function(r){ return rmArea(r) === areas[ai][0]; });
+      if (!ar.length) continue;
+      var aok = ar.filter(function(r){ return rmEstado(r)==='Ok'; }).length;
+      var aen = ar.filter(function(r){ return rmEstado(r)==='En curso' || rmEstado(r)==='En proceso'; }).length;
+      var aav = ar.length ? Math.round((aok + aen*0.5)/ar.length*100) : 0;
+      var apend = ar.filter(function(r){ return rmEstado(r)==='Pendiente'; }).length;
+      html += '<div class="rm-pf-card ' + areas[ai][1] + '" data-rm-fs-card="' + escHtml(areas[ai][0]) + '" role="button" tabindex="0" title="Filtrar por ' + escHtml(areas[ai][0]) + '">' +
+        '<div class="rm-pf-hd">' +
+          '<div><div class="rm-pf-name">' + areas[ai][0] + '</div><div class="rm-pf-sub">' + ar.length + ' iniciativas estratégicas</div></div>' +
+          '<div class="rm-pf-pct">' + aav + '<span class="rm-un">%</span></div>' +
+        '</div>' +
+        '<div class="rm-pf-bar"><div class="rm-pf-bar-fill" style="width:' + aav + '%"></div></div>' +
+        '<div class="rm-pf-stats"><span><b>' + aen + '</b> en curso</span><span><b>' + apend + '</b> pendientes</span></div>' +
+      '</div>';
+    }
+    html += '</div>';
+  } else if (isCaptacion) {
+    var subSet = {};
+    for (var ci = 0; ci < scoped.length; ci++) { var a = rmArea(scoped[ci]); if (a) subSet[a] = true; }
+    var subs = Object.keys(subSet);
+    html += '<div class="rm-section-tt">Distribución por sub-etapa del funnel</div>';
+    html += '<div class="rm-portfolio">';
+    for (var si = 0; si < subs.length; si++) {
+      var sub = subs[si];
+      var arr = scoped.filter(function(r){ return rmArea(r) === sub; });
+      var aok2 = arr.filter(function(r){ return rmEstado(r)==='Ok'; }).length;
+      var aen2 = arr.filter(function(r){ return rmEstado(r)==='En curso' || rmEstado(r)==='En proceso'; }).length;
+      var ap1  = arr.filter(function(r){ return rmPrio(r)===1; }).length;
+      var aav2 = arr.length ? Math.round((aok2 + aen2*0.5)/arr.length*100) : 0;
+      html += '<div class="rm-pf-card" data-rm-fs-card="' + escHtml(sub) + '" role="button" tabindex="0" title="Filtrar por ' + escHtml(sub) + '">' +
+        '<div class="rm-pf-hd">' +
+          '<div><div class="rm-pf-name">' + escHtml(sub) + '</div><div class="rm-pf-sub">' + arr.length + ' iniciativas · ' + ap1 + ' P1</div></div>' +
+          '<div class="rm-pf-pct">' + aav2 + '<span class="rm-un">%</span></div>' +
+        '</div>' +
+        '<div class="rm-pf-bar"><div class="rm-pf-bar-fill" style="width:' + aav2 + '%"></div></div>' +
+        '<div class="rm-pf-stats"><span><b>' + aen2 + '</b> en curso</span><span><b>' + (arr.length - aok2 - aen2) + '</b> no iniciadas</span></div>' +
+      '</div>';
+    }
+    html += '</div>';
+  } else {
+    html += '<div class="rm-section-tt">Composición</div>';
+    html += '<div class="rm-kgrid rm-kgrid-3">';
+    html += '<div class="rm-k"><div class="rm-kl">Tecnológicas</div><div class="rm-kv">' + tec + '</div><div class="rm-ktrend rm-tn">' + Math.round(tec/t*100) + '% del total</div></div>';
+    html += '<div class="rm-k"><div class="rm-kl">Proceso</div><div class="rm-kv">' + pr + '</div><div class="rm-ktrend rm-tn">' + Math.round(pr/t*100) + '% del total</div></div>';
+    html += '<div class="rm-k"><div class="rm-kl">P2 + P3</div><div class="rm-kv">' + scoped.filter(function(r){ return rmPrio(r)===2 || rmPrio(r)===3; }).length + '</div><div class="rm-ktrend rm-tn">Posterior a P1</div></div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderRmDetalle(scoped, st, fp, fs) {
+  if (!scoped.length) return '<div class="rm-empty">Sin iniciativas en esta vista.</div>';
+  var subSet = {};
+  for (var ci = 0; ci < scoped.length; ci++) { var a = rmArea(scoped[ci]); if (a) subSet[a] = true; }
+  var subOpts = Object.keys(subSet);
+  var showSub = subOpts.length > 0;
+  var f = scoped.filter(function(r){
+    if (fp !== 'all' && String(rmPrio(r)) !== fp) return false;
+    if (fs !== 'all' && rmArea(r) !== fs) return false;
+    return true;
+  });
+
+  var html = '<div class="rm-ft">' +
+    '<span class="rm-fl">Prioridad</span>' +
+    '<button type="button" class="rm-ch' + (fp==='all'?' on':'') + '" data-rm-fp="all">Todas</button>' +
+    '<button type="button" class="rm-ch' + (fp==='1'?' on':'') + '" data-rm-fp="1">P1</button>' +
+    '<button type="button" class="rm-ch' + (fp==='2'?' on':'') + '" data-rm-fp="2">P2</button>' +
+    '<button type="button" class="rm-ch' + (fp==='3'?' on':'') + '" data-rm-fp="3">P3</button>';
+  if (showSub) {
+    var subLabel = (st === 'le') ? 'Área' : 'Sub-etapa';
+    html += '<span class="rm-divider"></span><span class="rm-fl">' + subLabel + '</span>' +
+      '<button type="button" class="rm-ch' + (fs==='all'?' on':'') + '" data-rm-fs="all">Todas</button>';
+    for (var si = 0; si < subOpts.length; si++) {
+      html += '<button type="button" class="rm-ch' + (fs===subOpts[si]?' on':'') + '" data-rm-fs="' + escHtml(subOpts[si]) + '">' + escHtml(subOpts[si]) + '</button>';
+    }
+  }
+  html += '</div>';
+  html += '<div class="rm-count">Mostrando ' + f.length + ' de ' + scoped.length + '</div>';
+
+  if (showSub) {
+    var subTitle = (st === 'le') ? 'Área' : 'Sub-etapa';
+    html += '<div class="rm-table-wrap"><table class="rm-table">' +
+      '<colgroup><col style="width:11%"><col style="width:13%"><col style="width:33%"><col style="width:11%"><col style="width:6%"><col style="width:13%"><col style="width:13%"></colgroup>' +
+      '<thead><tr><th>' + subTitle + '</th><th>Programa</th><th>Iniciativa</th><th>Tipo</th><th>Prio</th><th>Responsable</th><th>Estado</th></tr></thead><tbody>';
+    for (var ri = 0; ri < f.length; ri++) {
+      var r = f[ri];
+      var area = rmArea(r);
+      var areaCls = area === 'COMPRA' ? 'rm-area-compra' : area === 'VENTA' ? 'rm-area-venta' : 'rm-area-sub';
+      var areaB = area ? '<span class="rm-mini-badge ' + areaCls + '">' + escHtml(area) + '</span>' : '<span class="rm-empty-dash">—</span>';
+      var sub2 = rmObj(r) ? '<div class="rm-row-sub">' + escHtml(rmObj(r)) + (rmKR(r) ? ' · ' + escHtml(rmKR(r)) : '') + '</div>' : '';
+      html += '<tr><td>' + areaB + '</td>' +
+        '<td class="rm-cell-muted">' + escHtml(rmProg(r)) + '</td>' +
+        '<td class="rm-cell-iniciativa">' + escHtml(rmIniciativa(r)) + sub2 + '</td>' +
+        '<td><span class="rm-mini-badge rm-tipo-' + tipoCss(rmTipo(r)) + '">' + escHtml(rmTipo(r)) + '</span></td>' +
+        '<td><span class="rm-mini-badge rm-prio-p' + rmPrio(r) + '">P' + rmPrio(r) + '</span></td>' +
+        '<td class="rm-cell-resp">' + escHtml(rmResp(r)) + '</td>' +
+        '<td><span class="rm-mini-badge rm-est-' + estadoCss(rmEstado(r)) + '">' + escHtml(rmEstado(r)) + '</span></td>' +
+      '</tr>';
+    }
+    html += '</tbody></table></div>';
+  } else {
+    html += '<div class="rm-table-wrap"><table class="rm-table">' +
+      '<colgroup><col style="width:14%"><col style="width:38%"><col style="width:11%"><col style="width:6%"><col style="width:18%"><col style="width:13%"></colgroup>' +
+      '<thead><tr><th>Programa</th><th>Iniciativa</th><th>Tipo</th><th>Prio</th><th>Responsable</th><th>Estado</th></tr></thead><tbody>';
+    for (var ri2 = 0; ri2 < f.length; ri2++) {
+      var rr = f[ri2];
+      html += '<tr>' +
+        '<td class="rm-cell-muted">' + escHtml(rmProg(rr)) + '</td>' +
+        '<td class="rm-cell-iniciativa">' + escHtml(rmIniciativa(rr)) + '</td>' +
+        '<td><span class="rm-mini-badge rm-tipo-' + tipoCss(rmTipo(rr)) + '">' + escHtml(rmTipo(rr)) + '</span></td>' +
+        '<td><span class="rm-mini-badge rm-prio-p' + rmPrio(rr) + '">P' + rmPrio(rr) + '</span></td>' +
+        '<td class="rm-cell-resp">' + escHtml(rmResp(rr)) + '</td>' +
+        '<td><span class="rm-mini-badge rm-est-' + estadoCss(rmEstado(rr)) + '">' + escHtml(rmEstado(rr)) + '</span></td>' +
+      '</tr>';
+    }
+    html += '</tbody></table></div>';
+  }
+
+  return html;
+}
+
+function renderRmCronograma(scoped, gp) {
+  if (!scoped.length) return '<div class="rm-empty">Sin iniciativas en esta vista.</div>';
+  var cAll = scoped.length;
+  var c1 = scoped.filter(function(r){ return rmPrio(r)===1; }).length;
+  var c2 = scoped.filter(function(r){ return rmPrio(r)===2; }).length;
+  var c3 = scoped.filter(function(r){ return rmPrio(r)===3; }).length;
+  var html = '<div class="rm-ft">' +
+    '<span class="rm-fl">Prioridad</span>' +
+    '<button type="button" class="rm-ch' + (gp==='all'?' on':'') + '" data-rm-gp="all">Todas <span class="rm-ct">' + cAll + '</span></button>' +
+    '<button type="button" class="rm-ch' + (gp==='1'?' on':'') + '" data-rm-gp="1">P1 <span class="rm-ct">' + c1 + '</span></button>' +
+    '<button type="button" class="rm-ch' + (gp==='2'?' on':'') + '" data-rm-gp="2">P2 <span class="rm-ct">' + c2 + '</span></button>' +
+    '<button type="button" class="rm-ch' + (gp==='3'?' on':'') + '" data-rm-gp="3">P3 <span class="rm-ct">' + c3 + '</span></button>' +
+  '</div>';
+  var f = scoped.filter(function(r){ return gp === 'all' || String(rmPrio(r)) === gp; });
+  if (!f.length) return html + '<div class="rm-empty">Sin iniciativas con esta prioridad.</div>';
+  html += '<div class="rm-count">Mostrando ' + f.length + ' de ' + scoped.length + '</div>';
+  var ord = f.slice().sort(function(a,b){ return (rmPrio(a)||99) - (rmPrio(b)||99); });
+  html += '<div class="rm-gantt-wrap"><div class="rm-gantt">';
+  html += '<div class="rm-gms"><div class="rm-gmb-lbl">Iniciativa</div><div class="rm-gmb">';
+  for (var mi = 0; mi < RM_GANTT_MESES.length; mi++) html += '<div>' + RM_GANTT_MESES[mi] + '</div>';
+  html += '</div><div class="rm-gmb-lbl rm-gmb-right">Período</div></div>';
+  for (var ri = 0; ri < ord.length; ri++) {
+    var rg = ord[ri];
+    var ai = rmGanttPos(rmInicio(rg));
+    var bi = rmGanttPos(rmFin(rg));
+    var bar, dr;
+    if (ai != null && bi != null) {
+      var w = Math.max(bi - ai, 1);
+      bar = '<div class="rm-gb rm-est-' + estadoCss(rmEstado(rg)) + '" style="left:' + ai + '%;width:' + w + '%"></div>';
+      dr = rmFmtDate(rmInicio(rg)) + ' – ' + rmFmtDate(rmFin(rg));
+    } else {
+      bar = '<div class="rm-gb-tbd">TBD</div>';
+      dr = '—';
+    }
+    var ar = rmArea(rg);
+    var areaCls2 = ar === 'COMPRA' ? 'rm-area-compra' : ar === 'VENTA' ? 'rm-area-venta' : 'rm-area-sub';
+    var areaPill = ar ? '<span class="rm-mini-badge ' + areaCls2 + '">' + escHtml(ar.length>14?ar.substring(0,14):ar) + '</span>' : '';
+    var iniText = rmIniciativa(rg);
+    if (iniText.length > 60) iniText = iniText.substring(0, 60) + '…';
+    html += '<div class="rm-gr">' +
+      '<div><div class="rm-gn">' + areaPill + '<span class="rm-mini-badge rm-prio-p' + rmPrio(rg) + '">P' + rmPrio(rg) + '</span><span>' + escHtml(iniText) + '</span></div>' +
+      '<div class="rm-gm">' + escHtml(rmResp(rg)) + '</div></div>' +
+      '<div class="rm-gtr">' + bar + '</div>' +
+      '<div class="rm-gdr">' + dr + '</div>' +
+    '</div>';
+  }
+  html += '<div class="rm-lg">' +
+    '<span><i class="rm-est-ok"></i>Completado</span>' +
+    '<span><i class="rm-est-cu"></i>En curso / proceso</span>' +
+    '<span><i class="rm-est-pe"></i>Pendiente</span>' +
+    '<span><i class="rm-est-no"></i>No iniciado</span>' +
+  '</div>';
+  html += '</div></div>';
+  return html;
+}
+
+function bindRoadmap2026(area) {
+  if (!area) return;
+  var st = 'all', fp = 'all', fs = 'all', gp = 'all';
+  function getScoped() {
+    var grp;
+    for (var i = 0; i < ROADMAP_2026_GROUPS.length; i++) if (ROADMAP_2026_GROUPS[i].id === st) { grp = ROADMAP_2026_GROUPS[i]; break; }
+    return ROADMAP_2026.filter(grp ? grp.filter : function(){ return true; });
+  }
+  function updateBanner() {
+    var elB = area.querySelector('[data-rm-banner]');
+    if (!elB) return;
+    var grp = null;
+    for (var i = 0; i < ROADMAP_2026_GROUPS.length; i++) if (ROADMAP_2026_GROUPS[i].id === st) { grp = ROADMAP_2026_GROUPS[i]; break; }
+    elB.innerHTML = '<b>' + escHtml(grp ? grp.label : 'Vista global') + '.</b> ' + buildRmNarrative(getScoped());
+  }
+  function renderResumen() {
+    var el = area.querySelector('[data-rm-render="resumen"]');
+    if (el) el.innerHTML = renderRmResumen(getScoped(), st);
+  }
+  function renderDetalle() {
+    var el = area.querySelector('[data-rm-render="detalle"]');
+    if (!el) return;
+    el.innerHTML = renderRmDetalle(getScoped(), st, fp, fs);
+    var fpBtns = el.querySelectorAll('[data-rm-fp]');
+    for (var i = 0; i < fpBtns.length; i++) (function(b){ b.addEventListener('click', function(){ fp = b.getAttribute('data-rm-fp'); renderDetalle(); }); })(fpBtns[i]);
+    var fsBtns = el.querySelectorAll('[data-rm-fs]');
+    for (var j = 0; j < fsBtns.length; j++) (function(b){ b.addEventListener('click', function(){ fs = b.getAttribute('data-rm-fs'); renderDetalle(); }); })(fsBtns[j]);
+  }
+  function renderCronograma() {
+    var el = area.querySelector('[data-rm-render="cronograma"]');
+    if (!el) return;
+    el.innerHTML = renderRmCronograma(getScoped(), gp);
+    var gpBtns = el.querySelectorAll('[data-rm-gp]');
+    for (var k = 0; k < gpBtns.length; k++) (function(b){ b.addEventListener('click', function(){ gp = b.getAttribute('data-rm-gp'); renderCronograma(); }); })(gpBtns[k]);
+  }
+  function renderAll() { updateBanner(); renderResumen(); renderDetalle(); renderCronograma(); }
+
+  var progBtns = area.querySelectorAll('[data-rm-prog]');
+  function activateProg(id) {
+    st = id; fp = 'all'; fs = 'all'; gp = 'all';
+    for (var i = 0; i < progBtns.length; i++) progBtns[i].classList.toggle('on', progBtns[i].getAttribute('data-rm-prog') === id);
+    renderAll();
+  }
+  for (var pb = 0; pb < progBtns.length; pb++) {
+    (function(btn) {
+      btn.addEventListener('click', function() { activateProg(btn.getAttribute('data-rm-prog')); });
+    })(progBtns[pb]);
+  }
+  // Cards clickeables: Vista global → cambia de programa; Leads/Captación → filtra sub-etapa/área
+  area.addEventListener('click', function(e) {
+    var pCard = e.target.closest('[data-rm-prog-card]');
+    if (pCard && area.contains(pCard)) {
+      activateProg(pCard.getAttribute('data-rm-prog-card'));
+      return;
+    }
+    var fCard = e.target.closest('[data-rm-fs-card]');
+    if (fCard && area.contains(fCard)) {
+      fs = fCard.getAttribute('data-rm-fs-card');
+      renderDetalle();
+      var detEl = area.querySelector('[data-rm-render="detalle"]');
+      if (detEl && detEl.scrollIntoView) detEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  area.addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var card = e.target.closest('[data-rm-prog-card],[data-rm-fs-card]');
+    if (!card || !area.contains(card)) return;
+    e.preventDefault();
+    card.click();
+  });
+  var subTabs = area.querySelectorAll('[data-rm-subtab]');
+  for (var sti = 0; sti < subTabs.length; sti++) {
+    (function(btn) {
+      btn.addEventListener('click', function() {
+        var key = btn.getAttribute('data-rm-subtab');
+        for (var i = 0; i < subTabs.length; i++) subTabs[i].classList.toggle('on', subTabs[i] === btn);
+        var panes = area.querySelectorAll('[data-rm-subpane]');
+        for (var p = 0; p < panes.length; p++) panes[p].classList.toggle('on', panes[p].getAttribute('data-rm-subpane') === key);
+      });
+    })(subTabs[sti]);
+  }
+  renderAll();
+}
+
+// Stubs vacíos (el roadmap nuevo usa bindRoadmap2026)
+function applyRoadmapFilters() {}
 
 function downloadRoadmapExcel() {
   if (typeof XLSX === 'undefined') { alert('La librería XLSX no cargó. Verifica conexión a internet.'); return; }
-  var headers = ['#','Iniciativa','Descripción','Macro','Etapa','Sub-etapa','Impacto','Ahorro estimado','Responsable','Fecha comprometida','Estado','Transformacional'];
+  var headers = ['#','Programa','Iniciativa','Tipo','Prioridad','Responsable','Estado','Inicio','Fin','Área / Sub-etapa','Objetivo','KR / Métrica'];
   var rows = [headers];
-  for (var i = 0; i < ROADMAP.length; i++) {
-    var it = ROADMAP[i];
-    var anyActive = roadmapFilters.macros.length > 0 || roadmapFilters.impactos.length > 0 || roadmapFilters.transformational;
-    var show;
-    if (!anyActive) {
-      show = true;
-    } else {
-      show = false;
-      if (roadmapFilters.macros.length > 0 && roadmapFilters.macros.indexOf(it.macro) >= 0) show = true;
-      if (roadmapFilters.impactos.length > 0 && roadmapFilters.impactos.indexOf(it.priority) >= 0) show = true;
-      if (roadmapFilters.transformational && it.transformational === true) show = true;
-    }
-    if (!show) continue;
-    var desc = (it.description || '').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
-    var impacto = it.transformational ? 'Transformacional' : (it.priority.charAt(0).toUpperCase() + it.priority.slice(1));
-    var macroTitle = MACRO_META[it.macro] ? MACRO_META[it.macro].title : it.macro;
-    var estadoLabel = it.estado.charAt(0).toUpperCase() + it.estado.slice(1);
+  for (var i = 0; i < ROADMAP_2026.length; i++) {
+    var r = ROADMAP_2026[i];
     rows.push([
-      (i+1), it.iniciativa, desc, macroTitle, it.stage, it.substep,
-      impacto, it.ahorro || '—', it.responsable, it.fecha, estadoLabel, it.transformational ? 'Sí' : 'No'
+      (i+1), rmProg(r), rmIniciativa(r), rmTipo(r), 'P'+rmPrio(r),
+      rmResp(r), rmEstado(r), rmInicio(r) || 'TBD', rmFin(r) || 'TBD',
+      rmArea(r) || '—', rmObj(r) || '—', rmKR(r) || '—'
     ]);
   }
   var ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [
-    { wch: 5 }, { wch: 48 }, { wch: 60 }, { wch: 14 }, { wch: 26 }, { wch: 26 },
-    { wch: 16 }, { wch: 22 }, { wch: 16 }, { wch: 18 }, { wch: 13 }, { wch: 16 }
-  ];
+  ws['!cols'] = [{wch:5},{wch:24},{wch:54},{wch:14},{wch:6},{wch:24},{wch:14},{wch:12},{wch:12},{wch:24},{wch:36},{wch:26}];
   ws['!freeze'] = { xSplit: 0, ySplit: 1 };
   var wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Roadmap');
+  XLSX.utils.book_append_sheet(wb, ws, 'Roadmap 2026');
   var d = new Date();
   var ymd = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  var totalRows = rows.length - 1;
-  var suffix = totalRows === ROADMAP.length ? '' : '-filtrado';
-  XLSX.writeFile(wb, 'roadmap-clicar-usados-' + ymd + suffix + '.xlsx');
+  XLSX.writeFile(wb, 'roadmap-clicar-2026-' + ymd + '.xlsx');
 }
 
-function handleRoadmapFilter(btn) {
-  var type = btn.getAttribute('data-filter-type');
-  var val = btn.getAttribute('data-filter-value');
-  if (type === 'all') {
-    roadmapFilters = { macros: [], impactos: [], transformational: false };
-  } else if (type === 'macro') {
-    roadmapFilters.transformational = false;
-    var i = roadmapFilters.macros.indexOf(val);
-    if (i >= 0) roadmapFilters.macros.splice(i, 1); else roadmapFilters.macros.push(val);
-  } else if (type === 'impacto') {
-    roadmapFilters.transformational = false;
-    var j = roadmapFilters.impactos.indexOf(val);
-    if (j >= 0) roadmapFilters.impactos.splice(j, 1); else roadmapFilters.impactos.push(val);
-  } else if (type === 'transformational') {
-    if (roadmapFilters.transformational) {
-      roadmapFilters = { macros: [], impactos: [], transformational: false };
-    } else {
-      roadmapFilters = { macros: [], impactos: [], transformational: true };
-    }
-  }
-  applyRoadmapFilters();
-}
+function handleRoadmapFilter() {} // legacy stub — el roadmap nuevo no lo usa
 
 // ============================================================
 // OKRs & IMPACTO — Vista directorio
@@ -6575,13 +7073,7 @@ function renderSlides() {
       });
     })(macroLinks[cm]);
   }
-  var roadmapFilterBtns = area.querySelectorAll('.roadmap-filter');
-  for (var rfi = 0; rfi < roadmapFilterBtns.length; rfi++) {
-    (function(btn) {
-      btn.addEventListener('click', function() { handleRoadmapFilter(btn); });
-    })(roadmapFilterBtns[rfi]);
-  }
-  if (roadmapFilterBtns.length) applyRoadmapFilters();
+  bindRoadmap2026(area);
   var roadmapViewTabs = area.querySelectorAll('.roadmap-view-tab');
   for (var rvt = 0; rvt < roadmapViewTabs.length; rvt++) {
     (function(btn) {
@@ -7453,10 +7945,6 @@ function renderHomeSlide(i) {
       '<div class="home-footer-note">Compra usa data real del CRM Llaima (158.753 leads, Oct 25 - Mar 26). Preparación está en levantamiento de KPIs operativos con BI y Operaciones. Venta en proceso de mapeo.</div>' +
     '</div>' +
   '</div>';
-}
-
-function renderControlSemanalSlide(i) {
-  return '<div class="slide" data-index="' + i + '"><div style="padding:40px;"><h2 style="font-size:22px;font-weight:800;color:var(--navy);">📅 Control Semanal</h2></div></div>';
 }
 
 function renderOverviewSlide(i) {
