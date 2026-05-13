@@ -60,7 +60,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="topbar">
   <div>
     <div class="topbar-title">Eje COMPRA · Gestión de Leads</div>
-    <div class="topbar-sub">Contact Center · Llamadas · Contactabilidad · Colas — Oct 25 a Mar 26 · 158.753 leads</div>
+    <div class="topbar-sub">Contact Center · Llamadas · Contactabilidad · Colas — Oct 25 a Abr 26 · 182.578 leads</div>
   </div>
   <div class="topbar-badge">Dashboard Operacional</div>
 </div>
@@ -73,16 +73,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       Vista operacional del <strong>Contact Center del eje Compra</strong>. Cubre el flujo desde el pool de
       colas hasta el traspaso a sucursal: <strong>volumen entrante</strong>, <strong>contactabilidad</strong>,
       <strong>tiempos de respuesta</strong>, <strong>cadencia de llamadas</strong> y
-      <strong>calificación / motivos de descarte</strong>. Datos del Levantamiento Punta a Punta — 6 meses, 158.753 leads.
+      <strong>calificación / motivos de descarte</strong>. Datos del Levantamiento Punta a Punta — 7 meses, 182.578 leads.
     </p>
   </div>
 
   <!-- KPIs ejecutivos -->
   <div class="kpi-grid">
-    <div class="kpi blue"><div class="kpi-label">Total leads pool</div><div class="kpi-value">158.753</div><div class="kpi-sub">Oct 25 – Mar 26</div></div>
-    <div class="kpi blue"><div class="kpi-label">Promedio mensual</div><div class="kpi-value">26.459</div><div class="kpi-sub">leads/mes</div></div>
+    <div class="kpi blue"><div class="kpi-label">Total leads pool</div><div class="kpi-value">182.578</div><div class="kpi-sub">Oct 25 – Abr 26</div></div>
+    <div class="kpi blue"><div class="kpi-label">Promedio mensual</div><div class="kpi-value">26.425</div><div class="kpi-sub">leads/mes</div></div>
     <div class="kpi amber"><div class="kpi-label">Pico mensual</div><div class="kpi-value">33.083</div><div class="kpi-sub">Ene 26 (+25%)</div></div>
-    <div class="kpi amber"><div class="kpi-label">Contactabilidad</div><div class="kpi-value">53%</div><div class="kpi-sub">global</div></div>
+    <div class="kpi amber"><div class="kpi-label">Contactabilidad</div><div class="kpi-value">54%</div><div class="kpi-sub">global</div></div>
     <div class="kpi red"><div class="kpi-label">Tiempo 1er contacto</div><div class="kpi-value">21h</div><div class="kpi-sub">horario CC L-V 9-19, Sáb 9-14</div></div>
     <div class="kpi blue"><div class="kpi-label">Duración llamada</div><div class="kpi-value">47seg</div><div class="kpi-sub">promedio</div></div>
     <div class="kpi amber"><div class="kpi-label">Tasa de agendamiento</div><div class="kpi-value">9,3%</div><div class="kpi-sub">leads → cita</div></div>
@@ -98,8 +98,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>% contactabilidad</div>
     </div>
     <div class="chart-wrap" style="height:280px;"><canvas id="cVol"></canvas></div>
-    <div class="insight b">Feb 26 fue el mejor mes: tiempo 1er contacto bajó a 13–16h (contacto mismo día) y la contactabilidad subió a 56%. Marzo se mantuvo cerca del promedio.</div>
-    <div class="insight w">Enero 26 concentró volumen récord (33.083 leads, +25% vs. promedio) — el equipo no escaló capacidad y la contactabilidad cayó.</div>
+    <div class="insight g">Abr 26 marcó el mejor registro de contactabilidad del período: 67%, superando el anterior máximo de Feb 26 (56%). El menor volumen del mes (24.027 leads) pudo haber contribuido a la mejora.</div>
+    <div class="insight w">Enero 26 concentró volumen récord (33.083 leads, +25% vs. promedio) — el equipo no escaló capacidad y la contactabilidad cayó. Abr 26 muestra que reducir volumen o mejorar cadencia impacta directamente la contactabilidad.</div>
   </div>
 
   <!-- Pool de colas y asignación -->
@@ -224,7 +224,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 
   <div class="footer">
-    Eje Compra · Gestión de Leads · Contact Center — datos del Levantamiento Punta a Punta · Oct 2025 a Mar 2026
+    Eje Compra · Gestión de Leads · Contact Center — datos del Levantamiento Punta a Punta · Oct 2025 a Abr 2026
   </div>
 </div>
 
@@ -241,11 +241,11 @@ function renderCharts() {
     new Chart(ctxVol, {
       type: 'bar',
       data: {
-        labels: ['Oct 25', 'Nov 25', 'Dic 25', 'Ene 26', 'Feb 26', 'Mar 26'],
+        labels: ['Oct 25', 'Nov 25', 'Dic 25', 'Ene 26', 'Feb 26', 'Mar 26', 'Abr 26'],
         datasets: [
           {
             type: 'bar', label: 'Leads ingresados',
-            data: [24800, 25600, 23200, 33083, 25500, 26570],
+            data: [24800, 25600, 23200, 33083, 25500, 26368, 24027],
             backgroundColor: '#B5D4F4', borderRadius: 4, yAxisID: 'y',
             order: 2,
             datalabels: {
@@ -256,7 +256,7 @@ function renderCharts() {
           },
           {
             type: 'line', label: '% contactabilidad',
-            data: [50, 52, 49, 61, 56, 53],
+            data: [50, 52, 49, 61, 56, 53, 67],
             borderColor: '#1D9E75', backgroundColor: '#1D9E75',
             tension: 0.3, yAxisID: 'y1', pointRadius: 4, pointHoverRadius: 6,
             borderWidth: 2.5, order: 1,
