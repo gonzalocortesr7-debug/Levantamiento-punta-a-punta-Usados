@@ -3277,88 +3277,11 @@ function isWeekActual(mesKey, semKey) {
 }
 
 function renderControlSemanalSlide(i) {
-  var ejesByMacro = CONTROL_SEMANAL_EJES;
-  var html = '<div class="slide exec-summary" data-slide="' + i + '">' +
-    '<div class="okrs-hero">' +
-      '<div class="eyebrow">Control semanal · cadencia ágil</div>' +
-      '<h1>🗓️ Control Semanal</h1>' +
-      '<p>Bitácora viva por <strong>eje</strong>, <strong>semana</strong> y <strong>mes</strong>: compromisos asumidos, acciones realizadas y comentarios / bloqueos. Todo se guarda automáticamente en este navegador. Usá <strong>Exportar JSON</strong> para respaldar y compartir.</p>' +
-    '</div>' +
-    '<div class="okr-track-toolbar">' +
-      '<div class="okr-track-filters">' +
-        '<span class="okr-track-filter-label">Ver eje:</span>' +
-        '<button type="button" class="okr-track-filter active" data-cs-filter="all">Todos</button>' +
-        '<button type="button" class="okr-track-filter" data-cs-filter="compra">Compra</button>' +
-        '<button type="button" class="okr-track-filter" data-cs-filter="preparación">Preparación</button>' +
-        '<button type="button" class="okr-track-filter" data-cs-filter="venta">Venta</button>' +
-      '</div>' +
-      '<div class="okr-track-actions">' +
-        '<button type="button" class="okr-track-action" data-cs-action="export">⬇ Exportar JSON</button>' +
-        '<button type="button" class="okr-track-action" data-cs-action="import">⬆ Importar JSON</button>' +
-        '<button type="button" class="okr-track-action danger" data-cs-action="clear">Limpiar todo</button>' +
-        '<input type="file" accept=".json,application/json" id="cs-import-file" style="display:none">' +
-      '</div>' +
+  return '<div class="slide exec-summary" data-slide="' + i + '" style="padding:0;">' +
+    '<iframe src="https://barbaracolleg-art.github.io/OKRs/seguimiento_okrs_roadmap_gantt.html" ' +
+    'style="width:100%;flex:1;border:none;display:block;min-height:0;" ' +
+    'allowfullscreen></iframe>' +
     '</div>';
-
-  for (var mi = 0; mi < CONTROL_SEMANAL_MESES.length; mi++) {
-    var mes = CONTROL_SEMANAL_MESES[mi];
-    html += '<section class="cs-mes" data-cs-mes="' + mes.key + '">' +
-      '<header class="cs-mes-head">' +
-        '<span class="cs-mes-icon">▼</span>' +
-        '<h2>' + mes.label + '</h2>' +
-        '<span class="cs-mes-count">' + mes.semanas.length + ' semanas</span>' +
-      '</header>' +
-      '<div class="cs-semanas-list">';
-
-    for (var si = 0; si < mes.semanas.length; si++) {
-      var sem = mes.semanas[si];
-      var semKey = mes.key + '.' + sem.key;
-      var isActual = isWeekActual(mes.key, sem.key);
-      html += '<article class="cs-semana' + (isActual ? ' cs-semana-actual cs-semana-open' : '') + '" data-cs-semana="' + semKey + '">' +
-        '<header class="cs-semana-head" role="button" tabindex="0" data-cs-toggle="' + semKey + '">' +
-          '<span class="cs-semana-icon">' + (isActual ? '▼' : '▶') + '</span>' +
-          '<span class="cs-semana-num">' + sem.key + '</span>' +
-          '<span class="cs-semana-rango">' + sem.rango + '</span>' +
-          (isActual ? '<span class="cs-semana-actual-badge">Semana en curso</span>' : '') +
-        '</header>' +
-        '<div class="cs-semana-body">';
-
-      for (var ei = 0; ei < ejesByMacro.length; ei++) {
-        var eje = ejesByMacro[ei];
-        var indPanelKey = eje.key + ':' + semKey;
-        html += '<div class="cs-eje" data-cs-eje="' + eje.key + '">' +
-          '<div class="cs-eje-head">' +
-            '<span class="okr-track-eje-dot ' + eje.dot + '"></span>' +
-            '<h3>' + eje.label + '</h3>' +
-          '</div>' +
-          '<div class="cs-ind-section">' +
-            '<button type="button" class="cs-ind-toggle" data-cs-ind-toggle="' + indPanelKey + '" data-cs-ind-eje="' + eje.key + '" data-cs-ind-mesidx="' + mes.mesIdx + '" data-cs-ind-mesname="' + mes.mesName + '">' +
-              '<span class="cs-ind-icon">▶</span>' +
-              '<span class="cs-ind-toggle-label">Estado de indicadores del eje · ' + mes.mesName + '</span>' +
-              '<span class="cs-ind-summary" data-cs-ind-summary="' + indPanelKey + '"></span>' +
-            '</button>' +
-            '<div class="cs-ind-panel" data-cs-ind-panel="' + indPanelKey + '" hidden></div>' +
-          '</div>' +
-          '<div class="cs-bloques">';
-        for (var bi = 0; bi < CONTROL_SEMANAL_BLOQUES.length; bi++) {
-          var bloque = CONTROL_SEMANAL_BLOQUES[bi];
-          var dataKey = semKey + '.' + eje.key + '.' + bloque.key;
-          html += '<div class="cs-bloque cs-bloque-' + bloque.key + '">' +
-            '<label class="cs-bloque-label">' + bloque.label + '</label>' +
-            '<textarea class="cs-textarea" data-cs-key="' + dataKey + '" placeholder="' + bloque.placeholder.replace(/"/g, '&quot;') + '" spellcheck="false"></textarea>' +
-          '</div>';
-        }
-        html += '</div></div>';
-      }
-
-      html += '</div></article>';
-    }
-
-    html += '</div></section>';
-  }
-
-  html += '</div>';
-  return html;
 }
 
 function renderRoadmapSlide(i) {
