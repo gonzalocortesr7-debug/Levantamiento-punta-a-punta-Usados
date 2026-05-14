@@ -1904,6 +1904,10 @@
         <span class="macro-view-icon">🗓️</span>
         <span>Control Semanal</span>
       </button>
+      <button class="macro-view-btn" data-view="seguimiento-squad">
+        <span class="macro-view-icon">👥</span>
+        <span>Seguimiento por Squad</span>
+      </button>
       <button class="macro-view-btn" data-view="roadmap">
         <span class="macro-view-icon">🗺️</span>
         <span>Roadmap</span>
@@ -3277,6 +3281,13 @@ function isWeekActual(mesKey, semKey) {
 }
 
 function renderControlSemanalSlide(i) {
+  return '<div class="slide exec-summary" data-slide="' + i + '" style="padding:0;">' +
+    '<iframe src="https://barbaracolleg-art.github.io/OKRs/seguimiento_okrs_roadmap_gantt.html" ' +
+    'style="width:100%;flex:1;border:none;display:block;min-height:0;" ' +
+    'allowfullscreen></iframe>' +
+    '</div>';
+}
+function renderSeguimientoSquadSlide(i) {
   return '<div class="slide exec-summary" data-slide="' + i + '" style="padding:0;">' +
     '<iframe src="https://barbaracolleg-art.github.io/OKRs/seguimiento_okrs_roadmap_gantt.html" ' +
     'style="width:100%;flex:1;border:none;display:block;min-height:0;" ' +
@@ -5645,7 +5656,7 @@ function getActiveStages() {
   return out;
 }
 function buildFlatSlides() {
-  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'okr-seguimiento' }, { type: 'control-semanal' }, { type: 'overview' }];
+  var list = [{ type: 'home' }, { type: 'exec-summary' }, { type: 'roadmap' }, { type: 'okrs' }, { type: 'okr-seguimiento' }, { type: 'control-semanal' }, { type: 'seguimiento-squad' }, { type: 'overview' }];
   var active = getActiveStages();
   for (var si = 0; si < active.length; si++) {
     var stage = active[si];
@@ -5658,7 +5669,7 @@ function buildFlatSlides() {
 
 // Flatten (initial)
 var flatSlides = buildFlatSlides();
-var TOTAL_SUBSTEPS = flatSlides.length - 7;
+var TOTAL_SUBSTEPS = flatSlides.length - 8;
 var currentSlide = 0;
 var chartInstances = {};
 var chartState = {};
@@ -6837,7 +6848,7 @@ function setMacro(macro) {
   if (macro !== currentMacro) {
     currentMacro = macro;
     flatSlides = buildFlatSlides();
-    TOTAL_SUBSTEPS = flatSlides.length - 7;
+    TOTAL_SUBSTEPS = flatSlides.length - 8;
     renderMacroTabs();
     renderStageTabs();
     renderSlides();
@@ -6850,6 +6861,7 @@ function goToRoadmap() { goToSlide(2); }
 function goToOKRs() { goToSlide(3); }
 function goToOKRSeguimiento() { goToSlide(4); }
 function goToControlSemanal() { goToSlide(5); }
+function goToSeguimientoSquad() { goToSlide(6); }
 
 function goToRoadmapTarget(macro, stageName, substepName) {
   if (!macro || !stageName) return;
@@ -6977,6 +6989,8 @@ function renderSlides() {
       html += renderOKRSeguimientoSlide(i);
     } else if (s.type === 'control-semanal') {
       html += renderControlSemanalSlide(i);
+    } else if (s.type === 'seguimiento-squad') {
+      html += renderSeguimientoSquadSlide(i);
     } else if (s.type === 'overview') {
       html += renderOverviewSlide(i);
     } else {
@@ -8713,7 +8727,7 @@ function updateChrome() {
   var prevBtn = document.getElementById('prev-btn');
   var nextBtn = document.getElementById('next-btn');
 
-  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okrs' || slide.type === 'okr-seguimiento' || slide.type === 'control-semanal');
+  var isSpecialView = (slide.type === 'home' || slide.type === 'exec-summary' || slide.type === 'roadmap' || slide.type === 'okrs' || slide.type === 'okr-seguimiento' || slide.type === 'control-semanal' || slide.type === 'seguimiento-squad');
   var macroTabsEl = document.querySelectorAll('.macro-stage');
   for (var mti = 0; mti < macroTabsEl.length; mti++) {
     if (isSpecialView) {
@@ -8763,6 +8777,11 @@ function updateChrome() {
     stepper.style.display = 'none';
     breadcrumb.innerHTML = '<span class="bc-stage">Control semanal · cadencia ágil</span>';
     counter.innerHTML = '<span class="current">-</span> <span class="total">Bitácora por eje y semana</span>';
+  } else if (slide.type === 'seguimiento-squad') {
+    for (var th4d = 0; th4d < tabs.length; th4d++) tabs[th4d].classList.remove('active');
+    stepper.style.display = 'none';
+    breadcrumb.innerHTML = '<span class="bc-stage">Seguimiento por Squad</span>';
+    counter.innerHTML = '<span class="current">-</span> <span class="total">Vista por equipo</span>';
   } else if (slide.type === 'overview') {
     for (var t = 0; t < tabs.length; t++) tabs[t].classList.remove('active');
     stepper.style.display = 'none';
@@ -8869,6 +8888,7 @@ function init() {
           else if (v === 'okrs') goToOKRs();
           else if (v === 'okr-seguimiento') goToOKRSeguimiento();
           else if (v === 'control-semanal') goToControlSemanal();
+          else if (v === 'seguimiento-squad') goToSeguimientoSquad();
         });
       })(viewBtns[vbi2]);
     }
