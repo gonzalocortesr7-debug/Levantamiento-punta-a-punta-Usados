@@ -346,12 +346,12 @@ const palancasCap = [
   {tipo:'area_sep', texto:'EJE COMPRA', color:'#1E3A5F'},
   {tipo:'okr', codigo:'OKR-CD1', texto:'OKR 1- Aumentar en un 30% los leads que tasaron llevarlos a concretar una agenda, pasar de 1866 a 2500 promedio mensual para el 30 de junio', meta:'70%', metaNum:70, direccion:'subir', unidad:'%'},
   {tipo:'sub', texto:'Palancas OKR 1'},
-  {tipo:'pal', codigo:'CD1.1', texto:'Rescatar por lo menos el 10% de leads que generaron una tasación a través de paula', meta:'10%', metaNum:10, direccion:'subir', unidad:'%'},
-  {tipo:'pal', codigo:'CD1.2', texto:'Lograr que al menos el 35% de leads verificados agenden inspección', meta:'35%', metaNum:35, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD1.1', texto:'Estar sobre el 50% de tasa de conversión respecto a los usuarios que iniciaron tasación', meta:'50%', metaNum:50, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD1.2', texto:'Lograr al menos el 35% de leads verificados agenden inspección', meta:'35%', metaNum:35, direccion:'subir', unidad:'%'},
   {tipo:'okr', codigo:'OKR-CD2', texto:'OKR 2- Mejorar la nota de evaluación UX de la sección Compra respecto a competidores, pasando de 7.5 a 17 puntos (sobre 27) al 30 de junio de 2026.', meta:'60%', metaNum:60, direccion:'subir', unidad:'%'},
   {tipo:'sub', texto:'Palancas OKR 2'},
   {tipo:'pal', codigo:'CD2.1', texto:'Aumentar la tasa de interacción del 69% al 85% en páginas de compra mediante mejoras de UX priorizadas', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
-  {tipo:'pal', codigo:'CD2.2', texto:'Reducir la tasa de dead clicks de 8,6% a menos del 3% en la sección Compra', meta:'<3%', metaNum:3, direccion:'bajar', unidad:'%'},
+  {tipo:'pal', codigo:'CD2.2', texto:'Reducir la tasa de dead clicks de 9,86% a menos del 3% en la sección Compra', meta:'<3%', metaNum:3, direccion:'bajar', unidad:'%'},
   {tipo:'area_sep', texto:'EJE VENTA', color:'#7B1E1E'},
   {tipo:'okr', codigo:'OKR-CD3', texto:'OKR 3 - Aumentar la generación de prospectos de 9690 promedio de leads a 12500 promedio (+29%) a al 30 junio', meta:'—', metaNum:null, direccion:'subir', unidad:''},
   {tipo:'ref', codigo:'CD3.proy', texto:'Proyección esperada del OKR', meta:'—'},
@@ -360,7 +360,8 @@ const palancasCap = [
   {tipo:'pal', codigo:'CD3.2', texto:'Asegurar que el 100% de vehículos del catálogo de usados cuente con fotografía, como estándar de calidad que impacta la conversión.', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
   {tipo:'okr', codigo:'OKR-CD4', texto:'OKR 4 - Mejorar la nota de evaluación UX de la sección Venta respecto a competidores, pasando de 15 a 20 puntos (sobre 24) al 30 de junio de 2026.', meta:'—', metaNum:null, direccion:'subir', unidad:''},
   {tipo:'sub', texto:'Palancas OKR 4'},
-  {tipo:'pal', codigo:'CD4.1', texto:'Reducir dead clicks en sección Venta de [X]% a [Y]%', meta:'—', metaNum:null, direccion:'bajar', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.1', texto:'Reducir dead clicks en sección catálogo de 38,53% a 30%', meta:'30%', metaNum:30, direccion:'bajar', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.1b', texto:'Reducir dead clicks en sección ficha de auto de 51,88% a 41,5%', meta:'41,5%', metaNum:41.5, direccion:'bajar', unidad:'%'},
   {tipo:'pal', codigo:'CD4.2', texto:'Aumentar tasa de interacción en páginas de catálogo de 61,03% a 75%', meta:'75%', metaNum:75, direccion:'subir', unidad:'%'},
   {tipo:'pal', codigo:'CD4.3', texto:'Aumentar tasa de interacción en páginas de cotización de 81,96% a 95%.', meta:'95%', metaNum:95, direccion:'subir', unidad:'%'},
 ];
@@ -385,7 +386,7 @@ const mesesGanttCap = [
 
 const iniciativasCap = [
   {codigo:'OKR-CD2', iniciativa:'Reformular título: "Ingresa tus datos para recibir la tasación de tu auto"', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Marketing', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
-  {codigo:'OKR-CD2', iniciativa:'Corregir bug de cambio de campo (formulario queda en estado inconsistente)', prio:'Alta', estado:'No Iniciado', responsable:'Backend / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Corregir bug de cambio de campo (formulario queda en estado inconsistente)', prio:'Alta', estado:'Finalizado', responsable:'Backend / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,11)},
   {codigo:'OKR-CD2', iniciativa:'Unificar nomenclatura "Datos del auto" en todas las pantallas del flujo', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Marketing', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
   {codigo:'OKR-CD2', iniciativa:'Pre-filtro de elegibilidad al inicio del flujo + modal de rechazo empático', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
   {codigo:'OKR-CD2', iniciativa:'UX del flujo con autocompletado por patente (Autofact)', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
@@ -409,24 +410,24 @@ const iniciativasCap = [
   {codigo:'OKR-CD2', iniciativa:'Flujo de retargeting (email+WhatsApp) para usuarios que tasaron sin agendar', prio:'Media', estado:'No Iniciado', responsable:'Backend', ini:new Date(2026,4,25), fin:new Date(2026,5,16)},
   {codigo:'OKR-CD2', iniciativa:'Ajustar posición del botón WhatsApp flotante para no tapar CTAs en mobile', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
   {codigo:'OKR-CD2', iniciativa:'Stepper adaptado a mobile: compacto y siempre visible en todos los pasos', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,1)},
-  {codigo:'OKR-CD4', iniciativa:'Mayor visibilidad del buscador de texto dentro del catálogo', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
-  {codigo:'OKR-CD4', iniciativa:'Mayor visibilidad del botón de filtro', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,25)},
-  {codigo:'OKR-CD4', iniciativa:'Optimizar filtros para evitar combinaciones sin stock', prio:'Media', estado:'No Iniciado', responsable:'Backend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
-  {codigo:'OKR-CD4', iniciativa:'Optimizar Hero catálogo', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
-  {codigo:'OKR-CD4', iniciativa:'Optimizar Hero ficha de auto', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD4', iniciativa:'Mayor visibilidad del buscador de texto dentro del catálogo', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimizar filtros para evitar combinaciones sin stock', prio:'Media', estado:'No Iniciado', responsable:'Backend', ini:new Date(2026,4,11), fin:new Date(2026,5,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimizar Hero catálogo', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimizar Hero ficha de auto', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,25)},
   {codigo:'OKR-CD3', iniciativa:'Comparador de autos', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
   {codigo:'OKR-CD3', iniciativa:'Opiniones y rating', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
   {codigo:'OKR-CD3', iniciativa:'Copy de confianza (revisión certificada, garantía, talleres propios)', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
   {codigo:'OKR-CD3', iniciativa:'Mostrar en ficha historial de vehículo', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
   {codigo:'OKR-CD4', iniciativa:'Swipe en fotos de inspección', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
-  {codigo:'OKR-CD4', iniciativa:'Optimización UX - fricción del formulario de cotización', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimización UX - fricción del formulario de cotización', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
 ];
 
 const colorPalancaCap = {
   'CD1.1':{fill:'#BAE6FD',text:'#0C4A6E'},'CD1.2':{fill:'#7DD3FC',text:'#0369A1'},
   'CD2.1':{fill:'#C4B5FD',text:'#3B0764'},'CD2.2':{fill:'#A78BFA',text:'#2E1065'},
   'CD3.1':{fill:'#FCA5A5',text:'#7F1D1D'},'CD3.2':{fill:'#FDBA74',text:'#7C2D12'},
-  'CD4.1':{fill:'#FCD34D',text:'#78350F'},'CD4.2':{fill:'#86EFAC',text:'#14532D'},
+  'CD4.1':{fill:'#FCD34D',text:'#78350F'},'CD4.1b':{fill:'#FDE68A',text:'#78350F'},
+  'CD4.2':{fill:'#86EFAC',text:'#14532D'},
   'CD4.3':{fill:'#6EE7B7',text:'#065F46'},
   'OKR-CD1':{fill:'#BAE6FD',text:'#0C4A6E'},'OKR-CD2':{fill:'#DDD6FE',text:'#3B0764'},
   'OKR-CD3':{fill:'#FECACA',text:'#7F1D1D'},'OKR-CD4':{fill:'#FEF08A',text:'#713F12'},
@@ -435,7 +436,8 @@ const ganttLabelsCap = {
   'CD1.1':'Rescatar tasaciones','CD1.2':'Leads agenden inspección',
   'CD2.1':'Interacción compra','CD2.2':'Dead clicks compra',
   'CD3.1':'Buy process','CD3.2':'Catálogo foto',
-  'CD4.1':'Dead clicks venta','CD4.2':'Catálogo interact.','CD4.3':'Cotización interact.',
+  'CD4.1':'Dead clicks catálogo','CD4.1b':'Dead clicks ficha',
+  'CD4.2':'Catálogo interact.','CD4.3':'Cotización interact.',
   'OKR-CD1':'Leads tasación agenda','OKR-CD2':'UX Compra',
   'OKR-CD3':'Prospectos Venta','OKR-CD4':'UX Venta',
 };
@@ -566,7 +568,16 @@ let datosPub = {
   "P3.2":      {"S1":"0",     "S2":"0",     "S3":"0",     "S4":"0"}
 };
 let datosCap = {
-  "CD1.1": {"S3":"0"}
+  "CD1.1": {"S1":"47,10%","S2":"42,90%","S3":"39,90%","S4":"32,10%"},
+  "CD1.2": {"S1":"20,00%","S2":"21,00%","S3":"18,00%","S4":"19,00%"},
+  "CD2.1": {"S1":"69,00%","S2":"68,60%","S3":"67,70%","S4":"70,00%"},
+  "CD2.2": {"S1":"9,86%","S2":"9,24%","S3":"8,61%","S4":"7,99%"},
+  "CD3.1": {"S1":"3,90%","S2":"3,90%","S3":"3,90%","S4":"3,90%"},
+  "CD3.2": {"S4":"100,00%"},
+  "CD4.1": {"S1":"38,53%","S2":"37,75%","S3":"36,98%","S4":"36,20%"},
+  "CD4.1b":{"S1":"51,88%","S2":"50,94%","S3":"49,99%","S4":"49,05%"},
+  "CD4.2": {"S3":"61,03%","S4":"61,10%"},
+  "CD4.3": {"S3":"81,96%","S4":"82,07%"}
 };
 let datosOp = {
   "OP3.proy": {"S3":"506"},
@@ -1019,7 +1030,6 @@ function renderGantt() {
   let maxD = new Date(Math.max(...data.map(i => i.fin.getTime())));
   minD.setDate(minD.getDate() - ((minD.getDay()+6)%7));
   maxD.setDate(maxD.getDate() + (7-((maxD.getDay()+6)%7))%7);
-  const totalDays = diffD(minD, maxD)+1;
 
   const weekStarts = [];
   let cur = new Date(minD);
@@ -1031,7 +1041,11 @@ function renderGantt() {
     'En Proceso':  {bg:'#FEF3C7',text:'#92400E'},
     'En Riesgo':   {bg:'#FEE2E2',text:'#991B1B'},
   };
-  const lW=180, cW=42, pW=38, eW=68, rW=96, dW=82, gW=Math.max(420, weekStarts.length*60), rowH=28;
+  const MAX_WEEKS = 6;
+  const visWeeks = weekStarts.slice(0, MAX_WEEKS);
+  const capMaxD  = visWeeks.length ? new Date(visWeeks[visWeeks.length-1].getTime()+7*24*3600*1000) : maxD;
+  const totalDays = diffD(minD, capMaxD)+1;
+  const lW=260, cW=52, pW=38, eW=68, rW=96, dW=82, gW=visWeeks.length*84, rowH=28;
 
   let html = `<div style="min-width:${lW+cW+pW+eW+rW+dW+gW}px;position:relative;">`;
 
@@ -1042,8 +1056,8 @@ function renderGantt() {
     <div style="width:${eW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Estado</div>
     <div style="width:${rW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Responsable</div>
     <div style="width:${dW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Inicio–Fin</div>
-    <div style="width:${gW}px;position:relative;flex-shrink:0;height:30px;">`;
-  for (const ws of weekStarts) {
+    <div style="width:${gW}px;overflow:hidden;position:relative;flex-shrink:0;height:30px;">`;
+  for (const ws of visWeeks) {
     const left = (diffD(minD,ws)/totalDays)*gW;
     html += `<div style="position:absolute;left:${left}px;width:${(7/totalDays)*gW}px;padding:7px 0;text-align:center;font-size:9px;color:#94A3B8;border-left:1px solid #E2E8F0;">${fmtF(ws)}</div>`;
   }
@@ -1063,17 +1077,17 @@ function renderGantt() {
       <div style="width:${eW}px;padding:0 3px;text-align:center;flex-shrink:0;">${(()=>{const ei=estadoInfo[it.estado]||{bg:'#F1F5F9',text:'#64748B'};return `<span style="background:${ei.bg};color:${ei.text};padding:2px 5px;border-radius:3px;font-weight:600;font-size:9px;white-space:nowrap;">${it.estado}</span>`;})()}</div>
       <div style="width:${rW}px;padding:0 6px;text-align:left;font-size:9px;color:#374151;flex-shrink:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title="${it.responsable||'—'}">${it.responsable||'—'}</div>
       <div style="width:${dW}px;padding:0 3px;text-align:center;font-size:9.5px;color:#9CA3AF;flex-shrink:0;white-space:nowrap;">${fmtF(it.ini)}–${fmtF(it.fin)}</div>
-      <div style="width:${gW}px;position:relative;flex-shrink:0;height:100%;">`;
-    for (const ws of weekStarts) {
+      <div style="width:${gW}px;overflow:hidden;position:relative;flex-shrink:0;height:100%;">`;
+    for (const ws of visWeeks) {
       html += `<div style="position:absolute;left:${(diffD(minD,ws)/totalDays)*gW}px;top:0;bottom:0;width:1px;background:#F1F5F9;"></div>`;
     }
-    const barClr = {'Ok':'#22C55E','No Iniciado':'#94A3B8','En Proceso':'#F59E0B','En Riesgo':'#EF4444'}[it.estado]||'#94A3B8';
-html += `<div class="gantt-bar" onclick="goToPalanca('${it.codigo}')" title="${it.iniciativa} · ${it.estado} · ${it.responsable||'—'} · ${fmtF(it.ini)}–${fmtF(it.fin)}" style="position:absolute;left:${left}px;top:50%;transform:translateY(-50%);width:${width}px;height:14px;background:${barClr};border-radius:3px;cursor:pointer;border-left:3px solid ${c.fill};overflow:hidden;"></div>
+    const barClr = {'Ok':'#22C55E','No Iniciado':'#94A3B8','En Proceso':'#F59E0B','En Riesgo':'#EF4444','Finalizado':'#3B82F6'}[it.estado]||'#94A3B8';
+    html += `<div class="gantt-bar" onclick="goToPalanca('${it.codigo}')" title="${it.iniciativa} · ${it.estado} · ${it.responsable||'—'} · ${fmtF(it.ini)}–${fmtF(it.fin)}" style="position:absolute;left:${left}px;top:50%;transform:translateY(-50%);width:${width}px;height:14px;background:${barClr};border-radius:3px;cursor:pointer;border-left:3px solid ${c.fill};"></div>
       </div></div>`;
   }
 
   const hoy = new Date();
-  if (hoy >= minD && hoy <= maxD) {
+  if (hoy >= minD && hoy <= capMaxD) {
     const hL = lW+cW+pW+eW+rW+dW+(diffD(minD,hoy)/totalDays)*gW;
     html += `<div style="position:absolute;left:${hL}px;top:0;bottom:0;width:2px;background:#EF4444;pointer-events:none;z-index:5;opacity:.65;"></div>`;
   }
