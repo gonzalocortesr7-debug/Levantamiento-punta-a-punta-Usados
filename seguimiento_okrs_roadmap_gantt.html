@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tablero OKRs — Q2 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:#F0F4F8;color:#0F172A;font-size:13px;min-height:100vh}
+.hdr{background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);color:#fff;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.hdr-eye{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+.hdr-title{font-size:20px;font-weight:700;color:#F8FAFC}
+.hdr-sub{font-size:11.5px;color:#94A3B8;margin-top:3px}
+.hdr-right{text-align:right;font-size:11px;color:#94A3B8}
+.hdr-right strong{display:block;font-size:14px;font-weight:600;color:#CBD5E1;margin-bottom:2px}
+.main{padding:20px 24px;max-width:1600px;margin:0 auto}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:20px}
+.kpi-card{background:#fff;border-radius:10px;border:1px solid #E2E8F0;padding:16px 16px 14px;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.kpi-stripe{position:absolute;top:0;left:0;width:3px;height:100%}
+.kpi-badge{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 8px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.badge-c{background:#DBEAFE;color:#1E40AF}.badge-v{background:#FEE2E2;color:#991B1B}.badge-p{background:#D1FAE5;color:#065F46}
+.kpi-name{font-size:11px;color:#64748B;line-height:1.4;margin-bottom:10px;min-height:28px}
+.kpi-nums{display:flex;align-items:baseline;gap:5px;margin-bottom:9px}
+.kpi-actual{font-size:28px;font-weight:700;line-height:1;color:#0F172A}
+.kpi-target{font-size:12px;color:#94A3B8}
+.kpi-bar-bg{height:4px;background:#E2E8F0;border-radius:99px;overflow:hidden;margin-bottom:6px}
+.kpi-bar-fill{height:100%;border-radius:99px;transition:width .5s ease}
+.kpi-foot{font-size:10.5px;font-weight:600}
+.c-ok{color:#059669}.c-warn{color:#D97706}.c-bad{color:#DC2626}.c-none{color:#9CA3AF}
+.tab-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.tab-group{display:flex;gap:2px;background:#E2E8F0;padding:3px;border-radius:8px}
+.tab-btn{border:none;background:transparent;padding:6px 18px;font-size:12px;font-weight:500;border-radius:6px;cursor:pointer;color:#64748B;font-family:inherit;transition:all .15s}
+.tab-btn.active{background:#fff;color:#0F172A;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.flt-banner{display:none;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:8px 14px;margin-bottom:12px;font-size:12px;color:#1E40AF;align-items:center;justify-content:space-between}
+.flt-banner button{border:none;background:transparent;color:#1E40AF;cursor:pointer;font-weight:700;font-family:inherit;font-size:12px}
+.seg-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.legend{display:flex;align-items:center;gap:12px;font-size:11px;color:#6B7280;flex-wrap:wrap}
+.ldot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px}
+.mes-group{display:flex;gap:5px;flex-wrap:wrap}
+.mes-btn{border:1px solid #E2E8F0;background:#fff;padding:4px 14px;font-size:11px;font-weight:500;border-radius:99px;cursor:pointer;color:#64748B;font-family:inherit;transition:all .15s}
+.mes-btn.active{background:#0F172A;border-color:#0F172A;color:#fff}
+.seg-wrap{overflow-x:auto;background:#fff;border-radius:10px;border:1px solid #E2E8F0;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.seg-table{width:100%;border-collapse:collapse;font-size:12px}
+.seg-table th{background:#F8FAFC;padding:9px 10px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6B7280;border-bottom:1px solid #E2E8F0;white-space:nowrap}
+.seg-table th:first-child{text-align:left;padding-left:16px}
+.sem-cell{padding:2px;border-left:1px solid #F1F5F9;border-bottom:1px solid #F1F5F9;min-width:62px}
+.sem-input{width:100%;border:none;background:transparent;text-align:center;font-size:12px;font-family:inherit;padding:8px 3px;color:#374151;outline:none;border-radius:4px;font-weight:500}
+.sem-input:focus{background:#EFF6FF;color:#1E40AF;box-shadow:0 0 0 1.5px #93C5FD inset}
+.status-ok{background:#D1FAE5!important}.status-warn{background:#FEF3C7!important}.status-bad{background:#FEE2E2!important}
+.toolbar{display:flex;align-items:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.btn{border:1px solid #E2E8F0;background:#fff;padding:6px 14px;font-size:12px;font-weight:500;border-radius:7px;cursor:pointer;color:#374151;font-family:inherit;transition:background .1s}
+.btn:hover{background:#F8FAFC}
+.btn-del{color:#DC2626;border-color:#FECACA}.btn-del:hover{background:#FEF2F2}
+.save-status{margin-left:auto;font-size:11px;font-weight:600;color:#059669}
+.hint{font-size:11px;color:#9CA3AF;margin-top:10px}
+.gantt-legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11px;color:#6B7280;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid #E2E8F0;margin-bottom:12px}
+.gchip{display:inline-flex;align-items:center;gap:5px}
+.gchip-dot{display:inline-block;width:14px;height:7px;border-radius:2px}
+.gantt-wrap{overflow-x:auto;background:#fff;border-radius:10px;border:1px solid #E2E8F0;box-shadow:0 1px 3px rgba(0,0,0,.06);position:relative}
+.gantt-row:hover{background:#F8FAFC!important}
+.gantt-bar{transition:opacity .15s}.gantt-bar:hover{opacity:.82}
+.squad-tab{display:inline-flex;align-items:center;gap:9px;padding:14px 24px 13px;border-bottom:3px solid transparent;font-size:14px;font-weight:700;color:#94A3B8;cursor:pointer;user-select:none;transition:all .2s;letter-spacing:.01em;}
+.squad-tab:hover{color:#475569;background:#F8FAFC;}
+[data-squad="leads"].squad-active{border-bottom-color:#22C55E;color:#16A34A;background:#F0FDF4;}
+[data-squad="pub"].squad-active{border-bottom-color:#F59E0B;color:#B45309;background:#FFFBEB;}
+[data-squad="cap"].squad-active{border-bottom-color:#8B5CF6;color:#6D28D9;background:#F5F3FF;}
+[data-squad="op"].squad-active{border-bottom-color:#F97316;color:#C2410C;background:#FFF7ED;}
+.squad-dot{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div style="background:#fff;border-bottom:1px solid #E2E8F0;padding:0 24px;display:flex;align-items:center;gap:0;">
+  <div class="squad-tab squad-active" data-squad="cap" onclick="showSquad('cap')">
+    <span class="squad-dot" style="background:#8B5CF6;box-shadow:0 0 0 2px #EDE9FE;"></span>
+    Squad Captación Digital
+  </div>
+  <div class="squad-tab" data-squad="leads" onclick="showSquad('leads')">
+    <span class="squad-dot" style="background:#22C55E;box-shadow:0 0 0 2px #DCFCE7;"></span>
+    Squad Gestión de Leads
+  </div>
+  <div class="squad-tab" data-squad="op" onclick="showSquad('op')">
+    <span class="squad-dot" style="background:#F97316;box-shadow:0 0 0 2px #FFEDD5;"></span>
+    Squad Operaciones
+  </div>
+  <div class="squad-tab" data-squad="pub" onclick="showSquad('pub')">
+    <span class="squad-dot" style="background:#F59E0B;box-shadow:0 0 0 2px #FEF3C7;"></span>
+    Squad Publicaciones
+  </div>
+</div>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-eye" id="hdr-eye">Americar · Gestión de Leads · Q2 2026</div>
+    <div class="hdr-title">Tablero de OKRs</div>
+    <div class="hdr-sub">Líder: <span id="hdr-lider">Mayorin Vivas</span> &nbsp;·&nbsp; Última sesión: <span id="hdr-ultima"></span></div>
+  </div>
+  <div class="hdr-right">
+    <strong id="hdr-sem">—</strong>
+    <span id="hdr-fecha"></span>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="kpi-grid" id="kpi-grid"></div>
+
+  <div class="tab-bar">
+    <div class="tab-group">
+      <button class="tab-btn active" id="tab-seg" onclick="showTab('seg')">Seguimiento OKRs</button>
+      <button class="tab-btn" id="tab-road" onclick="showTab('road')">Roadmap (Gantt)</button>
+    </div>
+  </div>
+
+  <div id="filter-banner" class="flt-banner">
+    <span id="filter-text"></span>
+    <button onclick="clearFilter()">Limpiar ✕</button>
+  </div>
+
+  <div id="view-seg">
+    <div class="seg-topbar">
+      <div class="legend">
+        <strong style="color:#374151;font-weight:600;">Semáforo:</strong>
+        <span><span class="ldot" style="background:#059669;"></span>≥ 90% meta</span>
+        <span><span class="ldot" style="background:#D97706;"></span>70–90%</span>
+        <span><span class="ldot" style="background:#DC2626;"></span>&lt; 70%</span>
+      </div>
+      <div class="mes-group" id="mes-group-seg"></div>
+    </div>
+    <div class="seg-wrap" id="seg-table-wrap"></div>
+    <div class="toolbar">
+      <button class="btn" onclick="exportData()">↓ Exportar CSV</button>
+      <button class="btn btn-del" onclick="resetData()">↺ Limpiar datos</button>
+      <span class="save-status" id="save-status"></span>
+    </div>
+    <p class="hint">Escribe el valor en cada celda de semana. Clic en el nombre de la palanca para ver sus iniciativas en el Gantt.</p>
+  </div>
+
+  <div id="view-road" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+      <div class="mes-group" id="mes-group-gantt"></div>
+      <span id="gantt-count" style="font-size:11px;color:#9CA3AF;"></span>
+    </div>
+    <div class="gantt-legend" id="gantt-legend"></div>
+    <div class="gantt-wrap" id="gantt-container"></div>
+    <p class="hint" style="margin-top:10px;">Clic en una barra para navegar a la palanca en el seguimiento.</p>
+  </div>
+
+</div>
+
+<script>
+// ── DATA: GESTIÓN DE LEADS ──
+const palancasLeads = [
+  {tipo:'area_sep', texto:'COMPRA', color:'#1E3A5F'},
+  {tipo:'okr_titulo', texto:'OKR C1: Conversión Lead → Lead SQL / Oportunidad Compra'},
+  {tipo:'okr', codigo:'OKR-C1', texto:'OKR C1 – % Conversión Lead → Lead SQL / Oportunidad (Compra)', meta:'3,00%', metaNum:3, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR C1'},
+  {tipo:'pal', codigo:'C1.1', texto:'Palanca C1.1 – Contactabilidad Global de Leads de Compra', meta:'70%', metaNum:70, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'C1.2', texto:'Palanca C1.2 – Tiempo Promedio de Primer Contacto (Leads Compra)', meta:'< 6h', metaNum:6, direccion:'bajar', unidad:'h'},
+  {tipo:'okr_titulo', texto:'OKR C2: Conversión Lead → Cita de Inspección Completada'},
+  {tipo:'okr', codigo:'OKR-C2', texto:'OKR C2 – % de Leads que Completan Cita de Inspección', meta:'40%', metaNum:40, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR C2'},
+  {tipo:'pal', codigo:'C2.1', texto:'Palanca C2.1 – Validación y Seguimiento de Citas de Inspección desde el Lead (completada)', meta:'40%', metaNum:40, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'C2.2', texto:'Palanca C2.2 – Capacitación y Auditoría de Protocolos en Llamadas de Inspección', meta:'Protocolo de capacitación y auditoria', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'area_sep', texto:'VENTA', color:'#7B1E1E'},
+  {tipo:'okr_titulo', texto:'OKR V1: Conversión Lead → Lead SQL / Oportunidad Venta'},
+  {tipo:'okr', codigo:'OKR-V1', texto:'OKR V1 – Conversión Lead → Lead SQL / Oportunidad Venta', meta:'10%', metaNum:10, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR V1'},
+  {tipo:'pal', codigo:'V1.1', texto:'Palanca V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP', meta:'15%', metaNum:15, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'V1.2', texto:'Palanca V1.2 – Conversión Lead SQL (Oportunidad de Venta) Segmento + VPP (Flujo y Cadencia Exclusiva)', meta:'25%', metaNum:25, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'V1.3', texto:'Palanca V1.3 – Conversión Lead SQL + Financiamiento (Oportunidad de Venta)', meta:'14%', metaNum:14, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'V1.4', texto:'Palanca V1.4 – Política comercial para segmento de clientes y VPP (Marketing, Comercial, Experiencia y Gestión)', meta:'Política', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'okr_titulo', texto:'OKR V2: Conversión Lead → Cita de Venta Completada'},
+  {tipo:'okr', codigo:'OKR-V2', texto:'OKR V2 – Tasa de Citas de Venta Completadas / Efectivas (Asistencia a Piso)', meta:'20%', metaNum:20, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR V2'},
+  {tipo:'pal', codigo:'V2.1', texto:'Palanca V2.1 – Automatización del Flujo de Confirmación y Recordatorio de Cita', meta:'Desarrollo', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'pal', codigo:'V2.2', texto:'Palanca V2.2 – Optimización del flujo de descarte del lead con cita (no autocancelar) y preguntar al cliente si asistió', meta:'Desarrollo', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'pal', codigo:'V2.3', texto:'Palanca V2.3 – Incorporar motivos de cancelación de la cita', meta:'Desarrollo', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'pal', codigo:'V2.4', texto:'Palanca V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal', meta:'Plan de actualización de rutina para cita de venta al jefe', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'pal', codigo:'V2.5', texto:'Palanca V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas', meta:'Estrategia y propuesta de valor para clientes con citas agendadas', metaNum:null, direccion:'subir', unidad:''},
+];
+
+const semanasLeads = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
+const fechasSemLeads = ['20/04','27/04','04/05','11/05','18/05','25/05','01/06','08/06','15/06','22/06','29/06','06/07'];
+
+const mesesLeads = [
+  {label:'Todos', semanas:null},
+  {label:'Abril', semanas:['S1','S2']},
+  {label:'Mayo',  semanas:['S3','S4','S5','S6']},
+  {label:'Junio', semanas:['S7','S8','S9','S10','S11']},
+  {label:'Julio', semanas:['S12']},
+];
+const mesesGanttLeads = [
+  {label:'Todos', ini:null, fin:null},
+  {label:'Abril', ini:new Date(2026,3,1), fin:new Date(2026,3,30)},
+  {label:'Mayo',  ini:new Date(2026,4,1), fin:new Date(2026,4,31)},
+  {label:'Junio', ini:new Date(2026,5,1), fin:new Date(2026,5,30)},
+  {label:'Julio', ini:new Date(2026,6,1), fin:new Date(2026,6,31)},
+];
+
+const iniciativasLeads = [
+  {codigo:'C1.1', iniciativa:'Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)', prio:'Alta', estado:'No Iniciado', responsable:'Gestión de Leads / CRM', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'C1.1', iniciativa:'OTP al inicio del flujo de compra para validar solo números reales', prio:'Alta', estado:'Iniciado', responsable:'Backend / Producto Digital', ini:new Date(2026,2,23), fin:new Date(2026,4,8)},
+  {codigo:'C1.1', iniciativa:'Primer contacto automático desde Llaima en Compra (iniciativa con Paula)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,15), fin:new Date(2026,5,5)},
+  {codigo:'C1.2', iniciativa:'Reasignación Express: reasignación automática de leads sin contacto al superar SLA', prio:'Media', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
+  {codigo:'C1.2', iniciativa:'Monitoreo de colas y priorización de leads categoría Muy Alta y Alta', prio:'Alta', estado:'Iniciado', responsable:'Lead Management', ini:new Date(2026,4,11), fin:new Date(2026,4,29)},
+  {codigo:'C2.1', iniciativa:'Monitoreo de citas agendadas y atención de leads', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'C2.1', iniciativa:'Lead Scoring Predictivo: análisis del tipo de cliente y auto con mayor conversión en compra', prio:'Alta', estado:'No Iniciado', responsable:'Datos / Producto Digital / CRM', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
+  {codigo:'C2.1', iniciativa:'Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
+  {codigo:'C2.1', iniciativa:'Panel de citas de inspección del día para jefe de sucursal (visibilidad tiempo real)', prio:'Media', estado:'No Iniciado', responsable:'CRM / Lead Management', ini:new Date(2026,5,1), fin:new Date(2026,6,3)},
+  {codigo:'C2.2', iniciativa:'Capacitación y auditoría de protocolos en llamadas de inspección basada en éxito', prio:'Alta', estado:'No Iniciado', responsable:'Gestión de Leads / Exp. Cliente', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'C2.2', iniciativa:'Análisis de llamadas con IA para detectar factores de éxito en conversión de inspección', prio:'Alta', estado:'No Iniciado', responsable:'IA / Gestión de Leads', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
+  {codigo:'C2.2', iniciativa:'Dashboard de rendimiento individual por asesor en llamadas de compra (inspección)', prio:'Media', estado:'No Iniciado', responsable:'CRM / Lead Management', ini:new Date(2026,5,8), fin:new Date(2026,5,26)},
+  {codigo:'V1.1', iniciativa:'Flujo diferenciado VPP: enrutamiento automático a asesor especializado en BPP', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
+  {codigo:'V1.2', iniciativa:'Flujo exclusivo para leads Segmento con VPP', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V1.2', iniciativa:'Segmentación de leads por tipo y paneles de trabajo por grupos de foco', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / Producto Digital', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V1.2', iniciativa:'Panel exclusivo de seguimiento comercial (jefes, supervisores, gerentes)', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Lead Management', ini:new Date(2026,5,1), fin:new Date(2026,5,26)},
+  {codigo:'V1.3', iniciativa:'Asignación directa al asesor financiero desde que el lead declara interés en financiamiento', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V1.3', iniciativa:'Apertura de motivos de descarte para dar feedback estructurado a Marketing', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Gestión de Leads / Marketing', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V1.3', iniciativa:'Follow-up automatizado de financiamiento con simulación de cuotas personalizada', prio:'Media', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,18), fin:new Date(2026,6,3)},
+  {codigo:'V1.4', iniciativa:'Diseño e implementación de política comercial segmentada por perfil de cliente + VPP', prio:'Alta', estado:'Iniciado', responsable:'Comercial / Marketing / Exp. Cliente', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
+  {codigo:'V2.1', iniciativa:'Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Marketing', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V2.1', iniciativa:'Automatización flujo de confirmación + recordatorio de cita de venta (elimina dependencia del vendedor)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
+  {codigo:'V2.2', iniciativa:'Flujo inteligente: antes de descartar lead con cita, validar si el cliente asistió a sucursal', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Producto Digital', ini:new Date(2026,4,25), fin:new Date(2026,5,12)},
+  {codigo:'V2.3', iniciativa:'Captura y categorización obligatoria del motivo de no asistencia al cancelar lead con cita', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Producto Digital', ini:new Date(2026,4,25), fin:new Date(2026,5,12)},
+  {codigo:'V2.3', iniciativa:'Dashboard de análisis de motivos de cancelación con feedback a Marketing y Comercial', prio:'Media', estado:'No Iniciado', responsable:'Datos / Marketing / Comercial', ini:new Date(2026,5,8), fin:new Date(2026,5,26)},
+  {codigo:'V2.4', iniciativa:'Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web', prio:'Alta', estado:'Iniciado', responsable:'Comercial / Gestión de Leads', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V2.4', iniciativa:'Reporte matutino automático al jefe de sucursal con citas del día (desde CRM, tiempo real)', prio:'Alta', estado:'Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
+  {codigo:'V2.5', iniciativa:'Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Gestión de Leads / Exp. Cliente / Marketing', ini:new Date(2026,5,1), fin:new Date(2026,5,26)},
+  {codigo:'V2.5', iniciativa:'Material digital pre-cita: ficha del auto con fotos HD', prio:'Media', estado:'No Iniciado', responsable:'Marketing / IA', ini:new Date(2026,4,18), fin:new Date(2026,6,3)},
+];
+
+const colorPalancaLeads = {
+  'C1.1':{fill:'#85B7EB',text:'#042C53'},'C1.2':{fill:'#5DCAA5',text:'#04342C'},
+  'C2.1':{fill:'#EF9F27',text:'#412402'},'C2.2':{fill:'#AFA9EC',text:'#26215C'},
+  'OKR-C1':{fill:'#F0997B',text:'#4A1B0C'},'OKR-C2':{fill:'#ED93B1',text:'#4B1528'},
+  'V1.1':{fill:'#A8D5A2',text:'#1A4D2E'},'V1.2':{fill:'#58C9A5',text:'#0A3020'},
+  'V1.3':{fill:'#86EFAC',text:'#14532D'},'V1.4':{fill:'#FDE68A',text:'#78350F'},
+  'V2.1':{fill:'#FFBA6B',text:'#4A2200'},'V2.2':{fill:'#CE93D8',text:'#4A0072'},
+  'V2.3':{fill:'#DDD6FE',text:'#3B0764'},'V2.4':{fill:'#FCA5A5',text:'#7F1D1D'},
+  'V2.5':{fill:'#BAE6FD',text:'#0C4A6E'},
+  'OKR-V1':{fill:'#EF9A9A',text:'#7B1E1E'},'OKR-V2':{fill:'#F48FB1',text:'#880E4F'},
+};
+const ganttLabelsLeads = {
+  'C1.1':'Contactabilidad','C1.2':'Tiempo contacto',
+  'C2.1':'Validación citas','C2.2':'Capacitación inspección',
+  'OKR-C1':'Lead Scoring','OKR-C2':'Cita Inspección',
+  'V1.1':'VPP Lead SQL','V1.2':'Segmento+VPP','V1.3':'Financiamiento','V1.4':'Política comercial',
+  'V2.1':'Confirm. cita venta','V2.2':'Descarte lead cita','V2.3':'Motivos cancelación',
+  'V2.4':'Expansión suc.','V2.5':'Estrategia valor',
+  'OKR-V1':'SQL Venta','OKR-V2':'Cita Venta efectiva',
+};
+
+// ── DATA: PUBLICACIONES ──
+const palancasPub = [
+  {tipo:'area_sep', texto:'PUBLICACIONES WEB', color:'#065F46'},
+  {tipo:'okr_titulo', texto:'OKRS2: Aumentar la cantidad de unidades publicadas 400 promedio'},
+  {tipo:'okr', codigo:'OKR-P1', texto:'OKR P1 - Aumentar el Inventario publicado en Vitrina de un 79,5% a un 90%', meta:'90%', metaNum:90, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P1.proy', texto:'Proyección esperada del OKR', meta:'—'},
+  {tipo:'ref', codigo:'P1.ref1', texto:'*Total Inventario Vitrina', meta:'—'},
+  {tipo:'sub', texto:'Palancas OKR P1'},
+  {tipo:'pal', codigo:'P1.1', texto:'Palanca P1.1: Publicar unidades en Acopio de 114 a <30 Unidades', meta:'30', metaNum:30, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'P1.2', texto:'Palanca P1.2: Publicar unidades Reservadas 0 → 100%', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P1.ref2', texto:'Reservas Publicadas', meta:'—'},
+  {tipo:'ref', codigo:'P1.ref3', texto:'*Total unidades Reservadas', meta:'—'},
+  {tipo:'okr_titulo', texto:'OKRS3: Venta'},
+  {tipo:'okr', codigo:'OKR-P2', texto:'OKR V1-Fotografías: Unidades publicadas con foto calidad 61,5% → 95%', meta:'95%', metaNum:95, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR V1'},
+  {tipo:'pal', codigo:'P2.1', texto:'Palanca V1.1: Unidades con foto Impel', meta:'—'},
+  {tipo:'ref', codigo:'P2.ref1', texto:'*Total unidades Publicadas', meta:'—'},
+  {tipo:'pal', codigo:'P2.2', texto:'Palanca V1.2: Seguimiento Fotografía Impel Unidades disponibles en piso por Zonas (promedios)', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P2.ref2', texto:'% Publicado foto Impel Zona Metropolitana (promedio semanal)', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P2.ref3', texto:'% Publicado foto Impel Zona Longitudinal (promedio semanal)', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P2.ref4', texto:'% Publicado foto Impel Zona Concepción (promedio semanal)', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P2.ref5', texto:'% Publicado foto Impel Zona Temuco (promedio semanal)', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'P2.refZSur', texto:'% Publicado foto Impel Zona Sur (promedio semanal)', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'P2.3', texto:'Palanca V1.3: Unidades con foto Inspección mejorada', meta:'—'},
+  {tipo:'ref', codigo:'P2.ref6', texto:'*Total unidades Publicadas', meta:'—'},
+  {tipo:'okr', codigo:'OKR-P3', texto:'OKR V2-Fotografías: disminuir la cantidad de unidades sin foto en el sitio web 338 → <30', meta:'<30', metaNum:30, direccion:'bajar', unidad:''},
+  {tipo:'sub', texto:'Palancas OKR V2'},
+  {tipo:'pal', codigo:'P3.1', texto:'Palanca V2.1: Disminuir la cantidad de unidades publicadas sin fotos', meta:'30', metaNum:30, direccion:'bajar', unidad:''},
+  {tipo:'ref', codigo:'P3.ref1', texto:'*Total unidades Publicadas', meta:'—'},
+  {tipo:'pal', codigo:'P3.2', texto:'Palanca V2.2: Unidades Test Car ingresadas al Flujo Llaima', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
+];
+
+const semanasPub = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
+const fechasSemPub = ['20/04','27/04','04/05','11/05','18/05','25/05','01/06','08/06','15/06','22/06','29/06','06/07'];
+
+const mesesPub = [
+  {label:'Todos', semanas:null},
+  {label:'Abril', semanas:['S1','S2']},
+  {label:'Mayo',  semanas:['S3','S4','S5','S6']},
+  {label:'Junio', semanas:['S7','S8','S9','S10','S11']},
+  {label:'Julio', semanas:['S12']},
+];
+const mesesGanttPub = [
+  {label:'Todos', ini:null, fin:null},
+  {label:'Abril', ini:new Date(2026,3,1), fin:new Date(2026,3,30)},
+  {label:'Mayo',  ini:new Date(2026,4,1), fin:new Date(2026,4,31)},
+  {label:'Junio', ini:new Date(2026,5,1), fin:new Date(2026,5,30)},
+  {label:'Julio', ini:new Date(2026,6,1), fin:new Date(2026,6,31)},
+];
+
+const iniciativasPub = [
+  // Acopio
+  {codigo:'P1.1', iniciativa:'Publicar unidades en Acopio', prio:'Alta', estado:'Ok', responsable:'D. Villegas', ini:new Date(2026,4,1), fin:new Date(2026,4,31)},
+  {codigo:'P1.1', iniciativa:'Generar cambio de estado a Gestpark de "previsión" a "Stock" al aplicar Checklist de Entrega', prio:'Alta', estado:'No Iniciado', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,7,31)},
+  // Reservas
+  {codigo:'P1.2', iniciativa:'Publicar Unidades Reservadas', prio:'Alta', estado:'Ok', responsable:'D. Villegas/G. Barrera', ini:new Date(2026,3,15), fin:new Date(2026,4,15)},
+  {codigo:'P1.2', iniciativa:'Liberación automática de reservas fantasma', prio:'Alta', estado:'Ok', responsable:'D. Abarca', ini:new Date(2026,3,15), fin:new Date(2026,4,31)},
+  {codigo:'P1.2', iniciativa:'Regla en Llaima: liberación a 48h sin avance', prio:'Alta', estado:'Ok', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'P1.2', iniciativa:'Alerta al asesor antes del vencimiento', prio:'Alta', estado:'Ok', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'P1.2', iniciativa:'Diferenciar reserva comercial activa vs. fantasma (>30 días sin avance)', prio:'Alta', estado:'Ok', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  // Otro
+  {codigo:'OKR-P1', iniciativa:'Actualización de precios de Autos Publicados con errores (corre cada 1h → actualización 15 min)', prio:'Alta', estado:'No Iniciado', responsable:'J. Olmedo/G. Barrera', ini:new Date(2026,4,15), fin:new Date(2026,6,30)},
+  {codigo:'OKR-P1', iniciativa:'Bloqueo de publicación sin campos mínimos (definir campos mínimos con equipo pricing)', prio:'Alta', estado:'No Iniciado', responsable:'R. Canales', ini:new Date(2026,4,15), fin:new Date(2026,6,30)},
+  // Foto Impel
+  {codigo:'OKR-P2', iniciativa:'[TRANSFORMACIONAL] Foto guiada', prio:'Alta', estado:'En Proceso', responsable:'V. Araya', ini:new Date(2026,4,18), fin:new Date(2026,6,30)},
+  {codigo:'OKR-P2', iniciativa:'[TRANSFORMACIONAL] Foto con IA', prio:'Alta', estado:'No Iniciado', responsable:'V. Araya', ini:new Date(2026,5,1), fin:new Date(2026,7,31)},
+  {codigo:'OKR-P2', iniciativa:'SLA transitorio foto tomada → Impel <24h para unidades disponibles en piso', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/D. Villegas', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'OKR-P2', iniciativa:'Target mínimo 85% por zona (considerando stock en piso) hasta completar el roll-out', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/D. Villegas', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'OKR-P2', iniciativa:'Priorización de stock premium durante transición', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/D. Villegas', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'OKR-P2', iniciativa:'Revisión proceso fotográfico y programa de incentivos', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/A. Korenbiit', ini:new Date(2026,4,15), fin:new Date(2026,5,30)},
+  // Sin foto
+  {codigo:'P3.1', iniciativa:'Ingresar a Llaima todas las unidades que ingresan al stock (sumar Test car, compras b2b)', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/D. Villegas', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'P3.1', iniciativa:'Priorización de stock sin fotografía', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/D. Villegas', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'P3.1', iniciativa:'Alerta cuando backlog >15% del disponible publicado', prio:'Media', estado:'No Iniciado', responsable:'J. Jerez/A. Korenbiit', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+];
+
+const colorPalancaPub = {
+  'P1.1':{fill:'#6EE7B7',text:'#065F46'},'P1.2':{fill:'#34D399',text:'#064E3B'},
+  'P3.1':{fill:'#FCD34D',text:'#78350F'},'P3.2':{fill:'#93C5FD',text:'#1E3A8A'},
+  'OKR-P1':{fill:'#A7F3D0',text:'#064E3B'},'OKR-P2':{fill:'#FECACA',text:'#7F1D1D'},
+  'OKR-P3':{fill:'#FEF08A',text:'#713F12'},
+};
+const ganttLabelsPub = {
+  'P1.1':'Acopio','P1.2':'Reservas fantasma',
+  'P3.1':'Sin foto','P3.2':'Test Car Llaima',
+  'OKR-P1':'Publicaciones','OKR-P2':'Foto Impel','OKR-P3':'Backlog fotos',
+};
+
+// ── DATA: CAPTACIÓN DIGITAL ──
+const palancasCap = [
+  {tipo:'area_sep', texto:'EJE COMPRA', color:'#1E3A5F'},
+  {tipo:'okr', codigo:'OKR-CD1', texto:'OKR 1- Aumentar en un 30% los leads que tasaron llevarlos a concretar una agenda, pasar de 1866 a 2500 promedio mensual para el 30 de junio', meta:'70%', metaNum:70, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR 1'},
+  {tipo:'pal', codigo:'CD1.1', texto:'Rescatar por lo menos el 10% de leads que generaron una tasación a través de paula', meta:'10%', metaNum:10, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD1.2', texto:'Lograr que al menos el 35% de leads verificados agenden inspección', meta:'35%', metaNum:35, direccion:'subir', unidad:'%'},
+  {tipo:'okr', codigo:'OKR-CD2', texto:'OKR 2- Mejorar la nota de evaluación UX de la sección Compra respecto a competidores, pasando de 7.5 a 17 puntos (sobre 27) al 30 de junio de 2026.', meta:'60%', metaNum:60, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR 2'},
+  {tipo:'pal', codigo:'CD2.1', texto:'Aumentar la tasa de interacción del 69% al 85% en páginas de compra mediante mejoras de UX priorizadas', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD2.2', texto:'Reducir la tasa de dead clicks de 8,6% a menos del 3% en la sección Compra', meta:'<3%', metaNum:3, direccion:'bajar', unidad:'%'},
+  {tipo:'area_sep', texto:'EJE VENTA', color:'#7B1E1E'},
+  {tipo:'okr', codigo:'OKR-CD3', texto:'OKR 3 - Aumentar la generación de prospectos de 9690 promedio de leads a 12500 promedio (+29%) a al 30 junio', meta:'—', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'ref', codigo:'CD3.proy', texto:'Proyección esperada del OKR', meta:'—'},
+  {tipo:'sub', texto:'Palancas OKR 3'},
+  {tipo:'pal', codigo:'CD3.1', texto:'Incrementar la tasa de inicio del proceso de compra (buy process) de 3,9% a 5,3%', meta:'5,3%', metaNum:5.3, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD3.2', texto:'Asegurar que el 100% de vehículos del catálogo de usados cuente con fotografía, como estándar de calidad que impacta la conversión.', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
+  {tipo:'okr', codigo:'OKR-CD4', texto:'OKR 4 - Mejorar la nota de evaluación UX de la sección Venta respecto a competidores, pasando de 15 a 20 puntos (sobre 24) al 30 de junio de 2026.', meta:'—', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'sub', texto:'Palancas OKR 4'},
+  {tipo:'pal', codigo:'CD4.1', texto:'Reducir dead clicks en sección Venta de [X]% a [Y]%', meta:'—', metaNum:null, direccion:'bajar', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.2', texto:'Aumentar tasa de interacción en páginas de catálogo de 61,03% a 75%', meta:'75%', metaNum:75, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.3', texto:'Aumentar tasa de interacción en páginas de cotización de 81,96% a 95%.', meta:'95%', metaNum:95, direccion:'subir', unidad:'%'},
+];
+
+const semanasCap    = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
+const fechasSemCap  = ['20/04','27/04','04/05','11/05','18/05','25/05','01/06','08/06','15/06','22/06','29/06','06/07'];
+
+const mesesCap = [
+  {label:'Todos', semanas:null},
+  {label:'Abril', semanas:['S1','S2']},
+  {label:'Mayo',  semanas:['S3','S4','S5','S6']},
+  {label:'Junio', semanas:['S7','S8','S9','S10','S11']},
+  {label:'Julio', semanas:['S12']},
+];
+const mesesGanttCap = [
+  {label:'Todos', ini:null,              fin:null},
+  {label:'Abril', ini:new Date(2026,3,1), fin:new Date(2026,3,30)},
+  {label:'Mayo',  ini:new Date(2026,4,1), fin:new Date(2026,4,31)},
+  {label:'Junio', ini:new Date(2026,5,1), fin:new Date(2026,5,30)},
+  {label:'Julio', ini:new Date(2026,6,1), fin:new Date(2026,6,31)},
+];
+
+const iniciativasCap = [
+  {codigo:'OKR-CD2', iniciativa:'Reformular título: "Ingresa tus datos para recibir la tasación de tu auto"', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Marketing', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Corregir bug de cambio de campo (formulario queda en estado inconsistente)', prio:'Alta', estado:'No Iniciado', responsable:'Backend / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Unificar nomenclatura "Datos del auto" en todas las pantallas del flujo', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Marketing', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Pre-filtro de elegibilidad al inicio del flujo + modal de rechazo empático', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD2', iniciativa:'UX del flujo con autocompletado por patente (Autofact)', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Buscador tipeable (typeahead) en selectores Marca, Modelo, Versión', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,18), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD2', iniciativa:'Validación inteligente de kilometraje con mensaje inline no bloqueante', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,18), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD2', iniciativa:'Diseño: teléfono integrado al formulario + rediseño completo del modal OTP', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD2', iniciativa:'Campo RUT con autoformato + experiencia de cliente reconocido', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,11), fin:new Date(2026,5,1)},
+  {codigo:'OKR-CD2', iniciativa:'Reformular frase: "buenas condiciones" → "El valor final se confirma tras la inspección"', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Frontend', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Ícono junto al precio con condiciones desplegables en contexto', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Frontend', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Diferenciar visualmente Intercambio vs Inmediato por beneficio real', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD2', iniciativa:'Diseño: componente de rango referencial de vehículos similares junto al precio', prio:'Baja', estado:'No Iniciado', responsable:'C. Araya / Backend', ini:new Date(2026,4,25), fin:new Date(2026,5,8)},
+  {codigo:'OKR-CD2', iniciativa:'Cambiar título: "Formulario de contacto" → "Agenda tu inspección"', prio:'Alta', estado:'En Proceso', responsable:'C. Araya', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Corregir bug de persistencia: campo Región aparece vacío', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Datos de contacto como resumen de solo lectura con "¿Editar datos?"', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Calendario visual de fechas disponibles + chips de horario mobile-first', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,25), fin:new Date(2026,5,8)},
+  {codigo:'OKR-CD2', iniciativa:'CTA "Agenda tu inspección" sticky visible en mobile sin scroll', prio:'Media', estado:'No Iniciado', responsable:'C. Araya', ini:new Date(2026,4,25), fin:new Date(2026,5,8)},
+  {codigo:'OKR-CD2', iniciativa:'Reformular título: "¡Tu inspección está agendada!" (honesto y celebratorio)', prio:'Alta', estado:'En Proceso', responsable:'Marketing / Frontend', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Corregir el tamaño de email cortado en pantalla de confirmación en mobile', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,8)},
+  {codigo:'OKR-CD2', iniciativa:'Nueva pantalla de confirmación + CTAs relevantes', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,25), fin:new Date(2026,5,8)},
+  {codigo:'OKR-CD2', iniciativa:'Confirmación automática WhatsApp + correo con botón reagendar/cancelar', prio:'Media', estado:'No Iniciado', responsable:'Backend', ini:new Date(2026,4,25), fin:new Date(2026,5,16)},
+  {codigo:'OKR-CD2', iniciativa:'Flujo de retargeting (email+WhatsApp) para usuarios que tasaron sin agendar', prio:'Media', estado:'No Iniciado', responsable:'Backend', ini:new Date(2026,4,25), fin:new Date(2026,5,16)},
+  {codigo:'OKR-CD2', iniciativa:'Ajustar posición del botón WhatsApp flotante para no tapar CTAs en mobile', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD2', iniciativa:'Stepper adaptado a mobile: compacto y siempre visible en todos los pasos', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,1)},
+  {codigo:'OKR-CD4', iniciativa:'Mayor visibilidad del buscador de texto dentro del catálogo', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,18)},
+  {codigo:'OKR-CD4', iniciativa:'Mayor visibilidad del botón de filtro', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,5,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimizar filtros para evitar combinaciones sin stock', prio:'Media', estado:'No Iniciado', responsable:'Backend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimizar Hero catálogo', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimizar Hero ficha de auto', prio:'Alta', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD3', iniciativa:'Comparador de autos', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-CD3', iniciativa:'Opiniones y rating', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-CD3', iniciativa:'Copy de confianza (revisión certificada, garantía, talleres propios)', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-CD3', iniciativa:'Mostrar en ficha historial de vehículo', prio:'Media', estado:'No Iniciado', responsable:'C. Araya / Backend / Frontend', ini:new Date(2026,5,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-CD4', iniciativa:'Swipe en fotos de inspección', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+  {codigo:'OKR-CD4', iniciativa:'Optimización UX - fricción del formulario de cotización', prio:'Media', estado:'No Iniciado', responsable:'Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
+];
+
+const colorPalancaCap = {
+  'CD1.1':{fill:'#BAE6FD',text:'#0C4A6E'},'CD1.2':{fill:'#7DD3FC',text:'#0369A1'},
+  'CD2.1':{fill:'#C4B5FD',text:'#3B0764'},'CD2.2':{fill:'#A78BFA',text:'#2E1065'},
+  'CD3.1':{fill:'#FCA5A5',text:'#7F1D1D'},'CD3.2':{fill:'#FDBA74',text:'#7C2D12'},
+  'CD4.1':{fill:'#FCD34D',text:'#78350F'},'CD4.2':{fill:'#86EFAC',text:'#14532D'},
+  'CD4.3':{fill:'#6EE7B7',text:'#065F46'},
+  'OKR-CD1':{fill:'#BAE6FD',text:'#0C4A6E'},'OKR-CD2':{fill:'#DDD6FE',text:'#3B0764'},
+  'OKR-CD3':{fill:'#FECACA',text:'#7F1D1D'},'OKR-CD4':{fill:'#FEF08A',text:'#713F12'},
+};
+const ganttLabelsCap = {
+  'CD1.1':'Rescatar tasaciones','CD1.2':'Leads agenden inspección',
+  'CD2.1':'Interacción compra','CD2.2':'Dead clicks compra',
+  'CD3.1':'Buy process','CD3.2':'Catálogo foto',
+  'CD4.1':'Dead clicks venta','CD4.2':'Catálogo interact.','CD4.3':'Cotización interact.',
+  'OKR-CD1':'Leads tasación agenda','OKR-CD2':'UX Compra',
+  'OKR-CD3':'Prospectos Venta','OKR-CD4':'UX Venta',
+};
+
+// ── DATA: OPERACIONES ──
+const palancasOp = [
+  {tipo:'area_sep', texto:'INSPECCIÓN Y CIERRE', color:'#1E3A5F'},
+  {tipo:'okr', codigo:'OKR-OP1', texto:'OKR C1- Aumentar conversión Compras/Booking de XX% a YY%', meta:'60%', metaNum:60, direccion:'subir', unidad:'%'},
+  {tipo:'ref', codigo:'OP1.proy', texto:'Proyección esperada del OKR', meta:'—'},
+  {tipo:'sub', texto:'Palancas OKR C1'},
+  {tipo:'pal', codigo:'OP1.1', texto:'Palanca C1.1: Disminuir tiempo total ingresos datos a Llaima de XX a YY', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP1.2', texto:'Palanca C1.2: Disminuir tiempo total precio inicial y apelaciones de XX a YY', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP1.3', texto:'Palanca C1.3: Disminuir tiempo total inspección uu y apelación demeritos de XX a YY', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP1.4', texto:'Palanca C1.4: Disminuir tiempo total validación comercial y cierre de XX a YY', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP1.5', texto:'Palanca C1.5: Mejorar CSAT de VPP VN/VU de XX a YY', meta:'—', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'okr', codigo:'OKR-OP2', texto:'OKR 2 - Disminuir tiempo desde Facturación/ingreso a Publicación Web de XX a YY días', meta:'95%', metaNum:95, direccion:'bajar', unidad:'%'},
+  {tipo:'ref', codigo:'OP2.proy', texto:'Proyección esperada del OKR', meta:'—'},
+  {tipo:'sub', texto:'Palancas OKR P2'},
+  {tipo:'pal', codigo:'OP2.1', texto:'Palanca P2.1: Disminuir tiempo de facturación a publicación de VPP', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP2.2', texto:'Palanca P2.2: Disminuir tiempo de facturación a publicación de compras funnel', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP2.3', texto:'Palanca P2.3: Disminuir tiempo de facturación a publicación de test car', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP2.4', texto:'Palanca P2.4: Disminuir tiempo de facturación a publicación de B2B', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'pal', codigo:'OP2.5', texto:'Palanca P2.5: Disminuir tiempo desde ingreso a publicación de Buy Back', meta:'—', metaNum:null, direccion:'bajar', unidad:''},
+  {tipo:'okr', codigo:'OKR-OP3', texto:'OKR V3- Aumentar la conversión Vta/Oportunidades de XX a YY', meta:'—', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'ref', codigo:'OP3.proy', texto:'Proyección esperada del OKR', meta:'30', metaNum:30, direccion:'subir', unidad:''},
+  {tipo:'sub', texto:'Palancas OKR 3'},
+  {tipo:'pal', codigo:'OP3.1', texto:'Palanca V1.1: Aumentar el % de sucursales Pole Position - Punteros de X% a y% de las sucursales en Programa Rally Usados', meta:'—', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'pal', codigo:'OP3.2', texto:'Palanca V1.2: FFVV 100% capacitada en modelo de atención en puntos críticos', meta:'F.A', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'pal', codigo:'OP3.3', texto:'Palanca V1.3: FFVV 100% capacitada en Habilidades Negociación', meta:'ADP', metaNum:null, direccion:'subir', unidad:''},
+];
+
+const semanasOp    = ['S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
+const fechasSemOp  = ['04/05','11/05','18/05','25/05','01/06','08/06','15/06','22/06','29/06','06/07'];
+
+const mesesOp = [
+  {label:'Todos', semanas:null},
+  {label:'Mayo',  semanas:['S3','S4','S5','S6']},
+  {label:'Junio', semanas:['S7','S8','S9','S10','S11']},
+  {label:'Julio', semanas:['S12']},
+];
+const mesesGanttOp = [
+  {label:'Todos', ini:null,              fin:null},
+  {label:'Mayo',  ini:new Date(2026,4,1), fin:new Date(2026,4,31)},
+  {label:'Junio', ini:new Date(2026,5,1), fin:new Date(2026,5,30)},
+  {label:'Julio', ini:new Date(2026,6,1), fin:new Date(2026,6,31)},
+];
+
+const iniciativasOp = [
+  // OKR C1 – Inspección y Cierre
+  {codigo:'OKR-OP1', iniciativa:'Validación comercial Mobile y responsiva', prio:'Alta', estado:'No Iniciado', responsable:'V. Araya', ini:new Date(2026,4,15), fin:new Date(2026,5,15)},
+  {codigo:'OKR-OP1', iniciativa:'Separar inspección de tasación', prio:'Alta', estado:'No Iniciado', responsable:'F. Gonzalez', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Mejoras proceso de creación de fichas en BO', prio:'Alta', estado:'No Iniciado', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Renovación automática Autofact', prio:'Media', estado:'No Iniciado', responsable:'V. Araya', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Revisión automática de errores en datos Llaima ingresados', prio:'Media', estado:'No Iniciado', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Argumentos automáticos de precio entregado', prio:'Media', estado:'No Iniciado', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Obtención automática de Dicom', prio:'Media', estado:'No Iniciado', responsable:'D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Costo por deméritos manual por parte del inspector', prio:'Media', estado:'No Iniciado', responsable:'V. Araya', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Revisión y actualización de puntos de inspección y deméritos', prio:'Alta', estado:'En Proceso', responsable:'V. Araya', ini:new Date(2026,4,1), fin:new Date(2026,4,15)},
+  {codigo:'OKR-OP1', iniciativa:'Proceso de cuadratura automático', prio:'Media', estado:'No Iniciado', responsable:'CDN', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP1', iniciativa:'Incorporar campo en CRM para Tasadores (precio observado)', prio:'Alta', estado:'Ok', responsable:'D. Abarca', ini:new Date(2026,4,1), fin:new Date(2026,4,31)},
+  // OKR 2 – Facturación a Publicación
+  {codigo:'OKR-OP2', iniciativa:'Automatizar el ingreso a Quiter en Compras', prio:'Alta', estado:'No Iniciado', responsable:'J. Olmedo/D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP2', iniciativa:'Extender integración VPP para todos los concesionarios (Actualmente solo SAIS)', prio:'Alta', estado:'No Iniciado', responsable:'J. Olmedo/D. Abarca', ini:new Date(2026,4,18), fin:new Date(2026,5,8)},
+  {codigo:'OKR-OP2', iniciativa:'Mejorar integración actual VPP (errores de consistencia)', prio:'Alta', estado:'No Iniciado', responsable:'J. Olmedo/D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,5,15)},
+  {codigo:'OKR-OP2', iniciativa:'Reporte diario del SLA (Desde Facturación hasta ingreso a Quiter)', prio:'Alta', estado:'No Iniciado', responsable:'R. Olivares', ini:new Date(2026,4,15), fin:new Date(2026,4,31)},
+  {codigo:'OKR-OP2', iniciativa:'Workflow estructurado con motivo obligatorio', prio:'Media', estado:'No Iniciado', responsable:'R. Olivares', ini:new Date(2026,5,15), fin:new Date(2026,6,15)},
+  {codigo:'OKR-OP2', iniciativa:'Dashboard de movimientos de precio por unidad', prio:'Media', estado:'No Iniciado', responsable:'M. Chavez', ini:new Date(2026,4,15), fin:new Date(2026,5,15)},
+  {codigo:'OKR-OP2', iniciativa:'Reporte de dispersión tasación web vs. precio de toma', prio:'Media', estado:'No Iniciado', responsable:'R. Olivares', ini:new Date(2026,4,15), fin:new Date(2026,5,15)},
+  {codigo:'OKR-OP2', iniciativa:'Mejora táctica - Aviso cierre BBDD actualización precios (12:30 hrs)', prio:'Media', estado:'No Iniciado', responsable:'J. Olmedo', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+  {codigo:'OKR-OP2', iniciativa:'Disminuir tiempo integración cambios precio Quiter→Llaima', prio:'Media', estado:'No Iniciado', responsable:'J. Olmedo/D. Abarca', ini:new Date(2026,4,15), fin:new Date(2026,6,6)},
+];
+
+const colorPalancaOp = {
+  'OP1.1':{fill:'#BAE6FD',text:'#0C4A6E'},'OP1.2':{fill:'#7DD3FC',text:'#0369A1'},
+  'OP1.3':{fill:'#FCA5A5',text:'#7F1D1D'},'OP1.4':{fill:'#FCD34D',text:'#78350F'},
+  'OP1.5':{fill:'#86EFAC',text:'#14532D'},
+  'OP2.1':{fill:'#C4B5FD',text:'#3B0764'},'OP2.2':{fill:'#A78BFA',text:'#2E1065'},
+  'OP2.3':{fill:'#6EE7B7',text:'#065F46'},'OP2.4':{fill:'#FDE68A',text:'#78350F'},
+  'OP2.5':{fill:'#FECACA',text:'#7F1D1D'},
+  'OP3.1':{fill:'#D1FAE5',text:'#065F46'},'OP3.2':{fill:'#FEF3C7',text:'#92400E'},
+  'OP3.3':{fill:'#DDD6FE',text:'#3B0764'},
+  'OKR-OP1':{fill:'#BAE6FD',text:'#0C4A6E'},'OKR-OP2':{fill:'#FECACA',text:'#7F1D1D'},
+  'OKR-OP3':{fill:'#D1FAE5',text:'#065F46'},
+};
+const ganttLabelsOp = {
+  'OP1.1':'Datos Llaima','OP1.2':'Precio apelaciones','OP1.3':'Inspección demeritos',
+  'OP1.4':'Validación cierre','OP1.5':'CSAT VPP',
+  'OP2.1':'VPP publicación','OP2.2':'Funnel publicación','OP2.3':'Test car publicación',
+  'OP2.4':'B2B publicación','OP2.5':'Buy Back publicación',
+  'OP3.1':'Rally Usados','OP3.2':'Atención críticos','OP3.3':'Negociación FFVV',
+  'OKR-OP1':'Conversión Compras','OKR-OP2':'Tiempo Facturación','OKR-OP3':'Conversión Vta',
+};
+
+// ── STATE ──
+let currentSquad = 'cap';
+let datosLeads = {
+  "OKR-C1": {"S4":"1,50%"},
+  "C1.1":   {"S4":"53%"},
+  "C1.2":   {"S4":"8h"},
+  "OKR-C2": {"S4":"32%"},
+  "C2.1":   {"S4":"32%"},
+  "OKR-V1": {"S4":"5,60%"},
+  "V1.1":   {"S4":"9,81%"},
+  "V1.2":   {"S4":"16,77%"},
+  "V1.3":   {"S4":"9,14%"},
+  "OKR-V2": {"S4":"10,39%"}
+};
+let datosPub = {
+  "OKR-P1":    {"S1":"70,10%","S2":"78,40%","S3":"91,00%","S4":"91,30%"},
+  "P1.proy":   {"S1":"1813",  "S2":"2157",  "S3":"2758",  "S4":"2786"},
+  "P1.ref1":   {"S1":"2587",  "S2":"2753",  "S3":"3031",  "S4":"3050"},
+  "P1.1":      {"S1":"257",   "S2":"114",   "S3":"7",     "S4":"11"},
+  "P1.2":      {"S1":"0%",    "S2":"0%",    "S3":"75%",   "S4":"84%"},
+  "P1.ref2":   {"S1":"0",     "S2":"0",     "S3":"245",   "S4":"285"},
+  "P1.ref3":   {"S1":"319",   "S2":"308",   "S3":"328",   "S4":"340"},
+  "OKR-P2":    {"S1":"69,70%","S2":"61,10%","S3":"57,90%"},
+  "P2.1":      {"S1":"1264",  "S2":"1318",  "S3":"1598",  "S4":"1625"},
+  "P2.2":      {"S1":"86%",   "S2":"82%",   "S3":"79%",   "S4":"82%"},
+  "P2.ref1":   {"S1":"1813",  "S2":"2157",  "S3":"2758",  "S4":"2786"},
+  "P2.ref2":   {"S1":"83%",   "S2":"83%",   "S3":"79%",   "S4":"80%"},
+  "P2.ref3":   {"S1":"86%",   "S2":"77%",   "S3":"78%",   "S4":"82%"},
+  "P2.ref4":   {"S1":"85%",   "S2":"80%",   "S3":"78%",   "S4":"85%"},
+  "P2.ref5":   {"S1":"88%",   "S2":"83%",   "S3":"78%",   "S4":"77%"},
+  "P2.refZSur":{"S1":"87%",   "S2":"85%",   "S3":"82%",   "S4":"87%"},
+  "OKR-P3":    {"S1":"9,60%", "S2":"15,90%","S3":"17,70%","S4":"16,10%"},
+  "P3.1":      {"S1":"174",   "S2":"344",   "S3":"488",   "S4":"448"},
+  "P3.ref1":   {"S1":"1813",  "S2":"2157",  "S3":"2758",  "S4":"2786"},
+  "P3.2":      {"S1":"0",     "S2":"0",     "S3":"0",     "S4":"0"}
+};
+let datosCap = {
+  "CD1.1": {"S3":"0"}
+};
+let datosOp = {
+  "OP3.proy": {"S3":"506"},
+  "OP3.1":    {"S3":"0"},
+  "OP3.3":    {"S3":"0"}
+};
+let currentFilter = null;
+let currentMesIdx = 0;
+let currentGanttMes = 0;
+
+// ── HELPERS ──
+function getMesActualIdx(meses) {
+  const label = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][new Date().getMonth()];
+  const idx = meses.findIndex(m => m.label === label);
+  return idx > 0 ? idx : 0;
+}
+
+function sq() {
+  if (currentSquad === 'op') return {
+    palancas:palancasOp, iniciativas:iniciativasOp,
+    semanas:semanasOp, fechasSemana:fechasSemOp,
+    meses:mesesOp, mesesGantt:mesesGanttOp,
+    colorPalanca:colorPalancaOp, ganttLabels:ganttLabelsOp,
+  };
+  if (currentSquad === 'pub') return {
+    palancas:palancasPub, iniciativas:iniciativasPub,
+    semanas:semanasPub, fechasSemana:fechasSemPub,
+    meses:mesesPub, mesesGantt:mesesGanttPub,
+    colorPalanca:colorPalancaPub, ganttLabels:ganttLabelsPub,
+  };
+  if (currentSquad === 'cap') return {
+    palancas:palancasCap, iniciativas:iniciativasCap,
+    semanas:semanasCap, fechasSemana:fechasSemCap,
+    meses:mesesCap, mesesGantt:mesesGanttCap,
+    colorPalanca:colorPalancaCap, ganttLabels:ganttLabelsCap,
+  };
+  return {
+    palancas:palancasLeads, iniciativas:iniciativasLeads,
+    semanas:semanasLeads, fechasSemana:fechasSemLeads,
+    meses:mesesLeads, mesesGantt:mesesGanttLeads,
+    colorPalanca:colorPalancaLeads, ganttLabels:ganttLabelsLeads,
+  };
+}
+function getDatos() {
+  if (currentSquad === 'pub') return datosPub;
+  if (currentSquad === 'cap') return datosCap;
+  if (currentSquad === 'op') return datosOp;
+  return datosLeads;
+}
+
+function getSemanaActual(sems, dates) {
+  const hoy = new Date();
+  for (let i = 0; i < sems.length; i++) {
+    const p = dates[i].split('/');
+    const ini = new Date(2026, parseInt(p[1])-1, parseInt(p[0]));
+    const fin = new Date(ini); fin.setDate(fin.getDate()+6);
+    if (hoy >= ini && hoy <= fin) return sems[i];
+  }
+  return null;
+}
+const semActualLeads = getSemanaActual(semanasLeads, fechasSemLeads);
+const semActualPub   = getSemanaActual(semanasPub,   fechasSemPub);
+const semActualCap   = getSemanaActual(semanasCap,   fechasSemCap);
+const semActualOp    = getSemanaActual(semanasOp,    fechasSemOp);
+function getSemActual() {
+  if (currentSquad === 'pub') return semActualPub;
+  if (currentSquad === 'cap') return semActualCap;
+  if (currentSquad === 'op') return semActualOp;
+  return semActualLeads;
+}
+
+function semanasActivas() {
+  const {meses, semanas} = sq();
+  return currentMesIdx === 0 || !meses[currentMesIdx].semanas ? semanas : meses[currentMesIdx].semanas;
+}
+
+function parseNum(str) {
+  if (!str) return null;
+  const n = parseFloat(String(str).replace(/[%h<>\s]/g,'').replace(',','.'));
+  return isNaN(n) ? null : n;
+}
+
+function getStatusInfo(valor, p) {
+  const num = parseNum(valor);
+  if (num === null || p.metaNum === null) return {pct:0, color:'#CBD5E1', label:'Sin datos', cls:'c-none'};
+  const ratio = p.direccion === 'subir' ? num/p.metaNum : p.metaNum/num;
+  const pct = Math.min(100, Math.round(ratio*100));
+  if (ratio >= 0.9) return {pct, color:'#059669', label:'En meta',   cls:'c-ok'};
+  if (ratio >= 0.7) return {pct, color:'#D97706', label:'En riesgo', cls:'c-warn'};
+  return               {pct, color:'#DC2626', label:'Bajo meta',  cls:'c-bad'};
+}
+
+function statusClass(valor, p) {
+  const num = parseNum(valor);
+  if (num === null || p.metaNum === null) return '';
+  const ratio = p.direccion === 'subir' ? num/p.metaNum : p.metaNum/num;
+  if (ratio >= 0.9) return 'status-ok';
+  if (ratio >= 0.7) return 'status-warn';
+  return 'status-bad';
+}
+
+function getLastValue(codigo) {
+  const d = getDatos();
+  const sems = sq().semanas;
+  const f = d[codigo] || {};
+  for (let i = sems.length-1; i >= 0; i--) {
+    if (f[sems[i]] && f[sems[i]].trim()) return f[sems[i]];
+  }
+  return '';
+}
+
+function ultimoCell(v, si, p) {
+  if (!v) return '<span style="color:#9CA3AF;font-weight:400;">—</span>';
+  const bar = p.metaNum !== null
+    ? `<div style="height:3px;background:#E2E8F0;border-radius:99px;margin-top:4px;overflow:hidden;"><div style="height:100%;width:${si.pct}%;background:${si.color};border-radius:99px;"></div></div>`
+    : '';
+  return `<div><span style="font-weight:700;font-size:13px;color:#0F172A;">${v}</span>${bar}</div>`;
+}
+
+// ── JSONBLOB STORAGE (sin auth — editable por todos) ──
+const BLOB_URL = 'https://jsonblob.com/api/jsonBlob/019e2839-cfb2-7a39-b4a5-41b9af500895';
+let saveTimer = null;
+
+async function loadData() {
+  try {
+    const res = await fetch(BLOB_URL, { headers: { 'Accept': 'application/json' } });
+    if (res.ok) {
+      const d = await res.json();
+      datosLeads = d.leads || {};
+      datosPub   = d.pub   || {};
+      datosCap   = d.cap   || {};
+      datosOp    = d.op    || {};
+    }
+  } catch(e) {}
+}
+
+async function saveData() {
+  const el = document.getElementById('save-status');
+  el.textContent = '↑ Guardando…';
+  try {
+    const res = await fetch(BLOB_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ leads: datosLeads, pub: datosPub, cap: datosCap, op: datosOp })
+    });
+    el.textContent = res.ok ? '✓ Guardado' : '⚠ Error al guardar';
+  } catch(e) { el.textContent = '⚠ Sin conexión'; }
+  setTimeout(() => { el.textContent = ''; }, 2500);
+}
+
+function scheduleSave() {
+  document.getElementById('save-status').textContent = '…';
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveData, 1500);
+}
+
+// ── INTERACTIONS ──
+function onCellChange(input, codigo, sem) {
+  const d = getDatos();
+  if (!d[codigo]) d[codigo] = {};
+  d[codigo][sem] = input.value;
+  const p = sq().palancas.find(x => x.codigo === codigo);
+  const cell = input.parentElement;
+  cell.classList.remove('status-ok','status-warn','status-bad');
+  if (p && (p.tipo === 'okr' || p.tipo === 'pal')) {
+    const cls = statusClass(input.value, p);
+    if (cls) cell.classList.add(cls);
+  }
+  if (p) {
+    const uel = document.getElementById('last-'+codigo);
+    if (uel) {
+      const v = getLastValue(codigo);
+      uel.innerHTML = ultimoCell(v, getStatusInfo(v, p), p);
+    }
+  }
+  scheduleSave();
+  renderKPIs();
+}
+
+function showSquad(squad) {
+  currentSquad = squad;
+  currentMesIdx  = getMesActualIdx(sq().meses);
+  currentGanttMes = getMesActualIdx(sq().mesesGantt);
+  currentFilter = null;
+  document.querySelectorAll('.squad-tab').forEach(t => t.classList.toggle('squad-active', t.dataset.squad === squad));
+  document.getElementById('filter-banner').style.display = 'none';
+  const squadInfo = {
+    leads: {name:'Squad Gestión de Leads',  lider:'Mayorin Vivas'},
+    pub:   {name:'Squad Publicaciones', lider:'Javiera Jerez'},
+    cap:   {name:'Squad Captación Digital', lider:'Trinidad Madrigal'},
+    op:    {name:'Squad Operaciones',       lider:'Raúl Olivares'},
+  };
+  const info = squadInfo[squad] || squadInfo.leads;
+  document.getElementById('hdr-eye').textContent   = 'Americar · ' + info.name + ' · Q2 2026';
+  document.getElementById('hdr-lider').textContent = info.lider;
+  renderMonthButtons();
+  renderKPIs();
+  renderSeguimiento();
+  if (document.getElementById('view-road').style.display !== 'none') renderGantt();
+}
+
+function showMes(idx) {
+  currentMesIdx = idx;
+  renderMonthButtons();
+  renderSeguimiento();
+}
+
+function showGanttMes(idx) {
+  currentGanttMes = idx;
+  renderMonthButtons();
+  renderGantt();
+}
+
+function showTab(tab) {
+  document.getElementById('view-seg').style.display  = tab === 'seg'  ? '' : 'none';
+  document.getElementById('view-road').style.display = tab === 'road' ? '' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  if (tab === 'road') renderGantt();
+}
+
+function filterRoadmap(codigo) {
+  currentFilter = codigo;
+  document.getElementById('filter-banner').style.display = 'flex';
+  document.getElementById('filter-text').textContent = 'Iniciativas de: ' + codigo;
+  showTab('road');
+}
+
+function clearFilter() {
+  currentFilter = null;
+  document.getElementById('filter-banner').style.display = 'none';
+  renderGantt();
+}
+
+function goToPalanca(codigo) {
+  clearFilter();
+  showTab('seg');
+  setTimeout(() => {
+    const el = document.getElementById('row-'+codigo);
+    if (!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'center'});
+    el.style.outline = '2px solid #3B82F6';
+    setTimeout(() => { el.style.outline = 'none'; }, 1200);
+  }, 50);
+}
+
+function exportData() {
+  const {palancas, semanas, fechasSemana} = sq();
+  const d = getDatos();
+  let csv = 'OKR/Palanca,Código,Meta,' + semanas.map((s,i) => s+' ('+fechasSemana[i]+')').join(',') + '\n';
+  for (const p of palancas) {
+    if (p.tipo !== 'okr' && p.tipo !== 'pal') continue;
+    const f = d[p.codigo] || {};
+    csv += `"${p.texto}",${p.codigo},${p.meta},${semanas.map(s => f[s]||'').join(',')}\n`;
+  }
+  const name = currentSquad === 'pub' ? 'publicaciones' : currentSquad === 'cap' ? 'captacion' : currentSquad === 'op' ? 'operaciones' : 'leads';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
+  a.download = 'seguimiento_okrs_' + name + '.csv';
+  a.click();
+}
+
+function resetData() {
+  if (!confirm('¿Borrar todos los valores ingresados para este squad?')) return;
+  if (currentSquad === 'pub') datosPub = {};
+  else if (currentSquad === 'cap') datosCap = {};
+  else if (currentSquad === 'op') datosOp = {};
+  else datosLeads = {};
+  datosJsonSha = null;
+  saveData();
+  renderSeguimiento();
+  renderKPIs();
+}
+
+// ── RENDER MONTH BUTTONS ──
+function renderMonthButtons() {
+  const {meses, mesesGantt} = sq();
+  document.getElementById('mes-group-seg').innerHTML = meses.map((m,i) =>
+    `<button class="mes-btn${i===currentMesIdx?' active':''}" onclick="showMes(${i})">${m.label}</button>`
+  ).join('');
+  document.getElementById('mes-group-gantt').innerHTML = mesesGantt.map((m,i) =>
+    `<button class="mes-btn${i===currentGanttMes?' active':''}" onclick="showGanttMes(${i})">${m.label}</button>`
+  ).join('');
+}
+
+// ── RENDER KPIs ──
+function renderKPIs() {
+  const okrs = sq().palancas.filter(p => p.tipo === 'okr');
+  document.getElementById('kpi-grid').innerHTML = okrs.map(okr => {
+    const v  = getLastValue(okr.codigo);
+    const si = getStatusInfo(v, okr);
+    let accent, badgeCls, badgeLabel;
+    if      (okr.codigo.startsWith('OKR-C')) { accent='#1E40AF'; badgeCls='badge-c'; badgeLabel='Compra'; }
+    else if (okr.codigo.startsWith('OKR-V')) { accent='#991B1B'; badgeCls='badge-v'; badgeLabel='Venta';  }
+    else                                     { accent='#065F46'; badgeCls='badge-p'; badgeLabel='Pub.';   }
+    const shortName = okr.texto.replace(/^OKR \d+[-–—][^\s]+ [-–—]\s*/,'').replace(/^OKR [CV]\d+\s*[-–—]\s*/,'');
+    return `
+    <div class="kpi-card">
+      <div class="kpi-stripe" style="background:${accent};"></div>
+      <span class="kpi-badge ${badgeCls}">${badgeLabel} · ${okr.codigo}</span>
+      <div class="kpi-name">${shortName}</div>
+      <div class="kpi-nums">
+        <span class="kpi-actual">${v||'—'}</span>
+        <span class="kpi-target">/ ${okr.meta}</span>
+      </div>
+      <div class="kpi-bar-bg"><div class="kpi-bar-fill" style="width:${si.pct}%;background:${si.color};"></div></div>
+      <span class="kpi-foot ${si.cls}">${si.label}${si.pct>0?' · '+si.pct+'%':''}</span>
+    </div>`;
+  }).join('');
+}
+
+// ── RENDER SEGUIMIENTO ──
+const expandedPals = new Set();
+function togglePal(codigo) {
+  expandedPals.has(codigo) ? expandedPals.delete(codigo) : expandedPals.add(codigo);
+  renderSeguimiento();
+}
+function renderSeguimiento() {
+  const {semanas, fechasSemana} = sq();
+  const activas = semanasActivas();
+  const semAct  = getSemActual();
+  const cols    = 3 + activas.length;
+
+  const thSems = activas.map(sem => {
+    const i = semanas.indexOf(sem);
+    const esCurrent = sem === semAct;
+    const thStyle = esCurrent
+      ? 'text-align:center;min-width:62px;background:#F0FDF4;border-bottom:3px solid #16A34A;position:relative;padding-top:4px;'
+      : 'text-align:center;min-width:62px;';
+    const semLabel = esCurrent
+      ? `<div style="color:#16A34A;font-size:13px;line-height:1;margin-bottom:1px;">▼</div><span style="color:#15803D;font-weight:700;">${sem}</span>`
+      : `<span>${sem}</span>`;
+    const fechaStyle = esCurrent ? 'font-weight:600;color:#16A34A;' : 'font-weight:400;color:#94A3B8;';
+    return `<th style="${thStyle}">${semLabel}<br><span style="${fechaStyle}">${fechasSemana[i]}</span></th>`;
+  }).join('');
+
+  const thead = `<thead><tr>
+    <th style="min-width:240px;text-align:left;padding-left:16px;">OKR / Palanca</th>
+    <th style="text-align:center;min-width:64px;">Meta</th>
+    <th style="text-align:center;min-width:82px;">Último</th>
+    ${thSems}
+  </tr></thead>`;
+
+  // pre-compute which pal codes have ref children
+  const palHasRefs = new Set();
+  { let tp = null;
+    for (const p of sq().palancas) {
+      if (p.tipo === 'pal') { tp = p.codigo; }
+      else if (p.tipo === 'ref' && tp) { palHasRefs.add(tp); }
+      else { tp = null; }
+    }
+  }
+
+  let rows = '';
+  let currentPalParent = null;
+  for (const p of sq().palancas) {
+    if (p.tipo === 'area_sep') {
+      currentPalParent = null;
+      rows += `<tr><td colspan="${cols}" style="background:${p.color};color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;">${p.texto}</td></tr>`;
+    } else if (p.tipo === 'okr_titulo') {
+      currentPalParent = null;
+      rows += `<tr><td colspan="${cols}" style="background:#EFF6FF;color:#1E40AF;font-size:12px;font-weight:600;padding:9px 16px;border-top:1px solid #BFDBFE;border-bottom:1px solid #BFDBFE;">${p.texto}</td></tr>`;
+    } else if (p.tipo === 'sub') {
+      currentPalParent = null;
+      rows += `<tr><td colspan="${cols}" style="background:#F8FAFC;color:#94A3B8;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:5px 16px;border-bottom:1px solid #E2E8F0;">${p.texto}</td></tr>`;
+    } else if (p.tipo === 'ref') {
+      if (currentPalParent && !expandedPals.has(currentPalParent)) continue;
+      const d = getDatos();
+      const cells = activas.map(sem => {
+        const val = (d[p.codigo] && d[p.codigo][sem]) || '';
+        const cBg = sem === semAct ? 'background:#F7FFF7;' : 'background:#FAFAFA;';
+        return `<td class="sem-cell" style="${cBg}"><input class="sem-input" type="text" value="${val.replace(/"/g,'&quot;')}" placeholder="—" style="font-style:italic;font-size:11.5px;color:#9CA3AF;" oninput="onCellChange(this,'${p.codigo}','${sem}')" /></td>`;
+      }).join('');
+      rows += `<tr id="row-${p.codigo}" style="background:#FAFAFA;">
+        <td style="padding:5px 16px 5px 48px;border-bottom:1px solid #F1F5F9;font-style:italic;color:#9CA3AF;font-size:11px;">${p.texto}</td>
+        <td style="text-align:center;padding:5px 6px;border-bottom:1px solid #F1F5F9;color:#E2E8F0;">—</td>
+        <td style="text-align:center;padding:5px 8px;border-bottom:1px solid #F1F5F9;"></td>
+        ${cells}
+      </tr>`;
+    } else if (p.tipo === 'okr' || p.tipo === 'pal') {
+      const isOkr = p.tipo === 'okr';
+      if (isOkr) currentPalParent = null;
+      else currentPalParent = p.codigo;
+
+      const isV   = p.codigo && p.codigo.startsWith('V');
+      const isP   = p.codigo && p.codigo.startsWith('P') || p.codigo && p.codigo.startsWith('OKR-P');
+      const rowBg = isOkr ? (isV ? '#FFF8F8' : isP ? '#F0FDF9' : '#FFFBF0') : '#fff';
+      const nameIndent = isOkr ? 'padding-left:16px;font-weight:600;' : 'padding-left:12px;';
+      const v  = getLastValue(p.codigo);
+      const si = getStatusInfo(v, p);
+
+      const cells = activas.map(sem => {
+        const val = (getDatos()[p.codigo] && getDatos()[p.codigo][sem]) || '';
+        const cls = statusClass(val, p);
+        const currentBorder = sem === semAct ? 'border-left:2px solid #22C55E;' : '';
+        const currentBg     = (!cls && sem === semAct) ? 'background:#F0FDF4;' : '';
+        return `<td class="sem-cell ${cls}" style="${currentBorder}${currentBg}"><input class="sem-input" type="text" value="${val.replace(/"/g,'&quot;')}" placeholder="—" oninput="onCellChange(this,'${p.codigo}','${sem}')" /></td>`;
+      }).join('');
+
+      let toggleBtn = '';
+      if (!isOkr && palHasRefs.has(p.codigo)) {
+        const isExp = expandedPals.has(p.codigo);
+        toggleBtn = `<span onclick="event.stopPropagation();togglePal('${p.codigo}')" title="${isExp ? 'Colapsar' : 'Expandir'}" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:3px;background:${isExp?'#DCFCE7':'#F1F5F9'};color:${isExp?'#16A34A':'#94A3B8'};font-size:9px;cursor:pointer;margin-right:6px;flex-shrink:0;transition:all .15s;">${isExp ? '▼' : '▶'}</span>`;
+      }
+
+      rows += `<tr id="row-${p.codigo}" style="background:${rowBg};">
+        <td style="${nameIndent}padding-top:10px;padding-bottom:10px;padding-right:10px;border-bottom:1px solid #F1F5F9;cursor:pointer;color:#0F172A;line-height:1.35;display:flex;align-items:center;" onclick="filterRoadmap('${p.codigo}')">${toggleBtn}<span>${p.texto}</span> <span style="font-size:10px;color:#CBD5E1;margin-left:4px;">↗</span></td>
+        <td style="text-align:center;padding:10px 6px;border-bottom:1px solid #F1F5F9;font-weight:600;color:#374151;white-space:nowrap;">${p.meta}</td>
+        <td id="last-${p.codigo}" style="text-align:center;padding:8px;border-bottom:1px solid #F1F5F9;">${ultimoCell(v,si,p)}</td>
+        ${cells}
+      </tr>`;
+    }
+  }
+
+  document.getElementById('seg-table-wrap').innerHTML =
+    `<table class="seg-table" style="min-width:${400+activas.length*65}px;">${thead}<tbody>${rows}</tbody></table>`;
+}
+
+// ── RENDER GANTT ──
+function fmtF(d) { return d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit'}); }
+function diffD(a,b) { return Math.round((b-a)/86400000); }
+
+const priOrder = {'Alta':1,'Media':2,'Baja':3};
+const priColor = {
+  'Alta':{bg:'#FEE2E2',text:'#991B1B'},
+  'Media':{bg:'#FEF3C7',text:'#92400E'},
+  'Baja':{bg:'#E0F2FE',text:'#0369A1'},
+};
+
+function renderGantt() {
+  const {iniciativas, colorPalanca, ganttLabels, mesesGantt} = sq();
+  const container = document.getElementById('gantt-container');
+
+  let data = currentFilter ? iniciativas.filter(i => i.codigo === currentFilter) : [...iniciativas];
+  if (!currentFilter && currentGanttMes > 0) {
+    const m = mesesGantt[currentGanttMes];
+    data = data.filter(i => i.ini <= m.fin && i.fin >= m.ini);
+  }
+  data.sort((a,b) => (priOrder[a.prio]||99)-(priOrder[b.prio]||99) || a.ini-b.ini);
+
+  const countEl = document.getElementById('gantt-count');
+  if (countEl) countEl.textContent = data.length + ' iniciativa' + (data.length !== 1 ? 's' : '');
+
+  if (!data.length) {
+    container.innerHTML = `<p style="padding:24px;text-align:center;color:#94A3B8;">Sin iniciativas${currentFilter ? ' para '+currentFilter : ''}.</p>`;
+    return;
+  }
+
+  let minD = new Date(Math.min(...data.map(i => i.ini.getTime())));
+  let maxD = new Date(Math.max(...data.map(i => i.fin.getTime())));
+  minD.setDate(minD.getDate() - ((minD.getDay()+6)%7));
+  maxD.setDate(maxD.getDate() + (7-((maxD.getDay()+6)%7))%7);
+  const totalDays = diffD(minD, maxD)+1;
+
+  const weekStarts = [];
+  let cur = new Date(minD);
+  while (cur <= maxD) { weekStarts.push(new Date(cur)); cur.setDate(cur.getDate()+7); }
+
+  const estadoInfo = {
+    'Ok':          {bg:'#D1FAE5',text:'#065F46'},
+    'No Iniciado': {bg:'#F1F5F9',text:'#64748B'},
+    'En Proceso':  {bg:'#FEF3C7',text:'#92400E'},
+    'En Riesgo':   {bg:'#FEE2E2',text:'#991B1B'},
+  };
+  const lW=180, cW=42, pW=38, eW=68, rW=96, dW=82, gW=Math.max(420, weekStarts.length*60), rowH=28;
+
+  let html = `<div style="min-width:${lW+cW+pW+eW+rW+dW+gW}px;position:relative;">`;
+
+  html += `<div style="display:flex;background:#F8FAFC;border-bottom:1px solid #E2E8F0;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6B7280;">
+    <div style="width:${lW}px;padding:7px 12px;flex-shrink:0;">Iniciativa</div>
+    <div style="width:${cW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Pal.</div>
+    <div style="width:${pW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Prio.</div>
+    <div style="width:${eW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Estado</div>
+    <div style="width:${rW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Responsable</div>
+    <div style="width:${dW}px;padding:7px 4px;text-align:center;flex-shrink:0;">Inicio–Fin</div>
+    <div style="width:${gW}px;position:relative;flex-shrink:0;height:30px;">`;
+  for (const ws of weekStarts) {
+    const left = (diffD(minD,ws)/totalDays)*gW;
+    html += `<div style="position:absolute;left:${left}px;width:${(7/totalDays)*gW}px;padding:7px 0;text-align:center;font-size:9px;color:#94A3B8;border-left:1px solid #E2E8F0;">${fmtF(ws)}</div>`;
+  }
+  html += `</div></div>`;
+
+  for (const it of data) {
+    const c  = colorPalanca[it.codigo] || {fill:'#CBD5E1',text:'#374151'};
+    const pc = priColor[it.prio]       || {bg:'#F1F5F9',text:'#64748B'};
+    const left  = (diffD(minD,it.ini)/totalDays)*gW;
+    const dur   = diffD(it.ini,it.fin)+1;
+    const width = Math.max(18,(dur/totalDays)*gW);
+
+    html += `<div class="gantt-row" style="display:flex;border-bottom:1px solid #F1F5F9;align-items:center;height:${rowH}px;background:#fff;">
+      <div title="${it.iniciativa}" style="width:${lW}px;padding:0 12px;font-size:10px;flex-shrink:0;color:#374151;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${it.iniciativa}</div>
+      <div style="width:${cW}px;padding:0 3px;text-align:center;flex-shrink:0;"><span onclick="goToPalanca('${it.codigo}')" style="cursor:pointer;background:${c.fill};color:${c.text};padding:2px 5px;border-radius:3px;font-weight:600;font-size:9px;white-space:nowrap;">${it.codigo}</span></div>
+      <div style="width:${pW}px;padding:0 3px;text-align:center;flex-shrink:0;"><span style="background:${pc.bg};color:${pc.text};padding:2px 5px;border-radius:3px;font-weight:600;font-size:9px;">${it.prio}</span></div>
+      <div style="width:${eW}px;padding:0 3px;text-align:center;flex-shrink:0;">${(()=>{const ei=estadoInfo[it.estado]||{bg:'#F1F5F9',text:'#64748B'};return `<span style="background:${ei.bg};color:${ei.text};padding:2px 5px;border-radius:3px;font-weight:600;font-size:9px;white-space:nowrap;">${it.estado}</span>`;})()}</div>
+      <div style="width:${rW}px;padding:0 6px;text-align:left;font-size:9px;color:#374151;flex-shrink:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title="${it.responsable||'—'}">${it.responsable||'—'}</div>
+      <div style="width:${dW}px;padding:0 3px;text-align:center;font-size:9.5px;color:#9CA3AF;flex-shrink:0;white-space:nowrap;">${fmtF(it.ini)}–${fmtF(it.fin)}</div>
+      <div style="width:${gW}px;position:relative;flex-shrink:0;height:100%;">`;
+    for (const ws of weekStarts) {
+      html += `<div style="position:absolute;left:${(diffD(minD,ws)/totalDays)*gW}px;top:0;bottom:0;width:1px;background:#F1F5F9;"></div>`;
+    }
+    const barClr = {'Ok':'#22C55E','No Iniciado':'#94A3B8','En Proceso':'#F59E0B','En Riesgo':'#EF4444'}[it.estado]||'#94A3B8';
+html += `<div class="gantt-bar" onclick="goToPalanca('${it.codigo}')" title="${it.iniciativa} · ${it.estado} · ${it.responsable||'—'} · ${fmtF(it.ini)}–${fmtF(it.fin)}" style="position:absolute;left:${left}px;top:50%;transform:translateY(-50%);width:${width}px;height:14px;background:${barClr};border-radius:3px;cursor:pointer;border-left:3px solid ${c.fill};overflow:hidden;"></div>
+      </div></div>`;
+  }
+
+  const hoy = new Date();
+  if (hoy >= minD && hoy <= maxD) {
+    const hL = lW+cW+pW+eW+rW+dW+(diffD(minD,hoy)/totalDays)*gW;
+    html += `<div style="position:absolute;left:${hL}px;top:0;bottom:0;width:2px;background:#EF4444;pointer-events:none;z-index:5;opacity:.65;"></div>`;
+  }
+  html += `</div>`;
+  container.innerHTML = html;
+
+  const codes = [...new Set(data.map(i => i.codigo))];
+  document.getElementById('gantt-legend').innerHTML =
+    '<span style="font-weight:600;color:#374151;margin-right:4px;">Palancas:</span>' +
+    codes.map(cd => {
+      const c = colorPalanca[cd] || {fill:'#CBD5E1'};
+      return `<span class="gchip"><span class="gchip-dot" style="background:${c.fill};"></span>${cd} ${ganttLabels[cd]||''}</span>`;
+    }).join('');
+}
+
+// ── HEADER ──
+function initHeader() {
+  const hoy = new Date();
+  const fmtHoy = hoy.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const sem = getSemActual();
+  document.getElementById('hdr-sem').textContent   = sem ? 'Semana ' + sem : 'Q2 2026';
+  document.getElementById('hdr-fecha').textContent = fmtHoy;
+  document.getElementById('hdr-ultima').textContent = fmtHoy;
+}
+
+// ── INIT ──
+(async () => {
+  await loadData();
+  initHeader();
+  currentMesIdx   = getMesActualIdx(sq().meses);
+  currentGanttMes = getMesActualIdx(sq().mesesGantt);
+  renderMonthButtons();
+  renderKPIs();
+  renderSeguimiento();
+  renderGantt();
+})();
+</script>
+</body>
+</html>
