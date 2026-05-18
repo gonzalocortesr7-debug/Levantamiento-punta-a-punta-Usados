@@ -6,6 +6,7 @@
 <title>Tablero OKRs — Q2 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:#F0F4F8;color:#0F172A;font-size:13px;min-height:100vh}
@@ -132,6 +133,7 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;backgroun
     <div class="seg-wrap" id="seg-table-wrap"></div>
     <div class="toolbar">
       <button class="btn" onclick="exportData()">↓ Exportar CSV</button>
+      <button class="btn" onclick="exportExcel()" style="background:#065F46;color:#fff;border-color:#065F46;">↓ Exportar Excel (todos los squads)</button>
       <button class="btn btn-del" onclick="resetData()">↺ Limpiar datos</button>
       <span class="save-status" id="save-status"></span>
     </div>
@@ -838,6 +840,122 @@ function exportData() {
   a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
   a.download = 'seguimiento_okrs_' + name + '.csv';
   a.click();
+}
+
+function exportExcel() {
+  const squads = [
+    { key:'leads', nombre:'Gestión de Leads',  palancas:palancasLeads, semanas:semanasLeads, fechas:fechasSemLeads, iniciativas:iniciativasLeads, datos:datosLeads },
+    { key:'pub',   nombre:'Publicaciones',      palancas:palancasPub,   semanas:semanasPub,   fechas:fechasSemPub,   iniciativas:iniciativasPub,   datos:datosPub },
+    { key:'cap',   nombre:'Captación Digital',  palancas:palancasCap,   semanas:semanasCap,   fechas:fechasSemCap,   iniciativas:iniciativasCap,   datos:datosCap },
+    { key:'op',    nombre:'Operaciones',         palancas:palancasOp,    semanas:semanasOp,    fechas:fechasSemOp,    iniciativas:iniciativasOp,    datos:datosOp },
+  ];
+
+  function colorEstado(e) {
+    if (e==='Finalizado'||e==='Ok') return '059669';
+    if (e==='En Proceso'||e==='Iniciado') return 'D97706';
+    return '6B7280';
+  }
+  function bgEstado(e) {
+    if (e==='Finalizado'||e==='Ok') return 'D1FAE5';
+    if (e==='En Proceso'||e==='Iniciado') return 'FEF3C7';
+    return 'F1F5F9';
+  }
+  function colorPrio(p) { return p==='Alta'?'991B1B':p==='Media'?'92400E':'374151'; }
+  function bgPrio(p) { return p==='Alta'?'FEE2E2':p==='Media'?'FEF3C7':'F3F4F6'; }
+
+  const S = {
+    hdr:    {font:{bold:true,color:{rgb:'FFFFFF'},sz:10},fill:{fgColor:{rgb:'0F172A'}},alignment:{horizontal:'center',vertical:'center',wrapText:true}},
+    titulo: {font:{bold:true,sz:13,color:{rgb:'0F172A'}},fill:{fgColor:{rgb:'E2E8F0'}},alignment:{horizontal:'left',vertical:'center'}},
+    sep:    {font:{bold:true,color:{rgb:'FFFFFF'},sz:10},fill:{fgColor:{rgb:'1E3A5F'}},alignment:{horizontal:'left',vertical:'center'}},
+    okr:    {font:{bold:true,color:{rgb:'1E3A5F'},sz:9}, fill:{fgColor:{rgb:'DBEAFE'}},alignment:{horizontal:'left',vertical:'center',wrapText:true}},
+    pal:    {font:{color:{rgb:'0F172A'},sz:9},            fill:{fgColor:{rgb:'FFFFFF'}},alignment:{horizontal:'left',vertical:'center',wrapText:true}},
+    meta:   {font:{bold:true,color:{rgb:'065F46'},sz:9},  fill:{fgColor:{rgb:'D1FAE5'}},alignment:{horizontal:'center',vertical:'center'}},
+    metaO:  {font:{bold:true,color:{rgb:'1E3A5F'},sz:9},  fill:{fgColor:{rgb:'BFDBFE'}},alignment:{horizontal:'center',vertical:'center'}},
+    cel:    {font:{sz:9},alignment:{horizontal:'center',vertical:'center'},border:{right:{style:'hair',color:{rgb:'E2E8F0'}},bottom:{style:'hair',color:{rgb:'E2E8F0'}}}},
+    celO:   {font:{sz:9},fill:{fgColor:{rgb:'EFF6FF'}},alignment:{horizontal:'center',vertical:'center'},border:{right:{style:'hair',color:{rgb:'BFDBFE'}},bottom:{style:'thin',color:{rgb:'BFDBFE'}}}},
+    secIni: {font:{bold:true,color:{rgb:'FFFFFF'},sz:11},fill:{fgColor:{rgb:'0F172A'}},alignment:{horizontal:'left',vertical:'center'}},
+    hdrCol: {font:{bold:true,color:{rgb:'FFFFFF'},sz:9}, fill:{fgColor:{rgb:'334155'}},alignment:{horizontal:'center',vertical:'center',wrapText:true}},
+    txt:    {font:{sz:9,color:{rgb:'0F172A'}},fill:{fgColor:{rgb:'FFFFFF'}},alignment:{horizontal:'left',vertical:'center',wrapText:true},border:{bottom:{style:'hair',color:{rgb:'E2E8F0'}}}},
+    txtC:   {font:{sz:9,color:{rgb:'0F172A'}},fill:{fgColor:{rgb:'FFFFFF'}},alignment:{horizontal:'center',vertical:'center'},border:{bottom:{style:'hair',color:{rgb:'E2E8F0'}}}},
+  };
+
+  function cc(v, s) { return { v: v ?? '', t: typeof v === 'number' ? 'n' : 's', s }; }
+
+  function buildSheet(squad) {
+    const {nombre, palancas, semanas, fechas, iniciativas, datos} = squad;
+    const nS = semanas.length;
+    const totalCols = Math.max(3 + nS, 7);
+    const ws = {};
+    let row = 0;
+
+    // Título seguimiento
+    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`SEGUIMIENTO SEMANAL — ${nombre} — Q2 2026`, S.titulo);
+    for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.titulo);
+    row += 2;
+
+    // Headers
+    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc('Indicador / Palanca', S.hdr);
+    ws[XLSX.utils.encode_cell({r:row,c:1})] = cc('Código', S.hdr);
+    ws[XLSX.utils.encode_cell({r:row,c:2})] = cc('Meta', S.hdr);
+    for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(`${semanas[i]}\n${fechas[i]}`, S.hdr);
+    row++;
+
+    // Palancas con datos
+    for (const p of palancas) {
+      if (p.tipo === 'area_sep') {
+        for (let col=0; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc(col===0?p.texto:'', S.sep);
+      } else if (p.tipo === 'okr') {
+        ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(p.texto, S.okr);
+        ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(p.codigo, S.okr);
+        ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(p.meta, S.metaO);
+        const f = datos[p.codigo] || {};
+        for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(f[semanas[i]]||'', S.celO);
+      } else if (p.tipo === 'pal') {
+        ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(p.texto, S.pal);
+        ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(p.codigo, {...S.pal, font:{...S.pal.font,bold:true}});
+        ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(p.meta, S.meta);
+        const f = datos[p.codigo] || {};
+        for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(f[semanas[i]]||'', S.cel);
+      } else { row++; continue; }
+      row++;
+    }
+
+    // Sección iniciativas
+    row += 2;
+    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`INICIATIVAS — ${nombre}`, S.secIni);
+    for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.secIni);
+    row += 2;
+
+    const hIni = ['Código','Iniciativa','Prioridad','Estado','Responsable','Fecha Inicio','Fecha Fin'];
+    for (let i=0; i<hIni.length; i++) ws[XLSX.utils.encode_cell({r:row,c:i})] = cc(hIni[i], S.hdrCol);
+    row++;
+
+    for (const ini of iniciativas) {
+      const sE = {font:{bold:true,sz:9,color:{rgb:colorEstado(ini.estado)}},fill:{fgColor:{rgb:bgEstado(ini.estado)}},alignment:{horizontal:'center',vertical:'center'}};
+      const sP = {font:{bold:true,sz:9,color:{rgb:colorPrio(ini.prio)}},fill:{fgColor:{rgb:bgPrio(ini.prio)}},alignment:{horizontal:'center',vertical:'center'}};
+      const fmtDate = d => d instanceof Date ? `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}` : (d||'');
+      ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(ini.codigo,     {...S.txtC,font:{bold:true,sz:9,color:{rgb:'1E3A5F'}}});
+      ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(ini.iniciativa, S.txt);
+      ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(ini.prio,       sP);
+      ws[XLSX.utils.encode_cell({r:row,c:3})] = cc(ini.estado,     sE);
+      ws[XLSX.utils.encode_cell({r:row,c:4})] = cc(ini.responsable,S.txt);
+      ws[XLSX.utils.encode_cell({r:row,c:5})] = cc(fmtDate(ini.ini),S.txtC);
+      ws[XLSX.utils.encode_cell({r:row,c:6})] = cc(fmtDate(ini.fin),S.txtC);
+      row++;
+    }
+
+    ws['!cols'] = [{wch:62},{wch:12},{wch:14},...semanas.map(()=>({wch:9}))];
+    ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:totalCols-1}}];
+    ws['!ref'] = XLSX.utils.encode_range({r:0,c:0},{r:row-1,c:totalCols-1});
+    return ws;
+  }
+
+  const wb = XLSX.utils.book_new();
+  for (const sq of squads) XLSX.utils.book_append_sheet(wb, buildSheet(sq), sq.nombre);
+
+  const fecha = new Date();
+  const stamp = `${fecha.getFullYear()}${String(fecha.getMonth()+1).padStart(2,'0')}${String(fecha.getDate()).padStart(2,'0')}`;
+  XLSX.writeFile(wb, `Seguimiento_por_Squad_Q2_2026_${stamp}.xlsx`, {bookType:'xlsx', cellStyles:true});
 }
 
 function resetData() {
