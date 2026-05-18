@@ -881,26 +881,25 @@ function exportExcel() {
 
   function cc(v, s) { return { v: v ?? '', t: typeof v === 'number' ? 'n' : 's', s }; }
 
-  function buildSheet(squad) {
-    const {nombre, palancas, semanas, fechas, iniciativas, datos} = squad;
+  const fmtDate = d => d instanceof Date ? `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}` : (d||'');
+
+  function buildSeguimientoSheet(squad) {
+    const {nombre, palancas, semanas, fechas, datos} = squad;
     const nS = semanas.length;
-    const totalCols = Math.max(3 + nS, 7);
+    const totalCols = 3 + nS;
     const ws = {};
     let row = 0;
 
-    // Título seguimiento
     ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`SEGUIMIENTO SEMANAL — ${nombre} — Q2 2026`, S.titulo);
     for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.titulo);
     row += 2;
 
-    // Headers
     ws[XLSX.utils.encode_cell({r:row,c:0})] = cc('Indicador / Palanca', S.hdr);
     ws[XLSX.utils.encode_cell({r:row,c:1})] = cc('Código', S.hdr);
     ws[XLSX.utils.encode_cell({r:row,c:2})] = cc('Meta', S.hdr);
     for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(`${semanas[i]}\n${fechas[i]}`, S.hdr);
     row++;
 
-    // Palancas con datos
     for (const p of palancas) {
       if (p.tipo === 'area_sep') {
         for (let col=0; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc(col===0?p.texto:'', S.sep);
@@ -920,10 +919,20 @@ function exportExcel() {
       row++;
     }
 
-    // Sección iniciativas
-    row += 2;
-    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`INICIATIVAS — ${nombre}`, S.secIni);
-    for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.secIni);
+    ws['!cols'] = [{wch:62},{wch:12},{wch:14},...semanas.map(()=>({wch:9}))];
+    ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:totalCols-1}}];
+    ws['!ref'] = XLSX.utils.encode_range({r:0,c:0},{r:row-1,c:totalCols-1});
+    return ws;
+  }
+
+  function buildIniciativasSheet(squad) {
+    const {nombre, iniciativas} = squad;
+    const totalCols = 7;
+    const ws = {};
+    let row = 0;
+
+    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`INICIATIVAS — ${nombre} — Q2 2026`, S.titulo);
+    for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.titulo);
     row += 2;
 
     const hIni = ['Código','Iniciativa','Prioridad','Estado','Responsable','Fecha Inicio','Fecha Fin'];
@@ -933,25 +942,36 @@ function exportExcel() {
     for (const ini of iniciativas) {
       const sE = {font:{bold:true,sz:9,color:{rgb:colorEstado(ini.estado)}},fill:{fgColor:{rgb:bgEstado(ini.estado)}},alignment:{horizontal:'center',vertical:'center'}};
       const sP = {font:{bold:true,sz:9,color:{rgb:colorPrio(ini.prio)}},fill:{fgColor:{rgb:bgPrio(ini.prio)}},alignment:{horizontal:'center',vertical:'center'}};
-      const fmtDate = d => d instanceof Date ? `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}` : (d||'');
-      ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(ini.codigo,     {...S.txtC,font:{bold:true,sz:9,color:{rgb:'1E3A5F'}}});
-      ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(ini.iniciativa, S.txt);
-      ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(ini.prio,       sP);
-      ws[XLSX.utils.encode_cell({r:row,c:3})] = cc(ini.estado,     sE);
-      ws[XLSX.utils.encode_cell({r:row,c:4})] = cc(ini.responsable,S.txt);
+      ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(ini.codigo,      {...S.txtC,font:{bold:true,sz:9,color:{rgb:'1E3A5F'}}});
+      ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(ini.iniciativa,  S.txt);
+      ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(ini.prio,        sP);
+      ws[XLSX.utils.encode_cell({r:row,c:3})] = cc(ini.estado,      sE);
+      ws[XLSX.utils.encode_cell({r:row,c:4})] = cc(ini.responsable, S.txt);
       ws[XLSX.utils.encode_cell({r:row,c:5})] = cc(fmtDate(ini.ini),S.txtC);
       ws[XLSX.utils.encode_cell({r:row,c:6})] = cc(fmtDate(ini.fin),S.txtC);
       row++;
     }
 
-    ws['!cols'] = [{wch:62},{wch:12},{wch:14},...semanas.map(()=>({wch:9}))];
+    ws['!cols'] = [{wch:12},{wch:62},{wch:12},{wch:14},{wch:38},{wch:14},{wch:14}];
     ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:totalCols-1}}];
     ws['!ref'] = XLSX.utils.encode_range({r:0,c:0},{r:row-1,c:totalCols-1});
     return ws;
   }
 
+  // Nombres cortos para pestañas (máx 31 chars)
+  const tabNames = {
+    'Gestión de Leads': 'Leads',
+    'Publicaciones':    'Pub',
+    'Captación Digital':'Cap',
+    'Operaciones':      'Op',
+  };
+
   const wb = XLSX.utils.book_new();
-  for (const sq of squads) XLSX.utils.book_append_sheet(wb, buildSheet(sq), sq.nombre);
+  for (const squad of squads) {
+    const short = tabNames[squad.nombre] || squad.nombre;
+    XLSX.utils.book_append_sheet(wb, buildSeguimientoSheet(squad), `${short} - Seguimiento`);
+    XLSX.utils.book_append_sheet(wb, buildIniciativasSheet(squad), `${short} - Iniciativas`);
+  }
 
   const fecha = new Date();
   const stamp = `${fecha.getFullYear()}${String(fecha.getMonth()+1).padStart(2,'0')}${String(fecha.getDate()).padStart(2,'0')}`;
