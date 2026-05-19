@@ -6,7 +6,6 @@
 <title>Tablero OKRs — Q2 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;background:#F0F4F8;color:#0F172A;font-size:13px;min-height:100vh}
@@ -82,13 +81,13 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;backgroun
     <span class="squad-dot" style="background:#22C55E;box-shadow:0 0 0 2px #DCFCE7;"></span>
     Squad Gestión de Leads
   </div>
-  <div class="squad-tab" data-squad="op" onclick="showSquad('op')">
-    <span class="squad-dot" style="background:#F97316;box-shadow:0 0 0 2px #FFEDD5;"></span>
-    Squad Operaciones
-  </div>
   <div class="squad-tab" data-squad="pub" onclick="showSquad('pub')">
     <span class="squad-dot" style="background:#F59E0B;box-shadow:0 0 0 2px #FEF3C7;"></span>
     Squad Publicaciones
+  </div>
+  <div class="squad-tab" data-squad="op" onclick="showSquad('op')">
+    <span class="squad-dot" style="background:#F97316;box-shadow:0 0 0 2px #FFEDD5;"></span>
+    Squad Operaciones
   </div>
 </div>
 
@@ -133,7 +132,6 @@ body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;backgroun
     <div class="seg-wrap" id="seg-table-wrap"></div>
     <div class="toolbar">
       <button class="btn" onclick="exportData()">↓ Exportar CSV</button>
-      <button class="btn" onclick="exportExcel()" style="background:#065F46;color:#fff;border-color:#065F46;">↓ Exportar Excel (todos los squads)</button>
       <button class="btn btn-del" onclick="resetData()">↺ Limpiar datos</button>
       <span class="save-status" id="save-status"></span>
     </div>
@@ -184,12 +182,11 @@ const palancasLeads = [
   {tipo:'pal', codigo:'V2.5', texto:'Palanca V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas', meta:'Estrategia y propuesta de valor para clientes con citas agendadas', metaNum:null, direccion:'subir', unidad:''},
 ];
 
-const semanasLeads = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
-const fechasSemLeads = ['20/04','27/04','04/05','11/05','18/05','25/05','01/06','08/06','15/06','22/06','29/06','06/07'];
+const semanasLeads = ['S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
+const fechasSemLeads = ['04/05','11/05','18/05','25/05','01/06','08/06','15/06','22/06','29/06','06/07'];
 
 const mesesLeads = [
   {label:'Todos', semanas:null},
-  {label:'Abril', semanas:['S1','S2']},
   {label:'Mayo',  semanas:['S3','S4','S5','S6']},
   {label:'Junio', semanas:['S7','S8','S9','S10','S11']},
   {label:'Julio', semanas:['S12']},
@@ -203,35 +200,35 @@ const mesesGanttLeads = [
 ];
 
 const iniciativasLeads = [
-  {codigo:'C1.1', iniciativa:'Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)', prio:'Alta', estado:'No Iniciado', responsable:'Gestión de Leads / CRM', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
-  {codigo:'C1.1', iniciativa:'OTP al inicio del flujo de compra para validar solo números reales', prio:'Alta', estado:'Iniciado', responsable:'Backend / Producto Digital', ini:new Date(2026,2,23), fin:new Date(2026,4,8)},
-  {codigo:'C1.1', iniciativa:'Primer contacto automático desde Llaima en Compra (iniciativa con Paula)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,15), fin:new Date(2026,5,5)},
-  {codigo:'C1.2', iniciativa:'Reasignación Express: reasignación automática de leads sin contacto al superar SLA', prio:'Media', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
-  {codigo:'C1.2', iniciativa:'Monitoreo de colas y priorización de leads categoría Muy Alta y Alta', prio:'Alta', estado:'Iniciado', responsable:'Lead Management', ini:new Date(2026,4,11), fin:new Date(2026,4,29)},
-  {codigo:'C2.1', iniciativa:'Monitoreo de citas agendadas y atención de leads', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'C1.1', iniciativa:'Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)', prio:'Alta', estado:'No Iniciado', responsable:'Gestión de Leads / CRM', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
+  {codigo:'C1.1', iniciativa:'OTP al inicio del flujo de compra para validar solo números reales', prio:'Alta', estado:'Ok', responsable:'Backend / Producto Digital', ini:new Date(2026,2,23), fin:new Date(2026,4,8)},
+  {codigo:'C1.1', iniciativa:'Primer contacto automático desde Llaima en Compra (iniciativa con Paula)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,25), fin:new Date(2026,5,12)},
+  {codigo:'C1.2', iniciativa:'Reasignación Express: reasignación automática de leads sin contacto al superar SLA', prio:'Media', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,25), fin:new Date(2026,5,12)},
+  {codigo:'C1.2', iniciativa:'Monitoreo de colas y priorización de leads categoría Muy Alta y Alta', prio:'Alta', estado:'En Proceso', responsable:'Lead Management', ini:new Date(2026,4,11), fin:new Date(2026,4,29)},
+  {codigo:'C2.1', iniciativa:'Monitoreo de citas agendadas y atención de leads', prio:'Alta', estado:'En Proceso', responsable:'Lead Management', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
   {codigo:'C2.1', iniciativa:'Lead Scoring Predictivo: análisis del tipo de cliente y auto con mayor conversión en compra', prio:'Alta', estado:'No Iniciado', responsable:'Datos / Producto Digital / CRM', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
   {codigo:'C2.1', iniciativa:'Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
   {codigo:'C2.1', iniciativa:'Panel de citas de inspección del día para jefe de sucursal (visibilidad tiempo real)', prio:'Media', estado:'No Iniciado', responsable:'CRM / Lead Management', ini:new Date(2026,5,1), fin:new Date(2026,6,3)},
-  {codigo:'C2.2', iniciativa:'Capacitación y auditoría de protocolos en llamadas de inspección basada en éxito', prio:'Alta', estado:'No Iniciado', responsable:'Gestión de Leads / Exp. Cliente', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'C2.2', iniciativa:'Capacitación y auditoría de protocolos en llamadas de inspección basada en éxito', prio:'Alta', estado:'No Iniciado', responsable:'Gestión de Leads / Exp. Cliente', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
   {codigo:'C2.2', iniciativa:'Análisis de llamadas con IA para detectar factores de éxito en conversión de inspección', prio:'Alta', estado:'No Iniciado', responsable:'IA / Gestión de Leads', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
   {codigo:'C2.2', iniciativa:'Dashboard de rendimiento individual por asesor en llamadas de compra (inspección)', prio:'Media', estado:'No Iniciado', responsable:'CRM / Lead Management', ini:new Date(2026,5,8), fin:new Date(2026,5,26)},
-  {codigo:'V1.1', iniciativa:'Flujo diferenciado VPP: enrutamiento automático a asesor especializado en BPP', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
-  {codigo:'V1.2', iniciativa:'Flujo exclusivo para leads Segmento con VPP', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
-  {codigo:'V1.2', iniciativa:'Segmentación de leads por tipo y paneles de trabajo por grupos de foco', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / Producto Digital', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V1.1', iniciativa:'Flujo diferenciado VPP: enrutamiento automático a asesor especializado en VPP', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,5,1), fin:new Date(2026,5,12)},
+  {codigo:'V1.2', iniciativa:'Flujo exclusivo para leads Segmento con VPP (Visualización en panel)', prio:'Alta', estado:'En Proceso', responsable:'Lead Management / CRM', ini:new Date(2026,5,1), fin:new Date(2026,5,12)},
+  {codigo:'V1.2', iniciativa:'Segmentación de leads por tipo y paneles de trabajo por grupos de foco', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / Producto Digital', ini:new Date(2026,4,25), fin:new Date(2026,4,29)},
   {codigo:'V1.2', iniciativa:'Panel exclusivo de seguimiento comercial (jefes, supervisores, gerentes)', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Lead Management', ini:new Date(2026,5,1), fin:new Date(2026,5,26)},
-  {codigo:'V1.3', iniciativa:'Asignación directa al asesor financiero desde que el lead declara interés en financiamiento', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
-  {codigo:'V1.3', iniciativa:'Apertura de motivos de descarte para dar feedback estructurado a Marketing', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Gestión de Leads / Marketing', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
-  {codigo:'V1.3', iniciativa:'Follow-up automatizado de financiamiento con simulación de cuotas personalizada', prio:'Media', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,18), fin:new Date(2026,6,3)},
-  {codigo:'V1.4', iniciativa:'Diseño e implementación de política comercial segmentada por perfil de cliente + VPP', prio:'Alta', estado:'Iniciado', responsable:'Comercial / Marketing / Exp. Cliente', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
-  {codigo:'V2.1', iniciativa:'Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Marketing', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
-  {codigo:'V2.1', iniciativa:'Automatización flujo de confirmación + recordatorio de cita de venta (elimina dependencia del vendedor)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
+  {codigo:'V1.3', iniciativa:'Asignación directa al asesor financiero desde que el lead declara interés en financiamiento', prio:'Alta', estado:'No Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
+  {codigo:'V1.3', iniciativa:'Apertura de motivos de descarte para dar feedback estructurado a Marketing', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Gestión de Leads / Marketing', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
+  {codigo:'V1.3', iniciativa:'Follow-up automatizado de financiamiento con simulación de cuotas personalizada', prio:'Media', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,5,15), fin:new Date(2026,6,3)},
+  {codigo:'V1.4', iniciativa:'Diseño e implementación de política comercial segmentada por perfil de cliente + VPP', prio:'Alta', estado:'En Proceso', responsable:'Comercial / Marketing / Exp. Cliente', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
+  {codigo:'V2.1', iniciativa:'Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Marketing', ini:new Date(2026,4,25), fin:new Date(2026,5,5)},
+  {codigo:'V2.1', iniciativa:'Automatización flujo de confirmación + recordatorio de cita de venta (elimina dependencia)', prio:'Alta', estado:'No Iniciado', responsable:'Producto Digital Vambe / CRM Llaima', ini:new Date(2026,4,25), fin:new Date(2026,5,19)},
   {codigo:'V2.2', iniciativa:'Flujo inteligente: antes de descartar lead con cita, validar si el cliente asistió a sucursal', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Producto Digital', ini:new Date(2026,4,25), fin:new Date(2026,5,12)},
   {codigo:'V2.3', iniciativa:'Captura y categorización obligatoria del motivo de no asistencia al cancelar lead con cita', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Producto Digital', ini:new Date(2026,4,25), fin:new Date(2026,5,12)},
   {codigo:'V2.3', iniciativa:'Dashboard de análisis de motivos de cancelación con feedback a Marketing y Comercial', prio:'Media', estado:'No Iniciado', responsable:'Datos / Marketing / Comercial', ini:new Date(2026,5,8), fin:new Date(2026,5,26)},
-  {codigo:'V2.4', iniciativa:'Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web', prio:'Alta', estado:'Iniciado', responsable:'Comercial / Gestión de Leads', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
-  {codigo:'V2.4', iniciativa:'Reporte matutino automático al jefe de sucursal con citas del día (desde CRM, tiempo real)', prio:'Alta', estado:'Iniciado', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
-  {codigo:'V2.5', iniciativa:'Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Gestión de Leads / Exp. Cliente / Marketing', ini:new Date(2026,5,1), fin:new Date(2026,5,26)},
-  {codigo:'V2.5', iniciativa:'Material digital pre-cita: ficha del auto con fotos HD', prio:'Media', estado:'No Iniciado', responsable:'Marketing / IA', ini:new Date(2026,4,18), fin:new Date(2026,6,3)},
+  {codigo:'V2.4', iniciativa:'Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web', prio:'Alta', estado:'En Proceso', responsable:'Comercial / Gestión de Leads', ini:new Date(2026,4,18), fin:new Date(2026,4,29)},
+  {codigo:'V2.4', iniciativa:'Reporte matutino automático al jefe de sucursal con citas del día (desde CRM, tiempo real)', prio:'Alta', estado:'En Proceso', responsable:'Lead Management / CRM', ini:new Date(2026,4,18), fin:new Date(2026,5,12)},
+  {codigo:'V2.5', iniciativa:'Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada', prio:'Alta', estado:'No Iniciado', responsable:'CRM / Lead Management / Exp. Cliente / Marketing', ini:new Date(2026,5,1), fin:new Date(2026,5,26)},
+  {codigo:'V2.5', iniciativa:'Material digital pre-cita: ficha del auto con fotos HD', prio:'Media', estado:'No Iniciado', responsable:'Marketing / IA', ini:new Date(2026,5,1), fin:new Date(2026,6,3)},
 ];
 
 const colorPalancaLeads = {
@@ -260,8 +257,6 @@ const palancasPub = [
   {tipo:'area_sep', texto:'PUBLICACIONES WEB', color:'#065F46'},
   {tipo:'okr_titulo', texto:'OKRS2: Aumentar la cantidad de unidades publicadas 400 promedio'},
   {tipo:'okr', codigo:'OKR-P1', texto:'OKR P1 - Aumentar el Inventario publicado en Vitrina de un 79,5% a un 90%', meta:'90%', metaNum:90, direccion:'subir', unidad:'%'},
-  {tipo:'ref', codigo:'P1.proy', texto:'Proyección esperada del OKR', meta:'—'},
-  {tipo:'ref', codigo:'P1.ref1', texto:'*Total Inventario Vitrina', meta:'—'},
   {tipo:'sub', texto:'Palancas OKR P1'},
   {tipo:'pal', codigo:'P1.1', texto:'Palanca P1.1: Publicar unidades en Acopio de 114 a <30 Unidades', meta:'30', metaNum:30, direccion:'bajar', unidad:''},
   {tipo:'pal', codigo:'P1.2', texto:'Palanca P1.2: Publicar unidades Reservadas 0 → 100%', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
@@ -345,27 +340,27 @@ const ganttLabelsPub = {
 
 // ── DATA: CAPTACIÓN DIGITAL ──
 const palancasCap = [
-  {tipo:'area_sep', texto:'EJE COMPRA', color:'#1E3A5F'},
-  {tipo:'okr', codigo:'OKR-CD1', texto:'OKR 1- Aumentar en un 30% los leads que tasaron llevarlos a concretar una agenda, pasar de 1866 a 2500 promedio mensual para el 30 de junio', meta:'70%', metaNum:70, direccion:'subir', unidad:'%'},
-  {tipo:'sub', texto:'Palancas OKR 1'},
-  {tipo:'pal', codigo:'CD1.1', texto:'Estar sobre el 50% de tasa de conversión respecto a los usuarios que iniciaron tasación', meta:'50%', metaNum:50, direccion:'subir', unidad:'%'},
-  {tipo:'pal', codigo:'CD1.2', texto:'Lograr al menos el 35% de leads verificados agenden inspección', meta:'35%', metaNum:35, direccion:'subir', unidad:'%'},
-  {tipo:'okr', codigo:'OKR-CD2', texto:'OKR 2- Mejorar la nota de evaluación UX de la sección Compra respecto a competidores, pasando de 7.5 a 17 puntos (sobre 27) al 30 de junio de 2026.', meta:'60%', metaNum:60, direccion:'subir', unidad:'%'},
-  {tipo:'sub', texto:'Palancas OKR 2'},
-  {tipo:'pal', codigo:'CD2.1', texto:'Aumentar la tasa de interacción del 69% al 85% en páginas de compra mediante mejoras de UX priorizadas', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
-  {tipo:'pal', codigo:'CD2.2', texto:'Reducir la tasa de dead clicks de 9,86% a menos del 3% en la sección Compra', meta:'<3%', metaNum:3, direccion:'bajar', unidad:'%'},
-  {tipo:'area_sep', texto:'EJE VENTA', color:'#7B1E1E'},
-  {tipo:'okr', codigo:'OKR-CD3', texto:'OKR 3 - Aumentar la generación de prospectos de 9690 promedio de leads a 12500 promedio (+29%) a al 30 junio', meta:'—', metaNum:null, direccion:'subir', unidad:''},
+  {tipo:'area_sep', texto:'COMPRA', color:'#1E3A5F'},
+  {tipo:'okr', codigo:'OKR-CD1', texto:'OKR C1- Aumentar en un 30% los leads que tasaron llevarlos a concretar una agenda, pasar de 1866 a 2500 promedio mensual para el 30 de junio', meta:'70%', metaNum:70, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR C1'},
+  {tipo:'pal', codigo:'CD1.1', texto:'Palanca C1.1: Estar sobre el 50% de tasa de conversión respecto a los usuarios que iniciaron tasación', meta:'50%', metaNum:50, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD1.2', texto:'Palanca C1.2: Lograr al menos el 35% de leads verificados agenden inspección', meta:'35%', metaNum:35, direccion:'subir', unidad:'%'},
+  {tipo:'okr', codigo:'OKR-CD2', texto:'OKR C2- Mejorar la nota de evaluación UX de la sección Compra respecto a competidores, pasando de 7.5 a 17 puntos (sobre 27) al 30 de junio de 2026.', meta:'17', metaNum:17, direccion:'subir', unidad:''},
+  {tipo:'sub', texto:'Palancas OKR C2'},
+  {tipo:'pal', codigo:'CD2.1', texto:'Palanca C2.1: Aumentar la tasa de interacción del 69% al 85% en páginas de compra mediante mejoras de UX priorizadas', meta:'85%', metaNum:85, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD2.2', texto:'Palanca C2.2: Reducir la tasa de dead clicks de 9,86% a menos del 3% en la sección Compra', meta:'<3%', metaNum:3, direccion:'bajar', unidad:'%'},
+  {tipo:'area_sep', texto:'VENTA', color:'#7B1E1E'},
+  {tipo:'okr', codigo:'OKR-CD3', texto:'OKR V1 - Aumentar la generación de prospectos de 9690 promedio de leads a 12500 promedio (+29%) a al 30 junio', meta:'3200', metaNum:3200, direccion:'subir', unidad:''},
   {tipo:'ref', codigo:'CD3.proy', texto:'Proyección esperada del OKR', meta:'—'},
-  {tipo:'sub', texto:'Palancas OKR 3'},
-  {tipo:'pal', codigo:'CD3.1', texto:'Incrementar la tasa de inicio del proceso de compra (buy process) de 3,9% a 5,3%', meta:'5,3%', metaNum:5.3, direccion:'subir', unidad:'%'},
-  {tipo:'pal', codigo:'CD3.2', texto:'Asegurar que el 100% de vehículos del catálogo de usados cuente con fotografía, como estándar de calidad que impacta la conversión.', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
-  {tipo:'okr', codigo:'OKR-CD4', texto:'OKR 4 - Mejorar la nota de evaluación UX de la sección Venta respecto a competidores, pasando de 15 a 20 puntos (sobre 24) al 30 de junio de 2026.', meta:'—', metaNum:null, direccion:'subir', unidad:''},
-  {tipo:'sub', texto:'Palancas OKR 4'},
-  {tipo:'pal', codigo:'CD4.1', texto:'Reducir dead clicks en sección catálogo de 38,53% a 30%', meta:'30%', metaNum:30, direccion:'bajar', unidad:'%'},
-  {tipo:'pal', codigo:'CD4.1b', texto:'Reducir dead clicks en sección ficha de auto de 51,88% a 41,5%', meta:'41,5%', metaNum:41.5, direccion:'bajar', unidad:'%'},
-  {tipo:'pal', codigo:'CD4.2', texto:'Aumentar tasa de interacción en páginas de catálogo de 61,03% a 75%', meta:'75%', metaNum:75, direccion:'subir', unidad:'%'},
-  {tipo:'pal', codigo:'CD4.3', texto:'Aumentar tasa de interacción en páginas de cotización de 81,96% a 95%.', meta:'95%', metaNum:95, direccion:'subir', unidad:'%'},
+  {tipo:'sub', texto:'Palancas OKR V1'},
+  {tipo:'pal', codigo:'CD3.1', texto:'Palanca V1.1: Incrementar la tasa de inicio del proceso de compra (buy process) de 3,9% a 5,3%', meta:'5,3%', metaNum:5.3, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD3.2', texto:'Palanca V1.2: Asegurar que el 100% de vehículos del catálogo de usados cuente con fotografía, como estándar de calidad que impacta la conversión.', meta:'100%', metaNum:100, direccion:'subir', unidad:'%'},
+  {tipo:'okr', codigo:'OKR-CD4', texto:'OKR V2 - Mejorar la nota de evaluación UX de la sección Venta respecto a competidores, pasando de 15 a 20 puntos (sobre 24) al 30 de junio de 2026.', meta:'24', metaNum:24, direccion:'subir', unidad:''},
+  {tipo:'sub', texto:'Palancas OKR V2'},
+  {tipo:'pal', codigo:'CD4.1', texto:'Palanca V2.1: Reducir dead clicks en sección catálogo de 38,53% a 30%', meta:'30%', metaNum:30, direccion:'bajar', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.1b', texto:'Palanca V2.2: Reducir dead clicks en sección ficha de auto de 51,88% a 41,5%', meta:'41,5%', metaNum:41.5, direccion:'bajar', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.2', texto:'Palanca V2.3: Aumentar tasa de interacción en páginas de catálogo de 61,03% a 75%', meta:'75%', metaNum:75, direccion:'subir', unidad:'%'},
+  {tipo:'pal', codigo:'CD4.3', texto:'Palanca V2.4: Aumentar tasa de interacción en páginas de cotización de 81,96% a 95%.', meta:'95%', metaNum:95, direccion:'subir', unidad:'%'},
 ];
 
 const semanasCap    = ['S1','S2','S3','S4','S5','S6','S7','S8','S9','S10','S11','S12'];
@@ -388,7 +383,7 @@ const mesesGanttCap = [
 
 const iniciativasCap = [
   {codigo:'OKR-CD2', iniciativa:'Reformular título: "Ingresa tus datos para recibir la tasación de tu auto"', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Marketing', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
-  {codigo:'OKR-CD2', iniciativa:'Corregir bug de cambio de campo (formulario queda en estado inconsistente)', prio:'Alta', estado:'Finalizado', responsable:'Backend / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,11)},
+  {codigo:'OKR-CD2', iniciativa:'Corregir bug de cambio de campo (formulario queda en estado inconsistente)', prio:'Alta', estado:'Ok', responsable:'Backend / Frontend', ini:new Date(2026,4,11), fin:new Date(2026,4,11)},
   {codigo:'OKR-CD2', iniciativa:'Unificar nomenclatura "Datos del auto" en todas las pantallas del flujo', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Marketing', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
   {codigo:'OKR-CD2', iniciativa:'Pre-filtro de elegibilidad al inicio del flujo + modal de rechazo empático', prio:'Alta', estado:'No Iniciado', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,11), fin:new Date(2026,4,25)},
   {codigo:'OKR-CD2', iniciativa:'UX del flujo con autocompletado por patente (Autofact)', prio:'Alta', estado:'En Proceso', responsable:'C. Araya / Frontend / Backend', ini:new Date(2026,4,7), fin:new Date(2026,4,18)},
@@ -536,16 +531,16 @@ const ganttLabelsOp = {
 // ── STATE ──
 let currentSquad = 'cap';
 let datosLeads = {
-  "OKR-C1": {"S4":"1,50%"},
-  "C1.1":   {"S4":"53%"},
-  "C1.2":   {"S4":"8h"},
-  "OKR-C2": {"S4":"32%"},
-  "C2.1":   {"S4":"32%"},
-  "OKR-V1": {"S4":"5,60%"},
-  "V1.1":   {"S4":"9,81%"},
-  "V1.2":   {"S4":"16,77%"},
-  "V1.3":   {"S4":"9,14%"},
-  "OKR-V2": {"S4":"10,39%"}
+  "OKR-C1": {"S3":"5,70%","S4":"7,20%"},
+  "C1.1":   {"S3":"60,20%","S4":"57,10%"},
+  "C1.2":   {"S3":"2,5","S4":"1,19"},
+  "OKR-C2": {"S3":"34,11%","S4":"27,55%"},
+  "C2.1":   {"S3":"34,11%","S4":"27,55%"},
+  "OKR-V1": {"S3":"5,40%","S4":"5,00%"},
+  "V1.1":   {"S3":"17,10%","S4":"16,60%"},
+  "V1.2":   {"S3":"31,40%","S4":"30,20%"},
+  "V1.3":   {"S3":"6,00%","S4":"5,90%"},
+  "OKR-V2": {"S3":"12,00%","S4":"40,00%"}
 };
 let datosPub = {
   "OKR-P1":    {"S1":"70,10%","S2":"78,40%","S3":"91,00%","S4":"91,30%"},
@@ -555,7 +550,7 @@ let datosPub = {
   "P1.2":      {"S1":"0%",    "S2":"0%",    "S3":"75%",   "S4":"84%"},
   "P1.ref2":   {"S1":"0",     "S2":"0",     "S3":"245",   "S4":"285"},
   "P1.ref3":   {"S1":"319",   "S2":"308",   "S3":"328",   "S4":"340"},
-  "OKR-P2":    {"S1":"69,70%","S2":"61,10%","S3":"57,90%"},
+  "OKR-P2":    {"S1":"69,70%","S2":"61,10%","S3":"57,90%","S4":"59,40%"},
   "P2.1":      {"S1":"1264",  "S2":"1318",  "S3":"1598",  "S4":"1625"},
   "P2.2":      {"S1":"86%",   "S2":"82%",   "S3":"79%",   "S4":"82%"},
   "P2.ref1":   {"S1":"1813",  "S2":"2157",  "S3":"2758",  "S4":"2786"},
@@ -570,16 +565,19 @@ let datosPub = {
   "P3.2":      {"S1":"0",     "S2":"0",     "S3":"0",     "S4":"0"}
 };
 let datosCap = {
-  "CD1.1": {"S1":"47,10%","S2":"42,90%","S3":"39,90%","S4":"32,10%"},
-  "CD1.2": {"S1":"20,00%","S2":"21,00%","S3":"18,00%","S4":"19,00%"},
-  "CD2.1": {"S1":"69,00%","S2":"68,60%","S3":"67,70%","S4":"70,00%"},
-  "CD2.2": {"S1":"9,86%","S2":"9,24%","S3":"8,61%","S4":"7,99%"},
-  "CD3.1": {"S1":"3,90%","S2":"3,90%","S3":"3,90%","S4":"3,90%"},
-  "CD3.2": {"S4":"100,00%"},
-  "CD4.1": {"S1":"38,53%","S2":"37,75%","S3":"36,98%","S4":"36,20%"},
-  "CD4.1b":{"S1":"51,88%","S2":"50,94%","S3":"49,99%","S4":"49,05%"},
-  "CD4.2": {"S3":"61,03%","S4":"61,10%"},
-  "CD4.3": {"S3":"81,96%","S4":"82,07%"}
+  "CD1.1":  {"S1":"47,10%","S2":"42,90%","S3":"39,90%","S4":"32,10%"},
+  "CD1.2":  {"S1":"20,00%","S2":"21,00%","S3":"18,00%","S4":"19,00%"},
+  "OKR-CD2":{"S1":"7,5","S2":"7,5","S3":"7,5","S4":"7,5"},
+  "CD2.1":  {"S1":"69,00%","S2":"68,60%","S3":"67,70%","S4":"70,00%"},
+  "CD2.2":  {"S1":"9,86%","S2":"9,24%","S3":"8,61%","S4":"7,99%"},
+  "OKR-CD3":{"S4":"1999"},
+  "CD3.1":  {"S1":"3,90%","S2":"3,90%","S3":"3,90%","S4":"3,90%"},
+  "CD3.2":  {"S1":"20%","S2":"20%","S3":"20%","S4":"100,00%"},
+  "OKR-CD4":{"S1":"15","S2":"15","S3":"15","S4":"15"},
+  "CD4.1":  {"S1":"38,53%","S2":"37,75%","S3":"36,98%","S4":"36,20%"},
+  "CD4.1b": {"S1":"51,88%","S2":"50,94%","S3":"49,99%","S4":"49,05%"},
+  "CD4.2":  {"S3":"61,03%","S4":"61,10%"},
+  "CD4.3":  {"S3":"81,96%","S4":"82,07%"}
 };
 let datosOp = {
   "OP3.proy": {"S3":"506"},
@@ -703,31 +701,39 @@ function ultimoCell(v, si, p) {
 const BLOB_URL = 'https://jsonblob.com/api/jsonBlob/019e2839-cfb2-7a39-b4a5-41b9af500895';
 let saveTimer = null;
 
-async function loadData() {
+function deepMerge(base, override) {
+  const result = {};
+  for (const k of Object.keys(base)) result[k] = { ...base[k] };
+  for (const k of Object.keys(override || {})) {
+    if (!result[k]) result[k] = {};
+    for (const sem of Object.keys(override[k] || {})) {
+      const v = override[k][sem];
+      if (v && String(v).trim()) result[k][sem] = v;
+    }
+  }
+  return result;
+}
+
+function loadData() {
   try {
-    const res = await fetch(BLOB_URL, { headers: { 'Accept': 'application/json' } });
-    if (res.ok) {
-      const d = await res.json();
-      datosLeads = d.leads || {};
-      datosPub   = d.pub   || {};
-      datosCap   = d.cap   || {};
-      datosOp    = d.op    || {};
+    const saved = localStorage.getItem('okr_tablero_v2');
+    if (saved) {
+      const d = JSON.parse(saved);
+      datosLeads = deepMerge(datosLeads, d.leads);
+      datosPub   = deepMerge(datosPub,   d.pub);
+      datosCap   = deepMerge(datosCap,   d.cap);
+      datosOp    = deepMerge(datosOp,    d.op);
     }
   } catch(e) {}
 }
 
-async function saveData() {
+function saveData() {
   const el = document.getElementById('save-status');
-  el.textContent = '↑ Guardando…';
   try {
-    const res = await fetch(BLOB_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ leads: datosLeads, pub: datosPub, cap: datosCap, op: datosOp })
-    });
-    el.textContent = res.ok ? '✓ Guardado' : '⚠ Error al guardar';
-  } catch(e) { el.textContent = '⚠ Sin conexión'; }
-  setTimeout(() => { el.textContent = ''; }, 2500);
+    localStorage.setItem('okr_tablero_v2', JSON.stringify({ leads: datosLeads, pub: datosPub, cap: datosCap, op: datosOp }));
+    el.textContent = '✓ Guardado';
+  } catch(e) { el.textContent = '⚠ Error al guardar'; }
+  setTimeout(() => { el.textContent = ''; }, 1500);
 }
 
 function scheduleSave() {
@@ -761,7 +767,7 @@ function onCellChange(input, codigo, sem) {
 
 function showSquad(squad) {
   currentSquad = squad;
-  currentMesIdx  = getMesActualIdx(sq().meses);
+  currentMesIdx  = 0;
   currentGanttMes = getMesActualIdx(sq().mesesGantt);
   currentFilter = null;
   document.querySelectorAll('.squad-tab').forEach(t => t.classList.toggle('squad-active', t.dataset.squad === squad));
@@ -842,149 +848,12 @@ function exportData() {
   a.click();
 }
 
-function exportExcel() {
-  const squads = [
-    { key:'leads', nombre:'Gestión de Leads',  palancas:palancasLeads, semanas:semanasLeads, fechas:fechasSemLeads, iniciativas:iniciativasLeads, datos:datosLeads },
-    { key:'pub',   nombre:'Publicaciones',      palancas:palancasPub,   semanas:semanasPub,   fechas:fechasSemPub,   iniciativas:iniciativasPub,   datos:datosPub },
-    { key:'cap',   nombre:'Captación Digital',  palancas:palancasCap,   semanas:semanasCap,   fechas:fechasSemCap,   iniciativas:iniciativasCap,   datos:datosCap },
-    { key:'op',    nombre:'Operaciones',         palancas:palancasOp,    semanas:semanasOp,    fechas:fechasSemOp,    iniciativas:iniciativasOp,    datos:datosOp },
-  ];
-
-  function colorEstado(e) {
-    if (e==='Finalizado'||e==='Ok') return '059669';
-    if (e==='En Proceso'||e==='Iniciado') return 'D97706';
-    return '6B7280';
-  }
-  function bgEstado(e) {
-    if (e==='Finalizado'||e==='Ok') return 'D1FAE5';
-    if (e==='En Proceso'||e==='Iniciado') return 'FEF3C7';
-    return 'F1F5F9';
-  }
-  function colorPrio(p) { return p==='Alta'?'991B1B':p==='Media'?'92400E':'374151'; }
-  function bgPrio(p) { return p==='Alta'?'FEE2E2':p==='Media'?'FEF3C7':'F3F4F6'; }
-
-  const S = {
-    hdr:    {font:{bold:true,color:{rgb:'FFFFFF'},sz:10},fill:{fgColor:{rgb:'0F172A'}},alignment:{horizontal:'center',vertical:'center',wrapText:true}},
-    titulo: {font:{bold:true,sz:13,color:{rgb:'0F172A'}},fill:{fgColor:{rgb:'E2E8F0'}},alignment:{horizontal:'left',vertical:'center'}},
-    sep:    {font:{bold:true,color:{rgb:'FFFFFF'},sz:10},fill:{fgColor:{rgb:'1E3A5F'}},alignment:{horizontal:'left',vertical:'center'}},
-    okr:    {font:{bold:true,color:{rgb:'1E3A5F'},sz:9}, fill:{fgColor:{rgb:'DBEAFE'}},alignment:{horizontal:'left',vertical:'center',wrapText:true}},
-    pal:    {font:{color:{rgb:'0F172A'},sz:9},            fill:{fgColor:{rgb:'FFFFFF'}},alignment:{horizontal:'left',vertical:'center',wrapText:true}},
-    meta:   {font:{bold:true,color:{rgb:'065F46'},sz:9},  fill:{fgColor:{rgb:'D1FAE5'}},alignment:{horizontal:'center',vertical:'center'}},
-    metaO:  {font:{bold:true,color:{rgb:'1E3A5F'},sz:9},  fill:{fgColor:{rgb:'BFDBFE'}},alignment:{horizontal:'center',vertical:'center'}},
-    cel:    {font:{sz:9},alignment:{horizontal:'center',vertical:'center'},border:{right:{style:'hair',color:{rgb:'E2E8F0'}},bottom:{style:'hair',color:{rgb:'E2E8F0'}}}},
-    celO:   {font:{sz:9},fill:{fgColor:{rgb:'EFF6FF'}},alignment:{horizontal:'center',vertical:'center'},border:{right:{style:'hair',color:{rgb:'BFDBFE'}},bottom:{style:'thin',color:{rgb:'BFDBFE'}}}},
-    secIni: {font:{bold:true,color:{rgb:'FFFFFF'},sz:11},fill:{fgColor:{rgb:'0F172A'}},alignment:{horizontal:'left',vertical:'center'}},
-    hdrCol: {font:{bold:true,color:{rgb:'FFFFFF'},sz:9}, fill:{fgColor:{rgb:'334155'}},alignment:{horizontal:'center',vertical:'center',wrapText:true}},
-    txt:    {font:{sz:9,color:{rgb:'0F172A'}},fill:{fgColor:{rgb:'FFFFFF'}},alignment:{horizontal:'left',vertical:'center',wrapText:true},border:{bottom:{style:'hair',color:{rgb:'E2E8F0'}}}},
-    txtC:   {font:{sz:9,color:{rgb:'0F172A'}},fill:{fgColor:{rgb:'FFFFFF'}},alignment:{horizontal:'center',vertical:'center'},border:{bottom:{style:'hair',color:{rgb:'E2E8F0'}}}},
-  };
-
-  function cc(v, s) { return { v: v ?? '', t: typeof v === 'number' ? 'n' : 's', s }; }
-
-  const fmtDate = d => d instanceof Date ? `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}` : (d||'');
-
-  function buildSeguimientoSheet(squad) {
-    const {nombre, palancas, semanas, fechas, datos} = squad;
-    const nS = semanas.length;
-    const totalCols = 3 + nS;
-    const ws = {};
-    let row = 0;
-
-    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`SEGUIMIENTO SEMANAL — ${nombre} — Q2 2026`, S.titulo);
-    for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.titulo);
-    row += 2;
-
-    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc('Indicador / Palanca', S.hdr);
-    ws[XLSX.utils.encode_cell({r:row,c:1})] = cc('Código', S.hdr);
-    ws[XLSX.utils.encode_cell({r:row,c:2})] = cc('Meta', S.hdr);
-    for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(`${semanas[i]}\n${fechas[i]}`, S.hdr);
-    row++;
-
-    for (const p of palancas) {
-      if (p.tipo === 'area_sep') {
-        for (let col=0; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc(col===0?p.texto:'', S.sep);
-      } else if (p.tipo === 'okr') {
-        ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(p.texto, S.okr);
-        ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(p.codigo, S.okr);
-        ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(p.meta, S.metaO);
-        const f = datos[p.codigo] || {};
-        for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(f[semanas[i]]||'', S.celO);
-      } else if (p.tipo === 'pal') {
-        ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(p.texto, S.pal);
-        ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(p.codigo, {...S.pal, font:{...S.pal.font,bold:true}});
-        ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(p.meta, S.meta);
-        const f = datos[p.codigo] || {};
-        for (let i=0; i<nS; i++) ws[XLSX.utils.encode_cell({r:row,c:3+i})] = cc(f[semanas[i]]||'', S.cel);
-      } else { row++; continue; }
-      row++;
-    }
-
-    ws['!cols'] = [{wch:62},{wch:12},{wch:14},...semanas.map(()=>({wch:9}))];
-    ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:totalCols-1}}];
-    ws['!ref'] = XLSX.utils.encode_range({r:0,c:0},{r:row-1,c:totalCols-1});
-    return ws;
-  }
-
-  function buildIniciativasSheet(squad) {
-    const {nombre, iniciativas} = squad;
-    const totalCols = 7;
-    const ws = {};
-    let row = 0;
-
-    ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(`INICIATIVAS — ${nombre} — Q2 2026`, S.titulo);
-    for (let col=1; col<totalCols; col++) ws[XLSX.utils.encode_cell({r:row,c:col})] = cc('', S.titulo);
-    row += 2;
-
-    const hIni = ['Código','Iniciativa','Prioridad','Estado','Responsable','Fecha Inicio','Fecha Fin'];
-    for (let i=0; i<hIni.length; i++) ws[XLSX.utils.encode_cell({r:row,c:i})] = cc(hIni[i], S.hdrCol);
-    row++;
-
-    for (const ini of iniciativas) {
-      const sE = {font:{bold:true,sz:9,color:{rgb:colorEstado(ini.estado)}},fill:{fgColor:{rgb:bgEstado(ini.estado)}},alignment:{horizontal:'center',vertical:'center'}};
-      const sP = {font:{bold:true,sz:9,color:{rgb:colorPrio(ini.prio)}},fill:{fgColor:{rgb:bgPrio(ini.prio)}},alignment:{horizontal:'center',vertical:'center'}};
-      ws[XLSX.utils.encode_cell({r:row,c:0})] = cc(ini.codigo,      {...S.txtC,font:{bold:true,sz:9,color:{rgb:'1E3A5F'}}});
-      ws[XLSX.utils.encode_cell({r:row,c:1})] = cc(ini.iniciativa,  S.txt);
-      ws[XLSX.utils.encode_cell({r:row,c:2})] = cc(ini.prio,        sP);
-      ws[XLSX.utils.encode_cell({r:row,c:3})] = cc(ini.estado,      sE);
-      ws[XLSX.utils.encode_cell({r:row,c:4})] = cc(ini.responsable, S.txt);
-      ws[XLSX.utils.encode_cell({r:row,c:5})] = cc(fmtDate(ini.ini),S.txtC);
-      ws[XLSX.utils.encode_cell({r:row,c:6})] = cc(fmtDate(ini.fin),S.txtC);
-      row++;
-    }
-
-    ws['!cols'] = [{wch:12},{wch:62},{wch:12},{wch:14},{wch:38},{wch:14},{wch:14}];
-    ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:totalCols-1}}];
-    ws['!ref'] = XLSX.utils.encode_range({r:0,c:0},{r:row-1,c:totalCols-1});
-    return ws;
-  }
-
-  // Nombres cortos para pestañas (máx 31 chars)
-  const tabNames = {
-    'Gestión de Leads': 'Leads',
-    'Publicaciones':    'Pub',
-    'Captación Digital':'Cap',
-    'Operaciones':      'Op',
-  };
-
-  const wb = XLSX.utils.book_new();
-  for (const squad of squads) {
-    const short = tabNames[squad.nombre] || squad.nombre;
-    XLSX.utils.book_append_sheet(wb, buildSeguimientoSheet(squad), `${short} - Seguimiento`);
-    XLSX.utils.book_append_sheet(wb, buildIniciativasSheet(squad), `${short} - Iniciativas`);
-  }
-
-  const fecha = new Date();
-  const stamp = `${fecha.getFullYear()}${String(fecha.getMonth()+1).padStart(2,'0')}${String(fecha.getDate()).padStart(2,'0')}`;
-  XLSX.writeFile(wb, `Seguimiento_por_Squad_Q2_2026_${stamp}.xlsx`, {bookType:'xlsx', cellStyles:true});
-}
-
 function resetData() {
   if (!confirm('¿Borrar todos los valores ingresados para este squad?')) return;
   if (currentSquad === 'pub') datosPub = {};
   else if (currentSquad === 'cap') datosCap = {};
   else if (currentSquad === 'op') datosOp = {};
   else datosLeads = {};
-  datosJsonSha = null;
   saveData();
   renderSeguimiento();
   renderKPIs();
@@ -1166,6 +1035,10 @@ function renderGantt() {
 
   let minD = new Date(Math.min(...data.map(i => i.ini.getTime())));
   let maxD = new Date(Math.max(...data.map(i => i.fin.getTime())));
+  if (!currentFilter && currentGanttMes > 0) {
+    const mF = mesesGantt[currentGanttMes];
+    if (minD < mF.ini) minD = new Date(mF.ini);
+  }
   minD.setDate(minD.getDate() - ((minD.getDay()+6)%7));
   maxD.setDate(maxD.getDate() + (7-((maxD.getDay()+6)%7))%7);
 
@@ -1219,7 +1092,7 @@ function renderGantt() {
     for (const ws of visWeeks) {
       html += `<div style="position:absolute;left:${(diffD(minD,ws)/totalDays)*gW}px;top:0;bottom:0;width:1px;background:#F1F5F9;"></div>`;
     }
-    const barClr = {'Ok':'#22C55E','No Iniciado':'#94A3B8','En Proceso':'#F59E0B','En Riesgo':'#EF4444','Finalizado':'#3B82F6'}[it.estado]||'#94A3B8';
+    const barClr = {'Ok':'#22C55E','No Iniciado':'#94A3B8','En Proceso':'#F59E0B','En Riesgo':'#EF4444'}[it.estado]||'#94A3B8';
     html += `<div class="gantt-bar" onclick="goToPalanca('${it.codigo}')" title="${it.iniciativa} · ${it.estado} · ${it.responsable||'—'} · ${fmtF(it.ini)}–${fmtF(it.fin)}" style="position:absolute;left:${left}px;top:50%;transform:translateY(-50%);width:${width}px;height:14px;background:${barClr};border-radius:3px;cursor:pointer;border-left:3px solid ${c.fill};"></div>
       </div></div>`;
   }
@@ -1252,10 +1125,10 @@ function initHeader() {
 }
 
 // ── INIT ──
-(async () => {
-  await loadData();
+(() => {
+  loadData();
   initHeader();
-  currentMesIdx   = getMesActualIdx(sq().meses);
+  currentMesIdx   = 0;
   currentGanttMes = getMesActualIdx(sq().mesesGantt);
   renderMonthButtons();
   renderKPIs();
